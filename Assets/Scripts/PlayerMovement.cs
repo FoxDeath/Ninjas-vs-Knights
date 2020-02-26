@@ -10,38 +10,43 @@ public class PlayerMovement : MonoBehaviour
     public Transform groundCheck;
     public LayerMask groundMask;
     private Vector3 velocity;
+    private Vector3 move;
 
     public float jumpHeight;
     public float speed;
     private float horizontal;
     private float vertical;
-    private float gravity = -9.81f;
-    private float fallMultiplier = 1.15f;
+    private float gravity = -11f;
+    private float fallMultiplier = 1.25f;
     private float groungDistance = 0.4f;
 
     public bool isGrounded;
     public bool doubleJumped;
     public bool resetFall;
 
-    // Update is called once per frame
+    private void Start()
+    {
+        move = new Vector3();
+        velocity = new Vector3();
+    }
+
     void Update()
     {
         isGrounded = Physics.CheckSphere(groundCheck.position, groungDistance, groundMask);
 
-        if (isGrounded && velocity.y < 0)
+        if (isGrounded)
         {
-            velocity.y = -2f;
             doubleJumped = false;
+            move = (transform.right * horizontal + transform.forward * vertical) * speed;
         }
 
-        Vector3 move = transform.right * horizontal + transform.forward * vertical;
-        controller.Move(move * speed * Time.deltaTime);
+        controller.Move(move * Time.deltaTime);
 
         velocity.y += gravity * Time.deltaTime;
 
         if (velocity.y < 0 && !isGrounded && !resetFall)
         {
-            velocity.y *= fallMultiplier;
+            velocity.y *= Mathf.Lerp(1.05f, fallMultiplier, 0f);
         }
         else
         {
@@ -50,6 +55,8 @@ public class PlayerMovement : MonoBehaviour
 
         velocity.y = Mathf.Clamp(velocity.y, -10f, 10f);
         controller.Move(velocity * Time.deltaTime);
+
+        print(velocity);
     }
 
     public void Move(InputAction.CallbackContext context)
@@ -72,6 +79,21 @@ public class PlayerMovement : MonoBehaviour
                 doubleJumped = true;
                 resetFall = true;
                 velocity.y = Mathf.Sqrt(jumpHeight * -2.4f * gravity);
+            }
+        }
+    }
+
+    public void Sprint(InputAction.CallbackContext context)
+    {
+        if (vertical > 0)
+        {
+            if (context.action.phase == InputActionPhase.Started)
+            {
+                speed *= 1.6f;
+            }
+            else if (context.action.phase == InputActionPhase.Canceled)
+            {
+                speed /= 1.6f;
             }
         }
     }

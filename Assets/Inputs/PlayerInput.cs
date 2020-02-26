@@ -41,6 +41,14 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Sprint"",
+                    ""type"": ""Button"",
+                    ""id"": ""0f35ab6f-75df-461c-9f0e-051d7a62d3a9"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -120,6 +128,17 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b4df8866-84ea-4aae-b303-983e451ea9c1"",
+                    ""path"": ""<Keyboard>/leftShift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard and Mouse"",
+                    ""action"": ""Sprint"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -159,6 +178,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         m_Ninja_Look = m_Ninja.FindAction("Look", throwIfNotFound: true);
         m_Ninja_Movement = m_Ninja.FindAction("Movement", throwIfNotFound: true);
         m_Ninja_Jump = m_Ninja.FindAction("Jump", throwIfNotFound: true);
+        m_Ninja_Sprint = m_Ninja.FindAction("Sprint", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -211,6 +231,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
     private readonly InputAction m_Ninja_Look;
     private readonly InputAction m_Ninja_Movement;
     private readonly InputAction m_Ninja_Jump;
+    private readonly InputAction m_Ninja_Sprint;
     public struct NinjaActions
     {
         private @PlayerInput m_Wrapper;
@@ -218,6 +239,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         public InputAction @Look => m_Wrapper.m_Ninja_Look;
         public InputAction @Movement => m_Wrapper.m_Ninja_Movement;
         public InputAction @Jump => m_Wrapper.m_Ninja_Jump;
+        public InputAction @Sprint => m_Wrapper.m_Ninja_Sprint;
         public InputActionMap Get() { return m_Wrapper.m_Ninja; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -236,6 +258,9 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                 @Jump.started -= m_Wrapper.m_NinjaActionsCallbackInterface.OnJump;
                 @Jump.performed -= m_Wrapper.m_NinjaActionsCallbackInterface.OnJump;
                 @Jump.canceled -= m_Wrapper.m_NinjaActionsCallbackInterface.OnJump;
+                @Sprint.started -= m_Wrapper.m_NinjaActionsCallbackInterface.OnSprint;
+                @Sprint.performed -= m_Wrapper.m_NinjaActionsCallbackInterface.OnSprint;
+                @Sprint.canceled -= m_Wrapper.m_NinjaActionsCallbackInterface.OnSprint;
             }
             m_Wrapper.m_NinjaActionsCallbackInterface = instance;
             if (instance != null)
@@ -249,6 +274,9 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                 @Jump.started += instance.OnJump;
                 @Jump.performed += instance.OnJump;
                 @Jump.canceled += instance.OnJump;
+                @Sprint.started += instance.OnSprint;
+                @Sprint.performed += instance.OnSprint;
+                @Sprint.canceled += instance.OnSprint;
             }
         }
     }
@@ -276,5 +304,6 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         void OnLook(InputAction.CallbackContext context);
         void OnMovement(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
+        void OnSprint(InputAction.CallbackContext context);
     }
 }
