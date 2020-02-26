@@ -25,6 +25,14 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Movement"",
+                    ""type"": ""Value"",
+                    ""id"": ""162691f4-2fe3-44a8-9b80-6b661fed831f"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -38,6 +46,61 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""action"": ""Look"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""WASD"",
+                    ""id"": ""8796cef5-c631-4910-af80-ac53573bde4b"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Movement"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""9a01ef79-628d-41d4-a334-b486016fad31"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard and Mouse"",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""4cf5353d-fe72-4883-9ab8-2d70f4afc3ac"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard and Mouse"",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""f1cd8abd-f175-4e06-9479-5083ad00e0f6"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard and Mouse"",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""48d98b1b-288a-4c51-b6a0-88b44172b72f"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard and Mouse"",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         }
@@ -75,6 +138,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         // Ninja
         m_Ninja = asset.FindActionMap("Ninja", throwIfNotFound: true);
         m_Ninja_Look = m_Ninja.FindAction("Look", throwIfNotFound: true);
+        m_Ninja_Movement = m_Ninja.FindAction("Movement", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -125,11 +189,13 @@ public class @PlayerInput : IInputActionCollection, IDisposable
     private readonly InputActionMap m_Ninja;
     private INinjaActions m_NinjaActionsCallbackInterface;
     private readonly InputAction m_Ninja_Look;
+    private readonly InputAction m_Ninja_Movement;
     public struct NinjaActions
     {
         private @PlayerInput m_Wrapper;
         public NinjaActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
         public InputAction @Look => m_Wrapper.m_Ninja_Look;
+        public InputAction @Movement => m_Wrapper.m_Ninja_Movement;
         public InputActionMap Get() { return m_Wrapper.m_Ninja; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -142,6 +208,9 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                 @Look.started -= m_Wrapper.m_NinjaActionsCallbackInterface.OnLook;
                 @Look.performed -= m_Wrapper.m_NinjaActionsCallbackInterface.OnLook;
                 @Look.canceled -= m_Wrapper.m_NinjaActionsCallbackInterface.OnLook;
+                @Movement.started -= m_Wrapper.m_NinjaActionsCallbackInterface.OnMovement;
+                @Movement.performed -= m_Wrapper.m_NinjaActionsCallbackInterface.OnMovement;
+                @Movement.canceled -= m_Wrapper.m_NinjaActionsCallbackInterface.OnMovement;
             }
             m_Wrapper.m_NinjaActionsCallbackInterface = instance;
             if (instance != null)
@@ -149,6 +218,9 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                 @Look.started += instance.OnLook;
                 @Look.performed += instance.OnLook;
                 @Look.canceled += instance.OnLook;
+                @Movement.started += instance.OnMovement;
+                @Movement.performed += instance.OnMovement;
+                @Movement.canceled += instance.OnMovement;
             }
         }
     }
@@ -174,5 +246,6 @@ public class @PlayerInput : IInputActionCollection, IDisposable
     public interface INinjaActions
     {
         void OnLook(InputAction.CallbackContext context);
+        void OnMovement(InputAction.CallbackContext context);
     }
 }

@@ -7,7 +7,6 @@ using UnityEngine.InputSystem;
 public class MouseLook : MonoBehaviour
 {
     public Transform playerBody;
-    private PlayerInput playerInput;
 
     public float mouseSensitivity;
     private float lookX;
@@ -29,7 +28,7 @@ public class MouseLook : MonoBehaviour
         playerBody.Rotate(Vector2.up, lookX);
     }
 
-    public void Move(InputAction.CallbackContext context)
+    public void Look(InputAction.CallbackContext context)
     {
         Vector2 look = context.ReadValue<Vector2>();
         lookX = look.x * mouseSensitivity * Time.deltaTime;
