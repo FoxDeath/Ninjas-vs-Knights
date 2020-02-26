@@ -33,6 +33,14 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Jump"",
+                    ""type"": ""Button"",
+                    ""id"": ""19193a2f-8a8d-4354-9b91-d472e3cc1484"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -101,6 +109,17 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""action"": ""Movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""96e76c42-87f1-48ef-b01d-3cbe3668f47f"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard and Mouse"",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -139,6 +158,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         m_Ninja = asset.FindActionMap("Ninja", throwIfNotFound: true);
         m_Ninja_Look = m_Ninja.FindAction("Look", throwIfNotFound: true);
         m_Ninja_Movement = m_Ninja.FindAction("Movement", throwIfNotFound: true);
+        m_Ninja_Jump = m_Ninja.FindAction("Jump", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -190,12 +210,14 @@ public class @PlayerInput : IInputActionCollection, IDisposable
     private INinjaActions m_NinjaActionsCallbackInterface;
     private readonly InputAction m_Ninja_Look;
     private readonly InputAction m_Ninja_Movement;
+    private readonly InputAction m_Ninja_Jump;
     public struct NinjaActions
     {
         private @PlayerInput m_Wrapper;
         public NinjaActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
         public InputAction @Look => m_Wrapper.m_Ninja_Look;
         public InputAction @Movement => m_Wrapper.m_Ninja_Movement;
+        public InputAction @Jump => m_Wrapper.m_Ninja_Jump;
         public InputActionMap Get() { return m_Wrapper.m_Ninja; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -211,6 +233,9 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                 @Movement.started -= m_Wrapper.m_NinjaActionsCallbackInterface.OnMovement;
                 @Movement.performed -= m_Wrapper.m_NinjaActionsCallbackInterface.OnMovement;
                 @Movement.canceled -= m_Wrapper.m_NinjaActionsCallbackInterface.OnMovement;
+                @Jump.started -= m_Wrapper.m_NinjaActionsCallbackInterface.OnJump;
+                @Jump.performed -= m_Wrapper.m_NinjaActionsCallbackInterface.OnJump;
+                @Jump.canceled -= m_Wrapper.m_NinjaActionsCallbackInterface.OnJump;
             }
             m_Wrapper.m_NinjaActionsCallbackInterface = instance;
             if (instance != null)
@@ -221,6 +246,9 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                 @Movement.started += instance.OnMovement;
                 @Movement.performed += instance.OnMovement;
                 @Movement.canceled += instance.OnMovement;
+                @Jump.started += instance.OnJump;
+                @Jump.performed += instance.OnJump;
+                @Jump.canceled += instance.OnJump;
             }
         }
     }
@@ -247,5 +275,6 @@ public class @PlayerInput : IInputActionCollection, IDisposable
     {
         void OnLook(InputAction.CallbackContext context);
         void OnMovement(InputAction.CallbackContext context);
+        void OnJump(InputAction.CallbackContext context);
     }
 }
