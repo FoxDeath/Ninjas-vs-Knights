@@ -1,11 +1,13 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Shoot : MonoBehaviour
 {
     public GameObject bullet;
+    public GameObject bulletEmiter;
     public Animator animator;
-
+    
     public float speed = 100f;
     public float reloadTime = 2f;
     public float fireRate = 15f;
@@ -14,51 +16,71 @@ public class Shoot : MonoBehaviour
 
     public int maxAmmo = 10;
     private int currentAmmo;
-    public int strayFactor;
 
     private bool isReloading = false;
     private bool isScoped = false;
 
-    private void Start()
+    void Start()
     {
         currentAmmo = maxAmmo;
     }
 
-    private void OnEnable()
+    void OnEnable()
     {
         isReloading = false;
+        animator.SetBool("Reloading", false);
     }
 
     void Update()
     {
-        if (isReloading)
-        {
-            return;
-        }
+        
+    }
 
-        if (Input.GetKeyDown(KeyCode.R) || currentAmmo <= 0)
+    public void Fire(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Performed && Time.time >= nextTimeToFire && !isReloading)
         {
-            if (currentAmmo < maxAmmo)
+            if (currentAmmo > 0)
             {
-                StartCoroutine(Reload());
+                currentAmmo--;
+                nextTimeToFire = Time.time + 1f / fireRate;
+                TryShoot();
+            }
+            else
+            {
+                StartCoroutine(Reloading());
                 return;
             }
         }
+    }
 
-        if (Input.GetButton("Fire1") && Time.time >= nextTimeToFire)
-        {
-            nextTimeToFire = Time.time + 1f / fireRate;
-            TryShoot();
-        }
-
-        if (Input.GetKeyDown(KeyCode.Mouse1))
+    public void Scope(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Performed)
         {
             isScoped = !isScoped;
             animator.SetBool("Scoped", isScoped);
         }
     }
 
-    IEnumerator Reload()
+    public void Reload(InputAction.CallbackContext context)
+    {
+        if (isReloading)
+        {
+            return;
+        }
+        
+        if (context.phase == InputActionPhase.Performed || currentAmmo <= 0)
+        {
+            if (currentAmmo < maxAmmo)
+            {
+                StartCoroutine(Reloading());
+                return;
+            }
+        }
+    }
+
+    IEnumerator Reloading()
     {
         isReloading = true;
 
@@ -73,16 +95,22 @@ public class Shoot : MonoBehaviour
 
     void TryShoot()
     {
-        currentAmmo--;
-
-        Vector3 shootDirection = bullet.transform.forward;
+        Vector3 shootDirection = bulletEmiter.transform.forward;
         shootDirection.x += Random.Range(-spread, spread);
         shootDirection.y += Random.Range(-spread, spread);
 
-        GameObject instantiateBullet = Instantiate(bullet, transform.position, Quaternion.identity) as GameObject;
+        GameObject instantiateBullet = Instantiate(bullet, bulletEmiter.transform.position, bulletEmiter.transform.rotation);
         Rigidbody temporaryRigidbody = instantiateBullet.GetComponent<Rigidbody>();
-        temporaryRigidbody.AddForce(shootDirection * speed); //Vector3.forward
+
+        if (!isScoped)
+        {
+            temporaryRigidbody.AddForce(shootDirection * speed);
+        }
+        else
+        {
+            temporaryRigidbody.AddForce(bulletEmiter.transform.forward * speed);
+        }
         
-        Destroy(instantiateBullet, 3f);
+        Destroy(instantiateBullet, 2f);
     }
 }
