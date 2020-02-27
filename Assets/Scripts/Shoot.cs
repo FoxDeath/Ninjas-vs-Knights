@@ -1,21 +1,23 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Fire : MonoBehaviour
+public class Shoot : MonoBehaviour
 {
     public GameObject bullet;
+    public Animator animator;
+
     public float speed = 100f;
-    public int maxAmmo = 10;
-    private int currentAmmo;
     public float reloadTime = 2f;
     public float fireRate = 15f;
     private float nextTimeToFire = 0f;
+    public float spread = 0.1f;
+
+    public int maxAmmo = 10;
+    private int currentAmmo;
+    public int strayFactor;
 
     private bool isReloading = false;
     private bool isScoped = false;
-
-    public Animator animator;
 
     private void Start()
     {
@@ -29,24 +31,27 @@ public class Fire : MonoBehaviour
 
     void Update()
     {
-        if(isReloading)
+        if (isReloading)
         {
             return;
         }
 
-        if(currentAmmo <= 0)
+        if (Input.GetKeyDown(KeyCode.R) || currentAmmo <= 0)
         {
-            StartCoroutine(Reload());
-            return;
+            if (currentAmmo < maxAmmo)
+            {
+                StartCoroutine(Reload());
+                return;
+            }
         }
 
-        if(Input.GetButton("Fire1") && Time.time >= nextTimeToFire)
+        if (Input.GetButton("Fire1") && Time.time >= nextTimeToFire)
         {
             nextTimeToFire = Time.time + 1f / fireRate;
-            Shoot();
+            TryShoot();
         }
-        
-        if(Input.GetKeyDown(KeyCode.Mouse1))
+
+        if (Input.GetKeyDown(KeyCode.Mouse1))
         {
             isScoped = !isScoped;
             animator.SetBool("Scoped", isScoped);
@@ -56,22 +61,28 @@ public class Fire : MonoBehaviour
     IEnumerator Reload()
     {
         isReloading = true;
+
         animator.SetBool("Reloading", true);
         yield return new WaitForSeconds(reloadTime - .25f);
         animator.SetBool("Reloading", false);
         yield return new WaitForSeconds(.25f);
+
         currentAmmo = maxAmmo;
         isReloading = false;
     }
 
-    void Shoot()
+    void TryShoot()
     {
         currentAmmo--;
 
+        Vector3 shootDirection = bullet.transform.forward;
+        shootDirection.x += Random.Range(-spread, spread);
+        shootDirection.y += Random.Range(-spread, spread);
+
         GameObject instantiateBullet = Instantiate(bullet, transform.position, Quaternion.identity) as GameObject;
         Rigidbody temporaryRigidbody = instantiateBullet.GetComponent<Rigidbody>();
-        temporaryRigidbody.AddForce(Vector3.right * -speed);
-
+        temporaryRigidbody.AddForce(shootDirection * speed); //Vector3.forward
+        
         Destroy(instantiateBullet, 3f);
     }
 }
