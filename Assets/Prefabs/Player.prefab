@@ -243,6 +243,7 @@ MonoBehaviour:
     m_Bits: 256
   jumpHeight: 2
   speed: 10
+  fallDecrease: 0.8
   isGrounded: 0
   doubleJumped: 0
   resetFall: 0
@@ -343,7 +344,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerBody: {fileID: 393805273881681316}
-  mouseSensitivity: 50
+  mouseSensitivity: 35
 --- !u!1 &3045208811581285619
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
@@ -11,13 +8,14 @@ public class PlayerMovement : MonoBehaviour
     public LayerMask groundMask;
     private Vector3 velocity;
     private Vector3 move;
+    private Vector3 lastMove;
 
     public float jumpHeight;
     public float speed;
+    public float fallDecrease;
     private float horizontal;
     private float vertical;
     private float gravity = -11f;
-    private float fallMultiplier = 1.25f;
     private float groungDistance = 0.4f;
 
     public bool isGrounded;
@@ -38,6 +36,12 @@ public class PlayerMovement : MonoBehaviour
         {
             doubleJumped = false;
             move = (transform.right * horizontal + transform.forward * vertical) * speed;
+            lastMove = move;
+        }
+        else
+        {
+            controller.Move(lastMove * 0.4f * Time.deltaTime);
+            move = (transform.right * horizontal + transform.forward * vertical) * speed * 0.8f;
         }
 
         controller.Move(move * Time.deltaTime);
@@ -46,14 +50,14 @@ public class PlayerMovement : MonoBehaviour
 
         if (velocity.y < 0 && !isGrounded && !resetFall)
         {
-            velocity.y *= Mathf.Lerp(1.05f, fallMultiplier, 0f);
+            velocity.y -= fallDecrease;
         }
         else
         {
             resetFall = false;
         }
 
-        velocity.y = Mathf.Clamp(velocity.y, -10f, 10f);
+        velocity.y = Mathf.Clamp(velocity.y, -15f, 10f);
         controller.Move(velocity * Time.deltaTime);
 
         print(velocity);
