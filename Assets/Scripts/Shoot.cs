@@ -31,11 +31,6 @@ public class Shoot : MonoBehaviour
         animator.SetBool("Reloading", false);
     }
 
-    void Update()
-    {
-        
-    }
-
     public void Fire(InputAction.CallbackContext context)
     {
         if (context.phase == InputActionPhase.Performed && Time.time >= nextTimeToFire && !isReloading)
@@ -110,7 +105,7 @@ public class Shoot : MonoBehaviour
         {
             temporaryRigidbody.AddForce(bulletEmiter.transform.forward * speed);
         }
-        
+
         Destroy(instantiateBullet, 2f);
     }
 }
