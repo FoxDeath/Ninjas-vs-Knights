@@ -40,7 +40,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            controller.Move(lastMove * 0.4f * Time.deltaTime);
+            controller.Move(lastMove * 0.3f * Time.deltaTime);
             move = (transform.right * horizontal + transform.forward * vertical) * speed * 0.8f;
         }
 
