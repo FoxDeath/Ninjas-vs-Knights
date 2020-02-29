@@ -31,7 +31,30 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         isGrounded = Physics.CheckSphere(groundCheck.position, groungDistance, groundMask);
+    }
 
+    void FixedUpdate()
+    {
+        velocity.y += gravity * Time.deltaTime;
+
+        Move();
+
+        Fall();
+
+        velocity.y = Mathf.Clamp(velocity.y, -15f, 10f);
+        controller.Move(velocity * Time.deltaTime);
+    }
+
+
+    public void MoveInput(InputAction.CallbackContext context)
+    {
+        Vector2 move = context.ReadValue<Vector2>();
+        horizontal = move.x;
+        vertical = move.y;
+    }
+    
+    private void Move()
+    {
         if (isGrounded)
         {
             doubleJumped = false;
@@ -45,49 +68,31 @@ public class PlayerMovement : MonoBehaviour
         }
 
         controller.Move(move * Time.deltaTime);
-
-        velocity.y += gravity * Time.deltaTime;
-
-        if (velocity.y < 0 && !isGrounded && !resetFall)
-        {
-            velocity.y -= fallDecrease;
-        }
-        else
-        {
-            resetFall = false;
-        }
-
-        velocity.y = Mathf.Clamp(velocity.y, -15f, 10f);
-        controller.Move(velocity * Time.deltaTime);
-
-        print(velocity);
     }
 
-    public void Move(InputAction.CallbackContext context)
-    {
-        Vector2 move = context.ReadValue<Vector2>();
-        horizontal = move.x;
-        vertical = move.y;
-    }
-
-    public void Jump(InputAction.CallbackContext context)
+    public void JumpInput(InputAction.CallbackContext context)
     {
         if (context.action.phase == InputActionPhase.Performed)
         {
-            if (isGrounded)
-            {
-                velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
-            }
-            else if (!isGrounded && !doubleJumped)
-            {
-                doubleJumped = true;
-                resetFall = true;
-                velocity.y = Mathf.Sqrt(jumpHeight * -2.4f * gravity);
-            }
+            Jump();
         }
     }
 
-    public void Sprint(InputAction.CallbackContext context)
+    private void Jump()
+    {
+        if (isGrounded)
+        {
+            velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+        }
+        else if (!isGrounded && !doubleJumped)
+        {
+            doubleJumped = true;
+            resetFall = true;
+            velocity.y = Mathf.Sqrt(jumpHeight * -2.4f * gravity);
+        }
+    }
+
+    public void SprintInput(InputAction.CallbackContext context)
     {
         if (vertical > 0)
         {
@@ -99,6 +104,18 @@ public class PlayerMovement : MonoBehaviour
             {
                 speed /= 1.6f;
             }
+        }
+    }
+    
+    private void Fall()
+    {
+        if (velocity.y < 0 && !isGrounded && !resetFall)
+        {
+            velocity.y -= fallDecrease;
+        }
+        else
+        {
+            resetFall = false;
         }
     }
 }

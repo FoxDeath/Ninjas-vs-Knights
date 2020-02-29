@@ -17,9 +17,10 @@ public class MouseLook : MonoBehaviour
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
-    }
+    }
+
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         xRotation -= lookY;
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);
@@ -28,7 +29,7 @@ public class MouseLook : MonoBehaviour
         playerBody.Rotate(Vector2.up, lookX);
     }
 
-    public void Look(InputAction.CallbackContext context)
+    public void LookInput(InputAction.CallbackContext context)
     {
         Vector2 look = context.ReadValue<Vector2>();
         lookX = look.x * mouseSensitivity * Time.deltaTime;
