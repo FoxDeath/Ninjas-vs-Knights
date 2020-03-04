@@ -2,14 +2,15 @@
 
 public class Target : MonoBehaviour
 {
-    public float health = 50f;
+    [SerializeField] float health = 50f;
 
     public void TakeDamage(float damage)
     {
+        FindObjectOfType<AudioManager>().Play("Hit", GetComponent<AudioSource>());
         health -= damage;
         if(health <= 0f)
         {
-            Die();
+            Invoke("Die", 1f);
         }
     }
 

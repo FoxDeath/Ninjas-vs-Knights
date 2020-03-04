@@ -198,6 +198,191 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Knight"",
+            ""id"": ""75620fe3-3537-4cbf-beb0-34235a9b816d"",
+            ""actions"": [
+                {
+                    ""name"": ""Look"",
+                    ""type"": ""Value"",
+                    ""id"": ""f3881dd5-c9bc-42b4-9b39-b25ffa9635cb"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Movement"",
+                    ""type"": ""Value"",
+                    ""id"": ""13e8d25b-0bfe-41a5-88e0-0cac72d74e1e"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Sprint"",
+                    ""type"": ""Button"",
+                    ""id"": ""4c9b6429-bd9c-465c-9e28-b4549d5f0997"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Jetpack Dash"",
+                    ""type"": ""Button"",
+                    ""id"": ""3dd231e9-759b-4ebc-90db-879e87f7c9d9"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Jump"",
+                    ""type"": ""Button"",
+                    ""id"": ""8f80fc03-3940-4607-8564-c3746f1daabe"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Jetpack Jump"",
+                    ""type"": ""Button"",
+                    ""id"": ""0de5b342-1f49-4aef-8977-d036a7d5e24b"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Shoot"",
+                    ""type"": ""Button"",
+                    ""id"": ""f55b3568-3a37-4acc-8116-feb32b73bab9"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""999c697c-fa11-4df5-8f21-296afb5d0fe9"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard and Mouse"",
+                    ""action"": ""Shoot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1ac083a0-9a04-4ec2-9919-cd3caa11dc8b"",
+                    ""path"": ""<Pointer>/delta"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard and Mouse"",
+                    ""action"": ""Look"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""WASD"",
+                    ""id"": ""cee7bd15-1089-4907-8244-80004dceb87f"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Movement"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""4a899fcd-3cbb-4a71-a4bf-4d4c4ca8919d"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard and Mouse"",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""efb79e6a-f230-428e-811c-baee3d81813b"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard and Mouse"",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""1098bb7a-40c1-4972-aeed-8855ff53c7c0"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard and Mouse"",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""9b82cc51-bd14-45b5-82d2-3304e22062fc"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard and Mouse"",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""12564c05-902f-44dc-a813-84b69ad9a1a2"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard and Mouse"",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9ed5a03e-caef-41b5-bb92-dc53e9570112"",
+                    ""path"": ""<Keyboard>/leftShift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard and Mouse"",
+                    ""action"": ""Sprint"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d7489b9e-8963-45d0-b4e2-93112496242e"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": ""Hold"",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard and Mouse"",
+                    ""action"": ""Jetpack Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8020a29f-758d-4ed9-af8c-710d9b195ee0"",
+                    ""path"": ""<Keyboard>/leftShift"",
+                    ""interactions"": ""MultiTap(tapDelay=0.2)"",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard and Mouse"",
+                    ""action"": ""Jetpack Dash"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -239,6 +424,15 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         m_Ninja_Fire = m_Ninja.FindAction("Fire", throwIfNotFound: true);
         m_Ninja_Scope = m_Ninja.FindAction("Scope", throwIfNotFound: true);
         m_Ninja_Reload = m_Ninja.FindAction("Reload", throwIfNotFound: true);
+        // Knight
+        m_Knight = asset.FindActionMap("Knight", throwIfNotFound: true);
+        m_Knight_Look = m_Knight.FindAction("Look", throwIfNotFound: true);
+        m_Knight_Movement = m_Knight.FindAction("Movement", throwIfNotFound: true);
+        m_Knight_Sprint = m_Knight.FindAction("Sprint", throwIfNotFound: true);
+        m_Knight_JetpackDash = m_Knight.FindAction("Jetpack Dash", throwIfNotFound: true);
+        m_Knight_Jump = m_Knight.FindAction("Jump", throwIfNotFound: true);
+        m_Knight_JetpackJump = m_Knight.FindAction("Jetpack Jump", throwIfNotFound: true);
+        m_Knight_Shoot = m_Knight.FindAction("Shoot", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -365,6 +559,87 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         }
     }
     public NinjaActions @Ninja => new NinjaActions(this);
+
+    // Knight
+    private readonly InputActionMap m_Knight;
+    private IKnightActions m_KnightActionsCallbackInterface;
+    private readonly InputAction m_Knight_Look;
+    private readonly InputAction m_Knight_Movement;
+    private readonly InputAction m_Knight_Sprint;
+    private readonly InputAction m_Knight_JetpackDash;
+    private readonly InputAction m_Knight_Jump;
+    private readonly InputAction m_Knight_JetpackJump;
+    private readonly InputAction m_Knight_Shoot;
+    public struct KnightActions
+    {
+        private @PlayerInput m_Wrapper;
+        public KnightActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Look => m_Wrapper.m_Knight_Look;
+        public InputAction @Movement => m_Wrapper.m_Knight_Movement;
+        public InputAction @Sprint => m_Wrapper.m_Knight_Sprint;
+        public InputAction @JetpackDash => m_Wrapper.m_Knight_JetpackDash;
+        public InputAction @Jump => m_Wrapper.m_Knight_Jump;
+        public InputAction @JetpackJump => m_Wrapper.m_Knight_JetpackJump;
+        public InputAction @Shoot => m_Wrapper.m_Knight_Shoot;
+        public InputActionMap Get() { return m_Wrapper.m_Knight; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(KnightActions set) { return set.Get(); }
+        public void SetCallbacks(IKnightActions instance)
+        {
+            if (m_Wrapper.m_KnightActionsCallbackInterface != null)
+            {
+                @Look.started -= m_Wrapper.m_KnightActionsCallbackInterface.OnLook;
+                @Look.performed -= m_Wrapper.m_KnightActionsCallbackInterface.OnLook;
+                @Look.canceled -= m_Wrapper.m_KnightActionsCallbackInterface.OnLook;
+                @Movement.started -= m_Wrapper.m_KnightActionsCallbackInterface.OnMovement;
+                @Movement.performed -= m_Wrapper.m_KnightActionsCallbackInterface.OnMovement;
+                @Movement.canceled -= m_Wrapper.m_KnightActionsCallbackInterface.OnMovement;
+                @Sprint.started -= m_Wrapper.m_KnightActionsCallbackInterface.OnSprint;
+                @Sprint.performed -= m_Wrapper.m_KnightActionsCallbackInterface.OnSprint;
+                @Sprint.canceled -= m_Wrapper.m_KnightActionsCallbackInterface.OnSprint;
+                @JetpackDash.started -= m_Wrapper.m_KnightActionsCallbackInterface.OnJetpackDash;
+                @JetpackDash.performed -= m_Wrapper.m_KnightActionsCallbackInterface.OnJetpackDash;
+                @JetpackDash.canceled -= m_Wrapper.m_KnightActionsCallbackInterface.OnJetpackDash;
+                @Jump.started -= m_Wrapper.m_KnightActionsCallbackInterface.OnJump;
+                @Jump.performed -= m_Wrapper.m_KnightActionsCallbackInterface.OnJump;
+                @Jump.canceled -= m_Wrapper.m_KnightActionsCallbackInterface.OnJump;
+                @JetpackJump.started -= m_Wrapper.m_KnightActionsCallbackInterface.OnJetpackJump;
+                @JetpackJump.performed -= m_Wrapper.m_KnightActionsCallbackInterface.OnJetpackJump;
+                @JetpackJump.canceled -= m_Wrapper.m_KnightActionsCallbackInterface.OnJetpackJump;
+                @Shoot.started -= m_Wrapper.m_KnightActionsCallbackInterface.OnShoot;
+                @Shoot.performed -= m_Wrapper.m_KnightActionsCallbackInterface.OnShoot;
+                @Shoot.canceled -= m_Wrapper.m_KnightActionsCallbackInterface.OnShoot;
+            }
+            m_Wrapper.m_KnightActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Look.started += instance.OnLook;
+                @Look.performed += instance.OnLook;
+                @Look.canceled += instance.OnLook;
+                @Movement.started += instance.OnMovement;
+                @Movement.performed += instance.OnMovement;
+                @Movement.canceled += instance.OnMovement;
+                @Sprint.started += instance.OnSprint;
+                @Sprint.performed += instance.OnSprint;
+                @Sprint.canceled += instance.OnSprint;
+                @JetpackDash.started += instance.OnJetpackDash;
+                @JetpackDash.performed += instance.OnJetpackDash;
+                @JetpackDash.canceled += instance.OnJetpackDash;
+                @Jump.started += instance.OnJump;
+                @Jump.performed += instance.OnJump;
+                @Jump.canceled += instance.OnJump;
+                @JetpackJump.started += instance.OnJetpackJump;
+                @JetpackJump.performed += instance.OnJetpackJump;
+                @JetpackJump.canceled += instance.OnJetpackJump;
+                @Shoot.started += instance.OnShoot;
+                @Shoot.performed += instance.OnShoot;
+                @Shoot.canceled += instance.OnShoot;
+            }
+        }
+    }
+    public KnightActions @Knight => new KnightActions(this);
     private int m_KeyboardandMouseSchemeIndex = -1;
     public InputControlScheme KeyboardandMouseScheme
     {
@@ -392,5 +667,15 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         void OnFire(InputAction.CallbackContext context);
         void OnScope(InputAction.CallbackContext context);
         void OnReload(InputAction.CallbackContext context);
+    }
+    public interface IKnightActions
+    {
+        void OnLook(InputAction.CallbackContext context);
+        void OnMovement(InputAction.CallbackContext context);
+        void OnSprint(InputAction.CallbackContext context);
+        void OnJetpackDash(InputAction.CallbackContext context);
+        void OnJump(InputAction.CallbackContext context);
+        void OnJetpackJump(InputAction.CallbackContext context);
+        void OnShoot(InputAction.CallbackContext context);
     }
 }
