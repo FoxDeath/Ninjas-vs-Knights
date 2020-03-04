@@ -49,6 +49,30 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Fire"",
+                    ""type"": ""Button"",
+                    ""id"": ""174db001-2c17-4ee9-b135-01e3d5573dad"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Scope"",
+                    ""type"": ""Button"",
+                    ""id"": ""3558cc0b-596e-468e-b70c-d418962defaf"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Reload"",
+                    ""type"": ""Button"",
+                    ""id"": ""2458a1fb-d161-492e-9046-eaec27acac96"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -139,6 +163,39 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""action"": ""Sprint"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cbec5257-5027-498f-a9e2-702e97f2f45e"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Fire"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d185bede-461d-4e83-832f-e5ec3b55d642"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Scope"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b40185fc-6e07-4f54-b962-f299bb545fc8"",
+                    ""path"": ""<Keyboard>/#(R)"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Reload"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -179,6 +236,9 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         m_Ninja_Movement = m_Ninja.FindAction("Movement", throwIfNotFound: true);
         m_Ninja_Jump = m_Ninja.FindAction("Jump", throwIfNotFound: true);
         m_Ninja_Sprint = m_Ninja.FindAction("Sprint", throwIfNotFound: true);
+        m_Ninja_Fire = m_Ninja.FindAction("Fire", throwIfNotFound: true);
+        m_Ninja_Scope = m_Ninja.FindAction("Scope", throwIfNotFound: true);
+        m_Ninja_Reload = m_Ninja.FindAction("Reload", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -232,6 +292,9 @@ public class @PlayerInput : IInputActionCollection, IDisposable
     private readonly InputAction m_Ninja_Movement;
     private readonly InputAction m_Ninja_Jump;
     private readonly InputAction m_Ninja_Sprint;
+    private readonly InputAction m_Ninja_Fire;
+    private readonly InputAction m_Ninja_Scope;
+    private readonly InputAction m_Ninja_Reload;
     public struct NinjaActions
     {
         private @PlayerInput m_Wrapper;
@@ -240,6 +303,9 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         public InputAction @Movement => m_Wrapper.m_Ninja_Movement;
         public InputAction @Jump => m_Wrapper.m_Ninja_Jump;
         public InputAction @Sprint => m_Wrapper.m_Ninja_Sprint;
+        public InputAction @Fire => m_Wrapper.m_Ninja_Fire;
+        public InputAction @Scope => m_Wrapper.m_Ninja_Scope;
+        public InputAction @Reload => m_Wrapper.m_Ninja_Reload;
         public InputActionMap Get() { return m_Wrapper.m_Ninja; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -261,6 +327,15 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                 @Sprint.started -= m_Wrapper.m_NinjaActionsCallbackInterface.OnSprint;
                 @Sprint.performed -= m_Wrapper.m_NinjaActionsCallbackInterface.OnSprint;
                 @Sprint.canceled -= m_Wrapper.m_NinjaActionsCallbackInterface.OnSprint;
+                @Fire.started -= m_Wrapper.m_NinjaActionsCallbackInterface.OnFire;
+                @Fire.performed -= m_Wrapper.m_NinjaActionsCallbackInterface.OnFire;
+                @Fire.canceled -= m_Wrapper.m_NinjaActionsCallbackInterface.OnFire;
+                @Scope.started -= m_Wrapper.m_NinjaActionsCallbackInterface.OnScope;
+                @Scope.performed -= m_Wrapper.m_NinjaActionsCallbackInterface.OnScope;
+                @Scope.canceled -= m_Wrapper.m_NinjaActionsCallbackInterface.OnScope;
+                @Reload.started -= m_Wrapper.m_NinjaActionsCallbackInterface.OnReload;
+                @Reload.performed -= m_Wrapper.m_NinjaActionsCallbackInterface.OnReload;
+                @Reload.canceled -= m_Wrapper.m_NinjaActionsCallbackInterface.OnReload;
             }
             m_Wrapper.m_NinjaActionsCallbackInterface = instance;
             if (instance != null)
@@ -277,6 +352,15 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                 @Sprint.started += instance.OnSprint;
                 @Sprint.performed += instance.OnSprint;
                 @Sprint.canceled += instance.OnSprint;
+                @Fire.started += instance.OnFire;
+                @Fire.performed += instance.OnFire;
+                @Fire.canceled += instance.OnFire;
+                @Scope.started += instance.OnScope;
+                @Scope.performed += instance.OnScope;
+                @Scope.canceled += instance.OnScope;
+                @Reload.started += instance.OnReload;
+                @Reload.performed += instance.OnReload;
+                @Reload.canceled += instance.OnReload;
             }
         }
     }
@@ -305,5 +389,8 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         void OnMovement(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnSprint(InputAction.CallbackContext context);
+        void OnFire(InputAction.CallbackContext context);
+        void OnScope(InputAction.CallbackContext context);
+        void OnReload(InputAction.CallbackContext context);
     }
 }
