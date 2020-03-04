@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 
-public class bulletHit : MonoBehaviour
+public class Bullet : MonoBehaviour
 {
-    public float damage = 10f;
+    [SerializeField] float damage = 10f;
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.GetComponent<bulletHit>())
+        if(collision.gameObject.GetComponent<Bullet>())
         {
             return;
         }
