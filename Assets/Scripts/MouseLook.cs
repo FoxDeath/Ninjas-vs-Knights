@@ -6,9 +6,9 @@ using UnityEngine.InputSystem;
 
 public class MouseLook : MonoBehaviour
 {
-    public Transform playerBody;
+    [SerializeField] Transform playerBody;
 
-    public float mouseSensitivity;
+    [SerializeField] float mouseSensitivity;
     private float lookX;
     private float lookY;
     private float xRotation;
