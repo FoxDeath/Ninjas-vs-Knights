@@ -73,6 +73,22 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Grapling Hook"",
+                    ""type"": ""Button"",
+                    ""id"": ""4c0a85ae-4079-45df-bd15-ebea32cffde3"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Crouch"",
+                    ""type"": ""Button"",
+                    ""id"": ""8f4b225b-234d-4413-b343-145b6a96b3c3"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -194,6 +210,28 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Reload"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""36796939-65e8-4c7c-94c2-e9452eb1a729"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": ""Hold"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Grapling Hook"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b2f33c4b-b591-4aef-9388-d37f9086e52d"",
+                    ""path"": ""<Keyboard>/leftCtrl"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Crouch"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -424,6 +462,8 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         m_Ninja_Fire = m_Ninja.FindAction("Fire", throwIfNotFound: true);
         m_Ninja_Scope = m_Ninja.FindAction("Scope", throwIfNotFound: true);
         m_Ninja_Reload = m_Ninja.FindAction("Reload", throwIfNotFound: true);
+        m_Ninja_GraplingHook = m_Ninja.FindAction("Grapling Hook", throwIfNotFound: true);
+        m_Ninja_Crouch = m_Ninja.FindAction("Crouch", throwIfNotFound: true);
         // Knight
         m_Knight = asset.FindActionMap("Knight", throwIfNotFound: true);
         m_Knight_Look = m_Knight.FindAction("Look", throwIfNotFound: true);
@@ -489,6 +529,8 @@ public class @PlayerInput : IInputActionCollection, IDisposable
     private readonly InputAction m_Ninja_Fire;
     private readonly InputAction m_Ninja_Scope;
     private readonly InputAction m_Ninja_Reload;
+    private readonly InputAction m_Ninja_GraplingHook;
+    private readonly InputAction m_Ninja_Crouch;
     public struct NinjaActions
     {
         private @PlayerInput m_Wrapper;
@@ -500,6 +542,8 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         public InputAction @Fire => m_Wrapper.m_Ninja_Fire;
         public InputAction @Scope => m_Wrapper.m_Ninja_Scope;
         public InputAction @Reload => m_Wrapper.m_Ninja_Reload;
+        public InputAction @GraplingHook => m_Wrapper.m_Ninja_GraplingHook;
+        public InputAction @Crouch => m_Wrapper.m_Ninja_Crouch;
         public InputActionMap Get() { return m_Wrapper.m_Ninja; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -530,6 +574,12 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                 @Reload.started -= m_Wrapper.m_NinjaActionsCallbackInterface.OnReload;
                 @Reload.performed -= m_Wrapper.m_NinjaActionsCallbackInterface.OnReload;
                 @Reload.canceled -= m_Wrapper.m_NinjaActionsCallbackInterface.OnReload;
+                @GraplingHook.started -= m_Wrapper.m_NinjaActionsCallbackInterface.OnGraplingHook;
+                @GraplingHook.performed -= m_Wrapper.m_NinjaActionsCallbackInterface.OnGraplingHook;
+                @GraplingHook.canceled -= m_Wrapper.m_NinjaActionsCallbackInterface.OnGraplingHook;
+                @Crouch.started -= m_Wrapper.m_NinjaActionsCallbackInterface.OnCrouch;
+                @Crouch.performed -= m_Wrapper.m_NinjaActionsCallbackInterface.OnCrouch;
+                @Crouch.canceled -= m_Wrapper.m_NinjaActionsCallbackInterface.OnCrouch;
             }
             m_Wrapper.m_NinjaActionsCallbackInterface = instance;
             if (instance != null)
@@ -555,6 +605,12 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                 @Reload.started += instance.OnReload;
                 @Reload.performed += instance.OnReload;
                 @Reload.canceled += instance.OnReload;
+                @GraplingHook.started += instance.OnGraplingHook;
+                @GraplingHook.performed += instance.OnGraplingHook;
+                @GraplingHook.canceled += instance.OnGraplingHook;
+                @Crouch.started += instance.OnCrouch;
+                @Crouch.performed += instance.OnCrouch;
+                @Crouch.canceled += instance.OnCrouch;
             }
         }
     }
@@ -667,6 +723,8 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         void OnFire(InputAction.CallbackContext context);
         void OnScope(InputAction.CallbackContext context);
         void OnReload(InputAction.CallbackContext context);
+        void OnGraplingHook(InputAction.CallbackContext context);
+        void OnCrouch(InputAction.CallbackContext context);
     }
     public interface IKnightActions
     {
