@@ -112,6 +112,7 @@ GameObject:
   - component: {fileID: 2056603104854673349}
   - component: {fileID: 306459465}
   - component: {fileID: 306459466}
+  - component: {fileID: 237782569}
   m_Layer: 9
   m_Name: NinjaPlayer
   m_TagString: Untagged
@@ -313,6 +314,36 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: f55b3568-3a37-4acc-8116-feb32b73bab9
     m_ActionName: Knight/Shoot[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3527555193783340687}
+        m_MethodName: HookInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 4c0a85ae-4079-45df-bd15-ebea32cffde3
+    m_ActionName: Ninja/Grapling Hook[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 306459466}
+        m_MethodName: Crouch
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 8f4b225b-234d-4413-b343-145b6a96b3c3
+    m_ActionName: Ninja/Crouch[/Keyboard/leftCtrl]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Ninja
@@ -363,7 +394,25 @@ MonoBehaviour:
   jumpHeight: 5
   speed: 5
   fallDecrease: 2
+  isGrounded: 0
   edgeHanging: 0
+--- !u!114 &237782569
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2056603104854673355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9bf3f81c3fec04c41bf41790ac2c36d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controller: {fileID: 2056603104854673348}
+  hook: {fileID: 5455116679612717290}
+  hookHolder: {fileID: 5455116679915736576}
+  isHooked: 0
+  hookSpeed: 10
 --- !u!1 &2056603105151804418
 GameObject:
   m_ObjectHideFlags: 0
@@ -425,6 +474,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1559077986323047480}
+  - {fileID: 5455116679915736577}
   m_Father: {fileID: 2056603104854673351}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -493,6 +543,115 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerBody: {fileID: 2056603104854673351}
   mouseSensitivity: 10
+--- !u!1001 &992728809504572315
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 2056603105755295628}
+    m_Modifications:
+    - target: {fileID: 4409733588105115290, guid: 932971c62c729ba47a4af35a9ac591da,
+        type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 2056603104854673355}
+    - target: {fileID: 4409733589493304596, guid: 932971c62c729ba47a4af35a9ac591da,
+        type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 2056603104854673355}
+    - target: {fileID: 5076284796238204314, guid: 932971c62c729ba47a4af35a9ac591da,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.76
+      objectReference: {fileID: 0}
+    - target: {fileID: 5076284796238204314, guid: 932971c62c729ba47a4af35a9ac591da,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.18
+      objectReference: {fileID: 0}
+    - target: {fileID: 5076284796238204314, guid: 932971c62c729ba47a4af35a9ac591da,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 2.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 5076284796238204314, guid: 932971c62c729ba47a4af35a9ac591da,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5076284796238204314, guid: 932971c62c729ba47a4af35a9ac591da,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5076284796238204314, guid: 932971c62c729ba47a4af35a9ac591da,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5076284796238204314, guid: 932971c62c729ba47a4af35a9ac591da,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5076284796238204314, guid: 932971c62c729ba47a4af35a9ac591da,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5076284796238204314, guid: 932971c62c729ba47a4af35a9ac591da,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5076284796238204314, guid: 932971c62c729ba47a4af35a9ac591da,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5076284796238204314, guid: 932971c62c729ba47a4af35a9ac591da,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5076284796238204315, guid: 932971c62c729ba47a4af35a9ac591da,
+        type: 3}
+      propertyPath: m_Name
+      value: Grappling Hook with Rope
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 932971c62c729ba47a4af35a9ac591da, type: 3}
+--- !u!1 &5455116679915736576 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5076284796238204315, guid: 932971c62c729ba47a4af35a9ac591da,
+    type: 3}
+  m_PrefabInstance: {fileID: 992728809504572315}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &5455116679915736577 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5076284796238204314, guid: 932971c62c729ba47a4af35a9ac591da,
+    type: 3}
+  m_PrefabInstance: {fileID: 992728809504572315}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3527555193783340687 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4409733589493304596, guid: 932971c62c729ba47a4af35a9ac591da,
+    type: 3}
+  m_PrefabInstance: {fileID: 992728809504572315}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5455116679915736576}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03d5adcd00c8f9b4ab5bbd9c884f1df9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &5455116679612717290 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5076284794322475889, guid: 932971c62c729ba47a4af35a9ac591da,
+    type: 3}
+  m_PrefabInstance: {fileID: 992728809504572315}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2056603104416602800
 PrefabInstance:
   m_ObjectHideFlags: 0
