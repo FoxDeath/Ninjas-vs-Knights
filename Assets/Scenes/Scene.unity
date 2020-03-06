@@ -760,7 +760,7 @@ MeshCollider:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1778122574}
+  m_GameObject: {fileID: 1770386689}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
