@@ -6,47 +6,36 @@ using UnityEngine.InputSystem;
 
 public class GrapplingHookMovement : MonoBehaviour
 {
-    public CharacterController controller;
-    public GameObject hook;
-    public GameObject hookHolder;
+    [SerializeField] CharacterController controller;
+    [SerializeField] GameObject hook;
+    [SerializeField] GameObject hookHolder;
     public bool isHooked;
-    public float hookSpeed = 10f;
+    [SerializeField] float hookSpeed = 10f;
 
-    void Update()
+    void FixedUpdate()
     {
-        ref Vector3 velocity = ref GetComponent<PlayerMovement>().GetVelocityByReference();
+        HookMovement();
+    }
+
+    private void HookMovement()
+    {
+        ref Vector3 velocity = ref GetComponent<NinjaPlayerMovement>().GetVelocityByReference();
         if (isHooked)
         {
             Vector3 hookDir = (hook.transform.position - transform.position) / hookSpeed;
             velocity += hookDir;
         }
-        else if (GetComponent<PlayerMovement>().isGrounded)
+        else if (GetComponent<NinjaPlayerMovement>().isGrounded)
         {
             velocity.x = 0f;
             velocity.z = 0f;
-        }
-
-        if (!isHooked && velocity.x != 0)
-        {
-            if (velocity.x < 0)
-                velocity.x = velocity.x / 1.002f;
-            else
-                velocity.x = velocity.x / 1.002f;
-        }
-
-        if (!isHooked && velocity.z != 0)
-        {
-            if (velocity.z < 0)
-                velocity.z = velocity.z / 1.002f;
-            else
-                velocity.z = velocity.z / 1.002f;
         }
     }
 
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
-        ref Vector3 velocity = ref GetComponent<PlayerMovement>().GetVelocityByReference();
-        if (!GetComponent<PlayerMovement>().isGrounded && isHooked &&
+        ref Vector3 velocity = ref GetComponent<NinjaPlayerMovement>().GetVelocityByReference();
+        if (!GetComponent<NinjaPlayerMovement>().isGrounded && isHooked &&
             (hit.transform == hook.transform.parent ||
             Vector3.Distance(transform.position, hook.transform.position) > Vector3.Distance(hit.point, hook.transform.position)))
         {

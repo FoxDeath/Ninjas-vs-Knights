@@ -6,22 +6,27 @@ using UnityEngine.InputSystem;
 public class GrapplingHook : MonoBehaviour
 {
 
-    public GameObject hook;
-    public GameObject hookHolder;
-    public GameObject player;
+    [SerializeField] GameObject hook;
+    [SerializeField] GameObject hookHolder;
+    [SerializeField] GameObject player;
 
-    LineRenderer rope;
-    public float hookTravelSpeed = 40f;
-    //public float playerTravelSpeed = 30f;
+    private LineRenderer rope;
+    [SerializeField] float hookTravelSpeed = 40f;
 
     public bool fired;
     public GameObject hookedObject;
 
-    public float maxDistance = 20f;
+    [SerializeField] float maxDistance = 20f;
     private float currentDistance;
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
+    {
+        Hook();
+        ReturnHook();
+    }
+
+    private void Hook()
     {
         if (fired)
         {
@@ -38,35 +43,37 @@ public class GrapplingHook : MonoBehaviour
 
             if (currentDistance >= maxDistance)
             {
-                ReturnHook();
+                EndHook();
             }
         }
+    }
 
+    public void HookInput(InputAction.CallbackContext context)
+    {
+        fired = true;
+        if (context.canceled)
+        {
+            EndHook();
+        }
+    }
+
+    public void ReturnHook()
+    {
         if (player.GetComponent<GrapplingHookMovement>().isHooked)
         {
             hook.transform.parent = hookedObject.transform;
-
-            //player.transform.position = Vector3.MoveTowards(player.transform.position, hook.transform.position, Time.deltaTime * playerTravelSpeed);
 
             float distanceToHook = Vector3.Distance(player.transform.position, hook.transform.position);
 
             if (distanceToHook < 5f)
             {
-                ReturnHook();
+                EndHook();
             }
         }
+        
     }
 
-    public void Fire(InputAction.CallbackContext context)
-    {
-        fired = true;
-        if (context.canceled)
-        {
-            ReturnHook();
-        }
-    }
-
-    public void ReturnHook()
+    private void EndHook()
     {
         rope.positionCount = 0;
         hook.transform.parent = hookHolder.transform;

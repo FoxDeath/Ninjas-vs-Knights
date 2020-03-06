@@ -216,7 +216,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""36796939-65e8-4c7c-94c2-e9452eb1a729"",
-                    ""path"": ""<Mouse>/leftButton"",
+                    ""path"": ""<Mouse>/middleButton"",
                     ""interactions"": ""Hold"",
                     ""processors"": """",
                     ""groups"": """",

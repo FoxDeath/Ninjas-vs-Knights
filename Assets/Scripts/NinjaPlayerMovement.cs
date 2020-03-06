@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class NinjaPlayerMovement : MonoBehaviour
@@ -18,9 +19,12 @@ public class NinjaPlayerMovement : MonoBehaviour
     private float gravity = -11f;
     private float groungDistance = 0.4f;
 
-    private bool isGrounded;
+    public bool isGrounded;
     private bool doubleJumped;
     private bool resetFall;
+    private bool sprinting;
+    private bool crouching;
+    private bool sliding;
     public bool edgeHanging;
 
     private void Start()
@@ -106,10 +110,12 @@ public class NinjaPlayerMovement : MonoBehaviour
         {
             if (context.action.phase == InputActionPhase.Started)
             {
+                sprinting = true;
                 speed *= 1.6f;
             }
             else if (context.action.phase == InputActionPhase.Canceled)
             {
+                sprinting = false;
                 speed /= 1.6f;
             }
         }
@@ -125,5 +131,51 @@ public class NinjaPlayerMovement : MonoBehaviour
         {
             resetFall = false;
         }
+    }
+
+    public void Crouch(InputAction.CallbackContext context)
+    {
+        if (context.action.phase == InputActionPhase.Started && !sprinting)
+        {
+            crouching = true;
+            transform.localScale = new Vector3(1f, 0.5f, 1f);
+            speed *= 0.6f;
+
+        }
+        else if (context.action.phase == InputActionPhase.Canceled && crouching)
+        {
+            transform.localScale = new Vector3(1f, 1f, 1f);
+            speed /= 0.6f;
+            crouching = false;
+        }
+        else if (context.action.phase == InputActionPhase.Started && sprinting)
+        {
+            StartCoroutine("Sliding");
+        }
+        else if (context.action.phase == InputActionPhase.Canceled && sliding)
+        {
+            EndSliding();
+        }
+    }
+
+    private void EndSliding()
+    {
+        speed /= 1.2f;
+        transform.localScale = new Vector3(1f, 1f, 1f);
+        sliding = false;
+    }
+
+    IEnumerator Sliding()
+    {
+        speed *= 1.2f;
+        sliding = true;
+        transform.localScale = new Vector3(1f, 0.5f, 1f);
+        yield return new WaitForSeconds(0.8f);
+        EndSliding();
+    }
+
+    public ref Vector3 GetVelocityByReference()
+    {
+        return ref velocity;
     }
 }
