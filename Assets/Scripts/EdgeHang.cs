@@ -15,7 +15,7 @@ public class EdgeHang : MonoBehaviour
     public Quaternion handRotation;
     public Quaternion footRotation;
     public Quaternion footRotationOffset;
-    public PlayerMovement playerMovement;
+    public NinjaPlayerMovement playerMovement;
 
     void FixedUpdate()
     {
@@ -71,12 +71,5 @@ public class EdgeHang : MonoBehaviour
         {
             canHang = false;
         }
-    }
-
-    void Update()
-    {
-        // Show Raycasts
-        // Debug.DrawRay(transform.position + new Vector3(0.0f, 2.0f, 0.0f) + transform.forward, -transform.up, Color.magenta);
-        // Debug.DrawRay(transform.position + new Vector3(0.0f, -0.5f, 0.0f), transform.forward, Color.magenta);
     }
 }

@@ -21,6 +21,7 @@ public class NinjaPlayerMovement : MonoBehaviour
     private bool isGrounded;
     private bool doubleJumped;
     private bool resetFall;
+    public bool edgeHanging;
 
     private void Start()
     {
@@ -35,7 +36,14 @@ public class NinjaPlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        velocity.y += gravity * Time.deltaTime;
+        if(edgeHanging)
+        {
+            velocity.y = 0f;
+        }
+        else
+        {
+            velocity.y += gravity * Time.deltaTime;
+        }
 
         Move();
 

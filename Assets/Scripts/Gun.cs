@@ -35,7 +35,7 @@ public class Gun : MonoBehaviour
             Target target = hit.transform.GetComponent<Target>();
             if(target)
             {
-                target.TakeDamege(damage);
+                target.TakeDamage(damage);
             }
 
             trailEffect.transform.rotation = Quaternion.LookRotation((hit.point - trailEffect.transform.position).normalized);
