@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3381593071689229196}
   - component: {fileID: 7577007841756367648}
   - component: {fileID: 303594197250764633}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: Parkour Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -114,7 +114,7 @@ GameObject:
   - component: {fileID: 2056603104373136730}
   - component: {fileID: 2056603104373136724}
   - component: {fileID: 2056603104373136725}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -197,9 +197,9 @@ GameObject:
   - component: {fileID: 2056603104854673349}
   - component: {fileID: 306459465}
   - component: {fileID: 106554078488157421}
-  - component: {fileID: 306459466}
   - component: {fileID: 237782569}
-  m_Layer: 9
+  - component: {fileID: 1588346156}
+  m_Layer: 10
   m_Name: NinjaPlayer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -243,6 +243,7 @@ MonoBehaviour:
   jumpHeight: 5
   speed: 5
   fallDecrease: 2
+  isGrounded: 0
 --- !u!143 &2056603104854673348
 CharacterController:
   m_ObjectHideFlags: 0
@@ -492,28 +493,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33fa3db851bd84c478cdf29645ce022d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &306459466
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2056603104854673355}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2729dfb3f3d477b4e965dc1997b8047c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  controller: {fileID: 2056603104854673348}
-  groundCheck: {fileID: 2056603105151804669}
-  groundMask:
-    serializedVersion: 2
-    m_Bits: 512
-  jumpHeight: 5
-  speed: 5
-  fallDecrease: 2
-  isGrounded: 0
-  edgeHanging: 0
 --- !u!114 &237782569
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -531,6 +510,25 @@ MonoBehaviour:
   hookHolder: {fileID: 5455116679915736576}
   isHooked: 0
   hookSpeed: 10
+--- !u!95 &1588346156
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2056603104854673355}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ec0b149c717544206bb0d70cffc6a934, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &2056603105151804418
 GameObject:
   m_ObjectHideFlags: 0
@@ -540,7 +538,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2056603105151804669}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: GroundCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -573,7 +571,7 @@ GameObject:
   - component: {fileID: 2056603105903442927}
   - component: {fileID: 2056603105903442924}
   - component: {fileID: 2056603105903442926}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -678,6 +676,11 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 2056603104854673355}
+    - target: {fileID: 5076284794322475889, guid: 932971c62c729ba47a4af35a9ac591da,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 5076284796238204314, guid: 932971c62c729ba47a4af35a9ac591da,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -738,20 +741,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: Grappling Hook with Rope
       objectReference: {fileID: 0}
+    - target: {fileID: 5076284796238204315, guid: 932971c62c729ba47a4af35a9ac591da,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 932971c62c729ba47a4af35a9ac591da, type: 3}
---- !u!1 &5455116679915736576 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5076284796238204315, guid: 932971c62c729ba47a4af35a9ac591da,
-    type: 3}
-  m_PrefabInstance: {fileID: 992728809504572315}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &5455116679915736577 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5076284796238204314, guid: 932971c62c729ba47a4af35a9ac591da,
-    type: 3}
-  m_PrefabInstance: {fileID: 992728809504572315}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &3527555193783340687 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4409733589493304596, guid: 932971c62c729ba47a4af35a9ac591da,
@@ -770,6 +766,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 992728809504572315}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &5455116679915736576 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5076284796238204315, guid: 932971c62c729ba47a4af35a9ac591da,
+    type: 3}
+  m_PrefabInstance: {fileID: 992728809504572315}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &5455116679915736577 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5076284796238204314, guid: 932971c62c729ba47a4af35a9ac591da,
+    type: 3}
+  m_PrefabInstance: {fileID: 992728809504572315}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2056603104416602800
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -785,7 +793,7 @@ PrefabInstance:
     - target: {fileID: 659901089950023299, guid: a10595411e8772e4ab0fd79a38a75660,
         type: 3}
       propertyPath: m_Layer
-      value: 8
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 659901089950023301, guid: a10595411e8772e4ab0fd79a38a75660,
         type: 3}
@@ -860,17 +868,11 @@ PrefabInstance:
     - target: {fileID: 659901091433920478, guid: a10595411e8772e4ab0fd79a38a75660,
         type: 3}
       propertyPath: m_Layer
-      value: 8
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 659901091433920448, guid: a10595411e8772e4ab0fd79a38a75660, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: a10595411e8772e4ab0fd79a38a75660, type: 3}
---- !u!1 &1559077986323047475 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 659901089950023299, guid: a10595411e8772e4ab0fd79a38a75660,
-    type: 3}
-  m_PrefabInstance: {fileID: 2056603104416602800}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1559077986323047480 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 659901089950023304, guid: a10595411e8772e4ab0fd79a38a75660,
@@ -880,6 +882,12 @@ Transform:
 --- !u!95 &1559077986323047476 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 659901089950023300, guid: a10595411e8772e4ab0fd79a38a75660,
+    type: 3}
+  m_PrefabInstance: {fileID: 2056603104416602800}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1559077986323047475 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 659901089950023299, guid: a10595411e8772e4ab0fd79a38a75660,
     type: 3}
   m_PrefabInstance: {fileID: 2056603104416602800}
   m_PrefabAsset: {fileID: 0}
