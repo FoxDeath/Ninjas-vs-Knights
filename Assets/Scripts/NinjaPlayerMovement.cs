@@ -4,9 +4,11 @@ using UnityEngine.InputSystem;
 
 public class NinjaPlayerMovement : MonoBehaviour
 {
-    [SerializeField] CharacterController controller;
+    [SerializeField]
+    public CharacterController controller;
     [SerializeField] Transform groundCheck;
     [SerializeField] LayerMask groundMask;
+    private EdgeClimb edgeClimb;
     private Vector3 velocity;
     private Vector3 move;
     private Vector3 lastMove;
@@ -22,15 +24,21 @@ public class NinjaPlayerMovement : MonoBehaviour
     public bool isGrounded;
     private bool doubleJumped;
     private bool resetFall;
-    private bool sprinting;
-    private bool crouching;
+    private bool edgeHanging;
+    private bool edgeClimbing;
     private bool sliding;
-    public bool edgeHanging;
+    private bool crouching;
+    private bool sprinting;
 
     private void Start()
     {
+        edgeClimb = GetComponent<EdgeClimb>();
+
         move = new Vector3();
         velocity = new Vector3();
+
+        edgeHanging = false;
+        edgeClimbing = false;
     }
 
     void Update()
@@ -40,7 +48,7 @@ public class NinjaPlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        if(edgeHanging)
+        if (edgeHanging)
         {
             velocity.y = 0f;
         }
@@ -53,8 +61,12 @@ public class NinjaPlayerMovement : MonoBehaviour
 
         Fall();
 
-        velocity.y = Mathf.Clamp(velocity.y, -15f, 10f);
-        controller.Move(velocity * Time.deltaTime);
+        velocity.y = Mathf.Clamp(velocity.y, -15f, 15f);
+
+        if (!edgeClimbing)
+        {
+            controller.Move(velocity * Time.deltaTime);
+        }
     }
 
 
@@ -86,7 +98,14 @@ public class NinjaPlayerMovement : MonoBehaviour
     {
         if (context.action.phase == InputActionPhase.Performed)
         {
-            Jump();
+            if (isGrounded)
+            {
+                Jump();
+            }
+            else if (edgeHanging)
+            {
+                edgeClimb.StartEdgeClimb();
+            }
         }
     }
 
@@ -177,5 +196,25 @@ public class NinjaPlayerMovement : MonoBehaviour
     public ref Vector3 GetVelocityByReference()
     {
         return ref velocity;
+    }
+
+    public void SetEdgeClimbing(bool edgeClimbing)
+    {
+        this.edgeClimbing = edgeClimbing;
+    }
+
+    public bool GetEdgeClimbing()
+    {
+        return edgeClimbing;
+    }
+
+    public void SetEdgeHanging(bool edgeHanging)
+    {
+        this.edgeHanging = edgeHanging;
+    }
+
+    public bool GetEdgeHanging()
+    {
+        return edgeHanging;
     }
 }

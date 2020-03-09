@@ -20,7 +20,7 @@ public class MouseLook : MonoBehaviour
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
         xRotation -= lookY;
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);
@@ -31,8 +31,8 @@ public class MouseLook : MonoBehaviour
 
     public void LookInput(InputAction.CallbackContext context)
     {
-        Vector2 look = context.ReadValue<Vector2>();
-        lookX = look.x * mouseSensitivity * Time.deltaTime;
-        lookY = look.y * mouseSensitivity * Time.deltaTime;
+        Vector2 look = context.ReadValue<Vector2>() * 0.1f;
+        lookX = look.x * mouseSensitivity;
+        lookY = look.y * mouseSensitivity;
     }
 }

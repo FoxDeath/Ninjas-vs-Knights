@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class EdgeHang : MonoBehaviour
 {
@@ -52,11 +53,11 @@ public class EdgeHang : MonoBehaviour
         {
             if (handIK && footIK)
             {
-                playerMovement.edgeHanging = true;
+                playerMovement.SetEdgeHanging(true);
             }
             else
             {
-                playerMovement.edgeHanging = false;
+                playerMovement.SetEdgeHanging(false);
             }
         }
     }
