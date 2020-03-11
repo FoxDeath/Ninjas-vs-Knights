@@ -7,6 +7,7 @@ TagManager:
   - Enemy
   - Hook
   - Hookable
+  - Wall
   layers:
   - Default
   - TransparentFX

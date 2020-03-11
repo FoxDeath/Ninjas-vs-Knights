@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
+
+
 public class PlayerMovement : MonoBehaviour
 {
     public CharacterController controller;
@@ -15,9 +17,10 @@ public class PlayerMovement : MonoBehaviour
     public float fallDecrease;
     private float horizontal;
     private float vertical;
-    private float gravity = -11f;
+    private float gravity = -25f;
     private float groungDistance = 0.4f;
     private float seconds = 0f;
+
 
     public bool isGrounded;
     public bool doubleJumped;
@@ -25,6 +28,15 @@ public class PlayerMovement : MonoBehaviour
     public bool sprinting;
     public bool crouching;
     public bool sliding;
+
+    private RaycastHit frontCast;
+    private RaycastHit rightCast;
+    private RaycastHit leftCast;
+    bool canWallJump;
+    bool wallRun;
+  
+    Vector3 normal;
+
 
     private void Start()
     {
@@ -51,7 +63,8 @@ public class PlayerMovement : MonoBehaviour
         {
             doubleJumped = false;
             move = (transform.right * horizontal + transform.forward * vertical) * speed;
-            lastMove = move;
+            wallRun = false;
+
         }
         else
         {
@@ -109,9 +122,53 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    public void Move(InputAction.CallbackContext context)
+    {
+        Vector2 move = context.ReadValue<Vector2>();
+        horizontal = move.x;
+        vertical = move.y;
+    }
+
+    public void Jump(InputAction.CallbackContext context)
+    {
+        if (context.action.phase == InputActionPhase.Performed)
+        {
+            if (isGrounded)
+            {
+                velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+            }
+            else if (!isGrounded && !doubleJumped)
+            {
+                doubleJumped = true;
+                resetFall = true;
+                velocity.y = Mathf.Sqrt(jumpHeight * -2.4f * gravity);
+            }
+        }
+    }
+
     public void Sprint(InputAction.CallbackContext context)
     {
         if (vertical > 0)
+        {
+            if (context.action.phase == InputActionPhase.Started)
+            {
+                speed *= 1.6f;
+            }
+            else if (context.action.phase == InputActionPhase.Canceled)
+            {
+                speed /= 1.6f;
+            }
+        }
+    }
+
+    void WallSkeet()
+    {
+        Physics.Raycast(transform.position, transform.right, out rightCast, 1);
+        Physics.Raycast(transform.position, -transform.right, out leftCast, 1);
+        Physics.Raycast(transform.position, transform.forward, out frontCast, 1);
+
+
+        if (rightCast.normal != Vector3.zero && rightCast.transform.tag == "Wall")
         {
             if (context.action.phase == InputActionPhase.Started && !crouching)
             {
@@ -123,6 +180,10 @@ public class PlayerMovement : MonoBehaviour
                 speed /= 1.6f;
                 sprinting = false;
             }
+        }
+        else if(context.action.phase == InputActionPhase.Canceled)
+        {
+            wallJumped = false;
         }
     }
     public void Crouch(InputAction.CallbackContext context)
@@ -160,3 +221,4 @@ public class PlayerMovement : MonoBehaviour
         return ref velocity;
     }
 }
+    
