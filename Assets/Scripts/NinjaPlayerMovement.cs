@@ -4,10 +4,10 @@ using UnityEngine.InputSystem;
 
 public class NinjaPlayerMovement : MonoBehaviour
 {
-    [SerializeField]
-    public CharacterController controller;
-    [SerializeField] Transform groundCheck;
-    [SerializeField] LayerMask groundMask;
+    [SerializeField] public CharacterController controller;
+    [SerializeField] private Transform groundCheck;
+    [SerializeField] private LayerMask groundMask;
+    private PauseMenu pauseMenu;
     private EdgeClimb edgeClimb;
     private Vector3 velocity;
     private Vector3 move;
@@ -23,11 +23,11 @@ public class NinjaPlayerMovement : MonoBehaviour
     private float gravity = -25f;
     private float groungDistance = 0.4f;
 
-    public bool isGrounded;
-    private bool doubleJumped = false;
+    [SerializeField] public bool isGrounded;
+    [SerializeField] private bool edgeHanging;
+    [SerializeField] private bool edgeClimbing;
+    private bool doubleJumped;
     private bool resetFall;
-    private bool edgeHanging;
-    private bool edgeClimbing;
     private bool sliding;
     private bool crouching;
     private bool sprinting;
@@ -40,9 +40,8 @@ public class NinjaPlayerMovement : MonoBehaviour
 
         move = new Vector3();
         velocity = new Vector3();
-
-        edgeHanging = false;
-        edgeClimbing = false;
+        
+        pauseMenu = FindObjectOfType<PauseMenu>();
     }
 
     void Update()
@@ -52,6 +51,10 @@ public class NinjaPlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
+        if(PauseMenu.GameIsPaused)
+        {
+            return;
+        }
         if (edgeHanging)
         {
             velocity.y = 0f;
@@ -65,7 +68,7 @@ public class NinjaPlayerMovement : MonoBehaviour
 
         Fall();
 
-        velocity.y = Mathf.Clamp(velocity.y, -15f, 15f);
+        velocity.y = Mathf.Clamp(velocity.y, -25f, 15f);
 
         if (!edgeClimbing)
         {
@@ -96,7 +99,6 @@ public class NinjaPlayerMovement : MonoBehaviour
         }
     }
 
-
     public void MoveInput(InputAction.CallbackContext context)
     {
         Vector2 move = context.ReadValue<Vector2>();
@@ -114,8 +116,22 @@ public class NinjaPlayerMovement : MonoBehaviour
         }
         else
         {
-            controller.Move(lastMove * 0.3f * Time.deltaTime);
-            move = (transform.right * horizontal + transform.forward * vertical) * speed * 0.8f;
+            if (!edgeClimbing && !edgeHanging)
+            {
+                controller.Move(lastMove * 0.3f * Time.deltaTime);
+                move = (transform.right * horizontal + transform.forward * vertical) * speed * 0.8f;
+            }
+
+            if (edgeHanging && !edgeClimbing)
+            {
+                vertical = Mathf.Clamp(vertical, -1f, 0f);
+                move = (transform.right * horizontal + transform.forward * vertical) * speed * 0.8f;
+            }
+
+            if (!edgeClimbing)
+            {
+                move = (transform.right * horizontal + transform.forward * vertical) * speed * 0.8f;
+            }
         }
 
         controller.Move(move * Time.deltaTime);
@@ -125,7 +141,6 @@ public class NinjaPlayerMovement : MonoBehaviour
     {
         if (context.action.phase == InputActionPhase.Performed)
         {
-            
             if (edgeHanging)
             {
                 edgeClimb.StartEdgeClimb();
@@ -160,12 +175,12 @@ public class NinjaPlayerMovement : MonoBehaviour
     {
         if (vertical > 0)
         {
-            if (context.action.phase == InputActionPhase.Started)
+            if (context.action.phase == InputActionPhase.Started && !sprinting)
             {
                 sprinting = true;
                 speed *= 1.6f;
             }
-            else if (context.action.phase == InputActionPhase.Canceled)
+            else if (context.action.phase == InputActionPhase.Canceled && sprinting)
             {
                 sprinting = false;
                 speed /= 1.6f;
@@ -249,6 +264,11 @@ public class NinjaPlayerMovement : MonoBehaviour
     public bool GetEdgeHanging()
     {
         return edgeHanging;
+    }
+
+    public void Pause(InputAction.CallbackContext context)
+    {
+        pauseMenu.MenuInput();
     }
 
     void OnControllerColliderHit(ControllerColliderHit hit)

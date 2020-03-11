@@ -8,11 +8,17 @@ public class EdgeClimb : MonoBehaviour
     private NinjaPlayerMovement playerMovement;
     private Animator anim;
 
+    private Camera parkourCamera;
+    private Camera mainCamera;
+
     // Start is called before the first frame update
     void Start()
     {
         playerMovement = GetComponent<NinjaPlayerMovement>();
         anim = GetComponent<Animator>();
+
+        parkourCamera = gameObject.transform.Find("Parkour Camera").GetComponent<Camera>();
+        mainCamera = gameObject.transform.Find("Main Camera").GetComponent<Camera>();
     }
 
     public void StartEdgeClimb()
@@ -23,11 +29,17 @@ public class EdgeClimb : MonoBehaviour
 
     IEnumerator EdgeClimbing()
     {
+        parkourCamera.gameObject.SetActive(true);
+        mainCamera.gameObject.SetActive(false);
+
         anim.SetTrigger("EdgeClimb");
         playerMovement.SetEdgeHanging(false);
         playerMovement.SetEdgeClimbing(true);
         yield return new WaitForSeconds(1f);
         playerMovement.SetEdgeClimbing(false);
+
+        mainCamera.gameObject.SetActive(true);
+        parkourCamera.gameObject.SetActive(false);
     }
 
     IEnumerator MovePlayer()
@@ -40,7 +52,7 @@ public class EdgeClimb : MonoBehaviour
             playerMovement.controller.Move(moveVector);
         }
 
-        targetPos = new Vector3(transform.position.x, transform.position.y, transform.position.z + 1.495f);
+        targetPos = new Vector3(transform.position.x, transform.position.y, transform.position.z - 1.495f);
         moveVector = targetPos - transform.position;
 
         while (Mathf.Abs(targetPos.z - transform.position.z) >= 0.5f)

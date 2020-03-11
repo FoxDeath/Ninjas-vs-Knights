@@ -35,6 +35,10 @@ public class AudioManager : MonoBehaviour
 
     public void Play(string name, AudioSource source = null)
     {
+        if(PauseMenu.GameIsPaused)
+        {
+            return;
+        }
         Sound s = Array.Find(sounds, sound => sound.name == name);
         if(s == null)
         {
@@ -63,6 +67,17 @@ public class AudioManager : MonoBehaviour
         s.isPlaying = false;
     }
 
+    public void StopAll()
+    {
+        foreach(Sound s in sounds)
+        {
+            if(s.source != null && s.isPlaying)
+            {
+                Stop(s.name);
+            }
+        }
+    }
+
     public bool IsPlaying(string name)
     {
         Sound s = Array.Find(sounds, sound => sound.name == name);
@@ -82,5 +97,10 @@ public class AudioManager : MonoBehaviour
         }
         s.source.pitch = pitch;
         
+    }
+
+    public void SetMasterVolume(float volume)
+    {
+        AudioListener.volume = volume;
     }
 }

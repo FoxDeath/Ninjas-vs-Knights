@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3353001842518517098}
   - component: {fileID: 6505123616320177901}
   - component: {fileID: -8975333075924396637}
-  - component: {fileID: 5684917249980566909}
+  - component: {fileID: 6373802811891102140}
   m_Layer: 0
   m_Name: Bullet
   m_TagString: Untagged
@@ -111,7 +111,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 10
---- !u!64 &5684917249980566909
+--- !u!64 &6373802811891102140
 MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
