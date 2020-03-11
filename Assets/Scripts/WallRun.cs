@@ -5,9 +5,8 @@ using UnityEngine.InputSystem;
 
 public class WallRun : MonoBehaviour
 {
-    private PlayerMovementWallRun playerMovement;
-
-    public float speed;
+    private NinjaPlayerMovement playerMovement;
+    private MouseLook mouseLook;
 
 
     private RaycastHit frontCast;
@@ -16,7 +15,8 @@ public class WallRun : MonoBehaviour
 
     private void Start()
     {
-        playerMovement = GetComponent<PlayerMovementWallRun>();
+        playerMovement = GetComponent<NinjaPlayerMovement>();
+        mouseLook = GetComponentInChildren<MouseLook>();
     }
 
     void Update()
@@ -34,29 +34,23 @@ public class WallRun : MonoBehaviour
         if (rightCast.normal != Vector3.zero && rightCast.transform.tag == "Wall" && !playerMovement.isGrounded)
         {
             playerMovement.wallRun = true;
-            doLeanRight();
+            mouseLook.zRotation = 17f;
         }
         else if (leftCast.normal != Vector3.zero && leftCast.transform.tag == "Wall" && !playerMovement.isGrounded)
         {
             playerMovement.wallRun = true;
-            doLeanLeft();
+            mouseLook.zRotation = -17f;
         }
         else if (frontCast.normal != Vector3.zero && frontCast.transform.tag == "Wall" && !playerMovement.isGrounded)
         {
             playerMovement.wallRun = true;
+            mouseLook.zRotation = 0f;
         }
         else if (playerMovement.wallRun)
         {
             playerMovement.wallRun = false;
+            mouseLook.zRotation = 0f;
         }
 
-    }
-    void doLeanLeft()
-    {
-        Camera.main.transform.Rotate(new Vector3(0, 0, -17));
-    }
-    void doLeanRight()
-    {
-        Camera.main.transform.Rotate(new Vector3(0, 0, 17));
     }
 }
