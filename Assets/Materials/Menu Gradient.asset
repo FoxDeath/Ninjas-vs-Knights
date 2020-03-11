@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 2108210716, guid: 89f0137620f6af44b9ba852b4190e64e, type: 3}
   m_Name: Menu Gradient
   m_EditorClassIdentifier: 
-  topLeft: {r: 1, g: 0.6179246, b: 0.6309036, a: 1}
-  topRight: {r: 1, g: 0.3915094, b: 0.4103286, a: 1}
-  bottomLeft: {r: 1, g: 0.18396229, b: 0.21028605, a: 1}
-  bottomRight: {r: 1, g: 0, b: 0.033653736, a: 1}
+  topLeft: {r: 1, g: 0.35096747, b: 0, a: 1}
+  topRight: {r: 1, g: 0.44421014, b: 0.1462264, a: 1}
+  bottomLeft: {r: 1, g: 0.56062835, b: 0.3254717, a: 1}
+  bottomRight: {r: 1, g: 0.62220275, b: 0.4198113, a: 1}

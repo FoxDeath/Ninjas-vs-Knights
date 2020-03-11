@@ -89,6 +89,22 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""PauseMenu"",
+                    ""type"": ""Button"",
+                    ""id"": ""7bddba4d-f239-433c-90a5-a0818b51b4f5"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""SwitchWeapon"",
+                    ""type"": ""Value"",
+                    ""id"": ""2d82f41a-d418-47d2-b863-dc6db34d7571"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -234,6 +250,28 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""action"": ""Crouch"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""72414897-3f78-460b-b543-7303002c264d"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard and Mouse"",
+                    ""action"": ""PauseMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a1a826f7-144e-4db0-a669-69d5ff4a9511"",
+                    ""path"": ""<Mouse>/scroll"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard and Mouse"",
+                    ""action"": ""SwitchWeapon"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -266,7 +304,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""Jetpack Dash"",
+                    ""name"": ""JetpackDash"",
                     ""type"": ""Button"",
                     ""id"": ""3dd231e9-759b-4ebc-90db-879e87f7c9d9"",
                     ""expectedControlType"": """",
@@ -294,6 +332,22 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""type"": ""Button"",
                     ""id"": ""f55b3568-3a37-4acc-8116-feb32b73bab9"",
                     ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""PauseMenu"",
+                    ""type"": ""Button"",
+                    ""id"": ""42ee6374-1e9b-494c-b053-e59af83cb8c1"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""SwitchWeapon"",
+                    ""type"": ""Value"",
+                    ""id"": ""830f39fc-f603-49a2-a7c9-77763e89440a"",
+                    ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """"
                 }
@@ -416,7 +470,29 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""interactions"": ""MultiTap(tapDelay=0.2)"",
                     ""processors"": """",
                     ""groups"": ""Keyboard and Mouse"",
-                    ""action"": ""Jetpack Dash"",
+                    ""action"": ""JetpackDash"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8ee7f151-61fe-4ec0-b48b-85f827ac354c"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard and Mouse"",
+                    ""action"": ""PauseMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e3d03654-08cf-4fb0-a46d-0f141b8a841f"",
+                    ""path"": ""<Mouse>/scroll"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard and Mouse"",
+                    ""action"": ""SwitchWeapon"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -464,15 +540,19 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         m_Ninja_Reload = m_Ninja.FindAction("Reload", throwIfNotFound: true);
         m_Ninja_GraplingHook = m_Ninja.FindAction("Grapling Hook", throwIfNotFound: true);
         m_Ninja_Crouch = m_Ninja.FindAction("Crouch", throwIfNotFound: true);
+        m_Ninja_PauseMenu = m_Ninja.FindAction("PauseMenu", throwIfNotFound: true);
+        m_Ninja_SwitchWeapon = m_Ninja.FindAction("SwitchWeapon", throwIfNotFound: true);
         // Knight
         m_Knight = asset.FindActionMap("Knight", throwIfNotFound: true);
         m_Knight_Look = m_Knight.FindAction("Look", throwIfNotFound: true);
         m_Knight_Movement = m_Knight.FindAction("Movement", throwIfNotFound: true);
         m_Knight_Sprint = m_Knight.FindAction("Sprint", throwIfNotFound: true);
-        m_Knight_JetpackDash = m_Knight.FindAction("Jetpack Dash", throwIfNotFound: true);
+        m_Knight_JetpackDash = m_Knight.FindAction("JetpackDash", throwIfNotFound: true);
         m_Knight_Jump = m_Knight.FindAction("Jump", throwIfNotFound: true);
         m_Knight_JetpackJump = m_Knight.FindAction("Jetpack Jump", throwIfNotFound: true);
         m_Knight_Shoot = m_Knight.FindAction("Shoot", throwIfNotFound: true);
+        m_Knight_PauseMenu = m_Knight.FindAction("PauseMenu", throwIfNotFound: true);
+        m_Knight_SwitchWeapon = m_Knight.FindAction("SwitchWeapon", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -531,6 +611,8 @@ public class @PlayerInput : IInputActionCollection, IDisposable
     private readonly InputAction m_Ninja_Reload;
     private readonly InputAction m_Ninja_GraplingHook;
     private readonly InputAction m_Ninja_Crouch;
+    private readonly InputAction m_Ninja_PauseMenu;
+    private readonly InputAction m_Ninja_SwitchWeapon;
     public struct NinjaActions
     {
         private @PlayerInput m_Wrapper;
@@ -544,6 +626,8 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         public InputAction @Reload => m_Wrapper.m_Ninja_Reload;
         public InputAction @GraplingHook => m_Wrapper.m_Ninja_GraplingHook;
         public InputAction @Crouch => m_Wrapper.m_Ninja_Crouch;
+        public InputAction @PauseMenu => m_Wrapper.m_Ninja_PauseMenu;
+        public InputAction @SwitchWeapon => m_Wrapper.m_Ninja_SwitchWeapon;
         public InputActionMap Get() { return m_Wrapper.m_Ninja; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -580,6 +664,12 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                 @Crouch.started -= m_Wrapper.m_NinjaActionsCallbackInterface.OnCrouch;
                 @Crouch.performed -= m_Wrapper.m_NinjaActionsCallbackInterface.OnCrouch;
                 @Crouch.canceled -= m_Wrapper.m_NinjaActionsCallbackInterface.OnCrouch;
+                @PauseMenu.started -= m_Wrapper.m_NinjaActionsCallbackInterface.OnPauseMenu;
+                @PauseMenu.performed -= m_Wrapper.m_NinjaActionsCallbackInterface.OnPauseMenu;
+                @PauseMenu.canceled -= m_Wrapper.m_NinjaActionsCallbackInterface.OnPauseMenu;
+                @SwitchWeapon.started -= m_Wrapper.m_NinjaActionsCallbackInterface.OnSwitchWeapon;
+                @SwitchWeapon.performed -= m_Wrapper.m_NinjaActionsCallbackInterface.OnSwitchWeapon;
+                @SwitchWeapon.canceled -= m_Wrapper.m_NinjaActionsCallbackInterface.OnSwitchWeapon;
             }
             m_Wrapper.m_NinjaActionsCallbackInterface = instance;
             if (instance != null)
@@ -611,6 +701,12 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                 @Crouch.started += instance.OnCrouch;
                 @Crouch.performed += instance.OnCrouch;
                 @Crouch.canceled += instance.OnCrouch;
+                @PauseMenu.started += instance.OnPauseMenu;
+                @PauseMenu.performed += instance.OnPauseMenu;
+                @PauseMenu.canceled += instance.OnPauseMenu;
+                @SwitchWeapon.started += instance.OnSwitchWeapon;
+                @SwitchWeapon.performed += instance.OnSwitchWeapon;
+                @SwitchWeapon.canceled += instance.OnSwitchWeapon;
             }
         }
     }
@@ -626,6 +722,8 @@ public class @PlayerInput : IInputActionCollection, IDisposable
     private readonly InputAction m_Knight_Jump;
     private readonly InputAction m_Knight_JetpackJump;
     private readonly InputAction m_Knight_Shoot;
+    private readonly InputAction m_Knight_PauseMenu;
+    private readonly InputAction m_Knight_SwitchWeapon;
     public struct KnightActions
     {
         private @PlayerInput m_Wrapper;
@@ -637,6 +735,8 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         public InputAction @Jump => m_Wrapper.m_Knight_Jump;
         public InputAction @JetpackJump => m_Wrapper.m_Knight_JetpackJump;
         public InputAction @Shoot => m_Wrapper.m_Knight_Shoot;
+        public InputAction @PauseMenu => m_Wrapper.m_Knight_PauseMenu;
+        public InputAction @SwitchWeapon => m_Wrapper.m_Knight_SwitchWeapon;
         public InputActionMap Get() { return m_Wrapper.m_Knight; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -667,6 +767,12 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                 @Shoot.started -= m_Wrapper.m_KnightActionsCallbackInterface.OnShoot;
                 @Shoot.performed -= m_Wrapper.m_KnightActionsCallbackInterface.OnShoot;
                 @Shoot.canceled -= m_Wrapper.m_KnightActionsCallbackInterface.OnShoot;
+                @PauseMenu.started -= m_Wrapper.m_KnightActionsCallbackInterface.OnPauseMenu;
+                @PauseMenu.performed -= m_Wrapper.m_KnightActionsCallbackInterface.OnPauseMenu;
+                @PauseMenu.canceled -= m_Wrapper.m_KnightActionsCallbackInterface.OnPauseMenu;
+                @SwitchWeapon.started -= m_Wrapper.m_KnightActionsCallbackInterface.OnSwitchWeapon;
+                @SwitchWeapon.performed -= m_Wrapper.m_KnightActionsCallbackInterface.OnSwitchWeapon;
+                @SwitchWeapon.canceled -= m_Wrapper.m_KnightActionsCallbackInterface.OnSwitchWeapon;
             }
             m_Wrapper.m_KnightActionsCallbackInterface = instance;
             if (instance != null)
@@ -692,6 +798,12 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                 @Shoot.started += instance.OnShoot;
                 @Shoot.performed += instance.OnShoot;
                 @Shoot.canceled += instance.OnShoot;
+                @PauseMenu.started += instance.OnPauseMenu;
+                @PauseMenu.performed += instance.OnPauseMenu;
+                @PauseMenu.canceled += instance.OnPauseMenu;
+                @SwitchWeapon.started += instance.OnSwitchWeapon;
+                @SwitchWeapon.performed += instance.OnSwitchWeapon;
+                @SwitchWeapon.canceled += instance.OnSwitchWeapon;
             }
         }
     }
@@ -725,6 +837,8 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         void OnReload(InputAction.CallbackContext context);
         void OnGraplingHook(InputAction.CallbackContext context);
         void OnCrouch(InputAction.CallbackContext context);
+        void OnPauseMenu(InputAction.CallbackContext context);
+        void OnSwitchWeapon(InputAction.CallbackContext context);
     }
     public interface IKnightActions
     {
@@ -735,5 +849,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         void OnJump(InputAction.CallbackContext context);
         void OnJetpackJump(InputAction.CallbackContext context);
         void OnShoot(InputAction.CallbackContext context);
+        void OnPauseMenu(InputAction.CallbackContext context);
+        void OnSwitchWeapon(InputAction.CallbackContext context);
     }
 }

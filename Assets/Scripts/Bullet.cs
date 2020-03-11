@@ -17,6 +17,7 @@ public class Bullet : MonoBehaviour
         }
         if(collision.gameObject.layer != 10)
         {
+            gameObject.GetComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
             gameObject.GetComponent<Rigidbody>().isKinematic = true;
             gameObject.transform.parent = collision.gameObject.transform;
         }

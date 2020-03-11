@@ -8,6 +8,7 @@ public class KnightPlayerMovement : MonoBehaviour
     [SerializeField] Transform groundCheck;
     [SerializeField] LayerMask groundMask;
     private AudioManager audioManager;
+    private PauseMenu pauseMenu;
     private Vector3 velocity;
     private Vector3 movement;
     private Vector3 lastMove;
@@ -41,6 +42,7 @@ public class KnightPlayerMovement : MonoBehaviour
         jetpackFuel = maxJetpackFuel;
 
         audioManager = FindObjectOfType<AudioManager>();
+        pauseMenu = FindObjectOfType<PauseMenu>();
     }
 
     void Update()
@@ -50,6 +52,10 @@ public class KnightPlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
+        if(PauseMenu.GameIsPaused)
+        {
+            return;
+        }
         velocity.y += gravity * Time.deltaTime;
 
         Move();
@@ -228,5 +234,10 @@ public class KnightPlayerMovement : MonoBehaviour
         {
             resetFall = false;
         }
+    }
+
+    public void Pause(InputAction.CallbackContext context)
+    {
+        pauseMenu.MenuInput();
     }
 }

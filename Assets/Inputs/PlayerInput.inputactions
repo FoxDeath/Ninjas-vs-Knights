@@ -76,6 +76,22 @@
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "PauseMenu",
+                    "type": "Button",
+                    "id": "7bddba4d-f239-433c-90a5-a0818b51b4f5",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "SwitchWeapon",
+                    "type": "Value",
+                    "id": "2d82f41a-d418-47d2-b863-dc6db34d7571",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -221,6 +237,28 @@
                     "action": "Crouch",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "72414897-3f78-460b-b543-7303002c264d",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard and Mouse",
+                    "action": "PauseMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a1a826f7-144e-4db0-a669-69d5ff4a9511",
+                    "path": "<Mouse>/scroll",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard and Mouse",
+                    "action": "SwitchWeapon",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -253,7 +291,7 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Jetpack Dash",
+                    "name": "JetpackDash",
                     "type": "Button",
                     "id": "3dd231e9-759b-4ebc-90db-879e87f7c9d9",
                     "expectedControlType": "",
@@ -281,6 +319,22 @@
                     "type": "Button",
                     "id": "f55b3568-3a37-4acc-8116-feb32b73bab9",
                     "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "PauseMenu",
+                    "type": "Button",
+                    "id": "42ee6374-1e9b-494c-b053-e59af83cb8c1",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "SwitchWeapon",
+                    "type": "Value",
+                    "id": "830f39fc-f603-49a2-a7c9-77763e89440a",
+                    "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": ""
                 }
@@ -403,7 +457,29 @@
                     "interactions": "MultiTap(tapDelay=0.2)",
                     "processors": "",
                     "groups": "Keyboard and Mouse",
-                    "action": "Jetpack Dash",
+                    "action": "JetpackDash",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8ee7f151-61fe-4ec0-b48b-85f827ac354c",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard and Mouse",
+                    "action": "PauseMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e3d03654-08cf-4fb0-a46d-0f141b8a841f",
+                    "path": "<Mouse>/scroll",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard and Mouse",
+                    "action": "SwitchWeapon",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

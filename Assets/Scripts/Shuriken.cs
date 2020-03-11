@@ -2,11 +2,13 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Shoot : MonoBehaviour
+public class Shuriken :  MonoBehaviour, IWeapon
 {
     [SerializeField] GameObject bullet;
     [SerializeField] GameObject bulletEmiter;
     [SerializeField] Animator animator;
+
+    private AmmoCounter ammoCounter;
     
     [SerializeField] float speed = 100f;
     [SerializeField] float reloadTime = 2f;
@@ -23,6 +25,9 @@ public class Shoot : MonoBehaviour
     void Start()
     {
         currentAmmo = maxAmmo;
+        ammoCounter = (AmmoCounter)FindObjectOfType(typeof(AmmoCounter));
+        ammoCounter.SetMaxAmmo(maxAmmo);
+        ammoCounter.SetCurrentAmmo(currentAmmo);
     }
 
     public void FireInput(InputAction.CallbackContext context)
@@ -41,6 +46,11 @@ public class Shoot : MonoBehaviour
                 return;
             }
         }
+    }
+
+    void Update()
+    {
+        ammoCounter.SetCurrentAmmo(currentAmmo);
     }
 
     void Fire()

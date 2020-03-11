@@ -23,11 +23,14 @@ public class MouseLook : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        xRotation -= lookY;
-        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
+        if(!PauseMenu.GameIsPaused)
+        {
+            xRotation -= lookY;
+            xRotation = Mathf.Clamp(xRotation, -90f, 90f);
 
         transform.localRotation = Quaternion.Euler(xRotation, 0f, zRotation);
         playerBody.Rotate(Vector2.up, lookX);
+        }
     }
 
     public void LookInput(InputAction.CallbackContext context)
