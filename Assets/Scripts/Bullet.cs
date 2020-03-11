@@ -15,7 +15,7 @@ public class Bullet : MonoBehaviour
         {
             target.TakeDamage(damage);
         }
-        if(collision.gameObject.layer != 9)
+        if(collision.gameObject.layer != 10)
         {
             gameObject.GetComponent<Rigidbody>().isKinematic = true;
             gameObject.transform.parent = collision.gameObject.transform;

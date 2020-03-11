@@ -12,23 +12,27 @@ public class NinjaPlayerMovement : MonoBehaviour
     private Vector3 velocity;
     private Vector3 move;
     private Vector3 lastMove;
+    private Vector2 normal;
 
-    [SerializeField] float jumpHeight;
-    [SerializeField] float speed;
-    [SerializeField] float fallDecrease;
+    [SerializeField] float jumpHeight = 5f;
+    [SerializeField] float speed = 10f;
+    [SerializeField] float fallDecrease = 2f;
+    [SerializeField] float wallJupmForce = 20f;
     private float horizontal;
     private float vertical;
-    private float gravity = -11f;
+    private float gravity = -25f;
     private float groungDistance = 0.4f;
 
     public bool isGrounded;
-    private bool doubleJumped;
+    private bool doubleJumped = false;
     private bool resetFall;
     private bool edgeHanging;
     private bool edgeClimbing;
     private bool sliding;
     private bool crouching;
     private bool sprinting;
+    private bool canWallJump;
+    public bool wallRun;
 
     private void Start()
     {
@@ -67,6 +71,29 @@ public class NinjaPlayerMovement : MonoBehaviour
         {
             controller.Move(velocity * Time.deltaTime);
         }
+
+        if (wallRun)
+        {
+            gravity = -17f;
+            fallDecrease = 0.1f;
+            canWallJump = true;
+            doubleJumped = false;
+        }
+        else
+        {
+            gravity = -25f;
+            fallDecrease = 0.4f;
+            canWallJump = false;
+        }
+
+        if(velocity.x > 0f)
+        {
+            velocity.x -= wallJupmForce * Time.deltaTime;
+        }
+        else if(velocity.x < 0f)
+        {
+            velocity.x += wallJupmForce * Time.deltaTime;
+        }
     }
 
 
@@ -98,20 +125,26 @@ public class NinjaPlayerMovement : MonoBehaviour
     {
         if (context.action.phase == InputActionPhase.Performed)
         {
-            if (isGrounded)
-            {
-                Jump();
-            }
-            else if (edgeHanging)
+            
+            if (edgeHanging)
             {
                 edgeClimb.StartEdgeClimb();
+            }
+            else
+            {
+                Jump();
             }
         }
     }
 
     private void Jump()
     {
-        if (isGrounded)
+        if (canWallJump)
+        {
+            velocity.x = wallJupmForce * normal.x;
+            velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+        }
+        else if (isGrounded)
         {
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
@@ -216,5 +249,10 @@ public class NinjaPlayerMovement : MonoBehaviour
     public bool GetEdgeHanging()
     {
         return edgeHanging;
+    }
+
+    void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        normal = hit.normal;
     }
 }

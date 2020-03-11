@@ -199,6 +199,7 @@ GameObject:
   - component: {fileID: 106554078488157421}
   - component: {fileID: 237782569}
   - component: {fileID: 1588346156}
+  - component: {fileID: 1699428271}
   m_Layer: 10
   m_Name: NinjaPlayer
   m_TagString: Untagged
@@ -241,9 +242,11 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   jumpHeight: 5
-  speed: 5
+  speed: 10
   fallDecrease: 2
+  wallJupmForce: 20
   isGrounded: 0
+  wallRun: 0
 --- !u!143 &2056603104854673348
 CharacterController:
   m_ObjectHideFlags: 0
@@ -529,6 +532,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1699428271
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2056603104854673355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e91e4cfd50ada8649b747a50ea312a40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2056603105151804418
 GameObject:
   m_ObjectHideFlags: 0
@@ -659,6 +674,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerBody: {fileID: 2056603104854673351}
   mouseSensitivity: 10
+  zRotation: 0
 --- !u!1001 &992728809504572315
 PrefabInstance:
   m_ObjectHideFlags: 0
