@@ -12,7 +12,8 @@ public class MouseLook : MonoBehaviour
     private float lookX;
     private float lookY;
     private float xRotation;
-    public float zRotation;
+    
+    [HideInInspector] public float zRotation;
 
     // Start is called before the first frame update
     void Start()

@@ -160,7 +160,7 @@ MonoBehaviour:
   bullet: {fileID: 6990920724253823357, guid: e7ae3f4da2298f84a907dc94ebbdbb31, type: 3}
   bulletEmiter: {fileID: 2668571266200572177}
   animator: {fileID: 2668571267398998091}
-  speed: 400
+  speed: 4000
   reloadTime: 2
   fireRate: 15
   spread: 0.1

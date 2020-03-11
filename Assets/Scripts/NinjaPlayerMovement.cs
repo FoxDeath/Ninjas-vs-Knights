@@ -175,12 +175,12 @@ public class NinjaPlayerMovement : MonoBehaviour
     {
         if (vertical > 0)
         {
-            if (context.action.phase == InputActionPhase.Started)
+            if (context.action.phase == InputActionPhase.Started && !sprinting)
             {
                 sprinting = true;
                 speed *= 1.6f;
             }
-            else if (context.action.phase == InputActionPhase.Canceled)
+            else if (context.action.phase == InputActionPhase.Canceled && sprinting)
             {
                 sprinting = false;
                 speed /= 1.6f;
