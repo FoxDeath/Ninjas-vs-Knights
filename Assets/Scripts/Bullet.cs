@@ -2,8 +2,13 @@
 
 public class Bullet : MonoBehaviour
 {
+    private Rigidbody rigidBody;
     [SerializeField] float damage = 10f;
 
+    void Awake()
+    {
+        rigidBody = GetComponent<Rigidbody>();
+    }
     private void OnCollisionEnter(Collision collision)
     {
         if(collision.gameObject.GetComponent<Bullet>())
@@ -17,9 +22,10 @@ public class Bullet : MonoBehaviour
         }
         if(collision.gameObject.layer != 10)
         {
-            gameObject.GetComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
-            gameObject.GetComponent<Rigidbody>().isKinematic = true;
+            rigidBody.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
+            rigidBody.isKinematic = true;
             gameObject.transform.parent = collision.gameObject.transform;
+            Destroy(gameObject, 2f);
         }
     }
 }

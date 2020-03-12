@@ -60,7 +60,7 @@ public class Shuriken :  MonoBehaviour, IWeapon
         shootDirection.y += Random.Range(-spread, spread);
 
         GameObject instantiateBullet = Instantiate(bullet, bulletEmiter.transform.position, bulletEmiter.transform.rotation);
-        Rigidbody temporaryRigidbody = instantiateBullet.GetComponent<Rigidbody>();
+        Rigidbody temporaryRigidbody = instantiateBullet.GetComponentInChildren<Rigidbody>();
 
         if (!isScoped)
         {
