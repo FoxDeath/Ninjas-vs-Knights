@@ -32,6 +32,7 @@ public class KnightPlayerMovement : MonoBehaviour
     private bool resetFall;
     private bool jetpack;
     private bool canDash = true;
+    private bool sprinting;
     
 
     private void Start()
@@ -47,6 +48,14 @@ public class KnightPlayerMovement : MonoBehaviour
 
     void Update()
     {
+        if(!isGrounded)
+        {
+            isGrounded = Physics.CheckSphere(groundCheck.position, groungDistance, groundMask);
+            if(isGrounded)
+            {
+                audioManager.Play("Falling");
+            }
+        }
         isGrounded = Physics.CheckSphere(groundCheck.position, groungDistance, groundMask);
     }
 
@@ -119,6 +128,7 @@ public class KnightPlayerMovement : MonoBehaviour
     {
         if (isGrounded)
         {
+            audioManager.Play("Jump");
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
     }
@@ -179,13 +189,15 @@ public class KnightPlayerMovement : MonoBehaviour
     {
         if (vertical > 0)
         {
-            if (context.action.phase == InputActionPhase.Performed)
+            if (context.action.phase == InputActionPhase.Performed && !sprinting)
             {
                 audioManager.SetPitch("Walking", 2);
+                sprinting = true;
                 speed *= 1.6f;
             }
-            else if (context.action.phase == InputActionPhase.Canceled)
+            else if (context.action.phase == InputActionPhase.Canceled && sprinting)
             {
+                sprinting = false;
                 audioManager.SetPitch("Walking", 1);
                 speed /= 1.6f;
             }

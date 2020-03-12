@@ -3,22 +3,7 @@ guid: dce138c9da3a2004da36036826c4a3ea
 ModelImporter:
   serializedVersion: 19300
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Barrel - Black
-    second: {fileID: 2100000, guid: 222f1880146c16c4d9d994c434e13c9b, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Body - Dark White
-    second: {fileID: 2100000, guid: 3fa6c016e1f00b242970d4df443f9f46, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Grip - Brown
-    second: {fileID: 2100000, guid: 3af5513266ff8e947856c148f077594f, type: 2}
+  externalObjects: {}
   materials:
     materialImportMode: 1
     materialName: 0

@@ -33,10 +33,13 @@ public class EdgeClimb : MonoBehaviour
         mainCamera.gameObject.SetActive(false);
 
         anim.SetTrigger("EdgeClimb");
-        playerMovement.SetEdgeHanging(false);
-        playerMovement.SetEdgeClimbing(true);
+
+        FindObjectOfType<AudioManager>().Play("Climb");
+
+        playerMovement.edgeHanging = false;
+        playerMovement.edgeClimbing = true;
         yield return new WaitForSeconds(1f);
-        playerMovement.SetEdgeClimbing(false);
+        playerMovement.edgeClimbing = false;
 
         mainCamera.gameObject.SetActive(true);
         parkourCamera.gameObject.SetActive(false);

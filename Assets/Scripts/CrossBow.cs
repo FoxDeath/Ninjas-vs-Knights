@@ -15,6 +15,7 @@ public class CrossBow : MonoBehaviour, IWeapon
     [SerializeField] LayerMask layerMask;
 
     private AmmoCounter ammoCounter;
+    private Quaternion defaultRotation;
 
     private float nextTimeToFire = 0f;
 
@@ -23,6 +24,8 @@ public class CrossBow : MonoBehaviour, IWeapon
         ammoCounter = (AmmoCounter)FindObjectOfType(typeof(AmmoCounter));
         ammoCounter.SetMaxAmmo(1);
         ammoCounter.SetCurrentAmmo(1);
+
+        defaultRotation = trailEffect.transform.localRotation;
     }
 
     void Update()
@@ -67,7 +70,7 @@ public class CrossBow : MonoBehaviour, IWeapon
         }
         else
         {
-            trailEffect.transform.rotation = new Quaternion();
+            trailEffect.transform.localRotation = defaultRotation;
         }
         trailEffect.Play();
 

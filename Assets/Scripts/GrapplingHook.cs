@@ -9,6 +9,7 @@ public class GrapplingHook : MonoBehaviour
     [SerializeField] GameObject hook;
     [SerializeField] GameObject hookHolder;
     [SerializeField] GameObject player;
+    private AudioManager audioManager;
 
     private LineRenderer rope;
     [SerializeField] float hookTravelSpeed = 40f;
@@ -19,7 +20,11 @@ public class GrapplingHook : MonoBehaviour
     [SerializeField] float maxDistance = 20f;
     private float currentDistance;
 
-    // Update is called once per frame
+    void Start()
+    {
+        audioManager = FindObjectOfType<AudioManager>();
+    }
+    
     void FixedUpdate()
     {
         Hook();
@@ -50,6 +55,11 @@ public class GrapplingHook : MonoBehaviour
 
     public void HookInput(InputAction.CallbackContext context)
     {
+        if(!fired && context.action.phase == InputActionPhase.Started)
+        { 
+            audioManager.Play("GrapplingShooting");
+        }
+
         fired = true;
         if (context.canceled)
         {
