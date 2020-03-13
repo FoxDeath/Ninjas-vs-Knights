@@ -9,8 +9,14 @@ public class GrapplingHookMovement : MonoBehaviour
     [SerializeField] CharacterController controller;
     [SerializeField] GameObject hook;
     [SerializeField] GameObject hookHolder;
+    private AudioManager audioManager;
     public bool isHooked;
     [SerializeField] float hookSpeed = 10f;
+
+    void Start()
+    {
+        audioManager = FindObjectOfType<AudioManager>();
+    }
 
     void FixedUpdate()
     {
@@ -22,6 +28,10 @@ public class GrapplingHookMovement : MonoBehaviour
         ref Vector3 velocity = ref GetComponent<NinjaPlayerMovement>().GetVelocityByReference();
         if (isHooked)
         {
+            if(!audioManager.IsPlaying("GrapplingHooking"))
+            {
+                audioManager.Play("GrapplingHooking");
+            }
             Vector3 hookDir = (hook.transform.position - transform.position) / hookSpeed;
             velocity += hookDir;
         }
@@ -29,6 +39,10 @@ public class GrapplingHookMovement : MonoBehaviour
         {
             velocity.x = 0f;
             velocity.z = 0f;
+        }
+        else
+        {
+            audioManager.Stop("GrapplingHooking");
         }
     }
 

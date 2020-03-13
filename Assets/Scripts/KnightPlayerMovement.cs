@@ -7,6 +7,7 @@ public class KnightPlayerMovement : MonoBehaviour
     [SerializeField] CharacterController controller;
     [SerializeField] Transform groundCheck;
     [SerializeField] LayerMask groundMask;
+    [SerializeField] Camera fpsCamera;
     private AudioManager audioManager;
     private PauseMenu pauseMenu;
     private Vector3 velocity;
@@ -32,6 +33,9 @@ public class KnightPlayerMovement : MonoBehaviour
     private bool resetFall;
     private bool jetpack;
     private bool canDash = true;
+    private bool dashing;
+    private bool sprinting;
+    private bool jetPacking;
     
 
     private void Start()
@@ -47,6 +51,14 @@ public class KnightPlayerMovement : MonoBehaviour
 
     void Update()
     {
+        if(!isGrounded)
+        {
+            isGrounded = Physics.CheckSphere(groundCheck.position, groungDistance, groundMask);
+            if(isGrounded)
+            {
+                audioManager.Play("Falling");
+            }
+        }
         isGrounded = Physics.CheckSphere(groundCheck.position, groungDistance, groundMask);
     }
 
@@ -119,6 +131,7 @@ public class KnightPlayerMovement : MonoBehaviour
     {
         if (isGrounded)
         {
+            audioManager.Play("Jump");
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
     }
@@ -132,11 +145,19 @@ public class KnightPlayerMovement : MonoBehaviour
         else if(context.action.phase == InputActionPhase.Canceled)
         {
             jetpack = false;
+            
+            if(jetPacking)
+            {
+                speed = speed / 1.5f;
+            }
+            
+            jetPacking = false;
         }
     }
     
     void JetPackJump()
     {
+        // Observer pattern
         SendMessage("SetSliderValue", jetpackFuel/maxJetpackFuel);
         if(!jetpack)
         {
@@ -154,20 +175,39 @@ public class KnightPlayerMovement : MonoBehaviour
         }
         else if(jetpackFuel > 0f)
         {
+            if(!jetPacking)
+            {
+                speed = speed * 1.5f;
+            }
+
+            jetPacking = true;
+
             if(!audioManager.IsPlaying("Jetpack"))
             {
                 audioManager.Play("Jetpack");
             }
-        jetpackFuel -= Time.deltaTime;
-        currentForce += Time.deltaTime/10f;
+
+            jetpackFuel -= Time.deltaTime;
+            currentForce += Time.deltaTime/10f;
+
             if(currentForce > 1f)
             {
                 currentForce = 1f;
             }
-        velocity.y = Mathf.Sqrt(jetpackForce * -2f * gravity * currentForce);
+
+            if(!dashing)
+            {
+                velocity.y = Mathf.Sqrt(jetpackForce * -2f * gravity * currentForce);
+            }
         }
         else if(jetpackFuel <= 0f)
         {
+            if(jetPacking)
+            {
+                speed = speed / 1.5f;
+            }
+            
+            jetPacking = false;
             if(audioManager.IsPlaying("Jetpack"))
             {
                 audioManager.Stop("Jetpack");
@@ -179,13 +219,15 @@ public class KnightPlayerMovement : MonoBehaviour
     {
         if (vertical > 0)
         {
-            if (context.action.phase == InputActionPhase.Performed)
+            if (context.action.phase == InputActionPhase.Performed && !sprinting)
             {
                 audioManager.SetPitch("Walking", 2);
+                sprinting = true;
                 speed *= 1.6f;
             }
-            else if (context.action.phase == InputActionPhase.Canceled)
+            else if (context.action.phase == InputActionPhase.Canceled && sprinting)
             {
+                sprinting = false;
                 audioManager.SetPitch("Walking", 1);
                 speed /= 1.6f;
             }
@@ -202,26 +244,68 @@ public class KnightPlayerMovement : MonoBehaviour
 
     IEnumerator Dash()
     {
-        canDash = false;
-        SendMessage("SetSliderColour", Color.red);
+        if(!jetpack && isGrounded)
+        {
+            canDash = false;
+            dashing = true;
+            SendMessage("SetSliderColour", Color.red);
 
-        audioManager.Play("Jetpack Dash");
+            audioManager.Play("Jetpack Dash");
 
-        float oldVertical = vertical;
-        float oldHorizontal = horizontal;
+            float oldVertical = vertical;
+            float oldHorizontal = horizontal;
 
-        vertical = dashForce * movementInput.y;
-        horizontal = dashForce * movementInput.x;
+            vertical = dashForce * movementInput.y;
+            horizontal = dashForce * movementInput.x;
 
-        yield return new WaitForSeconds(0.2f);
-        
-        vertical = oldVertical;
-        horizontal = oldHorizontal;
+            yield return new WaitForSeconds(0.4f);
+            
+            dashing = false;
 
-        yield return new WaitForSeconds(2f);
+            vertical = oldVertical;
+            horizontal = oldHorizontal;
 
-        canDash = true;
-        SendMessage("SetSliderColour", Color.green);
+            yield return new WaitForSeconds(2f);
+
+            canDash = true;
+            SendMessage("SetSliderColour", Color.green);
+        }
+        else if(!isGrounded)
+        {
+            canDash = false;
+            dashing = true;
+
+            SendMessage("SetSliderColour", Color.red);
+
+            audioManager.Play("Jetpack Dash");
+
+            float oldVerticalX = this.vertical;
+            float oldVerticalY = this.horizontal;
+            float oldHorizontal = this.velocity.y;
+            float oldGravity = this.gravity;
+
+            Vector3 localForward = transform.worldToLocalMatrix.MultiplyVector(fpsCamera.transform.forward);
+
+            vertical = dashForce * localForward.z;
+            horizontal = dashForce * localForward.x;
+
+            gravity = 0f;
+            velocity.y = dashForce * localForward.y;
+
+            yield return new WaitForSeconds(0.4f);
+            
+            dashing = false;
+
+            vertical = oldVerticalX;
+            horizontal = oldVerticalY;
+            velocity.y = oldHorizontal;
+            gravity = oldGravity;
+
+            yield return new WaitForSeconds(2f);
+
+            canDash = true;
+            SendMessage("SetSliderColour", Color.green);   
+        }
     }
 
     private void Fall()

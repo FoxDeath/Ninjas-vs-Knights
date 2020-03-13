@@ -2,14 +2,15 @@
 
 public class Bullet : MonoBehaviour
 {
+    private Rigidbody rigidBody;
     [SerializeField] float damage = 10f;
 
+    void Awake()
+    {
+        rigidBody = GetComponent<Rigidbody>();
+    }
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.GetComponent<Bullet>())
-        {
-            return;
-        }
         Target target = collision.gameObject.transform.GetComponent<Target>();
         if (target)
         {
@@ -17,9 +18,11 @@ public class Bullet : MonoBehaviour
         }
         if(collision.gameObject.layer != 10)
         {
-            gameObject.GetComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
-            gameObject.GetComponent<Rigidbody>().isKinematic = true;
+            FindObjectOfType<AudioManager>().Play("ShurikenHit", GetComponent<AudioSource>());
+            rigidBody.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
+            rigidBody.isKinematic = true;
             gameObject.transform.parent = collision.gameObject.transform;
+            Destroy(gameObject, 2f);
         }
     }
 }

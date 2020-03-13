@@ -7,6 +7,7 @@ public class Shuriken :  MonoBehaviour, IWeapon
     [SerializeField] GameObject bullet;
     [SerializeField] GameObject bulletEmiter;
     [SerializeField] Animator animator;
+    private AudioManager audioManager;
 
     private AmmoCounter ammoCounter;
     
@@ -24,6 +25,7 @@ public class Shuriken :  MonoBehaviour, IWeapon
 
     void Start()
     {
+        audioManager = FindObjectOfType<AudioManager>();
         currentAmmo = maxAmmo;
         ammoCounter = (AmmoCounter)FindObjectOfType(typeof(AmmoCounter));
         ammoCounter.SetMaxAmmo(maxAmmo);
@@ -55,12 +57,14 @@ public class Shuriken :  MonoBehaviour, IWeapon
 
     void Fire()
     {
+        audioManager.Play("ShurikenShoot");
+
         Vector3 shootDirection = bulletEmiter.transform.forward;
         shootDirection.x += Random.Range(-spread, spread);
         shootDirection.y += Random.Range(-spread, spread);
 
         GameObject instantiateBullet = Instantiate(bullet, bulletEmiter.transform.position, bulletEmiter.transform.rotation);
-        Rigidbody temporaryRigidbody = instantiateBullet.GetComponent<Rigidbody>();
+        Rigidbody temporaryRigidbody = instantiateBullet.GetComponentInChildren<Rigidbody>();
 
         if (!isScoped)
         {
@@ -103,6 +107,8 @@ public class Shuriken :  MonoBehaviour, IWeapon
     IEnumerator Reloading()
     {
         isReloading = true;
+        audioManager.Play("Reload");
+
 
         animator.SetBool("Reloading", true);
         yield return new WaitForSeconds(reloadTime - .25f);

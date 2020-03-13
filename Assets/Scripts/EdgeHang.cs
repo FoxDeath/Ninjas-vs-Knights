@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class EdgeHang : MonoBehaviour
 {
+    private AudioManager audioManager;
+
     public bool useIK; //used for future animations and shit
     public bool handIK;
     public bool footIK;
@@ -17,6 +19,11 @@ public class EdgeHang : MonoBehaviour
     public Quaternion footRotation;
     public Quaternion footRotationOffset;
     public NinjaPlayerMovement playerMovement;
+
+    void Start()
+    {
+        audioManager = FindObjectOfType<AudioManager>();
+    }
 
     void FixedUpdate()
     {
@@ -53,11 +60,15 @@ public class EdgeHang : MonoBehaviour
         {
             if (handIK && footIK)
             {
-                playerMovement.SetEdgeHanging(true);
+                if(!playerMovement.edgeHanging)
+                {       
+                    audioManager.Play("EdgeHang");
+                }
+                playerMovement.edgeHanging = true;
             }
             else
             {
-                playerMovement.SetEdgeHanging(false);
+                playerMovement.edgeHanging = false;
             }
         }
     }

@@ -39,7 +39,7 @@ public class AudioManager : MonoBehaviour
         {
             return;
         }
-        Sound s = Array.Find(sounds, sound => sound.name == name);
+        Sound s = Array.Find(sounds, sound => sound.name.Equals(name));
         if(s == null)
         {
             return;

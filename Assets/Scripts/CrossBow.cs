@@ -10,7 +10,6 @@ public class CrossBow : MonoBehaviour, IWeapon
 
     [SerializeField] Camera fpsCam;
     [SerializeField] GameObject player;
-    [SerializeField] ParticleSystem trailEffect;
     [SerializeField] GameObject arrowPrefab;
     [SerializeField] LayerMask layerMask;
 
@@ -62,14 +61,7 @@ public class CrossBow : MonoBehaviour, IWeapon
             {
                 target.TakeDamage(damage);
             }
-
-            trailEffect.transform.rotation = Quaternion.LookRotation((hit.point - trailEffect.transform.position).normalized);
         }
-        else
-        {
-            trailEffect.transform.rotation = new Quaternion();
-        }
-        trailEffect.Play();
 
         if(hit.rigidbody)
         {
@@ -79,7 +71,7 @@ public class CrossBow : MonoBehaviour, IWeapon
         
         if(hit.transform && hit.transform != player.transform)
         {
-            GameObject arrow = Instantiate(arrowPrefab, hit.point, trailEffect.transform.rotation);
+            GameObject arrow = Instantiate(arrowPrefab, hit.point, fpsCam.transform.rotation);
             arrow.transform.parent = hit.transform;
             Destroy(arrow, 2.5f);
         }
