@@ -14,7 +14,7 @@ public class NinjaPlayerMovement : MonoBehaviour
     private Vector3 move;
     private Vector3 lastMove;
     private Vector2 moveInput;
-    private Vector2 normal;
+    private Vector3 normal;
 
     [SerializeField] float jumpHeight = 5f;
     [SerializeField] float speed = 10f;
@@ -62,6 +62,7 @@ public class NinjaPlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
+
         if(PauseMenu.GameIsPaused)
         {
             return;
@@ -89,10 +90,14 @@ public class NinjaPlayerMovement : MonoBehaviour
 
         if (wallRun)
         {
-            gravity = -17f;
+            if(!canWallJump)
+            {
+                velocity.y = 10f;
+            }
+            gravity = 0f;
+            velocity.y -= 0.25f;
             fallDecrease = 0.1f;
             canWallJump = true;
-            doubleJumped = false;
         }
         else
         {
@@ -108,6 +113,15 @@ public class NinjaPlayerMovement : MonoBehaviour
         else if(velocity.x < 0f)
         {
             velocity.x += wallJupmForce * Time.deltaTime;
+        }
+
+        if(velocity.z > 0f)
+        {
+            velocity.z -= wallJupmForce * Time.deltaTime;
+        }
+        else if(velocity.z < 0f)
+        {
+            velocity.z += wallJupmForce * Time.deltaTime;
         }
     }
 
@@ -196,14 +210,15 @@ public class NinjaPlayerMovement : MonoBehaviour
         if (canWallJump)
         {
             velocity.x = wallJupmForce * normal.x;
-            velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+            velocity.z = wallJupmForce * normal.z;
+            velocity.y = Mathf.Sqrt(jumpHeight * 50f);
         }
         else if (isGrounded)
         {
             audioManager.Play("Jump");
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
-        else if (!isGrounded && !doubleJumped && !edgeClimbing)
+        else if (!isGrounded && !doubleJumped && !edgeClimbing && !wallRun)
         {
             audioManager.Play("Jump");
             doubleJumped = true;
@@ -218,11 +233,13 @@ public class NinjaPlayerMovement : MonoBehaviour
         {
             if (context.action.phase == InputActionPhase.Started && !sprinting)
             {
+                audioManager.SetPitch("Walking", 2);
                 sprinting = true;
                 speed *= 1.6f;
             }
             else if (context.action.phase == InputActionPhase.Canceled && sprinting)
             {
+                audioManager.SetPitch("Walking", 1);
                 sprinting = false;
                 speed /= 1.6f;
             }
@@ -256,21 +273,10 @@ public class NinjaPlayerMovement : MonoBehaviour
             speed /= 0.6f;
             crouching = false;
         }
-        else if (context.action.phase == InputActionPhase.Started && sprinting)
+        else if (context.action.phase == InputActionPhase.Started && sprinting && !sliding)
         {
             StartCoroutine("Sliding");
         }
-        else if (context.action.phase == InputActionPhase.Canceled && sliding)
-        {
-            EndSliding();
-        }
-    }
-
-    private void EndSliding()
-    {
-        speed /= 1.2f;
-        transform.localScale = new Vector3(1f, 1f, 1f);
-        sliding = false;
     }
 
     IEnumerator Sliding()
@@ -279,7 +285,10 @@ public class NinjaPlayerMovement : MonoBehaviour
         sliding = true;
         transform.localScale = new Vector3(1f, 0.5f, 1f);
         yield return new WaitForSeconds(0.8f);
-        EndSliding();
+        speed /= 1.2f;
+        transform.localScale = new Vector3(1f, 1f, 1f);
+        yield return new WaitForSeconds(1.53242634f);
+        sliding = false;
     }
 
     public ref Vector3 GetVelocityByReference()

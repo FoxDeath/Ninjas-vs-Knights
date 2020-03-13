@@ -18,7 +18,7 @@ public class Bullet : MonoBehaviour
         }
         if(collision.gameObject.layer != 10)
         {
-            FindObjectOfType<AudioManager>().Play("ShurikenHit");
+            FindObjectOfType<AudioManager>().Play("ShurikenHit", GetComponent<AudioSource>());
             rigidBody.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
             rigidBody.isKinematic = true;
             gameObject.transform.parent = collision.gameObject.transform;

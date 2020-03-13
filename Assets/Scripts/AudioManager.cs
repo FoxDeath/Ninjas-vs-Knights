@@ -54,8 +54,6 @@ public class AudioManager : MonoBehaviour
         }
         s.source.Play();
         s.isPlaying = true;
-
-        print("Playing: " + name);
     }
 
     public void Stop(string name)

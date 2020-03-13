@@ -26,6 +26,7 @@ public class WallRun : MonoBehaviour
 
     void WallRuning()
     {
+        // Right now you can climb up the walls by switching between looking right and left
         Physics.Raycast(transform.position, transform.right, out rightCast, 1);
         Physics.Raycast(transform.position, -transform.right, out leftCast, 1);
         Physics.Raycast(transform.position, transform.forward, out frontCast, 1);
@@ -41,16 +42,16 @@ public class WallRun : MonoBehaviour
             playerMovement.wallRun = true;
             mouseLook.zRotation = -17f;
         }
-        else if (frontCast.normal != Vector3.zero && frontCast.transform.tag == "Wall" && !playerMovement.isGrounded)
-        {
-            playerMovement.wallRun = true;
-            mouseLook.zRotation = 0f;
-        }
+        // For climbing walls while looking at them
+        // else if (frontCast.normal != Vector3.zero && frontCast.transform.tag == "Wall" && !playerMovement.isGrounded)
+        // {
+        //     playerMovement.wallRun = true;
+        //     mouseLook.zRotation = 0f;
+        // }
         else if (playerMovement.wallRun)
         {
             playerMovement.wallRun = false;
             mouseLook.zRotation = 0f;
         }
-
     }
 }

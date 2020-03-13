@@ -10,12 +10,10 @@ public class CrossBow : MonoBehaviour, IWeapon
 
     [SerializeField] Camera fpsCam;
     [SerializeField] GameObject player;
-    [SerializeField] ParticleSystem trailEffect;
     [SerializeField] GameObject arrowPrefab;
     [SerializeField] LayerMask layerMask;
 
     private AmmoCounter ammoCounter;
-    private Quaternion defaultRotation;
 
     private float nextTimeToFire = 0f;
 
@@ -24,8 +22,6 @@ public class CrossBow : MonoBehaviour, IWeapon
         ammoCounter = (AmmoCounter)FindObjectOfType(typeof(AmmoCounter));
         ammoCounter.SetMaxAmmo(1);
         ammoCounter.SetCurrentAmmo(1);
-
-        defaultRotation = trailEffect.transform.localRotation;
     }
 
     void Update()
@@ -65,14 +61,7 @@ public class CrossBow : MonoBehaviour, IWeapon
             {
                 target.TakeDamage(damage);
             }
-
-            trailEffect.transform.rotation = Quaternion.LookRotation((hit.point - trailEffect.transform.position).normalized);
         }
-        else
-        {
-            trailEffect.transform.localRotation = defaultRotation;
-        }
-        trailEffect.Play();
 
         if(hit.rigidbody)
         {
@@ -82,7 +71,7 @@ public class CrossBow : MonoBehaviour, IWeapon
         
         if(hit.transform && hit.transform != player.transform)
         {
-            GameObject arrow = Instantiate(arrowPrefab, hit.point, trailEffect.transform.rotation);
+            GameObject arrow = Instantiate(arrowPrefab, hit.point, fpsCam.transform.rotation);
             arrow.transform.parent = hit.transform;
             Destroy(arrow, 2.5f);
         }
