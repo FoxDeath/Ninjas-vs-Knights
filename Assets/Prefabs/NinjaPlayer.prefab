@@ -611,6 +611,7 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 512
+  fpsCamera: {fileID: 2056603105903442927}
   jumpHeight: 5
   speed: 10
   fallDecrease: 2

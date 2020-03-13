@@ -7,6 +7,7 @@ public class NinjaPlayerMovement : MonoBehaviour
     [SerializeField] public CharacterController controller;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundMask;
+    [SerializeField] private Camera fpsCamera;
     private PauseMenu pauseMenu;
     private AudioManager audioManager;
     private EdgeClimb edgeClimb;
@@ -34,6 +35,7 @@ public class NinjaPlayerMovement : MonoBehaviour
     private bool crouching;
     private bool sprinting;
     private bool canWallJump;
+    private bool wallJumping;
     public bool wallRun;
 
     private void Start()
@@ -62,7 +64,6 @@ public class NinjaPlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-
         if(PauseMenu.GameIsPaused)
         {
             return;
@@ -127,20 +128,20 @@ public class NinjaPlayerMovement : MonoBehaviour
 
     public void MoveInput(InputAction.CallbackContext context)
     {
-        moveInput = context.ReadValue<Vector2>();
-        horizontal = moveInput.x;
-        vertical = moveInput.y;
+            moveInput = context.ReadValue<Vector2>();
+            horizontal = moveInput.x;
+            vertical = moveInput.y;
     }
     
     private void Move()
     {
-        if (isGrounded)
+        if ((isGrounded || wallRun) && !wallJumping)
         {
             doubleJumped = false;
             move = (transform.right * horizontal + transform.forward * vertical) * speed;
             lastMove = move;
         }
-        else
+        else if(!wallJumping)
         {
             if (!edgeClimbing && !edgeHanging)
             {
@@ -160,7 +161,7 @@ public class NinjaPlayerMovement : MonoBehaviour
             }
         }
 
-        controller.Move(move * Time.deltaTime);
+            controller.Move(move * Time.deltaTime);
     }
 
     private void MoveAudio()
@@ -207,11 +208,9 @@ public class NinjaPlayerMovement : MonoBehaviour
 
     private void Jump()
     {
-        if (canWallJump)
+        if (canWallJump && !Physics.Raycast(transform.position, transform.forward, 1.5f))
         {
-            velocity.x = wallJupmForce * normal.x;
-            velocity.z = wallJupmForce * normal.z;
-            velocity.y = Mathf.Sqrt(jumpHeight * 50f);
+            StartCoroutine(WallJump());
         }
         else if (isGrounded)
         {
@@ -225,6 +224,22 @@ public class NinjaPlayerMovement : MonoBehaviour
             resetFall = true;
             velocity.y = Mathf.Sqrt(jumpHeight * -2.4f * gravity);
         }
+    }
+
+    IEnumerator WallJump()
+    {
+
+        wallJumping = true;
+
+        velocity.x = wallJupmForce * normal.x;
+        velocity.z = wallJupmForce * normal.z;
+        velocity.y = Mathf.Sqrt(jumpHeight * 50f);
+
+        move.x = lastMove.x;
+
+        yield return new WaitForSeconds(0.5f);
+
+        wallJumping = false;
     }
 
     public void SprintInput(InputAction.CallbackContext context)
