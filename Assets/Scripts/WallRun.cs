@@ -43,11 +43,11 @@ public class WallRun : MonoBehaviour
             mouseLook.zRotation = -17f;
         }
         // For climbing walls while looking at them
-        // else if (frontCast.normal != Vector3.zero && frontCast.transform.tag == "Wall" && !playerMovement.isGrounded)
-        // {
-        //     playerMovement.wallRun = true;
-        //     mouseLook.zRotation = 0f;
-        // }
+        else if (frontCast.normal != Vector3.zero && frontCast.transform.tag == "Wall" && !playerMovement.isGrounded)
+        {
+            playerMovement.wallRun = true;
+            mouseLook.zRotation = 0f;
+        }
         else if (playerMovement.wallRun)
         {
             playerMovement.wallRun = false;
