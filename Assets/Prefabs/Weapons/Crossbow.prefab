@@ -290,7 +290,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 10
-  range: 100
+  range: 500
   fireRate: 1
   pushForce: 1000
   fpsCam: {fileID: 0}
