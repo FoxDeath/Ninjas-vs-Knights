@@ -8,7 +8,7 @@ public class MouseLook : MonoBehaviour
 {
     [SerializeField] Transform playerBody;
 
-    [SerializeField] float mouseSensitivity;
+    public float mouseSensitivity;
     private float lookX;
     private float lookY;
     private float xRotation;

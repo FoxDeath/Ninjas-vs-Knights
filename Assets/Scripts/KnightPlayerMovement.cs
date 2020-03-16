@@ -17,6 +17,7 @@ public class KnightPlayerMovement : MonoBehaviour
 
     [SerializeField] float jumpHeight;
     [SerializeField] float speed;
+    private float defaultSpeed;
     [SerializeField] float dashForce;
     [SerializeField] float jetpackForce;
     [SerializeField] float maxJetpackFuel = 5f; 
@@ -44,6 +45,7 @@ public class KnightPlayerMovement : MonoBehaviour
         movement = new Vector3();
         velocity = new Vector3();
         jetpackFuel = maxJetpackFuel;
+        defaultSpeed = speed;
 
         audioManager = FindObjectOfType<AudioManager>();
         pauseMenu = FindObjectOfType<PauseMenu>();
@@ -221,14 +223,14 @@ public class KnightPlayerMovement : MonoBehaviour
         {
             if (context.action.phase == InputActionPhase.Performed && !sprinting)
             {
-                audioManager.SetPitch("Walking", 2);
+                audioManager.SetPitch("Walking", audioManager.GetPitch("Walking")*2f);
                 sprinting = true;
                 speed *= 1.6f;
             }
             else if (context.action.phase == InputActionPhase.Canceled && sprinting)
             {
                 sprinting = false;
-                audioManager.SetPitch("Walking", 1);
+                audioManager.SetPitch("Walking", audioManager.GetPitch("Walking")/2f);
                 speed /= 1.6f;
             }
         }

@@ -9,19 +9,34 @@ public class CrossBow : MonoBehaviour, IWeapon
     [SerializeField] float pushForce = 10f;
 
     [SerializeField] Camera fpsCam;
+    [SerializeField] Camera weaponCam;
     [SerializeField] GameObject player;
     [SerializeField] GameObject arrowPrefab;
     [SerializeField] LayerMask layerMask;
+    private Animator animator;
+    [SerializeField] GameObject scopeOverlay;
+    [SerializeField] GameObject gameUI;
 
     private AmmoCounter ammoCounter;
 
     private float nextTimeToFire = 0f;
+    private float scopedFOV;
+    private float[] scopedFOVs = {5f, 10f, 15f, 20f};
+    private int currentScopedFOV;
+    private float maxMouseSensitivity;
+
+    private bool isScoped;
 
     void Start()
     {
         ammoCounter = (AmmoCounter)FindObjectOfType(typeof(AmmoCounter));
         ammoCounter.SetMaxAmmo(1);
         ammoCounter.SetCurrentAmmo(1);
+
+        animator = GetComponent<Animator>();
+        currentScopedFOV = scopedFOVs.Length - 1;
+        scopedFOV = scopedFOVs[currentScopedFOV];
+        maxMouseSensitivity = fpsCam.GetComponent<MouseLook>().mouseSensitivity;
     }
 
     void Update()
@@ -74,6 +89,48 @@ public class CrossBow : MonoBehaviour, IWeapon
             GameObject arrow = Instantiate(arrowPrefab, hit.point, fpsCam.transform.rotation);
             arrow.transform.parent = hit.transform;
             Destroy(arrow, 2.5f);
+        }
+    }
+
+    public void ScopeInput(InputAction.CallbackContext context)
+    {
+        if(context.phase == InputActionPhase.Performed)
+        {
+            isScoped = !isScoped;
+            animator.SetBool("Scoped", isScoped);
+            Invoke("Scope", 0.15f);
+        }
+    }
+
+    public void ScopeZoomInput(InputAction.CallbackContext context)
+    {
+        if(context.phase == InputActionPhase.Performed)
+        {
+            if(currentScopedFOV <= 0)
+            {
+                currentScopedFOV = scopedFOVs.Length;
+                fpsCam.GetComponent<MouseLook>().mouseSensitivity = 10f;
+            }
+            currentScopedFOV --;
+            scopedFOV = scopedFOVs[currentScopedFOV];
+            Scope();
+        }
+    }
+
+    private void Scope()
+    {
+        gameUI.SetActive(!isScoped);
+        scopeOverlay.SetActive(isScoped);
+        weaponCam.gameObject.SetActive(!isScoped);
+        if(isScoped)
+        {
+            fpsCam.fieldOfView = scopedFOV; 
+            fpsCam.GetComponent<MouseLook>().mouseSensitivity = maxMouseSensitivity / (1.3f * scopedFOVs.Length - currentScopedFOV);
+        }
+        else
+        {
+            fpsCam.fieldOfView = weaponCam.fieldOfView;
+            fpsCam.GetComponent<MouseLook>().mouseSensitivity = maxMouseSensitivity;
         }
     }
 }

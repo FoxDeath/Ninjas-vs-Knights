@@ -350,6 +350,22 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Scope"",
+                    ""type"": ""Button"",
+                    ""id"": ""cb2acbdb-76c3-460e-b4b7-5a669e1b7c31"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""ScopeZoom"",
+                    ""type"": ""Button"",
+                    ""id"": ""ee974e1e-f8ab-442b-a957-cee121c1205c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -495,6 +511,28 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""action"": ""SwitchWeapon"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7575e7dd-40fe-4d8f-a84d-426e34f0a26c"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Scope"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c9e1b4d3-6f56-4880-8f58-d80dc850cd47"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard and Mouse"",
+                    ""action"": ""ScopeZoom"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -553,6 +591,8 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         m_Knight_Shoot = m_Knight.FindAction("Shoot", throwIfNotFound: true);
         m_Knight_PauseMenu = m_Knight.FindAction("PauseMenu", throwIfNotFound: true);
         m_Knight_SwitchWeapon = m_Knight.FindAction("SwitchWeapon", throwIfNotFound: true);
+        m_Knight_Scope = m_Knight.FindAction("Scope", throwIfNotFound: true);
+        m_Knight_ScopeZoom = m_Knight.FindAction("ScopeZoom", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -724,6 +764,8 @@ public class @PlayerInput : IInputActionCollection, IDisposable
     private readonly InputAction m_Knight_Shoot;
     private readonly InputAction m_Knight_PauseMenu;
     private readonly InputAction m_Knight_SwitchWeapon;
+    private readonly InputAction m_Knight_Scope;
+    private readonly InputAction m_Knight_ScopeZoom;
     public struct KnightActions
     {
         private @PlayerInput m_Wrapper;
@@ -737,6 +779,8 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         public InputAction @Shoot => m_Wrapper.m_Knight_Shoot;
         public InputAction @PauseMenu => m_Wrapper.m_Knight_PauseMenu;
         public InputAction @SwitchWeapon => m_Wrapper.m_Knight_SwitchWeapon;
+        public InputAction @Scope => m_Wrapper.m_Knight_Scope;
+        public InputAction @ScopeZoom => m_Wrapper.m_Knight_ScopeZoom;
         public InputActionMap Get() { return m_Wrapper.m_Knight; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -773,6 +817,12 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                 @SwitchWeapon.started -= m_Wrapper.m_KnightActionsCallbackInterface.OnSwitchWeapon;
                 @SwitchWeapon.performed -= m_Wrapper.m_KnightActionsCallbackInterface.OnSwitchWeapon;
                 @SwitchWeapon.canceled -= m_Wrapper.m_KnightActionsCallbackInterface.OnSwitchWeapon;
+                @Scope.started -= m_Wrapper.m_KnightActionsCallbackInterface.OnScope;
+                @Scope.performed -= m_Wrapper.m_KnightActionsCallbackInterface.OnScope;
+                @Scope.canceled -= m_Wrapper.m_KnightActionsCallbackInterface.OnScope;
+                @ScopeZoom.started -= m_Wrapper.m_KnightActionsCallbackInterface.OnScopeZoom;
+                @ScopeZoom.performed -= m_Wrapper.m_KnightActionsCallbackInterface.OnScopeZoom;
+                @ScopeZoom.canceled -= m_Wrapper.m_KnightActionsCallbackInterface.OnScopeZoom;
             }
             m_Wrapper.m_KnightActionsCallbackInterface = instance;
             if (instance != null)
@@ -804,6 +854,12 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                 @SwitchWeapon.started += instance.OnSwitchWeapon;
                 @SwitchWeapon.performed += instance.OnSwitchWeapon;
                 @SwitchWeapon.canceled += instance.OnSwitchWeapon;
+                @Scope.started += instance.OnScope;
+                @Scope.performed += instance.OnScope;
+                @Scope.canceled += instance.OnScope;
+                @ScopeZoom.started += instance.OnScopeZoom;
+                @ScopeZoom.performed += instance.OnScopeZoom;
+                @ScopeZoom.canceled += instance.OnScopeZoom;
             }
         }
     }
@@ -851,5 +907,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         void OnShoot(InputAction.CallbackContext context);
         void OnPauseMenu(InputAction.CallbackContext context);
         void OnSwitchWeapon(InputAction.CallbackContext context);
+        void OnScope(InputAction.CallbackContext context);
+        void OnScopeZoom(InputAction.CallbackContext context);
     }
 }
