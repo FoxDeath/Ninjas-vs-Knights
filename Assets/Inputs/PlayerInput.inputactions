@@ -337,6 +337,22 @@
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "Scope",
+                    "type": "Button",
+                    "id": "cb2acbdb-76c3-460e-b4b7-5a669e1b7c31",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "ScopeZoom",
+                    "type": "Button",
+                    "id": "ee974e1e-f8ab-442b-a957-cee121c1205c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -480,6 +496,28 @@
                     "processors": "",
                     "groups": "Keyboard and Mouse",
                     "action": "SwitchWeapon",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7575e7dd-40fe-4d8f-a84d-426e34f0a26c",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Scope",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c9e1b4d3-6f56-4880-8f58-d80dc850cd47",
+                    "path": "<Keyboard>/q",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "Keyboard and Mouse",
+                    "action": "ScopeZoom",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

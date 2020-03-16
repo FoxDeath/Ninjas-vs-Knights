@@ -88,7 +88,7 @@ public class AudioManager : MonoBehaviour
         return s.isPlaying;
     }
 
-    public void SetPitch(string name, int pitch)
+    public void SetPitch(string name, float pitch)
     {
         Sound s = Array.Find(sounds, sound => sound.name == name);
         if(s == null || pitch < 0 || pitch > 3)
@@ -97,6 +97,16 @@ public class AudioManager : MonoBehaviour
         }
         s.source.pitch = pitch;
         
+    }
+
+    public float GetPitch(string name)
+    {
+        Sound s = Array.Find(sounds, sound => sound.name == name);
+        if(s == null)
+        {
+            return 0f;
+        }
+        return s.source.pitch;
     }
 
     public void SetMasterVolume(float volume)
