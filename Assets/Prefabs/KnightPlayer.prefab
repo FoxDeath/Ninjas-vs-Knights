@@ -405,6 +405,21 @@ MonoBehaviour:
     m_ActionName: Knight/SwitchWeapon[/Mouse/scroll]
   - m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 5979411463205964829}
+        m_MethodName: JetPackChargeInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 99442510-9d27-4c80-b1b4-d328aa5fb7d1
+    m_ActionName: Knight/JatpackCharge[/Keyboard/f]
+  - m_PersistentCalls:
+      m_Calls:
       - m_Target: {fileID: 567666113}
         m_MethodName: ScopeInput
         m_Mode: 0
@@ -432,7 +447,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
     m_ActionId: ee974e1e-f8ab-442b-a957-cee121c1205c
-    m_ActionName: Knight/ScopeZoom[/Mouse/position/y,/Mouse/position/y]
+    m_ActionName: Knight/ScopeZoom[/Keyboard/q]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Knight
@@ -460,6 +475,10 @@ MonoBehaviour:
   speed: 5
   dashForce: 10
   jetpackForce: 100
+  chargeForce: 5
+  chargePushForce: 100
+  upwardsForce: 50
+  chargeDamage: 0
   maxJetpackFuel: 5
   fallDecrease: 2
 --- !u!114 &46135054

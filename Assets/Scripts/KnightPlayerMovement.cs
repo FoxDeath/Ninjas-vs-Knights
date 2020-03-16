@@ -125,7 +125,10 @@ public class KnightPlayerMovement : MonoBehaviour
         }
         else
         {
-            audioManager.Stop("Walking");
+            if(audioManager.IsPlaying("Walking"))
+            {
+                audioManager.Stop("Walking");
+            }
         }
     }
 
