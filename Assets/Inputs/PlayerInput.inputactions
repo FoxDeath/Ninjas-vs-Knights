@@ -353,6 +353,14 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "JatpackCharge",
+                    "type": "Button",
+                    "id": "99442510-9d27-4c80-b1b4-d328aa5fb7d1",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -518,6 +526,17 @@
                     "processors": "",
                     "groups": "Keyboard and Mouse",
                     "action": "ScopeZoom",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "688a4861-a63f-4ff4-9c7c-f7dee30a44df",
+                    "path": "<Keyboard>/#(F)",
+                    "interactions": "Press,Press",
+                    "processors": "",
+                    "groups": "Keyboard and Mouse",
+                    "action": "JatpackCharge",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

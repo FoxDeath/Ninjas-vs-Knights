@@ -366,6 +366,14 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""JatpackCharge"",
+                    ""type"": ""Button"",
+                    ""id"": ""99442510-9d27-4c80-b1b4-d328aa5fb7d1"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -533,6 +541,17 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""action"": ""ScopeZoom"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""688a4861-a63f-4ff4-9c7c-f7dee30a44df"",
+                    ""path"": ""<Keyboard>/#(F)"",
+                    ""interactions"": ""Press,Press"",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard and Mouse"",
+                    ""action"": ""JatpackCharge"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -593,6 +612,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         m_Knight_SwitchWeapon = m_Knight.FindAction("SwitchWeapon", throwIfNotFound: true);
         m_Knight_Scope = m_Knight.FindAction("Scope", throwIfNotFound: true);
         m_Knight_ScopeZoom = m_Knight.FindAction("ScopeZoom", throwIfNotFound: true);
+        m_Knight_JatpackCharge = m_Knight.FindAction("JatpackCharge", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -766,6 +786,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
     private readonly InputAction m_Knight_SwitchWeapon;
     private readonly InputAction m_Knight_Scope;
     private readonly InputAction m_Knight_ScopeZoom;
+    private readonly InputAction m_Knight_JatpackCharge;
     public struct KnightActions
     {
         private @PlayerInput m_Wrapper;
@@ -781,6 +802,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         public InputAction @SwitchWeapon => m_Wrapper.m_Knight_SwitchWeapon;
         public InputAction @Scope => m_Wrapper.m_Knight_Scope;
         public InputAction @ScopeZoom => m_Wrapper.m_Knight_ScopeZoom;
+        public InputAction @JatpackCharge => m_Wrapper.m_Knight_JatpackCharge;
         public InputActionMap Get() { return m_Wrapper.m_Knight; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -823,6 +845,9 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                 @ScopeZoom.started -= m_Wrapper.m_KnightActionsCallbackInterface.OnScopeZoom;
                 @ScopeZoom.performed -= m_Wrapper.m_KnightActionsCallbackInterface.OnScopeZoom;
                 @ScopeZoom.canceled -= m_Wrapper.m_KnightActionsCallbackInterface.OnScopeZoom;
+                @JatpackCharge.started -= m_Wrapper.m_KnightActionsCallbackInterface.OnJatpackCharge;
+                @JatpackCharge.performed -= m_Wrapper.m_KnightActionsCallbackInterface.OnJatpackCharge;
+                @JatpackCharge.canceled -= m_Wrapper.m_KnightActionsCallbackInterface.OnJatpackCharge;
             }
             m_Wrapper.m_KnightActionsCallbackInterface = instance;
             if (instance != null)
@@ -860,6 +885,9 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                 @ScopeZoom.started += instance.OnScopeZoom;
                 @ScopeZoom.performed += instance.OnScopeZoom;
                 @ScopeZoom.canceled += instance.OnScopeZoom;
+                @JatpackCharge.started += instance.OnJatpackCharge;
+                @JatpackCharge.performed += instance.OnJatpackCharge;
+                @JatpackCharge.canceled += instance.OnJatpackCharge;
             }
         }
     }
@@ -909,5 +937,6 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         void OnSwitchWeapon(InputAction.CallbackContext context);
         void OnScope(InputAction.CallbackContext context);
         void OnScopeZoom(InputAction.CallbackContext context);
+        void OnJatpackCharge(InputAction.CallbackContext context);
     }
 }
