@@ -20,6 +20,10 @@ public class KnightPlayerMovement : MonoBehaviour
     private float defaultSpeed;
     [SerializeField] float dashForce;
     [SerializeField] float jetpackForce;
+    [SerializeField] float chargeForce;
+    [SerializeField] float chargePushForce;
+    [SerializeField] float upwardsForce = 50f;
+    [SerializeField] float chargeDamage;
     [SerializeField] float maxJetpackFuel = 5f; 
     [SerializeField] float fallDecrease = 0.8f;
     private float horizontal;
@@ -33,8 +37,10 @@ public class KnightPlayerMovement : MonoBehaviour
     private bool isGrounded;
     private bool resetFall;
     private bool jetpack;
+    private bool canCharge = true;
     private bool canDash = true;
     private bool dashing;
+    private bool charging;
     private bool sprinting;
     private bool jetPacking;
     
@@ -85,11 +91,13 @@ public class KnightPlayerMovement : MonoBehaviour
 
     public void MoveInput(InputAction.CallbackContext context)
     {
-        movementInput = context.ReadValue<Vector2>();
-        horizontal = movementInput.x;
-        vertical = movementInput.y;
+        if (!charging)
+        {
+            movementInput = context.ReadValue<Vector2>();
+            horizontal = movementInput.x;
+            vertical = movementInput.y;
+        }
     }
-    
     private void Move()
     {
         if (isGrounded)
@@ -117,7 +125,10 @@ public class KnightPlayerMovement : MonoBehaviour
         }
         else
         {
-            audioManager.Stop("Walking");
+            if(audioManager.IsPlaying("Walking"))
+            {
+                audioManager.Stop("Walking");
+            }
         }
     }
 
@@ -310,6 +321,41 @@ public class KnightPlayerMovement : MonoBehaviour
         }
     }
 
+    public void JetPackChargeInput(InputAction.CallbackContext context)
+    {
+        if (context.action.phase == InputActionPhase.Performed && canCharge)
+        {
+            StartCoroutine("Charge");
+        }
+    }
+
+    IEnumerator Charge()
+    {
+        if (!jetpack && isGrounded && vertical > 0)
+        {
+            canCharge = false;
+            charging = true;
+
+            //audioManager.Play("");
+            
+            GetComponentInChildren<MouseLook>().mouseSensitivity /= 10;
+
+            vertical = chargeForce * movementInput.y;
+
+            yield return new WaitForSeconds(2.5f);
+
+            charging = false;
+
+            GetComponentInChildren<MouseLook>().mouseSensitivity *= 10;
+            
+            vertical = 0;
+
+            yield return new WaitForSeconds(10f);
+
+            canCharge = true;
+        }
+    }
+
     private void Fall()
     {
         if (velocity.y < 0 && !isGrounded && !resetFall)
@@ -319,6 +365,25 @@ public class KnightPlayerMovement : MonoBehaviour
         else
         {
             resetFall = false;
+        }
+    }
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        if (charging)
+        {
+            Target target = hit.transform.GetComponent<Target>();
+            if (target && !target.charged)
+            {
+                target.TakeDamage(chargeDamage);
+                target.charged = true;
+            }
+
+            if (hit.rigidbody)
+            {
+                Vector3 force = -hit.normal * chargePushForce;
+                force.y = upwardsForce;
+                hit.rigidbody.AddForce(force);
+            }
         }
     }
 
