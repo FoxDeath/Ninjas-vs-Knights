@@ -712,75 +712,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5979411463758342023, guid: 6d078d06d05695247b9837d9ab12863e,
-        type: 3}
-      propertyPath: m_ActionEvents.Array.size
-      value: 24
-      objectReference: {fileID: 0}
-    - target: {fileID: 5979411463758342023, guid: 6d078d06d05695247b9837d9ab12863e,
-        type: 3}
-      propertyPath: m_ActionEvents.Array.data[23].m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5979411463758342023, guid: 6d078d06d05695247b9837d9ab12863e,
-        type: 3}
-      propertyPath: m_ActionEvents.Array.data[23].m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5979411463758342023, guid: 6d078d06d05695247b9837d9ab12863e,
-        type: 3}
-      propertyPath: m_ActionEvents.Array.data[23].m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5979411463758342023, guid: 6d078d06d05695247b9837d9ab12863e,
-        type: 3}
-      propertyPath: m_ActionEvents.Array.data[23].m_ActionId
-      value: 1af5e068-4066-42de-a401-6cb0c33b7e98
-      objectReference: {fileID: 0}
-    - target: {fileID: 5979411463758342023, guid: 6d078d06d05695247b9837d9ab12863e,
-        type: 3}
-      propertyPath: m_ActionEvents.Array.data[23].m_ActionName
-      value: Knight/AOEAttack[/Keyboard/e]
-      objectReference: {fileID: 0}
-    - target: {fileID: 5979411463758342023, guid: 6d078d06d05695247b9837d9ab12863e,
-        type: 3}
-      propertyPath: m_ActionEvents.Array.data[23].m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1139407073}
-    - target: {fileID: 5979411463758342023, guid: 6d078d06d05695247b9837d9ab12863e,
-        type: 3}
-      propertyPath: m_ActionEvents.Array.data[23].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: AOEInput
-      objectReference: {fileID: 0}
-    - target: {fileID: 5979411463758342023, guid: 6d078d06d05695247b9837d9ab12863e,
-        type: 3}
-      propertyPath: m_ActionEvents.Array.data[23].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6d078d06d05695247b9837d9ab12863e, type: 3}
---- !u!1 &1139407072 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5979411463758342020, guid: 6d078d06d05695247b9837d9ab12863e,
-    type: 3}
-  m_PrefabInstance: {fileID: 1139407071}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1139407073
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1139407072}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0908278e6ae20e6448b774fbe1119a33, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  range: 20
-  damage: 20
-  upwardsForce: 600
-  pushForce: 500
 --- !u!1 &1155198927 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4403522873193251685, guid: 2350c3821144b2d4ba0ca13215ba1473,
