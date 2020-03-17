@@ -47,21 +47,12 @@ public class EdgeClimb : MonoBehaviour
 
     IEnumerator MovePlayer()
     {
-        Vector3 targetPos = new Vector3(transform.position.x, transform.position.y + 3.033f, transform.position.z);
-        Vector3 moveVector = targetPos - transform.position;
+        Vector3 targetPos = new Vector3(transform.localPosition.x, transform.localPosition.y + 3.033f, transform.localPosition.z + 1.495f);
+        Vector3 moveVector = targetPos - transform.localPosition;
 
-        while (Mathf.Abs(targetPos.y - transform.position.y) >= 0.5f)
-        {
-            playerMovement.controller.Move(moveVector);
-        }
+        playerMovement.controller.Move(transform.up * moveVector.y);
 
-        targetPos = new Vector3(transform.position.x, transform.position.y, transform.position.z - 1.495f);
-        moveVector = targetPos - transform.position;
-
-        while (Mathf.Abs(targetPos.z - transform.position.z) >= 0.5f)
-        {
-            playerMovement.controller.Move(moveVector);
-        }
+        playerMovement.controller.Move(transform.forward * moveVector.z);
 
         yield break;
     }

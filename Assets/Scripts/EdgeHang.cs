@@ -31,7 +31,7 @@ public class EdgeHang : MonoBehaviour
         RaycastHit footHit;
 
         // hand raycast
-        if(Physics.Raycast(transform.position + new Vector3(0.0f, 2.0f, 0.0f) + transform.forward, -transform.up, out handHit, 1f))
+        if(Physics.Raycast(transform.position + new Vector3(0.0f, 1.5f, 0.0f) + transform.forward, -transform.up, out handHit, 1f))
         {
             handIK = true;
             handPosition = handHit.point - handOffset;
@@ -63,7 +63,9 @@ public class EdgeHang : MonoBehaviour
                 if(!playerMovement.edgeHanging)
                 {       
                     audioManager.Play("EdgeHang");
+                    playerMovement.ZeroVelocity();
                 }
+
                 playerMovement.edgeHanging = true;
             }
             else

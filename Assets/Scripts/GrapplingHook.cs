@@ -86,6 +86,7 @@ public class GrapplingHook : MonoBehaviour
     private void EndHook()
     {
         rope.positionCount = 0;
+        currentDistance = 0f;
         hook.transform.parent = hookHolder.transform;
         hook.transform.rotation = hookHolder.transform.rotation;
         hook.transform.position = hookHolder.transform.position;

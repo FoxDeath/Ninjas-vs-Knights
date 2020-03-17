@@ -792,7 +792,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerBody: {fileID: 2056603104854673351}
-  mouseSensitivity: 10
+  mouseSensitivity: 2
   zRotation: 0
 --- !u!114 &2537338150754857947
 MonoBehaviour:
@@ -921,6 +921,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8431848206516928055, guid: 5b991d4c1b0bde448a6b84425db5d414,
+        type: 3}
+      propertyPath: bullet
+      value: 
+      objectReference: {fileID: 2693863253237791218, guid: 3c1b26a29c30dfd4e80d4d324a4b33cb,
+        type: 3}
     - target: {fileID: 8431848206516928058, guid: 5b991d4c1b0bde448a6b84425db5d414,
         type: 3}
       propertyPath: m_Name
@@ -958,6 +964,11 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 2056603104854673355}
+    - target: {fileID: 1379217573687321843, guid: 2fdda716840d5134982c2ddfabb5fed6,
+        type: 3}
+      propertyPath: m_Name
+      value: GraplingHookModel
+      objectReference: {fileID: 0}
     - target: {fileID: 1443655227300184267, guid: 2fdda716840d5134982c2ddfabb5fed6,
         type: 3}
       propertyPath: m_Name
