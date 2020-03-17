@@ -336,7 +336,7 @@ public class KnightPlayerMovement : MonoBehaviour
         {
             canCharge = false;
             charging = true;
-
+            
             //audioManager.Play("");
             
             GetComponentInChildren<MouseLook>().mouseSensitivity /= 10;

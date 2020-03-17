@@ -369,6 +369,14 @@
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "AOEAttack",
+                    "type": "Button",
+                    "id": "1af5e068-4066-42de-a401-6cb0c33b7e98",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -556,6 +564,17 @@
                     "processors": "",
                     "groups": "Keyboard and Mouse",
                     "action": "JatpackCharge",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c3626ab9-cecb-4589-ad6f-5bbc8b4ea357",
+                    "path": "<Keyboard>/e",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AOEAttack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

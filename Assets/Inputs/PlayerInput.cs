@@ -382,6 +382,14 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""AOEAttack"",
+                    ""type"": ""Button"",
+                    ""id"": ""1af5e068-4066-42de-a401-6cb0c33b7e98"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -571,6 +579,17 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""action"": ""JatpackCharge"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c3626ab9-cecb-4589-ad6f-5bbc8b4ea357"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AOEAttack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -633,6 +652,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         m_Knight_Scope = m_Knight.FindAction("Scope", throwIfNotFound: true);
         m_Knight_ScopeZoom = m_Knight.FindAction("ScopeZoom", throwIfNotFound: true);
         m_Knight_JatpackCharge = m_Knight.FindAction("JatpackCharge", throwIfNotFound: true);
+        m_Knight_AOEAttack = m_Knight.FindAction("AOEAttack", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -808,6 +828,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
     private readonly InputAction m_Knight_Scope;
     private readonly InputAction m_Knight_ScopeZoom;
     private readonly InputAction m_Knight_JatpackCharge;
+    private readonly InputAction m_Knight_AOEAttack;
     public struct KnightActions
     {
         private @PlayerInput m_Wrapper;
@@ -825,6 +846,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         public InputAction @Scope => m_Wrapper.m_Knight_Scope;
         public InputAction @ScopeZoom => m_Wrapper.m_Knight_ScopeZoom;
         public InputAction @JatpackCharge => m_Wrapper.m_Knight_JatpackCharge;
+        public InputAction @AOEAttack => m_Wrapper.m_Knight_AOEAttack;
         public InputActionMap Get() { return m_Wrapper.m_Knight; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -873,6 +895,9 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                 @JatpackCharge.started -= m_Wrapper.m_KnightActionsCallbackInterface.OnJatpackCharge;
                 @JatpackCharge.performed -= m_Wrapper.m_KnightActionsCallbackInterface.OnJatpackCharge;
                 @JatpackCharge.canceled -= m_Wrapper.m_KnightActionsCallbackInterface.OnJatpackCharge;
+                @AOEAttack.started -= m_Wrapper.m_KnightActionsCallbackInterface.OnAOEAttack;
+                @AOEAttack.performed -= m_Wrapper.m_KnightActionsCallbackInterface.OnAOEAttack;
+                @AOEAttack.canceled -= m_Wrapper.m_KnightActionsCallbackInterface.OnAOEAttack;
             }
             m_Wrapper.m_KnightActionsCallbackInterface = instance;
             if (instance != null)
@@ -916,6 +941,9 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                 @JatpackCharge.started += instance.OnJatpackCharge;
                 @JatpackCharge.performed += instance.OnJatpackCharge;
                 @JatpackCharge.canceled += instance.OnJatpackCharge;
+                @AOEAttack.started += instance.OnAOEAttack;
+                @AOEAttack.performed += instance.OnAOEAttack;
+                @AOEAttack.canceled += instance.OnAOEAttack;
             }
         }
     }
@@ -967,5 +995,6 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         void OnScope(InputAction.CallbackContext context);
         void OnScopeZoom(InputAction.CallbackContext context);
         void OnJatpackCharge(InputAction.CallbackContext context);
+        void OnAOEAttack(InputAction.CallbackContext context);
     }
 }
