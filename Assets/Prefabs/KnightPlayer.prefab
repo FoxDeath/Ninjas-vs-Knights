@@ -1276,7 +1276,7 @@ MonoBehaviour:
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 5979411463205964829}
-        m_MethodName: JetPackChargeInput
+        m_MethodName: Crouch
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1286,8 +1286,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_ActionId: 99442510-9d27-4c80-b1b4-d328aa5fb7d1
-    m_ActionName: Knight/JatpackCharge[/Keyboard/f]
+    m_ActionId: 7a0fddce-dc0a-4c4b-864a-444ff849b4c4
+    m_ActionName: Knight/Crouch[/Keyboard/leftCtrl]
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 567666113}
@@ -1318,6 +1318,10 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: ee974e1e-f8ab-442b-a957-cee121c1205c
     m_ActionName: Knight/ScopeZoom[/Keyboard/q]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 99442510-9d27-4c80-b1b4-d328aa5fb7d1
+    m_ActionName: Knight/JatpackCharge[/Keyboard/f]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Knight
@@ -1562,7 +1566,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerBody: {fileID: 5979411463758342022}
-  mouseSensitivity: 10
+  mouseSensitivity: 5
   zRotation: 0
 --- !u!114 &1139407074
 MonoBehaviour:
@@ -1960,6 +1964,16 @@ PrefabInstance:
       propertyPath: shieldAnimator
       value: 
       objectReference: {fileID: 1656160948}
+    - target: {fileID: 6251749267340565909, guid: 28956da47e9c0cb4e8ce576262cd0f9c,
+        type: 3}
+      propertyPath: damage
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 6251749267340565909, guid: 28956da47e9c0cb4e8ce576262cd0f9c,
+        type: 3}
+      propertyPath: fireRate
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 28956da47e9c0cb4e8ce576262cd0f9c, type: 3}
 --- !u!4 &6035998695772799603 stripped
@@ -1991,6 +2005,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Shield
+      objectReference: {fileID: 0}
+    - target: {fileID: 7164216275327251904, guid: ca21aacd68ae0b44fa214d89193c890b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 7164216275327251905, guid: ca21aacd68ae0b44fa214d89193c890b,
         type: 3}

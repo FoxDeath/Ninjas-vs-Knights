@@ -339,6 +339,14 @@
                     "interactions": ""
                 },
                 {
+                    "name": "Crouch",
+                    "type": "Button",
+                    "id": "7a0fddce-dc0a-4c4b-864a-444ff849b4c4",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
                     "name": "Scope",
                     "type": "Button",
                     "id": "cb2acbdb-76c3-460e-b4b7-5a669e1b7c31",
@@ -504,6 +512,17 @@
                     "processors": "",
                     "groups": "Keyboard and Mouse",
                     "action": "SwitchWeapon",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "92e444f2-14b0-4aab-8b6c-3122c3a7f797",
+                    "path": "<Keyboard>/leftCtrl",
+                    "interactions": "Hold(duration=0.01)",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Crouch",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

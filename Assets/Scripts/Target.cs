@@ -39,6 +39,7 @@ public class Target : MonoBehaviour
     void Die()
     {
         dead = true;
+        EndLevel.killedEnemies++;
         audioManager.Play("EnemyDying", GetComponent<AudioSource>());
         Destroy(gameObject, 1f);
     }
