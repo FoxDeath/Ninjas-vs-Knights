@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class Target : MonoBehaviour
 {
-    private AudioManager audioManager;
     private Rigidbody myRigidbody;
 
     [SerializeField] float health = 50f;
