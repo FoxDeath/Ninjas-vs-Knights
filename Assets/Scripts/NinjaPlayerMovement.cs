@@ -54,12 +54,19 @@ public class NinjaPlayerMovement : MonoBehaviour
         if(!isGrounded)
         {
             isGrounded = Physics.CheckSphere(groundCheck.position, groungDistance, groundMask);
+
             if(isGrounded)
             {
                 audioManager.Play("Falling");
             }
         }
+
         isGrounded = Physics.CheckSphere(groundCheck.position, groungDistance, groundMask);
+
+        if (sprinting && vertical <= 0)
+        {
+            SprintSwitch(false);
+        }
     }
 
     void FixedUpdate()
@@ -244,20 +251,29 @@ public class NinjaPlayerMovement : MonoBehaviour
 
     public void SprintInput(InputAction.CallbackContext context)
     {
-        if (vertical > 0)
+        if (context.action.phase == InputActionPhase.Started && !sprinting && vertical > 0)
         {
-            if (context.action.phase == InputActionPhase.Started && !sprinting)
-            {
-                audioManager.SetPitch("Walking", 2);
-                sprinting = true;
-                speed *= 1.6f;
-            }
-            else if (context.action.phase == InputActionPhase.Canceled && sprinting)
-            {
-                audioManager.SetPitch("Walking", 1);
-                sprinting = false;
-                speed /= 1.6f;
-            }
+            SprintSwitch(true);
+        }
+        else if (context.action.phase == InputActionPhase.Canceled && sprinting)
+        {
+            SprintSwitch(false);
+        }
+    }
+
+    void SprintSwitch(bool state)
+    {
+        if (state == true && sprinting == false)
+        {
+            audioManager.SetPitch("Walking", 2);
+            sprinting = true;
+            speed *= 1.6f;
+        }
+        else if (state == false && sprinting == true)
+        {
+            audioManager.SetPitch("Walking", 1);
+            sprinting = false;
+            speed /= 1.6f;
         }
     }
     
@@ -304,6 +320,11 @@ public class NinjaPlayerMovement : MonoBehaviour
         transform.localScale = new Vector3(1f, 1f, 1f);
         yield return new WaitForSeconds(1.53242634f);
         sliding = false;
+    }
+
+    public void ZeroVelocity()
+    {
+        velocity = Vector3.zero;
     }
 
     public ref Vector3 GetVelocityByReference()

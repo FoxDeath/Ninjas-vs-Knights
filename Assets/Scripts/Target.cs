@@ -3,6 +3,9 @@ using UnityEngine;
 
 public class Target : MonoBehaviour
 {
+    private AudioManager audioManager;
+    private Rigidbody myRigidbody;
+
     [SerializeField] float health = 50f;
     private AudioManager audioManager;
     public bool charged;
@@ -11,6 +14,9 @@ public class Target : MonoBehaviour
     void Start()
     {
         audioManager = FindObjectOfType<AudioManager>();
+        myRigidbody = GetComponent<Rigidbody>();
+
+        dead = false;
     }
 
     public void TakeDamage(float damage)
@@ -19,7 +25,8 @@ public class Target : MonoBehaviour
         {
             audioManager.Play("Hit", GetComponent<AudioSource>());
             health -= damage;
-            if(health <= 0f)
+
+            if (health <= 0f)
             {
                 Die();
             }
@@ -42,5 +49,14 @@ public class Target : MonoBehaviour
         EndLevel.killedEnemies++;
         audioManager.Play("EnemyDying", GetComponent<AudioSource>());
         Destroy(gameObject, 1f);
+    }
+
+    void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.name.Equals("ShurikenModel"))
+        {
+            Vector3 force = transform.localPosition - other.transform.localPosition;
+            myRigidbody.velocity = new Vector3(other.transform.right.x * force.x, other.transform.up.y * force.y, other.transform.forward.z * force.z);
+        }
     }
 }

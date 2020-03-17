@@ -12,10 +12,12 @@ public class Bullet : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         Target target = collision.gameObject.transform.GetComponent<Target>();
+
         if (target)
         {
             target.TakeDamage(damage);
         }
+
         if(collision.gameObject.layer != 10)
         {
             FindObjectOfType<AudioManager>().Play("ShurikenHit", GetComponent<AudioSource>());
