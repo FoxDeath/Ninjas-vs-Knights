@@ -13,9 +13,10 @@ public class CrossBow : MonoBehaviour, IWeapon
     [SerializeField] GameObject player;
     [SerializeField] GameObject arrowPrefab;
     [SerializeField] LayerMask layerMask;
-    private Animator animator;
     [SerializeField] GameObject scopeOverlay;
     [SerializeField] GameObject gameUI;
+    [SerializeField] Animator shieldAnimator;
+    private Animator crossbowAnimator;
 
     private AmmoCounter ammoCounter;
 
@@ -33,7 +34,7 @@ public class CrossBow : MonoBehaviour, IWeapon
         ammoCounter.SetMaxAmmo(1);
         ammoCounter.SetCurrentAmmo(1);
 
-        animator = GetComponent<Animator>();
+        crossbowAnimator = GetComponent<Animator>();
         currentScopedFOV = scopedFOVs.Length - 1;
         scopedFOV = scopedFOVs[currentScopedFOV];
         maxMouseSensitivity = fpsCam.GetComponent<MouseLook>().mouseSensitivity;
@@ -97,7 +98,8 @@ public class CrossBow : MonoBehaviour, IWeapon
         if(context.phase == InputActionPhase.Performed)
         {
             isScoped = !isScoped;
-            animator.SetBool("Scoped", isScoped);
+            crossbowAnimator.SetBool("Scoped", isScoped);
+            shieldAnimator.SetBool("Scoped", isScoped);
             Invoke("Scope", 0.15f);
         }
     }
