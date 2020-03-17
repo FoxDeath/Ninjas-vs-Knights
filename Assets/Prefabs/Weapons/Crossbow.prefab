@@ -296,13 +296,14 @@ MonoBehaviour:
   fpsCam: {fileID: 0}
   weaponCam: {fileID: 0}
   player: {fileID: 0}
-  arrowPrefab: {fileID: 4419020371880457072, guid: 9dbd6a4e8d7f31a44965c3a7ceedaa9a,
+  arrowPrefab: {fileID: 2060330078031075764, guid: a10b2059f3bb8d14a8a5b2be069e8cd0,
     type: 3}
   layerMask:
     serializedVersion: 2
     m_Bits: 567
   scopeOverlay: {fileID: 0}
   gameUI: {fileID: 0}
+  shieldAnimator: {fileID: 0}
 --- !u!95 &7772930909508445153
 Animator:
   serializedVersion: 3
