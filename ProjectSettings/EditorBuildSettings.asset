@@ -12,8 +12,8 @@ EditorBuildSettings:
     path: Assets/Scenes/Menu.unity
     guid: 72cb3034d6ab31b4d8c35e08cb43a0a8
   - enabled: 1
-    path: Assets/Scenes/KnightScene.unity
-    guid: f55a13d5742aec34eb508e47f6a6237c
+    path: Assets/Scenes/KnightDemoLvl.unity
+    guid: e66aae473a83a7840887691e3a88e433
   - enabled: 1
     path: Assets/Scenes/NinjaScene.unity
     guid: f0347740f28dd8248bd281c56e8e5e6a

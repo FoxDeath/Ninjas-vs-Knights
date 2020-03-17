@@ -352,6 +352,14 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
+                    ""name"": ""Crouch"",
+                    ""type"": ""Button"",
+                    ""id"": ""7a0fddce-dc0a-4c4b-864a-444ff849b4c4"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
                     ""name"": ""Scope"",
                     ""type"": ""Button"",
                     ""id"": ""cb2acbdb-76c3-460e-b4b7-5a669e1b7c31"",
@@ -522,6 +530,17 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""92e444f2-14b0-4aab-8b6c-3122c3a7f797"",
+                    ""path"": ""<Keyboard>/leftCtrl"",
+                    ""interactions"": ""Hold(duration=0.01)"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Crouch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""7575e7dd-40fe-4d8f-a84d-426e34f0a26c"",
                     ""path"": ""<Mouse>/rightButton"",
                     ""interactions"": ""Press"",
@@ -610,6 +629,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         m_Knight_Shoot = m_Knight.FindAction("Shoot", throwIfNotFound: true);
         m_Knight_PauseMenu = m_Knight.FindAction("PauseMenu", throwIfNotFound: true);
         m_Knight_SwitchWeapon = m_Knight.FindAction("SwitchWeapon", throwIfNotFound: true);
+        m_Knight_Crouch = m_Knight.FindAction("Crouch", throwIfNotFound: true);
         m_Knight_Scope = m_Knight.FindAction("Scope", throwIfNotFound: true);
         m_Knight_ScopeZoom = m_Knight.FindAction("ScopeZoom", throwIfNotFound: true);
         m_Knight_JatpackCharge = m_Knight.FindAction("JatpackCharge", throwIfNotFound: true);
@@ -784,6 +804,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
     private readonly InputAction m_Knight_Shoot;
     private readonly InputAction m_Knight_PauseMenu;
     private readonly InputAction m_Knight_SwitchWeapon;
+    private readonly InputAction m_Knight_Crouch;
     private readonly InputAction m_Knight_Scope;
     private readonly InputAction m_Knight_ScopeZoom;
     private readonly InputAction m_Knight_JatpackCharge;
@@ -800,6 +821,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         public InputAction @Shoot => m_Wrapper.m_Knight_Shoot;
         public InputAction @PauseMenu => m_Wrapper.m_Knight_PauseMenu;
         public InputAction @SwitchWeapon => m_Wrapper.m_Knight_SwitchWeapon;
+        public InputAction @Crouch => m_Wrapper.m_Knight_Crouch;
         public InputAction @Scope => m_Wrapper.m_Knight_Scope;
         public InputAction @ScopeZoom => m_Wrapper.m_Knight_ScopeZoom;
         public InputAction @JatpackCharge => m_Wrapper.m_Knight_JatpackCharge;
@@ -839,6 +861,9 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                 @SwitchWeapon.started -= m_Wrapper.m_KnightActionsCallbackInterface.OnSwitchWeapon;
                 @SwitchWeapon.performed -= m_Wrapper.m_KnightActionsCallbackInterface.OnSwitchWeapon;
                 @SwitchWeapon.canceled -= m_Wrapper.m_KnightActionsCallbackInterface.OnSwitchWeapon;
+                @Crouch.started -= m_Wrapper.m_KnightActionsCallbackInterface.OnCrouch;
+                @Crouch.performed -= m_Wrapper.m_KnightActionsCallbackInterface.OnCrouch;
+                @Crouch.canceled -= m_Wrapper.m_KnightActionsCallbackInterface.OnCrouch;
                 @Scope.started -= m_Wrapper.m_KnightActionsCallbackInterface.OnScope;
                 @Scope.performed -= m_Wrapper.m_KnightActionsCallbackInterface.OnScope;
                 @Scope.canceled -= m_Wrapper.m_KnightActionsCallbackInterface.OnScope;
@@ -879,6 +904,9 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                 @SwitchWeapon.started += instance.OnSwitchWeapon;
                 @SwitchWeapon.performed += instance.OnSwitchWeapon;
                 @SwitchWeapon.canceled += instance.OnSwitchWeapon;
+                @Crouch.started += instance.OnCrouch;
+                @Crouch.performed += instance.OnCrouch;
+                @Crouch.canceled += instance.OnCrouch;
                 @Scope.started += instance.OnScope;
                 @Scope.performed += instance.OnScope;
                 @Scope.canceled += instance.OnScope;
@@ -935,6 +963,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         void OnShoot(InputAction.CallbackContext context);
         void OnPauseMenu(InputAction.CallbackContext context);
         void OnSwitchWeapon(InputAction.CallbackContext context);
+        void OnCrouch(InputAction.CallbackContext context);
         void OnScope(InputAction.CallbackContext context);
         void OnScopeZoom(InputAction.CallbackContext context);
         void OnJatpackCharge(InputAction.CallbackContext context);

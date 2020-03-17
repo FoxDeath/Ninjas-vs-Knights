@@ -43,6 +43,7 @@ public class KnightPlayerMovement : MonoBehaviour
     private bool charging;
     private bool sprinting;
     private bool jetPacking;
+    private bool crouching;
     
 
     private void Start()
@@ -384,6 +385,22 @@ public class KnightPlayerMovement : MonoBehaviour
                 force.y = upwardsForce;
                 hit.rigidbody.AddForce(force);
             }
+        }
+    }
+
+    public void Crouch(InputAction.CallbackContext context)
+    {
+        if (context.action.phase == InputActionPhase.Started && !sprinting)
+        {
+            crouching = true;
+            transform.localScale = new Vector3(1f, 0.5f, 1f);
+            speed *= 0.6f;
+        }
+        else if (context.action.phase == InputActionPhase.Canceled && crouching)
+        {
+            transform.localScale = new Vector3(1f, 1f, 1f);
+            speed /= 0.6f;
+            crouching = false;
         }
     }
 
