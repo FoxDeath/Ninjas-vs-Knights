@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+
+//TO DO: Add to Menu Manager
 public class MainMenu : MonoBehaviour
 {
     public void PlayKnightGame()

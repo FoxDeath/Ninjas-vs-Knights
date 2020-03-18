@@ -2,6 +2,8 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+
+//TO DO: Refactor (Ben)
 public class AOEAttack : MonoBehaviour
 {
     [SerializeField] float range;

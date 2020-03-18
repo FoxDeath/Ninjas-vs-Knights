@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using  UnityEngine.UI;
 
+
+//TO DO: Add to UI Manager
 public class Fuel : MonoBehaviour
 {
     [SerializeField] Slider slider;

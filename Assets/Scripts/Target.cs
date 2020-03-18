@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using UnityEngine;
 
+
+//TO DO: Refactor(Radu)
 public class Target : MonoBehaviour
 {
     private Rigidbody myRigidbody;

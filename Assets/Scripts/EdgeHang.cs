@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using UnityEngine;
 
+
+//TO DO: Refactor(Andrei)
 public class EdgeHang : MonoBehaviour
 {
     private AudioManager audioManager;

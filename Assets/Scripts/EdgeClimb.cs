@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using UnityEngine;
 
+
+//TO DO: Refactor(Tomi)
 public class EdgeClimb : MonoBehaviour
 {
     private NinjaPlayerMovement playerMovement;

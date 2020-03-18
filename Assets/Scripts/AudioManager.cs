@@ -1,6 +1,8 @@
 ﻿using System;
 using UnityEngine;
 
+
+//TO DO: Refactor(Radu)
 public class AudioManager : MonoBehaviour
 {
     public Sound[] sounds;

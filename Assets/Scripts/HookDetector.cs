@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+//TO DO: Refactor(Ben)
 public class HookDetector : MonoBehaviour
 {
     [SerializeField] GameObject hookHolder;

@@ -2,6 +2,8 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+
+//TO DO: Refactor(Andrie)
 public class ShurikenGun :  MonoBehaviour, IWeapon
 {
     [SerializeField] GameObject bullet;

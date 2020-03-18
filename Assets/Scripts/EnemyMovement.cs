@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
 
+
+//TO DO: Refactor(Andrei)
 public class EnemyMovement : MonoBehaviour
 {
     public float lookRadius = 10f;

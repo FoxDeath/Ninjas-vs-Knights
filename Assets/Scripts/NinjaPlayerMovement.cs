@@ -2,6 +2,8 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+
+//TO DO: Refactor(Tomi)
 public class NinjaPlayerMovement : MonoBehaviour
 {
     [SerializeField] public CharacterController controller;

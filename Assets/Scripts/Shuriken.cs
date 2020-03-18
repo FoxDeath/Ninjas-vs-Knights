@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 
+
+//TO DO: Refactor(Andrei)
 public class Shuriken : MonoBehaviour
 {
     private Rigidbody rigidBody;

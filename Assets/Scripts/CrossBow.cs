@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
+
+//TO DO: Refactor(Radu)
 public class CrossBow : MonoBehaviour, IWeapon
 {
     [SerializeField] float damage = 10f;

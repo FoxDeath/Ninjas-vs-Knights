@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using TMPro;
 
+
+//TO DO: Add to UI Manager and Refactor
 public class AmmoCounter : MonoBehaviour
 {
     private TextMeshProUGUI currentAmmo;

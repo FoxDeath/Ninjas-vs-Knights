@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 
+
+//TO DO: Add to UI Manager
 public class EndLevel : MonoBehaviour
 {
     public static int killedEnemies = 0;

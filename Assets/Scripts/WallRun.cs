@@ -2,7 +2,7 @@
 using UnityEngine.InputSystem;
 
 
-
+//TO DO: Refactor(Adam)
 public class WallRun : MonoBehaviour
 {
     private NinjaPlayerMovement playerMovement;
