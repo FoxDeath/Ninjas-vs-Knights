@@ -6,10 +6,10 @@ using UnityEngine.InputSystem;
 //TO DO: Refactor(Tomi)
 public class NinjaPlayerMovement : MonoBehaviour
 {
-    [SerializeField] public CharacterController controller;
-    [SerializeField] Transform groundCheck;
-    [SerializeField] LayerMask groundMask;
-    [SerializeField] Camera fpsCamera;
+    public CharacterController controller;
+    private Transform groundCheck;
+    private LayerMask groundMask;
+    private Camera fpsCamera;
     private PauseMenu pauseMenu;
     private AudioManager audioManager;
     private EdgeClimb edgeClimb;
@@ -23,14 +23,15 @@ public class NinjaPlayerMovement : MonoBehaviour
     [SerializeField] float speed = 10f;
     [SerializeField] float fallDecrease = 2f;
     [SerializeField] float wallJupmForce = 20f;
-    private float horizontal;
-    private float vertical;
     private float gravity = -25f;
     private float groungDistance = 0.4f;
+    private float horizontal;
+    private float vertical;
 
-    [HideInInspector] public bool isGrounded;
-    [HideInInspector] public bool edgeHanging;
-    [HideInInspector] public bool edgeClimbing;
+    public bool wallRunning;
+    public bool isGrounded;
+    public bool edgeHanging;
+    public bool edgeClimbing;
     private bool doubleJumped;
     private bool resetFall;
     private bool sliding;
@@ -38,17 +39,19 @@ public class NinjaPlayerMovement : MonoBehaviour
     private bool sprinting;
     private bool canWallJump;
     private bool wallJumping;
-    public bool wallRun;
 
     private void Start()
     {
+        controller = gameObject.GetComponent<CharacterController>();
+        groundCheck = transform.Find("Cylinder").Find("GroundCheck");
+        groundMask = LayerMask.GetMask("Ground");
+        fpsCamera = transform.Find("Main Camera").GetComponent<Camera>();
         edgeClimb = GetComponent<EdgeClimb>();
+        audioManager = FindObjectOfType<AudioManager>();
+        pauseMenu = FindObjectOfType<PauseMenu>();
 
         move = new Vector3();
         velocity = new Vector3();
-        
-        audioManager = FindObjectOfType<AudioManager>();
-        pauseMenu = FindObjectOfType<PauseMenu>();
     }
 
     void Update()
@@ -78,7 +81,7 @@ public class NinjaPlayerMovement : MonoBehaviour
             return;
         }
 
-        if (edgeHanging)
+        if(edgeHanging)
         {
             velocity.y = 0f;
         }
@@ -93,17 +96,18 @@ public class NinjaPlayerMovement : MonoBehaviour
 
         velocity.y = Mathf.Clamp(velocity.y, -25f, 15f);
 
-        if (!edgeClimbing)
+        if(!edgeClimbing)
         {
             controller.Move(velocity * Time.deltaTime);
         }
 
-        if (wallRun)
+        if(wallRunning)
         {
             if(!canWallJump)
             {
                 velocity.y = 10f;
             }
+
             gravity = 0f;
             velocity.y -= 0.25f;
             fallDecrease = 0.1f;
@@ -144,7 +148,7 @@ public class NinjaPlayerMovement : MonoBehaviour
     
     private void Move()
     {
-        if ((isGrounded || wallRun) && !wallJumping)
+        if((isGrounded || wallRunning) && !wallJumping)
         {
             doubleJumped = false;
             move = (transform.right * horizontal + transform.forward * vertical) * speed;
@@ -152,19 +156,19 @@ public class NinjaPlayerMovement : MonoBehaviour
         }
         else if(!wallJumping)
         {
-            if (!edgeClimbing && !edgeHanging)
+            if(!edgeClimbing && !edgeHanging)
             {
                 controller.Move(lastMove * 0.3f * Time.deltaTime);
                 move = (transform.right * horizontal + transform.forward * vertical) * speed * 0.8f;
             }
 
-            if (edgeHanging && !edgeClimbing)
+            if(edgeHanging && !edgeClimbing)
             {
                 vertical = Mathf.Clamp(vertical, -1f, 0f);
                 move = (transform.right * horizontal + transform.forward * vertical) * speed * 0.8f;
             }
 
-            if (!edgeClimbing)
+            if(!edgeClimbing)
             {
                 move = (transform.right * horizontal + transform.forward * vertical) * speed * 0.8f;
             }
@@ -186,7 +190,7 @@ public class NinjaPlayerMovement : MonoBehaviour
             audioManager.Stop("Walking");
         }
 
-        if(moveInput != Vector2.zero && wallRun)
+        if(moveInput != Vector2.zero && wallRunning)
         {
             if(!audioManager.IsPlaying("Wallrun"))
             {
@@ -201,9 +205,9 @@ public class NinjaPlayerMovement : MonoBehaviour
 
     public void JumpInput(InputAction.CallbackContext context)
     {
-        if (context.action.phase == InputActionPhase.Performed)
+        if(context.action.phase == InputActionPhase.Performed)
         {
-            if (edgeHanging)
+            if(edgeHanging)
             {
                 edgeClimb.EdgeClimbStart();
             }
@@ -216,16 +220,16 @@ public class NinjaPlayerMovement : MonoBehaviour
 
     private void Jump()
     {
-        if (canWallJump && !Physics.Raycast(transform.position, transform.forward, 1.5f))
+        if(canWallJump && !Physics.Raycast(transform.position, transform.forward, 1.5f))
         {
             StartCoroutine(WallJump());
         }
-        else if (isGrounded)
+        else if(isGrounded)
         {
             audioManager.Play("Jump");
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
-        else if (!isGrounded && !doubleJumped && !edgeClimbing && !wallRun)
+        else if(!isGrounded && !doubleJumped && !edgeClimbing && !wallRunning)
         {
             audioManager.Play("Jump");
             doubleJumped = true;
@@ -249,11 +253,11 @@ public class NinjaPlayerMovement : MonoBehaviour
 
     public void SprintInput(InputAction.CallbackContext context)
     {
-        if (context.action.phase == InputActionPhase.Started && !sprinting && vertical > 0)
+        if(context.action.phase == InputActionPhase.Started && !sprinting && vertical > 0)
         {
             Sprint(true);
         }
-        else if (context.action.phase == InputActionPhase.Canceled && sprinting)
+        else if(context.action.phase == InputActionPhase.Canceled && sprinting)
         {
             Sprint(false);
         }
@@ -261,13 +265,13 @@ public class NinjaPlayerMovement : MonoBehaviour
 
     void Sprint(bool state)
     {
-        if (state == true && sprinting == false)
+        if(state == true && sprinting == false)
         {
             audioManager.SetPitch("Walking", 2);
             sprinting = true;
             speed *= 1.6f;
         }
-        else if (state == false && sprinting == true)
+        else if(state == false && sprinting == true)
         {
             audioManager.SetPitch("Walking", 1);
             sprinting = false;
@@ -289,20 +293,20 @@ public class NinjaPlayerMovement : MonoBehaviour
 
     public void Crouch(InputAction.CallbackContext context)
     {
-        if (context.action.phase == InputActionPhase.Started && !sprinting)
+        if(context.action.phase == InputActionPhase.Started && !sprinting)
         {
             crouching = true;
             transform.localScale = new Vector3(1f, 0.5f, 1f);
             speed *= 0.6f;
 
         }
-        else if (context.action.phase == InputActionPhase.Canceled && crouching)
+        else if(context.action.phase == InputActionPhase.Canceled && crouching)
         {
             transform.localScale = new Vector3(1f, 1f, 1f);
             speed /= 0.6f;
             crouching = false;
         }
-        else if (context.action.phase == InputActionPhase.Started && sprinting && !sliding)
+        else if(context.action.phase == InputActionPhase.Started && sprinting && !sliding)
         {
             StartCoroutine("Sliding");
         }
@@ -313,10 +317,14 @@ public class NinjaPlayerMovement : MonoBehaviour
         speed *= 1.2f;
         sliding = true;
         transform.localScale = new Vector3(1f, 0.5f, 1f);
+
         yield return new WaitForSeconds(0.8f);
+
         speed /= 1.2f;
         transform.localScale = new Vector3(1f, 1f, 1f);
-        yield return new WaitForSeconds(1.53242634f);
+
+        yield return new WaitForSeconds(1.5f);
+
         sliding = false;
     }
 

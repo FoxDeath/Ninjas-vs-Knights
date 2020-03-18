@@ -1,41 +1,39 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
 
-//TO DO: Refactor(Tomi)
 public class MouseLook : MonoBehaviour
 {
-    [SerializeField] Transform playerBody;
+    private Transform playerBody;
 
-    public float mouseSensitivity;
+    [HideInInspector] public float zRotation;
+    public float mouseSensitivity = 2f;
     private float lookX;
     private float lookY;
     private float xRotation;
     
-    [HideInInspector] public float zRotation;
-
-    // Start is called before the first frame update
     void Start()
     {
+        playerBody = transform.parent;
         Cursor.lockState = CursorLockMode.Locked;
     }
 
-    // Update is called once per frame
     void Update()
     {
+        //if game is not paused
         if(!PauseMenu.GameIsPaused)
         {
+            //sets and restricts rotation value
             xRotation -= lookY;
             xRotation = Mathf.Clamp(xRotation, -90f, 90f);
+            transform.localRotation = Quaternion.Euler(xRotation, 0f, zRotation);
 
-        transform.localRotation = Quaternion.Euler(xRotation, 0f, zRotation);
-        playerBody.Rotate(Vector2.up, lookX);
+            //applies rotation to player
+            playerBody.Rotate(Vector2.up, lookX);
         }
     }
 
+    //gets input from player
     public void LookInput(InputAction.CallbackContext context)
     {
         Vector2 look = context.ReadValue<Vector2>() * 0.1f;
