@@ -1,18 +1,13 @@
 ﻿using System.Collections;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 
-//TO DO: Refactor(Tomi)
 public class NinjaPlayerMovement : MonoBehaviour
 {
     public CharacterController controller;
     private Transform groundCheck;
     private LayerMask groundMask;
-    private Camera fpsCamera;
-    private PauseMenu pauseMenu;
     private AudioManager audioManager;
-    private EdgeClimb edgeClimb;
     private Vector3 velocity;
     private Vector3 move;
     private Vector3 lastMove;
@@ -22,7 +17,7 @@ public class NinjaPlayerMovement : MonoBehaviour
     [SerializeField] float jumpHeight = 5f;
     [SerializeField] float speed = 10f;
     [SerializeField] float fallDecrease = 2f;
-    [SerializeField] float wallJupmForce = 20f;
+    [SerializeField] float wallJumpForce = 20f;
     private float gravity = -25f;
     private float groungDistance = 0.4f;
     private float horizontal;
@@ -45,10 +40,7 @@ public class NinjaPlayerMovement : MonoBehaviour
         controller = gameObject.GetComponent<CharacterController>();
         groundCheck = transform.Find("Cylinder").Find("GroundCheck");
         groundMask = LayerMask.GetMask("Ground");
-        fpsCamera = transform.Find("Main Camera").GetComponent<Camera>();
-        edgeClimb = GetComponent<EdgeClimb>();
         audioManager = FindObjectOfType<AudioManager>();
-        pauseMenu = FindObjectOfType<PauseMenu>();
 
         move = new Vector3();
         velocity = new Vector3();
@@ -56,19 +48,16 @@ public class NinjaPlayerMovement : MonoBehaviour
 
     void Update()
     {
-        if(!isGrounded)
-        {
-            isGrounded = Physics.CheckSphere(groundCheck.position, groungDistance, groundMask);
-
-            if(isGrounded)
-            {
-                audioManager.Play("Falling");
-            }
-        }
-
+        //isGrounded is true if the groundCheck object is touching the Ground layer
         isGrounded = Physics.CheckSphere(groundCheck.position, groungDistance, groundMask);
 
-        if (sprinting && vertical <= 0)
+        if(!isGrounded)
+        {
+            audioManager.Play("Falling");
+        }
+
+        //if sprinting and moving backwards
+        if(sprinting && vertical <= 0)
         {
             Sprint(false);
         }
@@ -76,6 +65,7 @@ public class NinjaPlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
+        //if game is paused
         if(PauseMenu.GameIsPaused)
         {
             return;
@@ -83,10 +73,12 @@ public class NinjaPlayerMovement : MonoBehaviour
 
         if(edgeHanging)
         {
+            //turns off gravity while hanging on edge
             velocity.y = 0f;
         }
         else
         {
+            //sets vertical pull
             velocity.y += gravity * Time.deltaTime;
         }
 
@@ -94,10 +86,12 @@ public class NinjaPlayerMovement : MonoBehaviour
         MoveAudio();
         Fall();
 
+        //restricts the max vertical speed
         velocity.y = Mathf.Clamp(velocity.y, -25f, 15f);
 
         if(!edgeClimbing)
         {
+            //applies gravity
             controller.Move(velocity * Time.deltaTime);
         }
 
@@ -105,9 +99,11 @@ public class NinjaPlayerMovement : MonoBehaviour
         {
             if(!canWallJump)
             {
+                //sets vertical pull when starting wall running
                 velocity.y = 10f;
             }
 
+            //sets vertical pull attributes for wall running
             gravity = 0f;
             velocity.y -= 0.25f;
             fallDecrease = 0.1f;
@@ -115,6 +111,7 @@ public class NinjaPlayerMovement : MonoBehaviour
         }
         else
         {
+            //sets vertical pull attributes back to default
             gravity = -25f;
             fallDecrease = 0.4f;
             canWallJump = false;
@@ -122,30 +119,31 @@ public class NinjaPlayerMovement : MonoBehaviour
 
         if(velocity.x > 0f)
         {
-            velocity.x -= wallJupmForce * Time.deltaTime;
+            velocity.x -= wallJumpForce * Time.deltaTime;
         }
         else if(velocity.x < 0f)
         {
-            velocity.x += wallJupmForce * Time.deltaTime;
+            velocity.x += wallJumpForce * Time.deltaTime;
         }
 
         if(velocity.z > 0f)
         {
-            velocity.z -= wallJupmForce * Time.deltaTime;
+            velocity.z -= wallJumpForce * Time.deltaTime;
         }
         else if(velocity.z < 0f)
         {
-            velocity.z += wallJupmForce * Time.deltaTime;
+            velocity.z += wallJumpForce * Time.deltaTime;
         }
     }
 
-    public void MoveInput(InputAction.CallbackContext context)
+    //gets input from NinjaPlayerInput script
+    public void GetMoveInput(Vector2 moveInput)
     {
-            moveInput = context.ReadValue<Vector2>();
-            horizontal = moveInput.x;
-            vertical = moveInput.y;
+        horizontal = moveInput.x;
+        vertical = moveInput.y;
     }
     
+    //moves the player according to its state and attributes
     private void Move()
     {
         if((isGrounded || wallRunning) && !wallJumping)
@@ -176,6 +174,75 @@ public class NinjaPlayerMovement : MonoBehaviour
             controller.Move(move * Time.deltaTime);
     }
 
+    public void Jump()
+    {
+        if(canWallJump && !Physics.Raycast(transform.position, transform.forward, 1.5f))
+        {
+            //if able to wall jump and parallel t the wall, start wall jump
+            StartCoroutine(WallJump());
+        }
+        else if(isGrounded)
+        {
+            //if grounded play jump sound and move upwards
+            audioManager.Play("Jump");
+            velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+        }
+        else if(!isGrounded && !doubleJumped && !edgeClimbing && !wallRunning)
+        {
+            //if in air and didn't double jump yet, jump again
+            audioManager.Play("Jump");
+            doubleJumped = true;
+            resetFall = true;
+            velocity.y = Mathf.Sqrt(jumpHeight * -2.4f * gravity);
+        }
+    }
+
+    public void Sprint(bool state)
+    {
+        //turn on sprint
+        if(state && !sprinting)
+        {
+            audioManager.SetPitch("Walking", 2);
+            sprinting = true;
+            speed *= 1.6f;
+        }
+        //turn off sprint
+        else if(!state && sprinting)
+        {
+            audioManager.SetPitch("Walking", 1);
+            sprinting = false;
+            speed /= 1.6f;
+        }
+    }
+    
+    private void Fall()
+    {
+        if (velocity.y < 0 && !isGrounded && !resetFall)
+        {
+            velocity.y -= fallDecrease;
+        }
+        else
+        {
+            resetFall = false;
+        }
+    }
+
+    public void Crouch(bool crouching)
+    {
+        if(crouching)
+        {
+            crouching = true;
+            transform.localScale = new Vector3(1f, 0.5f, 1f);
+            speed *= 0.6f;
+        }
+        else
+        {
+            crouching = false;
+            transform.localScale = new Vector3(1f, 1f, 1f);
+            speed /= 0.6f;
+        }
+    }
+
     private void MoveAudio()
     {
         if(moveInput != Vector2.zero && isGrounded)
@@ -203,116 +270,43 @@ public class NinjaPlayerMovement : MonoBehaviour
         }
     }
 
-    public void JumpInput(InputAction.CallbackContext context)
+    public float GetVertical()
     {
-        if(context.action.phase == InputActionPhase.Performed)
-        {
-            if(edgeHanging)
-            {
-                edgeClimb.EdgeClimbStart();
-            }
-            else
-            {
-                Jump();
-            }
-        }
+        return vertical;
     }
 
-    private void Jump()
+    public bool GetEdgeHanging()
     {
-        if(canWallJump && !Physics.Raycast(transform.position, transform.forward, 1.5f))
-        {
-            StartCoroutine(WallJump());
-        }
-        else if(isGrounded)
-        {
-            audioManager.Play("Jump");
-            velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
-        }
-        else if(!isGrounded && !doubleJumped && !edgeClimbing && !wallRunning)
-        {
-            audioManager.Play("Jump");
-            doubleJumped = true;
-            resetFall = true;
-            velocity.y = Mathf.Sqrt(jumpHeight * -2.4f * gravity);
-        }
+        return edgeHanging;
     }
 
-    IEnumerator WallJump()
+    public void ZeroVelocity()
     {
-        wallJumping = true;
-        velocity.x = wallJupmForce * normal.x;
-        velocity.z = wallJupmForce * normal.z;
-        velocity.y = Mathf.Sqrt(jumpHeight * 50f);
-        move.x = lastMove.x;
-
-        yield return new WaitForSeconds(0.5f);
-
-        wallJumping = false;
+        velocity = Vector3.zero;
     }
 
-    public void SprintInput(InputAction.CallbackContext context)
+    public bool GetSprinting()
     {
-        if(context.action.phase == InputActionPhase.Started && !sprinting && vertical > 0)
-        {
-            Sprint(true);
-        }
-        else if(context.action.phase == InputActionPhase.Canceled && sprinting)
-        {
-            Sprint(false);
-        }
+        return sprinting;
     }
 
-    void Sprint(bool state)
+    public bool GetSliding()
     {
-        if(state == true && sprinting == false)
-        {
-            audioManager.SetPitch("Walking", 2);
-            sprinting = true;
-            speed *= 1.6f;
-        }
-        else if(state == false && sprinting == true)
-        {
-            audioManager.SetPitch("Walking", 1);
-            sprinting = false;
-            speed /= 1.6f;
-        }
-    }
-    
-    private void Fall()
-    {
-        if (velocity.y < 0 && !isGrounded && !resetFall)
-        {
-            velocity.y -= fallDecrease;
-        }
-        else
-        {
-            resetFall = false;
-        }
+        return sliding;
     }
 
-    public void Crouch(InputAction.CallbackContext context)
+    public bool GetCrouching()
     {
-        if(context.action.phase == InputActionPhase.Started && !sprinting)
-        {
-            crouching = true;
-            transform.localScale = new Vector3(1f, 0.5f, 1f);
-            speed *= 0.6f;
-
-        }
-        else if(context.action.phase == InputActionPhase.Canceled && crouching)
-        {
-            transform.localScale = new Vector3(1f, 1f, 1f);
-            speed /= 0.6f;
-            crouching = false;
-        }
-        else if(context.action.phase == InputActionPhase.Started && sprinting && !sliding)
-        {
-            StartCoroutine("Sliding");
-        }
+        return crouching;
     }
 
-    IEnumerator Sliding()
+    //pass reference references into functions... obviously lol xdd
+    public ref Vector3 GetVelocityByReference()
+    {
+        return ref velocity;
+    }
+
+    public IEnumerator Sliding()
     {
         speed *= 1.2f;
         sliding = true;
@@ -328,19 +322,17 @@ public class NinjaPlayerMovement : MonoBehaviour
         sliding = false;
     }
 
-    public void ZeroVelocity()
+    IEnumerator WallJump()
     {
-        velocity = Vector3.zero;
-    }
+        wallJumping = true;
+        velocity.x = wallJumpForce * normal.x;
+        velocity.z = wallJumpForce * normal.z;
+        velocity.y = Mathf.Sqrt(jumpHeight * 50f);
+        move.x = lastMove.x;
 
-    public ref Vector3 GetVelocityByReference()
-    {
-        return ref velocity;
-    }
+        yield return new WaitForSeconds(0.5f);
 
-    public void Pause(InputAction.CallbackContext context)
-    {
-        pauseMenu.MenuInput();
+        wallJumping = false;
     }
 
     void OnControllerColliderHit(ControllerColliderHit hit)

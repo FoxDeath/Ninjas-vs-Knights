@@ -97,9 +97,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7898204828edc427699458e8c980bd29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerBody: {fileID: 2056603104854673351}
-  mouseSensitivity: 10
   zRotation: 0
+  mouseSensitivity: 10
 --- !u!114 &1268920286773152526
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -251,11 +250,12 @@ GameObject:
   - component: {fileID: 2056603104854673351}
   - component: {fileID: 2056603104854673348}
   - component: {fileID: 2056603104854673349}
+  - component: {fileID: 306459466}
+  - component: {fileID: 6808211375706534767}
   - component: {fileID: 106554078488157421}
   - component: {fileID: 1588346156}
   - component: {fileID: 1699428271}
   - component: {fileID: 555343510}
-  - component: {fileID: 306459466}
   - component: {fileID: 555343509}
   - component: {fileID: 2347466531585119150}
   m_Layer: 10
@@ -343,7 +343,7 @@ MonoBehaviour:
     m_ActionName: Ninja/Look[/Mouse/position]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 306459466}
+      - m_Target: {fileID: 6808211375706534767}
         m_MethodName: MoveInput
         m_Mode: 0
         m_Arguments:
@@ -358,7 +358,7 @@ MonoBehaviour:
     m_ActionName: Ninja/Movement
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 306459466}
+      - m_Target: {fileID: 6808211375706534767}
         m_MethodName: JumpInput
         m_Mode: 0
         m_Arguments:
@@ -373,7 +373,7 @@ MonoBehaviour:
     m_ActionName: Ninja/New action
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 306459466}
+      - m_Target: {fileID: 6808211375706534767}
         m_MethodName: SprintInput
         m_Mode: 0
         m_Arguments:
@@ -461,8 +461,8 @@ MonoBehaviour:
     m_ActionName: Knight/Shoot[/Mouse/leftButton]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 306459466}
-        m_MethodName: Pause
+      - m_Target: {fileID: 6808211375706534767}
+        m_MethodName: PauseInput
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -495,8 +495,8 @@ MonoBehaviour:
     m_ActionName: Ninja/Grapling Hook[/Mouse/middleButton]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 306459466}
-        m_MethodName: Crouch
+      - m_Target: {fileID: 6808211375706534767}
+        m_MethodName: CrouchInput
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -552,6 +552,39 @@ MonoBehaviour:
   m_DefaultActionMap: Ninja
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &306459466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2056603104854673355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2729dfb3f3d477b4e965dc1997b8047c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controller: {fileID: 2056603104854673348}
+  jumpHeight: 5
+  speed: 10
+  fallDecrease: 2
+  wallJupmForce: 20
+  wallRunning: 0
+  isGrounded: 0
+  edgeHanging: 0
+  edgeClimbing: 0
+--- !u!114 &6808211375706534767
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2056603104854673355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 462ed2c3bb9a8ed48bd1bf97a42c6355, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &106554078488157421
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -614,32 +647,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &306459466
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2056603104854673355}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2729dfb3f3d477b4e965dc1997b8047c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  controller: {fileID: 2056603104854673348}
-  groundCheck: {fileID: 2056603105151804669}
-  groundMask:
-    serializedVersion: 2
-    m_Bits: 512
-  fpsCamera: {fileID: 2056603105903442927}
-  jumpHeight: 5
-  speed: 10
-  fallDecrease: 2
-  wallJupmForce: 20
-  isGrounded: 0
-  edgeHanging: 0
-  edgeClimbing: 0
-  wallRun: 0
 --- !u!114 &555343509
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -811,9 +818,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7898204828edc427699458e8c980bd29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerBody: {fileID: 2056603104854673351}
-  mouseSensitivity: 2
   zRotation: 0
+  mouseSensitivity: 2
 --- !u!114 &2537338150754857947
 MonoBehaviour:
   m_ObjectHideFlags: 0
