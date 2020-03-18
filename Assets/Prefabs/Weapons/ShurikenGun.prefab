@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8431848206516928053}
-  - component: {fileID: 8431848206516928055}
   - component: {fileID: 8431848206516928052}
+  - component: {fileID: -7681474507248471056}
   m_Layer: 10
   m_Name: ShurikenGun
   m_TagString: Untagged
@@ -33,26 +33,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8431848206516928055
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8431848206516928058}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 36ff3026b8974ae44844c9a393998dba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bullet: {fileID: 0}
-  bulletEmiter: {fileID: 8431848207487731172}
-  animator: {fileID: 8431848206516928052}
-  speed: 4000
-  reloadTime: 2
-  fireRate: 15
-  spread: 0.1
-  maxAmmo: 10
 --- !u!95 &8431848206516928052
 Animator:
   serializedVersion: 3
@@ -72,6 +52,26 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &-7681474507248471056
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8431848206516928058}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c6c0668471daa341b06971809b9bebe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bullet: {fileID: 2693863253237791218, guid: 3c1b26a29c30dfd4e80d4d324a4b33cb, type: 3}
+  bulletEmiter: {fileID: 8431848207487731172}
+  animator: {fileID: 8431848206516928052}
+  speed: 100
+  reloadTime: 2
+  fireRate: 15
+  spread: 0.1
+  maxAmmo: 10
 --- !u!1 &8431848207487731172
 GameObject:
   m_ObjectHideFlags: 0

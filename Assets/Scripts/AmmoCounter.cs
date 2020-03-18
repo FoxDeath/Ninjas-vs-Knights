@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
 
 public class AmmoCounter : MonoBehaviour
@@ -10,6 +9,7 @@ public class AmmoCounter : MonoBehaviour
     void Awake()
     {
         TextMeshProUGUI[] texts = gameObject.GetComponentsInChildren<TextMeshProUGUI>();
+        
         foreach(TextMeshProUGUI text in texts)
         {
             if(text.name.Equals("CurrentAmmo"))

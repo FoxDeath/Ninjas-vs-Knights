@@ -388,7 +388,7 @@ MonoBehaviour:
     m_ActionName: Ninja/Sprint[/Keyboard/leftShift]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 999806970}
+      - m_Target: {fileID: 6946269056364124733}
         m_MethodName: FireInput
         m_Mode: 0
         m_Arguments:
@@ -403,7 +403,7 @@ MonoBehaviour:
     m_ActionName: Ninja/Fire[/Mouse/leftButton]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 999806970}
+      - m_Target: {fileID: 6946269056364124733}
         m_MethodName: ScopeInput
         m_Mode: 0
         m_Arguments:
@@ -418,7 +418,7 @@ MonoBehaviour:
     m_ActionName: Ninja/Scope[/Mouse/rightButton]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 999806970}
+      - m_Target: {fileID: 6946269056364124733}
         m_MethodName: ReloadInput
         m_Mode: 0
         m_Arguments:
@@ -527,6 +527,26 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 2d82f41a-d418-47d2-b863-dc6db34d7571
     m_ActionName: Ninja/SwitchWeapon[/Mouse/forwardButton,/Mouse/backButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 7a0fddce-dc0a-4c4b-864a-444ff849b4c4
+    m_ActionName: Knight/Crouch[/Keyboard/leftCtrl]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: cb2acbdb-76c3-460e-b4b7-5a669e1b7c31
+    m_ActionName: Knight/Scope[/Mouse/rightButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ee974e1e-f8ab-442b-a957-cee121c1205c
+    m_ActionName: Knight/ScopeZoom[/Keyboard/q]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 99442510-9d27-4c80-b1b4-d328aa5fb7d1
+    m_ActionName: Knight/JatpackCharge[/Keyboard/f]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 1af5e068-4066-42de-a401-6cb0c33b7e98
+    m_ActionName: Knight/AOEAttack[/Keyboard/e]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Ninja
@@ -861,6 +881,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2056603105755295628}
     m_Modifications:
+    - target: {fileID: -7681474507248471056, guid: 5b991d4c1b0bde448a6b84425db5d414,
+        type: 3}
+      propertyPath: speed
+      value: 2000
+      objectReference: {fileID: 0}
+    - target: {fileID: -7681474507248471056, guid: 5b991d4c1b0bde448a6b84425db5d414,
+        type: 3}
+      propertyPath: spread
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5006340423061547518, guid: 5b991d4c1b0bde448a6b84425db5d414,
         type: 3}
       propertyPath: m_Name
@@ -940,16 +970,16 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 8431848206675175885}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &999806970 stripped
+--- !u!114 &6946269056364124733 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8431848206516928055, guid: 5b991d4c1b0bde448a6b84425db5d414,
+  m_CorrespondingSourceObject: {fileID: -7681474507248471056, guid: 5b991d4c1b0bde448a6b84425db5d414,
     type: 3}
   m_PrefabInstance: {fileID: 8431848206675175885}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 36ff3026b8974ae44844c9a393998dba, type: 3}
+  m_Script: {fileID: 11500000, guid: 8c6c0668471daa341b06971809b9bebe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &8483394145403542389

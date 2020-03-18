@@ -27,11 +27,15 @@ public class EdgeHang : MonoBehaviour
 
     void FixedUpdate()
     {
+
         RaycastHit handHit;
         RaycastHit footHit;
 
+        Debug.DrawRay(transform.position + new Vector3(0.0f, 1.5f, 0.0f), transform.forward * 1.2f);
+        Debug.DrawRay(transform.position + new Vector3(0.0f, 1.4f, 0.0f), transform.forward * 1.2f);
+
         // hand raycast
-        if(Physics.Raycast(transform.position + new Vector3(0.0f, 1.5f, 0.0f) + transform.forward, -transform.up, out handHit, 1f))
+        if(Physics.Raycast(transform.position + new Vector3(0.0f, 1.5f, 0.0f), transform.forward, out handHit, 1.2f))
         {
             handIK = true;
             handPosition = handHit.point - handOffset;
@@ -45,7 +49,7 @@ public class EdgeHang : MonoBehaviour
         }
 
         // foot raycast
-        if(Physics.Raycast(transform.position + new Vector3(0.0f, -0.5f, 0.0f), transform.forward, out footHit, 1f))
+        if(Physics.Raycast(transform.position + new Vector3(0.0f, 1.4f, 0.0f), transform.forward, out footHit, 1.2f))
         {
             footIK = true;
             footPosition = footHit.point - footOffset;
@@ -58,7 +62,7 @@ public class EdgeHang : MonoBehaviour
 
         if(canHang)
         {
-            if (handIK && footIK)
+            if (!handIK && footIK)
             {
                 if(!playerMovement.edgeHanging)
                 {       

@@ -1037,7 +1037,6 @@ GameObject:
   - component: {fileID: 5979411463205964829}
   - component: {fileID: 46135054}
   - component: {fileID: 46135055}
-  - component: {fileID: 3737047537577588152}
   - component: {fileID: 1139407073}
   m_Layer: 8
   m_Name: KnightPlayer
@@ -1374,7 +1373,7 @@ MonoBehaviour:
     m_Bits: 512
   fpsCamera: {fileID: 5979411464056459426}
   jumpHeight: 3
-  speed: 3
+  speed: 7
   dashForce: 10
   jetpackForce: 100
   chargeForce: 5
@@ -1492,22 +1491,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &3737047537577588152
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5979411463758342020}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0908278e6ae20e6448b774fbe1119a33, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  range: 10
-  damage: 30
-  upwardsForce: 10
-  pushForce: 10
 --- !u!114 &1139407073
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2128,15 +2111,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ca21aacd68ae0b44fa214d89193c890b, type: 3}
---- !u!95 &1656160948 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 7164216275327251910, guid: ca21aacd68ae0b44fa214d89193c890b,
-    type: 3}
-  m_PrefabInstance: {fileID: 7164216275886208882}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1656160947 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7164216275327251905, guid: ca21aacd68ae0b44fa214d89193c890b,
+    type: 3}
+  m_PrefabInstance: {fileID: 7164216275886208882}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &1656160948 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 7164216275327251910, guid: ca21aacd68ae0b44fa214d89193c890b,
     type: 3}
   m_PrefabInstance: {fileID: 7164216275886208882}
   m_PrefabAsset: {fileID: 0}

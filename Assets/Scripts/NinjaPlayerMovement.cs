@@ -5,9 +5,9 @@ using UnityEngine.InputSystem;
 public class NinjaPlayerMovement : MonoBehaviour
 {
     [SerializeField] public CharacterController controller;
-    [SerializeField] private Transform groundCheck;
-    [SerializeField] private LayerMask groundMask;
-    [SerializeField] private Camera fpsCamera;
+    [SerializeField] Transform groundCheck;
+    [SerializeField] LayerMask groundMask;
+    [SerializeField] Camera fpsCamera;
     private PauseMenu pauseMenu;
     private AudioManager audioManager;
     private EdgeClimb edgeClimb;
@@ -65,7 +65,7 @@ public class NinjaPlayerMovement : MonoBehaviour
 
         if (sprinting && vertical <= 0)
         {
-            SprintSwitch(false);
+            Sprint(false);
         }
     }
 
@@ -75,6 +75,7 @@ public class NinjaPlayerMovement : MonoBehaviour
         {
             return;
         }
+
         if (edgeHanging)
         {
             velocity.y = 0f;
@@ -86,7 +87,6 @@ public class NinjaPlayerMovement : MonoBehaviour
 
         Move();
         MoveAudio();
-
         Fall();
 
         velocity.y = Mathf.Clamp(velocity.y, -25f, 15f);
@@ -167,7 +167,6 @@ public class NinjaPlayerMovement : MonoBehaviour
                 move = (transform.right * horizontal + transform.forward * vertical) * speed * 0.8f;
             }
         }
-
             controller.Move(move * Time.deltaTime);
     }
 
@@ -204,7 +203,7 @@ public class NinjaPlayerMovement : MonoBehaviour
         {
             if (edgeHanging)
             {
-                edgeClimb.StartEdgeClimb();
+                edgeClimb.EdgeClimbStart();
             }
             else
             {
@@ -235,13 +234,10 @@ public class NinjaPlayerMovement : MonoBehaviour
 
     IEnumerator WallJump()
     {
-
         wallJumping = true;
-
         velocity.x = wallJupmForce * normal.x;
         velocity.z = wallJupmForce * normal.z;
         velocity.y = Mathf.Sqrt(jumpHeight * 50f);
-
         move.x = lastMove.x;
 
         yield return new WaitForSeconds(0.5f);
@@ -253,15 +249,15 @@ public class NinjaPlayerMovement : MonoBehaviour
     {
         if (context.action.phase == InputActionPhase.Started && !sprinting && vertical > 0)
         {
-            SprintSwitch(true);
+            Sprint(true);
         }
         else if (context.action.phase == InputActionPhase.Canceled && sprinting)
         {
-            SprintSwitch(false);
+            Sprint(false);
         }
     }
 
-    void SprintSwitch(bool state)
+    void Sprint(bool state)
     {
         if (state == true && sprinting == false)
         {

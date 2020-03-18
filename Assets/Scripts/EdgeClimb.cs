@@ -1,7 +1,5 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class EdgeClimb : MonoBehaviour
 {
@@ -11,7 +9,6 @@ public class EdgeClimb : MonoBehaviour
     private Camera parkourCamera;
     private Camera mainCamera;
 
-    // Start is called before the first frame update
     void Start()
     {
         playerMovement = GetComponent<NinjaPlayerMovement>();
@@ -21,13 +18,13 @@ public class EdgeClimb : MonoBehaviour
         mainCamera = gameObject.transform.Find("Main Camera").GetComponent<Camera>();
     }
 
-    public void StartEdgeClimb()
+    public void EdgeClimbStart()
     {
-        StartCoroutine(EdgeClimbing());
+        StartCoroutine(EdgeClimbBehaviour());
         StartCoroutine(MovePlayer());
     }
 
-    IEnumerator EdgeClimbing()
+    IEnumerator EdgeClimbBehaviour()
     {
         parkourCamera.gameObject.SetActive(true);
         mainCamera.gameObject.SetActive(false);
@@ -38,7 +35,9 @@ public class EdgeClimb : MonoBehaviour
 
         playerMovement.edgeHanging = false;
         playerMovement.edgeClimbing = true;
+
         yield return new WaitForSeconds(1f);
+        
         playerMovement.edgeClimbing = false;
 
         mainCamera.gameObject.SetActive(true);

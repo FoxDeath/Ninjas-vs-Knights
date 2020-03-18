@@ -1,121 +1,32 @@
-﻿using System.Collections;
-using UnityEngine;
-using UnityEngine.InputSystem;
+﻿using UnityEngine;
 
-public class Shuriken :  MonoBehaviour, IWeapon
+public class Shuriken : MonoBehaviour
 {
-    [SerializeField] GameObject bullet;
-    [SerializeField] GameObject bulletEmiter;
-    [SerializeField] Animator animator;
-    private AudioManager audioManager;
+    private Rigidbody rigidBody;
 
-    private AmmoCounter ammoCounter;
-    
-    [SerializeField] float speed = 100f;
-    [SerializeField] float reloadTime = 2f;
-    [SerializeField] float fireRate = 15f;
-    private float nextTimeToFire = 0f;
-    [SerializeField] float spread = 0.1f;
+    [SerializeField] float damage = 10f;
 
-    [SerializeField] int maxAmmo = 10;
-    private int currentAmmo;
-
-    private bool isReloading;
-    private bool isScoped;
-
-    void Start()
+    void Awake()
     {
-        audioManager = FindObjectOfType<AudioManager>();
-        currentAmmo = maxAmmo;
-        ammoCounter = (AmmoCounter)FindObjectOfType(typeof(AmmoCounter));
-        ammoCounter.SetMaxAmmo(maxAmmo);
-        ammoCounter.SetCurrentAmmo(currentAmmo);
+        rigidBody = GetComponent<Rigidbody>();
     }
 
-    public void FireInput(InputAction.CallbackContext context)
+    private void OnCollisionEnter(Collision collision)
     {
-        if (context.phase == InputActionPhase.Performed && Time.time >= nextTimeToFire && !isReloading)
+        Target target = collision.gameObject.transform.GetComponent<Target>();
+
+        if(target)
         {
-            if (currentAmmo > 0)
-            {
-                currentAmmo--;
-                nextTimeToFire = Time.time + 1f / fireRate;
-                Fire();
-            }
-            else
-            {
-                StartCoroutine(Reloading());
-                return;
-            }
-        }
-    }
-
-    void Update()
-    {
-        ammoCounter.SetCurrentAmmo(currentAmmo);
-    }
-
-    void Fire()
-    {
-        audioManager.Play("ShurikenShoot");
-
-        Vector3 shootDirection = bulletEmiter.transform.forward;
-        shootDirection.x += Random.Range(-spread, spread);
-        shootDirection.y += Random.Range(-spread, spread);
-
-        GameObject instantiateBullet = Instantiate(bullet, bulletEmiter.transform.position, bulletEmiter.transform.rotation);
-        Rigidbody temporaryRigidbody = instantiateBullet.GetComponentInChildren<Rigidbody>();
-
-        if (!isScoped)
-        {
-            temporaryRigidbody.AddForce(shootDirection * speed);
-        }
-        else
-        {
-            temporaryRigidbody.AddForce(bulletEmiter.transform.forward * speed);
+            target.TakeDamage(damage);
         }
 
-        Destroy(instantiateBullet, 2f);
-    }
-
-    public void ScopeInput(InputAction.CallbackContext context)
-    {
-        if (context.phase == InputActionPhase.Performed)
+        if(collision.gameObject.layer != LayerMask.NameToLayer("Player"))
         {
-            isScoped = !isScoped;
-            animator.SetBool("Scoped", isScoped);
+            FindObjectOfType<AudioManager>().Play("ShurikenHit", GetComponent<AudioSource>());
+            rigidBody.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
+            rigidBody.isKinematic = true;
+            gameObject.transform.parent = collision.gameObject.transform;
+            Destroy(gameObject, 2f);
         }
-    }
-
-    public void ReloadInput(InputAction.CallbackContext context)
-    {
-        if (isReloading)
-        {
-            return;
-        }
-        
-        if (context.phase == InputActionPhase.Performed || currentAmmo <= 0)
-        {
-            if (currentAmmo < maxAmmo)
-            {
-                StartCoroutine(Reloading());
-                return;
-            }
-        }
-    }
-
-    IEnumerator Reloading()
-    {
-        isReloading = true;
-        audioManager.Play("Reload");
-
-
-        animator.SetBool("Reloading", true);
-        yield return new WaitForSeconds(reloadTime - .25f);
-        animator.SetBool("Reloading", false);
-        yield return new WaitForSeconds(.25f);
-
-        currentAmmo = maxAmmo;
-        isReloading = false;
     }
 }

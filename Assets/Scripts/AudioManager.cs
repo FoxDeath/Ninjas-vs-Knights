@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using System;
+﻿using System;
 using UnityEngine;
-using UnityEngine.Audio;
 
 public class AudioManager : MonoBehaviour
 {
@@ -39,11 +37,14 @@ public class AudioManager : MonoBehaviour
         {
             return;
         }
+
         Sound s = Array.Find(sounds, sound => sound.name.Equals(name));
+
         if(s == null)
         {
             return;
         }
+
         if(source != null)
         {
             s.source = source;
@@ -52,23 +53,26 @@ public class AudioManager : MonoBehaviour
             s.source.pitch = s.pitch;
             s.source.loop = s.loop;
         }
+
         s.source.Play();
         s.isPlaying = true;
     }
 
     public void Stop(string name)
     {
-        if (!IsPlaying(name))
+        if(!IsPlaying(name))
         {
             return;
         }
         else
         {
             Sound s = Array.Find(sounds, sound => sound.name == name);
-            if (s == null)
+            
+            if(s == null)
             {
                 return;
             }
+
             s.source.Stop();
             s.isPlaying = false;
         }
@@ -88,31 +92,36 @@ public class AudioManager : MonoBehaviour
     public bool IsPlaying(string name)
     {
         Sound s = Array.Find(sounds, sound => sound.name == name);
+        
         if(s == null)
         {
             return false;
         }
+
         return s.isPlaying;
     }
 
     public void SetPitch(string name, float pitch)
     {
         Sound s = Array.Find(sounds, sound => sound.name == name);
+        
         if(s == null || pitch < 0 || pitch > 3)
         {
             return;
         }
-        s.source.pitch = pitch;
-        
+
+        s.source.pitch = pitch; 
     }
 
     public float GetPitch(string name)
     {
         Sound s = Array.Find(sounds, sound => sound.name == name);
-        if(s == null)
+        
+        if(s == null) 
         {
             return 0f;
         }
+
         return s.source.pitch;
     }
 

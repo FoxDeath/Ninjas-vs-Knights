@@ -7,7 +7,12 @@ public class CrossBow : MonoBehaviour, IWeapon
     [SerializeField] float range = 100f;
     [SerializeField] float fireRate = 50f;
     [SerializeField] float pushForce = 10f;
+    private float nextTimeToFire = 0f;
+    private float scopedFOV;
+    private float[] scopedFOVs = {5f, 10f, 15f, 20f};
+    private float maxMouseSensitivity;
 
+    private AudioManager audioManager;
     [SerializeField] Camera fpsCam;
     [SerializeField] Camera weaponCam;
     [SerializeField] GameObject player;
@@ -20,16 +25,14 @@ public class CrossBow : MonoBehaviour, IWeapon
 
     private AmmoCounter ammoCounter;
 
-    private float nextTimeToFire = 0f;
-    private float scopedFOV;
-    private float[] scopedFOVs = {5f, 10f, 15f, 20f};
     private int currentScopedFOV;
-    private float maxMouseSensitivity;
 
-    private bool isScoped;
+    private bool scoping;
 
     void Start()
     {
+        audioManager = FindObjectOfType<AudioManager>();
+
         ammoCounter = (AmmoCounter)FindObjectOfType(typeof(AmmoCounter));
         ammoCounter.SetMaxAmmo(1);
         ammoCounter.SetCurrentAmmo(1);
@@ -47,7 +50,7 @@ public class CrossBow : MonoBehaviour, IWeapon
 
     private void SetAmmo()
     {
-        if (Time.time >= nextTimeToFire - 0.1f)
+        if(Time.time >= nextTimeToFire - 0.1f)
         {
             ammoCounter.SetCurrentAmmo(1);
         }
@@ -61,18 +64,21 @@ public class CrossBow : MonoBehaviour, IWeapon
     {
         if(context.phase == InputActionPhase.Performed && Time.time >= nextTimeToFire)
         {
-            nextTimeToFire = Time.time + 1/fireRate;
-            Shoot();
+            nextTimeToFire = Time.time + 1 / fireRate;
+            Fire();
         }
     }
 
-    void Shoot()
+    void Fire()
     {
-        FindObjectOfType<AudioManager>().Play("Laser");
         RaycastHit hit;
+
+        audioManager.Play("Laser");
+
         if(Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out hit, range, layerMask))
         {
             Target target = hit.transform.GetComponent<Target>();
+
             if(target)
             {
                 target.TakeDamage(damage);
@@ -84,7 +90,6 @@ public class CrossBow : MonoBehaviour, IWeapon
             hit.rigidbody.AddForce(-hit.normal * pushForce);
         }
 
-        
         if(hit.transform && hit.transform != player.transform)
         {
             GameObject arrow = Instantiate(arrowPrefab, hit.point, fpsCam.transform.rotation);
@@ -97,9 +102,9 @@ public class CrossBow : MonoBehaviour, IWeapon
     {
         if(context.phase == InputActionPhase.Performed)
         {
-            isScoped = !isScoped;
-            crossbowAnimator.SetBool("Scoped", isScoped);
-            shieldAnimator.SetBool("Scoped", isScoped);
+            scoping = !scoping;
+            crossbowAnimator.SetBool("Scoped", scoping);
+            shieldAnimator.SetBool("Scoped", scoping);
             Invoke("Scope", 0.15f);
         }
     }
@@ -113,7 +118,8 @@ public class CrossBow : MonoBehaviour, IWeapon
                 currentScopedFOV = scopedFOVs.Length;
                 fpsCam.GetComponent<MouseLook>().mouseSensitivity = 10f;
             }
-            currentScopedFOV --;
+
+            currentScopedFOV--;
             scopedFOV = scopedFOVs[currentScopedFOV];
             Scope();
         }
@@ -121,10 +127,11 @@ public class CrossBow : MonoBehaviour, IWeapon
 
     private void Scope()
     {
-        gameUI.SetActive(!isScoped);
-        scopeOverlay.SetActive(isScoped);
-        weaponCam.gameObject.SetActive(!isScoped);
-        if(isScoped)
+        gameUI.SetActive(!scoping);
+        scopeOverlay.SetActive(scoping);
+        weaponCam.gameObject.SetActive(!scoping);
+        
+        if(scoping)
         {
             fpsCam.fieldOfView = scopedFOV; 
             fpsCam.GetComponent<MouseLook>().mouseSensitivity = maxMouseSensitivity / (1.3f * scopedFOVs.Length - currentScopedFOV);
