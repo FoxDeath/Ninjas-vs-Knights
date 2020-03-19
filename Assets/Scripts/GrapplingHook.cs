@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
 
@@ -8,22 +6,25 @@ using UnityEngine.InputSystem;
 public class GrapplingHook : MonoBehaviour
 {
 
-    [SerializeField] GameObject hook;
-    [SerializeField] GameObject hookHolder;
-    [SerializeField] GameObject player;
+    private GameObject hook;
+    private GameObject hookHolder;
+    private GameObject player;
     private AudioManager audioManager;
-
     private LineRenderer rope;
+    [HideInInspector] public GameObject hookedObject;
+
     [SerializeField] float hookTravelSpeed = 40f;
-
-    public bool fired;
-    public GameObject hookedObject;
-
     [SerializeField] float maxDistance = 20f;
+    [SerializeField] float detachDistance = 5f;
     private float currentDistance;
+
+    public bool firing;
 
     void Start()
     {
+        hook = GetComponentInChildren<HookDetector>().gameObject;
+        hookHolder = GameObject.Find("HookHolder");
+        player = GetComponentInParent<GrapplingHookMovement>().gameObject;
         audioManager = FindObjectOfType<AudioManager>();
     }
     
@@ -33,22 +34,26 @@ public class GrapplingHook : MonoBehaviour
         ReturnHook();
     }
 
+    //Fire and move the hook,
+    //Draw a line to the hook from the hook holder
+    //If the hook travels too far return it
     private void Hook()
     {
-        if (fired)
+        if(firing)
         {
             rope = GetComponent<LineRenderer>();
             rope.positionCount = 2;
             rope.SetPosition(0, hookHolder.transform.position);
             rope.SetPosition(1, hook.transform.position);
         }
-        if (fired && !player.GetComponent<GrapplingHookMovement>().isHooked)
+
+        if(firing && !player.GetComponent<GrapplingHookMovement>().hooking)
         {
             hook.transform.parent = null;
             hook.transform.Translate(-Vector3.forward * Time.deltaTime * hookTravelSpeed);
             currentDistance = Vector3.Distance(player.transform.position, hook.transform.position);
 
-            if (currentDistance >= maxDistance)
+            if(currentDistance >= maxDistance)
             {
                 EndHook();
             }
@@ -57,27 +62,30 @@ public class GrapplingHook : MonoBehaviour
 
     public void HookInput(InputAction.CallbackContext context)
     {
-        if(!fired && context.action.phase == InputActionPhase.Started)
+        if(!firing && context.action.phase == InputActionPhase.Started)
         { 
             audioManager.Play("GrapplingShooting");
         }
 
-        fired = true;
-        if (context.canceled)
+        firing = true;
+
+        if(context.canceled)
         {
             EndHook();
         }
     }
 
+    //If player is hooked to a target, calculate the distance between it and the player
+    //If player is too close to the hook, detatch it
     public void ReturnHook()
     {
-        if (player.GetComponent<GrapplingHookMovement>().isHooked)
+        if(player.GetComponent<GrapplingHookMovement>().hooking)
         {
             hook.transform.parent = hookedObject.transform;
 
             float distanceToHook = Vector3.Distance(player.transform.position, hook.transform.position);
 
-            if (distanceToHook < 5f)
+            if(distanceToHook < detachDistance)
             {
                 EndHook();
             }
@@ -85,6 +93,7 @@ public class GrapplingHook : MonoBehaviour
         
     }
 
+    //Return the hook to the hook holder
     private void EndHook()
     {
         rope.positionCount = 0;
@@ -93,7 +102,7 @@ public class GrapplingHook : MonoBehaviour
         hook.transform.rotation = hookHolder.transform.rotation;
         hook.transform.position = hookHolder.transform.position;
         hook.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
-        fired = false;
-        player.GetComponent<GrapplingHookMovement>().isHooked = false;
+        firing = false;
+        player.GetComponent<GrapplingHookMovement>().hooking = false;
     }
 }
