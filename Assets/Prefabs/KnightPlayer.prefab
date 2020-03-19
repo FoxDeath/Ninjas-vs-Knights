@@ -1246,8 +1246,8 @@ MonoBehaviour:
     m_ActionName: Ninja/PauseMenu
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5979411463205964829}
-        m_MethodName: Pause
+      - m_Target: {fileID: 4827913709872832600}
+        m_MethodName: PauseInput
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1619,9 +1619,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7898204828edc427699458e8c980bd29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerBody: {fileID: 5979411463758342022}
-  mouseSensitivity: 5
   zRotation: 0
+  mouseSensitivity: 5
 --- !u!114 &1139407074
 MonoBehaviour:
   m_ObjectHideFlags: 0
