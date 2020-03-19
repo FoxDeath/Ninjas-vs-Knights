@@ -1035,9 +1035,7 @@ GameObject:
   - component: {fileID: 5979411463758342021}
   - component: {fileID: 5979411463758342023}
   - component: {fileID: 5979411463205964829}
-  - component: {fileID: 46135054}
   - component: {fileID: 46135055}
-  - component: {fileID: 1139407073}
   - component: {fileID: 4827913709872832600}
   m_Layer: 8
   m_Name: KnightPlayer
@@ -1322,7 +1320,7 @@ MonoBehaviour:
     m_ActionName: Knight/ScopeZoom[/Keyboard/q]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1139407073}
+      - m_Target: {fileID: 0}
         m_MethodName: AOEInput
         m_Mode: 0
         m_Arguments:
@@ -1381,19 +1379,6 @@ MonoBehaviour:
   maxJetpackFuel: 5
   fallDecrease: 2
   jetpackOn: 0
---- !u!114 &46135054
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5979411463758342020}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc237b84f89ad4643b22c7ce498e8b24, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  slider: {fileID: 0}
 --- !u!82 &46135055
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1490,22 +1475,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &1139407073
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5979411463758342020}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0908278e6ae20e6448b774fbe1119a33, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  range: 20
-  damage: 20
-  upwardsForce: 600
-  pushForce: 500
 --- !u!114 &4827913709872832600
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2121,15 +2090,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ca21aacd68ae0b44fa214d89193c890b, type: 3}
---- !u!95 &1656160948 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 7164216275327251910, guid: ca21aacd68ae0b44fa214d89193c890b,
-    type: 3}
-  m_PrefabInstance: {fileID: 7164216275886208882}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1656160947 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7164216275327251905, guid: ca21aacd68ae0b44fa214d89193c890b,
+    type: 3}
+  m_PrefabInstance: {fileID: 7164216275886208882}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &1656160948 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 7164216275327251910, guid: ca21aacd68ae0b44fa214d89193c890b,
     type: 3}
   m_PrefabInstance: {fileID: 7164216275886208882}
   m_PrefabAsset: {fileID: 0}
