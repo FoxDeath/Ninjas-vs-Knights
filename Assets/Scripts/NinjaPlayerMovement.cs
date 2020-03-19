@@ -49,12 +49,15 @@ public class NinjaPlayerMovement : MonoBehaviour
     void Update()
     {
         //isGrounded is true if the groundCheck object is touching the Ground layer
-        isGrounded = Physics.CheckSphere(groundCheck.position, groungDistance, groundMask);
-
         if(!isGrounded)
         {
-            audioManager.Play("Falling");
+            isGrounded = Physics.CheckSphere(groundCheck.position, groungDistance, groundMask);
+            if(isGrounded)
+            {
+                audioManager.Play("Falling");
+            }
         }
+        isGrounded = Physics.CheckSphere(groundCheck.position, groungDistance, groundMask);
 
         //if sprinting and moving backwards
         if(sprinting && vertical <= 0)
@@ -137,7 +140,7 @@ public class NinjaPlayerMovement : MonoBehaviour
     }
 
     //gets input from NinjaPlayerInput script
-    public void GetMoveInput(Vector2 moveInput)
+    public void SetMoveInput(Vector2 moveInput)
     {
         horizontal = moveInput.x;
         vertical = moveInput.y;

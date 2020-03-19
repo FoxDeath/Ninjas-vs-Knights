@@ -73,6 +73,6 @@ public class NinjaPlayerInput : MonoBehaviour
     public void MoveInput(InputAction.CallbackContext context)
     {
         //passes on the move vector to the movement script
-        playerMovement.GetMoveInput(context.ReadValue<Vector2>());
+        playerMovement.SetMoveInput(context.ReadValue<Vector2>());
     }
 }
