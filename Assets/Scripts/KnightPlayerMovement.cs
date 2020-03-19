@@ -169,7 +169,13 @@ public class KnightPlayerMovement : MonoBehaviour
     }
 
     public void Jump()
-    {
+    {   
+        //Cant jump while crouching
+        if(crouching)
+        {
+            return;
+        }
+        
         if (isGrounded)
         {
             audioManager.Play("Jump");
@@ -275,35 +281,8 @@ public class KnightPlayerMovement : MonoBehaviour
 
     IEnumerator DashBehaviour()
     {
-        //If the player is on the ground and it dashes then you dash in the direction you are moving towards
-        if(!jetpackOn && isGrounded)
-        {
-            canDash = false;
-            dashing = true;
-            SendMessage("SetSliderColour", Color.red);
-
-            audioManager.Play("Jetpack Dash");
-
-            float oldVertical = vertical;
-            float oldHorizontal = horizontal;
-
-            vertical = dashForce * movementInput.y;
-            horizontal = dashForce * movementInput.x;
-
-            yield return new WaitForSeconds(0.4f);
-            
-            dashing = false;
-
-            vertical = oldVertical;
-            horizontal = oldHorizontal;
-
-            yield return new WaitForSeconds(2f);
-
-            canDash = true;
-            SendMessage("SetSliderColour", Color.green);
-        }
         //If the player is not on the ground and you dash it dashes in the direction he is looking at
-        else if(!isGrounded)
+        if(!isGrounded)
         {
             canDash = false;
             dashing = true;
@@ -408,7 +387,13 @@ public class KnightPlayerMovement : MonoBehaviour
     }
     
     public void Crouch(bool crouching)
-    {
+    {   
+        //You can't crouch if you are not on the ground
+        if(!isGrounded)
+        {
+            return;
+        }
+
         if(crouching)
         {
             this.crouching = true;
