@@ -1,35 +1,33 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 
 //TO DO: Refactor(Ben)
 public class HookDetector : MonoBehaviour
 {
-    private GameObject grapplingHook;
-    private GameObject player;
+    [SerializeField] GameObject hookHolder;
+    [SerializeField] GameObject player;
     private AudioManager audioManager;
 
     void Start()
     {
-        grapplingHook = GetComponentInParent<GrapplingHook>().gameObject;
-        player = GetComponentInParent<GrapplingHookMovement>().gameObject;
         audioManager = FindObjectOfType<AudioManager>();
     }
 
-    //When colliding, check if the collider is a hookable object, if it is attach to it
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag.Equals("Hookable") && grapplingHook.GetComponent<GrapplingHook>().firing)
+        if (other.tag == "Hookable" && hookHolder.GetComponent<GrapplingHook>().fired)
         {
-            player.GetComponent<GrapplingHookMovement>().hooking = true;
-            grapplingHook.GetComponent<GrapplingHook>().hookedObject = other.gameObject;
+            player.GetComponent<GrapplingHookMovement>().isHooked = true;
+            hookHolder.GetComponent<GrapplingHook>().hookedObject = other.gameObject;
             audioManager.Play("GrapplingConnecting", GetComponent<AudioSource>());
         }
     }
 
-    //Play audio when detaching
     private void OnTriggerExit(Collider other)
     {
-        if(other.tag.Equals("Hookable"))
+        if (other.tag == "Hookable")
         {
             audioManager.Play("GrapplingDisconnecting", GetComponent<AudioSource>());
         }
