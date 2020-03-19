@@ -5,18 +5,6 @@ using UnityEngine.InputSystem;
 //Controlls all crossbow functionality
 public class CrossBow : MonoBehaviour, IWeapon
 {
-    [SerializeField] float damage = 10f;
-    [SerializeField] float spread = 10f;
-    [SerializeField] float range = 100f;
-    [SerializeField] float fireRate = 1f;
-    [SerializeField] float pushForce = 1000f;
-    private float nextTimeToFire = 0f;
-    private float scopedFOV;
-    private float[] scopedFOVs = {5f, 10f, 15f, 20f};
-    private float maxMouseSensitivity;
-
-    [SerializeField] GameObject scopeOverlay; //To change after UI Manager
-    [SerializeField] GameObject gameUI; //To change after UI Manager
     [SerializeField] GameObject arrowPrefab;
     [SerializeField] LayerMask layerMask;
     private AudioManager audioManager;
@@ -24,9 +12,18 @@ public class CrossBow : MonoBehaviour, IWeapon
     private Animator shieldAnimator;
     private Camera fpsCam;
     private Camera weaponCam;
+    private UIManager uiManager;
+
     private GameObject player;
 
-    private AmmoCounter ammoCounter; //To change after UI Manager
+    [SerializeField] float damage = 10f;
+    [SerializeField] float range = 100f;
+    [SerializeField] float fireRate = 1f;
+    [SerializeField] float pushForce = 1000f;
+    private float nextTimeToFire = 0f;
+    private float scopedFOV;
+    private float[] scopedFOVs = { 5f, 10f, 15f, 20f };
+    private float maxMouseSensitivity;
 
     private int currentScopedFOV;
 
@@ -41,12 +38,9 @@ public class CrossBow : MonoBehaviour, IWeapon
         weaponCam = GameObject.Find("WeaponCamera").GetComponent<Camera>();
         player = GameObject.Find("KnightPlayer");
 
-
-
-        ammoCounter = FindObjectOfType<AmmoCounter>();
-        ammoCounter.SetMaxAmmo(1);
-        ammoCounter.SetCurrentAmmo(1);
-
+        uiManager = FindObjectOfType<UIManager>();
+        uiManager.SetMaxAmmo(1);
+        uiManager.SetCurrentAmmo(1);
 
         currentScopedFOV = scopedFOVs.Length - 1;
         scopedFOV = scopedFOVs[currentScopedFOV];
@@ -62,11 +56,11 @@ public class CrossBow : MonoBehaviour, IWeapon
     {
         if(Time.time >= nextTimeToFire - 0.1f)
         {
-            ammoCounter.SetCurrentAmmo(1);
+            uiManager.SetCurrentAmmo(1);
         }
         else
         {
-            ammoCounter.SetCurrentAmmo(0);
+            uiManager.SetCurrentAmmo(0);
         }
     }
 
@@ -161,8 +155,8 @@ public class CrossBow : MonoBehaviour, IWeapon
 
     private void Scope()
     {
-        gameUI.SetActive(!scoping);
-        scopeOverlay.SetActive(scoping);
+        uiManager.SetKnightUIActive(!scoping);
+        uiManager.SetKnightScopeOverlayActive(scoping);
         weaponCam.gameObject.SetActive(!scoping);
         
         //Changes the mouse sensitivity depentding on the level of zoom

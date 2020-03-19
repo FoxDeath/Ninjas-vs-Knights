@@ -485,7 +485,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8044018665906881070}
-  - component: {fileID: 5536296871628125165}
   m_Layer: 5
   m_Name: AmmoCounter
   m_TagString: Untagged
@@ -515,15 +514,3 @@ RectTransform:
   m_AnchoredPosition: {x: -210, y: 50}
   m_SizeDelta: {x: 420, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &5536296871628125165
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9096887459653823927}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 85107008e9a62f5479835bb8b9ca0aae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

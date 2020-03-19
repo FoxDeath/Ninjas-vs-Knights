@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 
 //TO DO: Refactor(Radu)
@@ -8,13 +7,16 @@ public class KnightPlayerMovement : MonoBehaviour
 {
     [SerializeField] LayerMask groundMask;
     private CharacterController controller;
-    private GameObject groundCheck;
     private Camera fpsCamera;
     private AudioManager audioManager;
+    private UIManager uiManager;
+
+    private GameObject groundCheck;
 
     private Vector3 velocity;
     private Vector3 movement;
     private Vector3 lastMove;
+
     private Vector2 movementInput;
 
     [SerializeField] float jumpHeight = 3f;
@@ -70,6 +72,7 @@ public class KnightPlayerMovement : MonoBehaviour
         controller = GetComponent<CharacterController>();
         groundCheck = GameObject.Find("GroundCheck");
         fpsCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
+        uiManager = FindObjectOfType<UIManager>();
 
         Application.targetFrameRate = 60;
         movement = new Vector3();
@@ -185,9 +188,8 @@ public class KnightPlayerMovement : MonoBehaviour
     
     public void Jetpack()
     {
+        uiManager.SetKnightSliderValue(jetpackFuel / maxJetpackFuel);
 
-        // Observer pattern
-        SendMessage("SetSliderValue", jetpackFuel/maxJetpackFuel);
         //If the jetpack is off stops the sound and recharges the jetpack
         if(!jetpackOn)
         {
@@ -281,13 +283,40 @@ public class KnightPlayerMovement : MonoBehaviour
 
     IEnumerator DashBehaviour()
     {
+        //If the player is on the ground and it dashes then you dash in the direction you are moving towards
+        if(!jetpackOn && isGrounded)
+        {
+            canDash = false;
+            dashing = true;
+            uiManager.SetKnightSliderColour(Color.red);
+
+            audioManager.Play("Jetpack Dash");
+
+            float oldVertical = vertical;
+            float oldHorizontal = horizontal;
+
+            vertical = dashForce * movementInput.y;
+            horizontal = dashForce * movementInput.x;
+
+            yield return new WaitForSeconds(0.4f);
+            
+            dashing = false;
+
+            vertical = oldVertical;
+            horizontal = oldHorizontal;
+
+            yield return new WaitForSeconds(2f);
+
+            canDash = true;
+            uiManager.SetKnightSliderColour(Color.green);
+        }
         //If the player is not on the ground and you dash it dashes in the direction he is looking at
         if(!isGrounded)
         {
             canDash = false;
             dashing = true;
 
-            SendMessage("SetSliderColour", Color.red);
+            uiManager.SetKnightSliderColour(Color.red);
 
             audioManager.Play("Jetpack Dash");
 
@@ -316,7 +345,7 @@ public class KnightPlayerMovement : MonoBehaviour
             yield return new WaitForSeconds(2f);
 
             canDash = true;
-            SendMessage("SetSliderColour", Color.green);   
+            uiManager.SetKnightSliderColour(Color.green);
         }
     }
 
@@ -335,8 +364,6 @@ public class KnightPlayerMovement : MonoBehaviour
         {
             canCharge = false;
             charging = true;
-            
-            //audioManager.Play("");
             
             GetComponentInChildren<MouseLook>().mouseSensitivity /= 10;
 

@@ -45,7 +45,7 @@ public class EdgeHang : MonoBehaviour
         }
 
         //Foot raycast
-        if(Physics.Raycast(transform.position + new Vector3(0.0f, 1.4f, 0.0f), transform.forward, out footHit, 1.2f))
+        if(Physics.Raycast(transform.position + new Vector3(0.0f, 1f, 0.0f), transform.forward, out footHit, 1.2f))
         {
             footIK = true;
             footPosition = footHit.point - footOffset;

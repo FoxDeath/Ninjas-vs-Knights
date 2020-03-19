@@ -7,7 +7,7 @@ public class ShurikenGun :  MonoBehaviour, IWeapon
     [SerializeField] GameObject bullet;
     private GameObject bulletEmiter;
     private AudioManager audioManager;
-    private AmmoCounter ammoCounter;
+    private UIManager uiManager;
     private Animator animator;
     
     [SerializeField] float speed = 100f;
@@ -28,9 +28,9 @@ public class ShurikenGun :  MonoBehaviour, IWeapon
         audioManager = FindObjectOfType<AudioManager>();
         animator = GetComponent<Animator>();
         currentAmmo = maxAmmo;
-        ammoCounter = (AmmoCounter)FindObjectOfType(typeof(AmmoCounter));
-        ammoCounter.SetMaxAmmo(maxAmmo);
-        ammoCounter.SetCurrentAmmo(currentAmmo);
+        uiManager = (UIManager)FindObjectOfType(typeof(UIManager));
+        uiManager.SetMaxAmmo(maxAmmo);
+        uiManager.SetCurrentAmmo(currentAmmo);
 
         bulletEmiter = GameObject.Find("ShurikenEmitter");
     }
@@ -56,7 +56,7 @@ public class ShurikenGun :  MonoBehaviour, IWeapon
 
     void Update()
     {
-        ammoCounter.SetCurrentAmmo(currentAmmo);
+        uiManager.SetCurrentAmmo(currentAmmo);
     }
 
     //Makes the Gun fire a temporary shuriken, and destroyes that temporary shuriken after a few seconds.
