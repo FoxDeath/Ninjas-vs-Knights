@@ -259,3 +259,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lookRadius: 20
+  target: {fileID: 0}
+  agent: {fileID: 0}
