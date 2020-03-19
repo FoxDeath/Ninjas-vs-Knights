@@ -2,7 +2,6 @@
 using UnityEngine;
 
 
-//TO DO: Refactor(Tomi)
 public class EdgeClimb : MonoBehaviour
 {
     private NinjaPlayerMovement playerMovement;
@@ -28,11 +27,14 @@ public class EdgeClimb : MonoBehaviour
 
     IEnumerator EdgeClimbBehaviour()
     {
+        //switches cameras
         parkourCamera.gameObject.SetActive(true);
         mainCamera.gameObject.SetActive(false);
 
+        //start anim
         anim.SetTrigger("EdgeClimb");
 
+        //plays sound
         FindObjectOfType<AudioManager>().Play("Climb");
 
         playerMovement.edgeHanging = false;
@@ -42,17 +44,20 @@ public class EdgeClimb : MonoBehaviour
         
         playerMovement.edgeClimbing = false;
 
+        //switches cameras back to default
         mainCamera.gameObject.SetActive(true);
         parkourCamera.gameObject.SetActive(false);
     }
 
     IEnumerator MovePlayer()
     {
+        //gets destination position and move direction
         Vector3 targetPos = new Vector3(transform.localPosition.x, transform.localPosition.y + 3.033f, transform.localPosition.z + 1.495f);
         Vector3 moveVector = targetPos - transform.localPosition;
 
-        playerMovement.controller.Move(transform.up * moveVector.y);
 
+        //moves the player
+        playerMovement.controller.Move(transform.up * moveVector.y);
         playerMovement.controller.Move(transform.forward * moveVector.z);
 
         yield break;
