@@ -9,12 +9,12 @@ public class MainMenu : MonoBehaviour
 {
     public void PlayKnightGame()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        Loader.Load(Loader.Scene.KnightDemoLevel);
     }
 
     public void PlayNinjaGame()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 2);
+        Loader.Load(Loader.Scene.NinjaDemoLevel);
     }
 
     public void Quit()

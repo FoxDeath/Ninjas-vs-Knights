@@ -6,6 +6,6 @@ public class DDOL : MonoBehaviour
     void Awake()
     {
         DontDestroyOnLoad(gameObject);
-        SceneManager.LoadScene(1);
+        Loader.Load(Loader.Scene.MainMenu);
     }
 }
