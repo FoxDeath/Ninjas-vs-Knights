@@ -1,42 +1,36 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
-
-//TO DO: Refactor(Andrei)
 public class EdgeHang : MonoBehaviour
 {
+    private bool useIK; //used for future animations and shit
+    private bool handIK;
+    private bool footIK;
+    private bool hanging;
+
+    private Vector3 handPosition;
+    private Vector3 handOffset;
+    private Vector3 footPosition;
+    private Vector3 footOffset;
+    private Vector3 handOriginalPosition;
+    private Quaternion handRotation;
+    private Quaternion footRotation;
+    private Quaternion footRotationOffset;
+    private NinjaPlayerMovement playerMovement;
     private AudioManager audioManager;
-
-    public bool useIK; //used for future animations and shit
-    public bool handIK;
-    public bool footIK;
-    public bool canHang;
-
-    public Vector3 handPosition;
-    public Vector3 handOffset;
-    public Vector3 footPosition;
-    public Vector3 footOffset;
-    public Vector3 handOriginalPosition;
-    public Quaternion handRotation;
-    public Quaternion footRotation;
-    public Quaternion footRotationOffset;
-    public NinjaPlayerMovement playerMovement;
 
     void Start()
     {
         audioManager = FindObjectOfType<AudioManager>();
+        playerMovement = GetComponent<NinjaPlayerMovement>();
     }
 
+    //Two raycasts are created, one for the hands and one for the feet. 
     void FixedUpdate()
     {
-
         RaycastHit handHit;
         RaycastHit footHit;
 
-        Debug.DrawRay(transform.position + new Vector3(0.0f, 1.5f, 0.0f), transform.forward * 1.2f);
-        Debug.DrawRay(transform.position + new Vector3(0.0f, 1.4f, 0.0f), transform.forward * 1.2f);
-
-        // hand raycast
+        //Hand raycast, with the hands rotating coreclty when animations will be added (hopefully)
         if(Physics.Raycast(transform.position + new Vector3(0.0f, 1.5f, 0.0f), transform.forward, out handHit, 1.2f))
         {
             handIK = true;
@@ -50,7 +44,7 @@ public class EdgeHang : MonoBehaviour
             handIK = false;
         }
 
-        // foot raycast
+        //Foot raycast
         if(Physics.Raycast(transform.position + new Vector3(0.0f, 1.4f, 0.0f), transform.forward, out footHit, 1.2f))
         {
             footIK = true;
@@ -62,9 +56,9 @@ public class EdgeHang : MonoBehaviour
             footIK = false;
         }
 
-        if(canHang)
+        if(hanging)
         {
-            if (!handIK && footIK)
+            if(!handIK && footIK)
             {
                 if(!playerMovement.edgeHanging)
                 {       
@@ -81,15 +75,16 @@ public class EdgeHang : MonoBehaviour
         }
     }
 
+    //Checks the game objects tag when collision happens, to make sure if the player will be able to hang.
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
         if(hit.gameObject.tag == "EdgeHang")
         {
-            canHang = true;
+            hanging = true;
         }
         else
         {
-            canHang = false;
+            hanging = false;
         }
     }
 }

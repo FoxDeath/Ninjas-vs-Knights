@@ -2,43 +2,45 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-
-//TO DO: Refactor(Andrie)
 public class ShurikenGun :  MonoBehaviour, IWeapon
 {
     [SerializeField] GameObject bullet;
-    [SerializeField] GameObject bulletEmiter;
-    [SerializeField] Animator animator;
+    private GameObject bulletEmiter;
     private AudioManager audioManager;
-
     private AmmoCounter ammoCounter;
+    private Animator animator;
     
     [SerializeField] float speed = 100f;
     [SerializeField] float reloadTime = 2f;
     [SerializeField] float fireRate = 15f;
+    [SerializeField] float spread = 0.01f;
     private float nextTimeToFire = 0f;
-    [SerializeField] float spread = 0.1f;
 
     [SerializeField] int maxAmmo = 10;
     private int currentAmmo;
 
-    private bool isReloading;
-    private bool isScoped;
+    private bool reloading;
+    private bool scoping;
 
+    //The Gun starts with maximum ammo.
     void Start()
     {
         audioManager = FindObjectOfType<AudioManager>();
+        animator = GetComponent<Animator>();
         currentAmmo = maxAmmo;
         ammoCounter = (AmmoCounter)FindObjectOfType(typeof(AmmoCounter));
         ammoCounter.SetMaxAmmo(maxAmmo);
         ammoCounter.SetCurrentAmmo(currentAmmo);
+
+        bulletEmiter = GameObject.Find("ShurikenEmitter");
     }
 
+    //Fires the Gun when the input is performed, lowers the current ammo, and automatically starts reloading when running out of ammo.
     public void FireInput(InputAction.CallbackContext context)
     {
-        if (context.phase == InputActionPhase.Performed && Time.time >= nextTimeToFire && !isReloading)
+        if(context.phase == InputActionPhase.Performed && Time.time >= nextTimeToFire && !reloading)
         {
-            if (currentAmmo > 0)
+            if(currentAmmo > 0)
             {
                 currentAmmo--;
                 nextTimeToFire = Time.time + 1f / fireRate;
@@ -57,18 +59,21 @@ public class ShurikenGun :  MonoBehaviour, IWeapon
         ammoCounter.SetCurrentAmmo(currentAmmo);
     }
 
+    //Makes the Gun fire a temporary shuriken, and destroyes that temporary shuriken after a few seconds.
+    //The shuriken has spread, but only when the Gun isn't scoped.
     void Fire()
     {
         audioManager.Play("ShurikenShoot");
 
         Vector3 shootDirection = bulletEmiter.transform.forward;
+
         shootDirection.x += Random.Range(-spread, spread);
         shootDirection.y += Random.Range(-spread, spread);
 
         GameObject instantiateBullet = Instantiate(bullet, bulletEmiter.transform.position, bulletEmiter.transform.rotation);
         Rigidbody temporaryRigidbody = instantiateBullet.GetComponentInChildren<Rigidbody>();
 
-        if (!isScoped)
+        if(!scoping)
         {
             temporaryRigidbody.AddForce(shootDirection * speed);
         }
@@ -80,25 +85,27 @@ public class ShurikenGun :  MonoBehaviour, IWeapon
         Destroy(instantiateBullet, 2f);
     }
 
+    //Scopes the Gun.
     public void ScopeInput(InputAction.CallbackContext context)
     {
-        if (context.phase == InputActionPhase.Performed)
+        if(context.phase == InputActionPhase.Performed)
         {
-            isScoped = !isScoped;
-            animator.SetBool("Scoped", isScoped);
+            scoping = !scoping;
+            animator.SetBool("Scoped", scoping);
         }
     }
 
+    //Reloads the Gun.
     public void ReloadInput(InputAction.CallbackContext context)
     {
-        if (isReloading)
+        if(reloading)
         {
             return;
         }
         
-        if (context.phase == InputActionPhase.Performed || currentAmmo <= 0)
+        if(context.phase == InputActionPhase.Performed || currentAmmo <= 0)
         {
-            if (currentAmmo < maxAmmo)
+            if(currentAmmo < maxAmmo)
             {
                 StartCoroutine(Reloading());
                 return;
@@ -108,16 +115,19 @@ public class ShurikenGun :  MonoBehaviour, IWeapon
 
     IEnumerator Reloading()
     {
-        isReloading = true;
+        reloading = true;
+
         audioManager.Play("Reload");
 
-
         animator.SetBool("Reloading", true);
+
         yield return new WaitForSeconds(reloadTime - .25f);
+
         animator.SetBool("Reloading", false);
+
         yield return new WaitForSeconds(.25f);
 
         currentAmmo = maxAmmo;
-        isReloading = false;
+        reloading = false;
     }
 }

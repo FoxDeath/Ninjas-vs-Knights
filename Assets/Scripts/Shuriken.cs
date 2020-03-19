@@ -1,7 +1,5 @@
 ﻿using UnityEngine;
 
-
-//TO DO: Refactor(Andrei)
 public class Shuriken : MonoBehaviour
 {
     private Rigidbody rigidBody;
@@ -13,6 +11,8 @@ public class Shuriken : MonoBehaviour
         rigidBody = GetComponent<Rigidbody>();
     }
 
+    //The shuriken will do damage when it collides with the target.
+    //The shuriken does not collide with itself, and it gets destroyed after a few seconds.
     private void OnCollisionEnter(Collision collision)
     {
         Target target = collision.gameObject.transform.GetComponent<Target>();

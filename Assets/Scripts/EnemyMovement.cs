@@ -1,14 +1,12 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
 
-
-//TO DO: Refactor(Andrei)
 public class EnemyMovement : MonoBehaviour
 {
-    public float lookRadius = 10f;
+    [SerializeField] float lookRadius = 10f;
 
-    Transform target;
-    NavMeshAgent agent;
+    private Transform target;
+    private NavMeshAgent agent;
 
     void Start()
     {
@@ -16,6 +14,7 @@ public class EnemyMovement : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
     }
 
+    //The enemy starts moving towards the targets position.
     void Update()
     {
         float distance = Vector3.Distance(target.position, transform.position);
@@ -31,6 +30,7 @@ public class EnemyMovement : MonoBehaviour
         }
     }
 
+    //Makes the enemy face their target.
     void FaceTarget()
     {
         Vector3 direction = (target.position - transform.position).normalized;
@@ -38,6 +38,7 @@ public class EnemyMovement : MonoBehaviour
         transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
     }
 
+    //Draws the radius that the enemy will be able to see the target.
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
