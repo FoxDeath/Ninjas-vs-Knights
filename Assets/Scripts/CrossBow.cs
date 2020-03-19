@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 public class CrossBow : MonoBehaviour, IWeapon
 {
     [SerializeField] float damage = 10f;
+    [SerializeField] float spread = 10f;
     [SerializeField] float range = 100f;
     [SerializeField] float fireRate = 1f;
     [SerializeField] float pushForce = 1000f;
@@ -78,36 +79,56 @@ public class CrossBow : MonoBehaviour, IWeapon
         }
     }
 
-    void Fire()
+    private void Fire()
     {
+        Vector3 forwardVector = CalculatingSpread();
+
+        if(scoping)
+        {
+            forwardVector = fpsCam.transform.forward;
+        }
+
+        Debug.DrawRay(fpsCam.transform.position, (fpsCam.transform.forward * range) + new Vector3(Random.Range(0.1f, 1f), Random.Range(0.1f, 1f), Random.Range(0.1f, 1f)));
         RaycastHit hit;
 
         audioManager.Play("Laser");
 
         //Checks if the raycast hits anything and if it is a target then it takes damage
-        if(Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out hit, range, layerMask))
+        if (Physics.Raycast(fpsCam.transform.position, forwardVector, out hit, range, layerMask))
         {
             Target target = hit.transform.GetComponent<Target>();
 
-            if(target)
+            if (target)
             {
                 target.TakeDamage(damage);
             }
         }
 
         //If the target has a rigidbody then it pushes it
-        if(hit.rigidbody)
+        if (hit.rigidbody)
         {
             hit.rigidbody.AddForce(-hit.normal * pushForce);
         }
 
         //If the target has a transform that isn't the player then it puts an arrow in it
-        if(hit.transform && hit.transform != player.transform)
+        if (hit.transform && hit.transform != player.transform)
         {
             GameObject arrow = Instantiate(arrowPrefab, hit.point, fpsCam.transform.rotation);
             arrow.transform.parent = hit.transform;
             Destroy(arrow, 2.5f);
         }
+    }
+
+    //Calculating the spread of the crossbow
+    private Vector3 CalculatingSpread()
+    {
+        Vector3 forwardVector = Vector3.forward;
+        float deviation = Random.Range(0f, spread);
+        float angle = Random.Range(0f, 360f);
+        forwardVector = Quaternion.AngleAxis(deviation, Vector3.up) * forwardVector;
+        forwardVector = Quaternion.AngleAxis(angle, Vector3.forward) * forwardVector;
+        forwardVector = fpsCam.transform.rotation * forwardVector;
+        return forwardVector;
     }
 
     public void ScopeInput(InputAction.CallbackContext context)

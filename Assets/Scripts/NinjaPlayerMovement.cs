@@ -149,7 +149,7 @@ public class NinjaPlayerMovement : MonoBehaviour
     //moves the player according to its state and attributes
     private void Move()
     {
-        if((isGrounded || wallRunning) && !wallJumping)
+        if(isGrounded && !wallJumping)
         {
             doubleJumped = false;
             move = (transform.right * horizontal + transform.forward * vertical) * speed;
@@ -179,6 +179,12 @@ public class NinjaPlayerMovement : MonoBehaviour
 
     public void Jump()
     {
+        //Cant jump while crouching
+        if(crouching)
+        {
+            return;
+        }
+
         if(canWallJump && !Physics.Raycast(transform.position, transform.forward, 1.5f))
         {
             //if able to wall jump and parallel t the wall, start wall jump
@@ -232,15 +238,21 @@ public class NinjaPlayerMovement : MonoBehaviour
 
     public void Crouch(bool crouching)
     {
+        //You can't crouch if you are not on the ground
+        if(!isGrounded)
+        {
+            return;
+        }
+
         if(crouching)
         {
-            crouching = true;
+            this.crouching = true;
             transform.localScale = new Vector3(1f, 0.5f, 1f);
             speed *= 0.6f;
         }
         else
         {
-            crouching = false;
+            this.crouching = false;
             transform.localScale = new Vector3(1f, 1f, 1f);
             speed /= 0.6f;
         }
@@ -327,6 +339,11 @@ public class NinjaPlayerMovement : MonoBehaviour
 
     IEnumerator WallJump()
     {
+        if(!doubleJumped)
+        {
+            doubleJumped = true;
+        }
+
         wallJumping = true;
         velocity.x = wallJumpForce * normal.x;
         velocity.z = wallJumpForce * normal.z;
