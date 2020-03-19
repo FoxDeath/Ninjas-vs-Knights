@@ -1,19 +1,22 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.InputSystem;
 
 
 //TO DO: Refactor(Ben)
 public class GrapplingHookMovement : MonoBehaviour
 {
-    private GameObject hook;
+    [SerializeField] CharacterController controller;
+    [SerializeField] GameObject hook;
+    [SerializeField] GameObject hookHolder;
     private AudioManager audioManager;
-
-    [SerializeField] float hookSpeed = 0.8f;
-
-    public bool hooking;
+    public bool isHooked;
+    [SerializeField] float hookSpeed = 10f;
 
     void Start()
     {
-        hook = GetComponentInChildren<HookDetector>().gameObject;
         audioManager = FindObjectOfType<AudioManager>();
     }
 
@@ -22,21 +25,19 @@ public class GrapplingHookMovement : MonoBehaviour
         HookMovement();
     }
 
-    //If the player is hooking change its velocity to move towards the hook, if we land reset the velocity
     private void HookMovement()
     {
         ref Vector3 velocity = ref GetComponent<NinjaPlayerMovement>().GetVelocityByReference();
-        if(hooking)
+        if (isHooked)
         {
             if(!audioManager.IsPlaying("GrapplingHooking"))
             {
                 audioManager.Play("GrapplingHooking");
             }
-
             Vector3 hookDir = (hook.transform.position - transform.position) / hookSpeed;
             velocity += hookDir;
         }
-        else if(GetComponent<NinjaPlayerMovement>().isGrounded)
+        else if (GetComponent<NinjaPlayerMovement>().isGrounded)
         {
             velocity.x = 0f;
             velocity.z = 0f;
@@ -44,6 +45,20 @@ public class GrapplingHookMovement : MonoBehaviour
         else
         {
             audioManager.Stop("GrapplingHooking");
+        }
+    }
+
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        ref Vector3 velocity = ref GetComponent<NinjaPlayerMovement>().GetVelocityByReference();
+        if (!GetComponent<NinjaPlayerMovement>().isGrounded && isHooked &&
+            (hit.transform == hook.transform.parent ||
+            Vector3.Distance(transform.position, hook.transform.position) > Vector3.Distance(hit.point, hook.transform.position)))
+        {
+            hookHolder.GetComponent<GrapplingHook>().ReturnHook();
+            velocity.y = 0f;
+            velocity.x = 0f;
+            velocity.z = 0f;
         }
     }
 }
