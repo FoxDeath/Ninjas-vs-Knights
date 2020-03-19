@@ -6,28 +6,28 @@ using UnityEngine.InputSystem;
 //TO DO: Refactor(Radu)
 public class KnightPlayerMovement : MonoBehaviour
 {
-    [SerializeField] CharacterController controller;
-    [SerializeField] Transform groundCheck;
     [SerializeField] LayerMask groundMask;
-    [SerializeField] Camera fpsCamera;
+    private CharacterController controller;
+    private GameObject groundCheck;
+    private Camera fpsCamera;
     private AudioManager audioManager;
-    private PauseMenu pauseMenu;
+
     private Vector3 velocity;
     private Vector3 movement;
     private Vector3 lastMove;
     private Vector2 movementInput;
 
-    [SerializeField] float jumpHeight;
-    [SerializeField] float speed;
-    private float defaultSpeed;
-    [SerializeField] float dashForce;
-    [SerializeField] float jetpackForce;
-    [SerializeField] float chargeForce;
-    [SerializeField] float chargePushForce;
+    [SerializeField] float jumpHeight = 3f;
+    [SerializeField] float speed = 7f;
+    [SerializeField] float dashForce = 10f;
+    [SerializeField] float jetpackForce = 100f;
+    [SerializeField] float chargeForce = 5f;
+    [SerializeField] float chargePushForce = 100f;
     [SerializeField] float upwardsForce = 50f;
-    [SerializeField] float chargeDamage;
+    [SerializeField] float chargeDamage = 30f;
     [SerializeField] float maxJetpackFuel = 5f; 
     [SerializeField] float fallDecrease = 0.8f;
+    private float defaultSpeed;
     private float horizontal;
     private float vertical;
     private float gravity = -25f;
@@ -37,19 +37,40 @@ public class KnightPlayerMovement : MonoBehaviour
     private float jetpackFuel;
 
     private bool isGrounded;
+    private bool crouching;
+    private bool sprinting;
     private bool resetFall;
-    private bool jetpack;
+    public bool jetpackOn;
     private bool canCharge = true;
     private bool canDash = true;
     private bool dashing;
     private bool charging;
-    private bool sprinting;
-    private bool jetPacking;
-    private bool crouching;
+    private bool jetpacking;
     
-
+    #region Getters and Setters
+    public bool GetCrouching()
+    {
+        return crouching;
+    }
+    public void SetCrouching(bool crouching)
+    {
+        this.crouching = crouching;
+    }
+    public bool GetSprinting()
+    {
+        return sprinting;
+    }
+    public float GetVertical()
+    {
+        return vertical;
+    }
+    #endregion
     private void Start()
     {
+        controller = GetComponent<CharacterController>();
+        groundCheck = GameObject.Find("GroundCheck");
+        fpsCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
+
         Application.targetFrameRate = 60;
         movement = new Vector3();
         velocity = new Vector3();
@@ -57,20 +78,28 @@ public class KnightPlayerMovement : MonoBehaviour
         defaultSpeed = speed;
 
         audioManager = FindObjectOfType<AudioManager>();
-        pauseMenu = FindObjectOfType<PauseMenu>();
     }
 
     void Update()
     {
+        //Checks if the player is grounded
         if(!isGrounded)
         {
-            isGrounded = Physics.CheckSphere(groundCheck.position, groungDistance, groundMask);
+            isGrounded = Physics.CheckSphere(groundCheck.transform.position, groungDistance, groundMask);
+
+            //If it isn't grounded and becomes grounded plays falling sound
             if(isGrounded)
             {
                 audioManager.Play("Falling");
             }
         }
-        isGrounded = Physics.CheckSphere(groundCheck.position, groungDistance, groundMask);
+        isGrounded = Physics.CheckSphere(groundCheck.transform.position, groungDistance, groundMask);
+
+        //if sprinting and moving backwards
+        if(sprinting && vertical <= 0)
+        {
+            Sprint(false);
+        }
     }
 
     void FixedUpdate()
@@ -79,28 +108,31 @@ public class KnightPlayerMovement : MonoBehaviour
         {
             return;
         }
+
         velocity.y += gravity * Time.deltaTime;
 
         Move();
         MoveAudio();
+        Jetpack();
 
         Fall();
-
-        JetPackJump();
 
         velocity.y = Mathf.Clamp(velocity.y, -25f, 10f);
         controller.Move(velocity * Time.deltaTime);
     }
 
-    public void MoveInput(InputAction.CallbackContext context)
+    //Sets the move input from the PlayerInput
+    public void SetMoveInput(Vector2 movementInput)
     {
         if (!charging)
         {
-            movementInput = context.ReadValue<Vector2>();
+            this.movementInput = movementInput;
             horizontal = movementInput.x;
             vertical = movementInput.y;
         }
     }
+
+    //Moves the player acording to the "horizontal" and "vertical" atributes
     private void Move()
     {
         if (isGrounded)
@@ -117,9 +149,10 @@ public class KnightPlayerMovement : MonoBehaviour
         controller.Move(movement * Time.deltaTime);
     }
 
+    //Plays the moving sound
     private void MoveAudio()
     {
-        if(movementInput != Vector2.zero && isGrounded)
+        if(movement != Vector3.zero && isGrounded)
         {
             if(!audioManager.IsPlaying("Walking"))
             {
@@ -135,15 +168,7 @@ public class KnightPlayerMovement : MonoBehaviour
         }
     }
 
-    public void JumpInput(InputAction.CallbackContext context)
-    {
-        if (context.action.phase == InputActionPhase.Performed)
-        {
-            Jump();
-        }
-    }
-
-    private void Jump()
+    public void Jump()
     {
         if (isGrounded)
         {
@@ -151,31 +176,14 @@ public class KnightPlayerMovement : MonoBehaviour
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
     }
-
-    public void JetPackInput(InputAction.CallbackContext context)
-    {
-        if(context.action.phase == InputActionPhase.Performed)
-        {
-            jetpack = true;
-        }
-        else if(context.action.phase == InputActionPhase.Canceled)
-        {
-            jetpack = false;
-            
-            if(jetPacking)
-            {
-                speed = speed / 1.5f;
-            }
-            
-            jetPacking = false;
-        }
-    }
     
-    void JetPackJump()
+    public void Jetpack()
     {
+
         // Observer pattern
         SendMessage("SetSliderValue", jetpackFuel/maxJetpackFuel);
-        if(!jetpack)
+        //If the jetpack is off stops the sound and recharges the jetpack
+        if(!jetpackOn)
         {
             audioManager.Stop("Jetpack");
             if(isGrounded && jetpackFuel < maxJetpackFuel)
@@ -187,16 +195,25 @@ public class KnightPlayerMovement : MonoBehaviour
             {
                 currentForce = 0f;
             }
+
+            if(jetpacking)
+            {
+                speed = speed / 1.5f;
+            }
+            
+            jetpacking = false;
+
             return;
         }
+        //If the jetpack is on and it has fuel the player flies
         else if(jetpackFuel > 0f)
         {
-            if(!jetPacking)
+            if(!jetpacking)
             {
                 speed = speed * 1.5f;
             }
 
-            jetPacking = true;
+            jetpacking = true;
 
             if(!audioManager.IsPlaying("Jetpack"))
             {
@@ -216,14 +233,15 @@ public class KnightPlayerMovement : MonoBehaviour
                 velocity.y = Mathf.Sqrt(jetpackForce * -2f * gravity * currentForce);
             }
         }
+        //If the jetpack is on and it has no fuel it stops
         else if(jetpackFuel <= 0f)
         {
-            if(jetPacking)
+            if(jetpacking)
             {
                 speed = speed / 1.5f;
             }
             
-            jetPacking = false;
+            jetpacking = false;
             if(audioManager.IsPlaying("Jetpack"))
             {
                 audioManager.Stop("Jetpack");
@@ -231,36 +249,34 @@ public class KnightPlayerMovement : MonoBehaviour
         }
     }
 
-    public void SprintInput(InputAction.CallbackContext context)
+    public void Sprint(bool state)
     {
-        if (vertical > 0)
+        if (state && !sprinting)
         {
-            if (context.action.phase == InputActionPhase.Performed && !sprinting)
-            {
-                audioManager.SetPitch("Walking", audioManager.GetPitch("Walking")*2f);
-                sprinting = true;
-                speed *= 1.6f;
-            }
-            else if (context.action.phase == InputActionPhase.Canceled && sprinting)
-            {
-                sprinting = false;
-                audioManager.SetPitch("Walking", audioManager.GetPitch("Walking")/2f);
-                speed /= 1.6f;
-            }
+            audioManager.SetPitch("Walking", audioManager.GetPitch("Walking") * 2f);
+            sprinting = true;
+            speed *= 1.6f;
+        }
+        else if(!state && sprinting)
+        {
+            audioManager.SetPitch("Walking", audioManager.GetPitch("Walking") / 2f);
+            sprinting = false;
+            speed /= 1.6f;
         }
     }
 
-    public void JetPackDashInput(InputAction.CallbackContext context)
+    public void Dash()
     {
-        if(context.action.phase == InputActionPhase.Performed && canDash)
+        if(canDash)
         {
-            StartCoroutine("Dash");
+            StartCoroutine(DashBehaviour());
         }
     }
 
-    IEnumerator Dash()
+    IEnumerator DashBehaviour()
     {
-        if(!jetpack && isGrounded)
+        //If the player is on the ground and it dashes then you dash in the direction you are moving towards
+        if(!jetpackOn && isGrounded)
         {
             canDash = false;
             dashing = true;
@@ -286,6 +302,7 @@ public class KnightPlayerMovement : MonoBehaviour
             canDash = true;
             SendMessage("SetSliderColour", Color.green);
         }
+        //If the player is not on the ground and you dash it dashes in the direction he is looking at
         else if(!isGrounded)
         {
             canDash = false;
@@ -324,17 +341,18 @@ public class KnightPlayerMovement : MonoBehaviour
         }
     }
 
-    public void JetPackChargeInput(InputAction.CallbackContext context)
+    public void Charge()
     {
-        if (context.action.phase == InputActionPhase.Performed && canCharge)
+        if(canCharge)
         {
-            StartCoroutine("Charge");
+            StartCoroutine(ChargeBehaviour());
         }
     }
 
-    IEnumerator Charge()
+    //Charging attack
+    IEnumerator ChargeBehaviour()
     {
-        if (!jetpack && isGrounded && vertical > 0)
+        if (!jetpackOn && isGrounded && vertical > 0)
         {
             canCharge = false;
             charging = true;
@@ -375,10 +393,9 @@ public class KnightPlayerMovement : MonoBehaviour
         if (charging)
         {
             Target target = hit.transform.GetComponent<Target>();
-            if (target && !target.charged)
+            if (target)
             {
                 target.TakeDamage(chargeDamage);
-                target.charged = true;
             }
 
             if (hit.rigidbody)
@@ -389,25 +406,20 @@ public class KnightPlayerMovement : MonoBehaviour
             }
         }
     }
-
-    public void Crouch(InputAction.CallbackContext context)
+    
+    public void Crouch(bool crouching)
     {
-        if (context.action.phase == InputActionPhase.Started && !sprinting)
+        if(crouching)
         {
-            crouching = true;
+            this.crouching = true;
             transform.localScale = new Vector3(1f, 0.5f, 1f);
             speed *= 0.6f;
         }
-        else if (context.action.phase == InputActionPhase.Canceled && crouching)
+        else
         {
+            this.crouching = false;
             transform.localScale = new Vector3(1f, 1f, 1f);
             speed /= 0.6f;
-            crouching = false;
         }
-    }
-
-    public void Pause(InputAction.CallbackContext context)
-    {
-        pauseMenu.MenuInput();
     }
 }
