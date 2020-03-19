@@ -6,10 +6,10 @@ using UnityEngine;
 public class Target : MonoBehaviour
 {
     private Rigidbody myRigidbody;
+    private AudioManager audioManager;
 
     [SerializeField] float health = 50f;
-    private AudioManager audioManager;
-    public bool charged;
+    
     private bool dead;
 
     void Start()
@@ -31,17 +31,7 @@ public class Target : MonoBehaviour
             {
                 Die();
             }
-            if (charged)
-            {
-                StartCoroutine("ResetCharged");
-            }
         }
-    }
-
-    IEnumerator ResetCharged()
-    {
-        yield return new WaitForSeconds(2.5f);
-        charged = false;
     }
 
     void Die()

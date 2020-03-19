@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8431848206516928053}
   - component: {fileID: 8431848206516928052}
   - component: {fileID: -7681474507248471056}
+  - component: {fileID: 7491713786511049836}
   m_Layer: 10
   m_Name: ShurikenGun
   m_TagString: Untagged
@@ -72,6 +73,18 @@ MonoBehaviour:
   fireRate: 15
   spread: 0.1
   maxAmmo: 10
+--- !u!114 &7491713786511049836
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8431848206516928058}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bb991a5d36513d4785968bcf422a8df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8431848207487731172
 GameObject:
   m_ObjectHideFlags: 0

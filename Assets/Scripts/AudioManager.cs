@@ -2,7 +2,7 @@
 using UnityEngine;
 
 
-//TO DO: Refactor(Radu)
+//Audio Manager who controlls all the sounds and their behaviours
 public class AudioManager : MonoBehaviour
 {
     public Sound[] sounds;
@@ -11,6 +11,7 @@ public class AudioManager : MonoBehaviour
 
     void Awake()
     {
+        //Using the singleton pattern
         if(instance == null)
         {
             instance = this;
@@ -23,6 +24,7 @@ public class AudioManager : MonoBehaviour
 
         DontDestroyOnLoad(gameObject);
 
+        //Adding a sourse to all sounds
         foreach(Sound s in sounds)
         {
             s.source = gameObject.AddComponent<AudioSource>();
@@ -33,6 +35,8 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    /*Playing the sound whose name is the string "name" 
+    and also giving the posibility to change the audio source with the optional paramarer "source" */
     public void Play(string name, AudioSource source = null)
     {
         if(PauseMenu.GameIsPaused)
@@ -60,6 +64,7 @@ public class AudioManager : MonoBehaviour
         s.isPlaying = true;
     }
 
+    //Stopping the sound whose name is the string "name"
     public void Stop(string name)
     {
         if(!IsPlaying(name))
@@ -80,6 +85,7 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    //Stopping all sounds who are currently playing
     public void StopAll()
     {
         foreach(Sound s in sounds)
@@ -91,6 +97,7 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    //Returning true if the sound whose name is the string "name" is playing or false if it's not playing
     public bool IsPlaying(string name)
     {
         Sound s = Array.Find(sounds, sound => sound.name == name);
@@ -103,11 +110,12 @@ public class AudioManager : MonoBehaviour
         return s.isPlaying;
     }
 
+    //Setting the pitch of the sound whose name is the string "name" withing the rance 0.1 and 3
     public void SetPitch(string name, float pitch)
     {
         Sound s = Array.Find(sounds, sound => sound.name == name);
         
-        if(s == null || pitch < 0 || pitch > 3)
+        if(s == null || pitch < 0.1f || pitch > 3f)
         {
             return;
         }
@@ -115,6 +123,7 @@ public class AudioManager : MonoBehaviour
         s.source.pitch = pitch; 
     }
 
+    //Gets the pitch of the sound whose name is the string "name"
     public float GetPitch(string name)
     {
         Sound s = Array.Find(sounds, sound => sound.name == name);
@@ -127,6 +136,7 @@ public class AudioManager : MonoBehaviour
         return s.source.pitch;
     }
 
+    //Setting the master volume of the whole game
     public void SetMasterVolume(float volume)
     {
         AudioListener.volume = volume;

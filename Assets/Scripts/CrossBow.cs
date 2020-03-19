@@ -2,30 +2,30 @@
 using UnityEngine.InputSystem;
 
 
-//TO DO: Refactor(Radu)
+//Controlls all crossbow functionality
 public class CrossBow : MonoBehaviour, IWeapon
 {
     [SerializeField] float damage = 10f;
     [SerializeField] float range = 100f;
-    [SerializeField] float fireRate = 50f;
-    [SerializeField] float pushForce = 10f;
+    [SerializeField] float fireRate = 1f;
+    [SerializeField] float pushForce = 1000f;
     private float nextTimeToFire = 0f;
     private float scopedFOV;
     private float[] scopedFOVs = {5f, 10f, 15f, 20f};
     private float maxMouseSensitivity;
 
-    private AudioManager audioManager;
-    [SerializeField] Camera fpsCam;
-    [SerializeField] Camera weaponCam;
-    [SerializeField] GameObject player;
+    [SerializeField] GameObject scopeOverlay; //To change after UI Manager
+    [SerializeField] GameObject gameUI; //To change after UI Manager
     [SerializeField] GameObject arrowPrefab;
     [SerializeField] LayerMask layerMask;
-    [SerializeField] GameObject scopeOverlay;
-    [SerializeField] GameObject gameUI;
-    [SerializeField] Animator shieldAnimator;
+    private AudioManager audioManager;
     private Animator crossbowAnimator;
+    private Animator shieldAnimator;
+    private Camera fpsCam;
+    private Camera weaponCam;
+    private GameObject player;
 
-    private AmmoCounter ammoCounter;
+    private AmmoCounter ammoCounter; //To change after UI Manager
 
     private int currentScopedFOV;
 
@@ -34,12 +34,19 @@ public class CrossBow : MonoBehaviour, IWeapon
     void Start()
     {
         audioManager = FindObjectOfType<AudioManager>();
+        crossbowAnimator = GetComponent<Animator>();
+        shieldAnimator = GameObject.Find("Shield").GetComponent<Animator>();
+        fpsCam = GameObject.Find("Main Camera").GetComponent<Camera>();
+        weaponCam = GameObject.Find("WeaponCamera").GetComponent<Camera>();
+        player = GameObject.Find("KnightPlayer");
 
-        ammoCounter = (AmmoCounter)FindObjectOfType(typeof(AmmoCounter));
+
+
+        ammoCounter = FindObjectOfType<AmmoCounter>();
         ammoCounter.SetMaxAmmo(1);
         ammoCounter.SetCurrentAmmo(1);
 
-        crossbowAnimator = GetComponent<Animator>();
+
         currentScopedFOV = scopedFOVs.Length - 1;
         scopedFOV = scopedFOVs[currentScopedFOV];
         maxMouseSensitivity = fpsCam.GetComponent<MouseLook>().mouseSensitivity;
@@ -77,6 +84,7 @@ public class CrossBow : MonoBehaviour, IWeapon
 
         audioManager.Play("Laser");
 
+        //Checks if the raycast hits anything and if it is a target then it takes damage
         if(Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out hit, range, layerMask))
         {
             Target target = hit.transform.GetComponent<Target>();
@@ -87,11 +95,13 @@ public class CrossBow : MonoBehaviour, IWeapon
             }
         }
 
+        //If the target has a rigidbody then it pushes it
         if(hit.rigidbody)
         {
             hit.rigidbody.AddForce(-hit.normal * pushForce);
         }
 
+        //If the target has a transform that isn't the player then it puts an arrow in it
         if(hit.transform && hit.transform != player.transform)
         {
             GameObject arrow = Instantiate(arrowPrefab, hit.point, fpsCam.transform.rotation);
@@ -111,6 +121,7 @@ public class CrossBow : MonoBehaviour, IWeapon
         }
     }
 
+    //Iterates trough different levels of zoom
     public void ScopeZoomInput(InputAction.CallbackContext context)
     {
         if(context.phase == InputActionPhase.Performed)
@@ -133,6 +144,7 @@ public class CrossBow : MonoBehaviour, IWeapon
         scopeOverlay.SetActive(scoping);
         weaponCam.gameObject.SetActive(!scoping);
         
+        //Changes the mouse sensitivity depentding on the level of zoom
         if(scoping)
         {
             fpsCam.fieldOfView = scopedFOV; 
