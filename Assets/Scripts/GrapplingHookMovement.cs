@@ -1,13 +1,11 @@
 ﻿using UnityEngine;
 
-
-//TO DO: Refactor(Ben)
 public class GrapplingHookMovement : MonoBehaviour
 {
     private GameObject hook;
     private AudioManager audioManager;
 
-    [SerializeField] float hookSpeed = 0.8f;
+    [SerializeField] float hookSpeed = 6f;
 
     public bool hooking;
 
@@ -32,7 +30,7 @@ public class GrapplingHookMovement : MonoBehaviour
             {
                 audioManager.Play("GrapplingHooking");
             }
-
+            //Tried to make the speed not dependent on the distance of the hook, not sure if i should use it or not
             Vector3 hookDir = (hook.transform.position - transform.position) / hookSpeed;
             velocity += hookDir;
         }

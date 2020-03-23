@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
-
-//TO DO: Refactor(Ben)
 public class GrapplingHook : MonoBehaviour
 {
 
@@ -13,7 +11,7 @@ public class GrapplingHook : MonoBehaviour
     private LineRenderer rope;
     [HideInInspector] public GameObject hookedObject;
 
-    [SerializeField] float hookTravelSpeed = 40f;
+    [SerializeField] float hookTravelSpeed = 80f;
     [SerializeField] float maxDistance = 20f;
     [SerializeField] float detachDistance = 5f;
     private float currentDistance;
@@ -103,6 +101,10 @@ public class GrapplingHook : MonoBehaviour
         hook.transform.position = hookHolder.transform.position;
         hook.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
         firing = false;
+        if (player.GetComponent<GrapplingHookMovement>().hooking)
+        {
+            audioManager.Play("GrapplingDisconnecting", hook.GetComponent<AudioSource>());
+        }
         player.GetComponent<GrapplingHookMovement>().hooking = false;
     }
 }

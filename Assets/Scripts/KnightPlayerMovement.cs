@@ -50,8 +50,12 @@ public class KnightPlayerMovement : MonoBehaviour
     private bool dashing;
     private bool charging;
     private bool jetpacking;
-    
+
     #region Getters and Setters
+    public bool GetIsGrounded() 
+    {
+        return isGrounded;
+    }
     public bool GetCrouching()
     {
         return crouching;
@@ -456,5 +460,10 @@ public class KnightPlayerMovement : MonoBehaviour
             isCrouched = false;
             transform.localScale = new Vector3(1f, 1f, 1f);
         }
+    }
+
+    public void Slam() 
+    {
+        velocity.y -= 25f;
     }
 }
