@@ -9,6 +9,7 @@ public class ShurikenGun :  MonoBehaviour, IWeapon
     private AudioManager audioManager;
     private UIManager uiManager;
     private Animator animator;
+    private NinjaPlayerMovement ninjaMovement;
     
     [SerializeField] float speed = 100f;
     [SerializeField] float reloadTime = 2f;
@@ -25,6 +26,7 @@ public class ShurikenGun :  MonoBehaviour, IWeapon
     //The Gun starts with maximum ammo.
     void Start()
     {
+        ninjaMovement = GameObject.Find("NinjaPlayer").GetComponent<NinjaPlayerMovement>();
         audioManager = FindObjectOfType<AudioManager>();
         animator = GetComponent<Animator>();
         currentAmmo = maxAmmo;
@@ -92,6 +94,8 @@ public class ShurikenGun :  MonoBehaviour, IWeapon
         {
             scoping = !scoping;
             animator.SetBool("Scoped", scoping);
+            ninjaMovement.SetScoping(scoping);
+            ninjaMovement.Sprint(false);
         }
     }
 

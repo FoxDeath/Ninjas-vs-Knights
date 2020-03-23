@@ -41,6 +41,7 @@ public class KnightPlayerMovement : MonoBehaviour
     private bool isGrounded;
     private bool crouching;
     private bool isCrouched;
+    private bool scoping;
     private bool sprinting;
     private bool resetFall;
     public bool jetpackOn;
@@ -66,6 +67,10 @@ public class KnightPlayerMovement : MonoBehaviour
     public float GetVertical()
     {
         return vertical;
+    }
+    public void SetIsScoped(bool scoping)
+    {
+        this.scoping = scoping;
     }
     #endregion
     private void Start()
@@ -104,6 +109,7 @@ public class KnightPlayerMovement : MonoBehaviour
         {
             Sprint(false);
         }
+        SpeedCalculation();
     }
 
     void FixedUpdate()
@@ -125,6 +131,31 @@ public class KnightPlayerMovement : MonoBehaviour
         velocity.y = Mathf.Clamp(velocity.y, -25f, 10f);
         controller.Move(velocity * Time.deltaTime);
     }
+
+    //Calculates the speed depending on the situation
+    private void SpeedCalculation()
+    {
+        if (sprinting || jetpacking)
+        {
+            speed = defaultSpeed * 1.6f;
+        }
+        else
+        {
+            if (crouching && !scoping)
+            {
+                speed = defaultSpeed * 0.6f;
+            }
+            else if (scoping)
+            {
+                speed = defaultSpeed * 0.4f;
+            }
+            else
+            {
+                speed = defaultSpeed;
+            }
+        }
+    }
+
 
     //Sets the move input from the PlayerInput
     public void SetMoveInput(Vector2 movementInput)
@@ -192,6 +223,12 @@ public class KnightPlayerMovement : MonoBehaviour
     {
         uiManager.SetKnightSliderValue(jetpackFuel / maxJetpackFuel);
 
+        //If the player is crouching you can't use the jetpack
+        if(crouching)
+        {
+            return;
+        }
+
         //If the jetpack is off stops the sound and recharges the jetpack
         if(!jetpackOn)
         {
@@ -206,8 +243,6 @@ public class KnightPlayerMovement : MonoBehaviour
                 currentForce = 0f;
             }
             
-            speed = defaultSpeed;
-            
             jetpacking = false;
 
             return;
@@ -217,7 +252,7 @@ public class KnightPlayerMovement : MonoBehaviour
             //If the jetpack is on and it has fuel the player flies
             if(jetpackFuel > 0f)
             {
-                speed = defaultSpeed * 1.5f;
+                jetpacking = true;
 
                 if(!audioManager.IsPlaying("Jetpack"))
                 {
@@ -239,10 +274,8 @@ public class KnightPlayerMovement : MonoBehaviour
             }
             //If the jetpack is on and it has no fuel it stops
             else if(jetpackFuel <= 0f)
-            {
-                speed = defaultSpeed;
-                
-                jetpacking = false;
+            {   
+                jetpacking = false;   
                 if(audioManager.IsPlaying("Jetpack"))
                 {
                     audioManager.Stop("Jetpack");
@@ -253,17 +286,15 @@ public class KnightPlayerMovement : MonoBehaviour
 
     public void Sprint(bool state)
     {
-        if (state && !sprinting)
+        if (state && !crouching && !scoping && !sprinting)
         {
             audioManager.SetPitch("Walking", audioManager.GetPitch("Walking") * 2f);
             sprinting = true;
-            speed = defaultSpeed * 1.6f;
         }
         else if(!state && sprinting)
         {
             audioManager.SetPitch("Walking", audioManager.GetPitch("Walking") / 2f);
             sprinting = false;
-            speed = defaultSpeed;
         }
     }
 
@@ -419,13 +450,11 @@ public class KnightPlayerMovement : MonoBehaviour
         {
             isCrouched = true;
             transform.localScale = new Vector3(1f, 0.5f, 1f);
-            speed = defaultSpeed * 0.6f;
         }
         else
         {
             isCrouched = false;
             transform.localScale = new Vector3(1f, 1f, 1f);
-            speed  = defaultSpeed;
         }
     }
 }

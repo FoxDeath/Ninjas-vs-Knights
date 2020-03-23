@@ -36,6 +36,7 @@ public class NinjaPlayerMovement : MonoBehaviour
     private bool sprinting;
     private bool canWallJump;
     private bool wallJumping;
+    private bool scoping;
 
     #region Getters and Setters
     public float GetVertical()
@@ -71,6 +72,10 @@ public class NinjaPlayerMovement : MonoBehaviour
     {
         this.crouching = crouching;
     }
+    public void SetScoping(bool scoping)
+    {
+        this.scoping = scoping;
+    }
     #endregion
 
     private void Start()
@@ -103,6 +108,8 @@ public class NinjaPlayerMovement : MonoBehaviour
         {
             Sprint(false);
         }
+
+        SpeedCalculation();
     }
 
     void FixedUpdate()
@@ -127,6 +134,7 @@ public class NinjaPlayerMovement : MonoBehaviour
         Move();
         MoveAudio();
         Fall();
+        Crouch();
 
         //restricts the max vertical speed
         velocity.y = Mathf.Clamp(velocity.y, -25f, 15f);
@@ -175,6 +183,30 @@ public class NinjaPlayerMovement : MonoBehaviour
         else if(velocity.z < 0f)
         {
             velocity.z += wallJumpForce * Time.deltaTime;
+        }
+    }
+
+    //Calculates the speed depending on the situation
+    private void SpeedCalculation()
+    {
+        if (sprinting)
+        {
+            speed = defaultSpeed * 1.6f;
+        }
+        else
+        {
+            if (crouching && !scoping)
+            {
+                speed = defaultSpeed * 0.6f;
+            }
+            else if (scoping)
+            {
+                speed = defaultSpeed * 0.4f;
+            }
+            else
+            {
+                speed = defaultSpeed;
+            }
         }
     }
 
@@ -248,18 +280,16 @@ public class NinjaPlayerMovement : MonoBehaviour
     public void Sprint(bool state)
     {
         //turn on sprint
-        if(state && !sprinting)
+        if(state && !crouching && !scoping && !sprinting)
         {
             audioManager.SetPitch("Walking", 2);
             sprinting = true;
-            speed = defaultSpeed * 1.6f;
         }
         //turn off sprint
         else if(!state && sprinting)
         {
             audioManager.SetPitch("Walking", 1);
             sprinting = false;
-            speed = defaultSpeed;
         }
     }
     
@@ -287,13 +317,11 @@ public class NinjaPlayerMovement : MonoBehaviour
         {
             isCrouched = true;
             transform.localScale = new Vector3(1f, 0.5f, 1f);
-            speed = defaultSpeed * 0.6f;
         }
         else
         {
             isCrouched = false;
             transform.localScale = new Vector3(1f, 1f, 1f);
-            speed  = defaultSpeed;
         }
     }
 

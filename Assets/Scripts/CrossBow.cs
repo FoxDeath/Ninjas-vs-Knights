@@ -131,6 +131,8 @@ public class CrossBow : MonoBehaviour, IWeapon
         if(context.phase == InputActionPhase.Performed)
         {
             scoping = !scoping;
+            player.GetComponent<KnightPlayerMovement>().SetIsScoped(scoping);
+            player.GetComponent<KnightPlayerMovement>().Sprint(false);
             crossbowAnimator.SetBool("Scoped", scoping);
             shieldAnimator.SetBool("Scoped", scoping);
             Invoke("Scope", 0.15f);

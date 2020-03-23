@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class EdgeHang : MonoBehaviour
 {
@@ -6,6 +7,7 @@ public class EdgeHang : MonoBehaviour
     private bool handIK;
     private bool footIK;
     private bool hanging;
+    private bool canHang;
 
     private Vector3 handPosition;
     private Vector3 handOffset;
@@ -22,6 +24,8 @@ public class EdgeHang : MonoBehaviour
     {
         audioManager = FindObjectOfType<AudioManager>();
         playerMovement = GetComponent<NinjaPlayerMovement>();
+
+        canHang = true;
     }
 
     //Two raycasts are created, one for the hands and one for the feet. 
@@ -31,7 +35,7 @@ public class EdgeHang : MonoBehaviour
         RaycastHit footHit;
 
         //Hand raycast, with the hands rotating coreclty when animations will be added (hopefully)
-        if(Physics.Raycast(transform.position + new Vector3(0.0f, 1.5f, 0.0f), transform.forward, out handHit, 1.2f))
+        if(Physics.Raycast(transform.position + new Vector3(0.0f, 1.5f, 0.0f), transform.forward, out handHit, 1.2f) && canHang)
         {
             handIK = true;
             handPosition = handHit.point - handOffset;
@@ -45,7 +49,7 @@ public class EdgeHang : MonoBehaviour
         }
 
         //Foot raycast
-        if(Physics.Raycast(transform.position + new Vector3(0.0f, 1f, 0.0f), transform.forward, out footHit, 1.2f))
+        if(Physics.Raycast(transform.position + new Vector3(0.0f, 1f, 0.0f), transform.forward, out footHit, 1.2f) && canHang)
         {
             footIK = true;
             footPosition = footHit.point - footOffset;
@@ -66,6 +70,11 @@ public class EdgeHang : MonoBehaviour
                     playerMovement.ZeroVelocity();
                 }
 
+                if(playerMovement.edgeHanging == false)
+                {
+                    StartCoroutine(HangTimer());
+                }
+
                 playerMovement.edgeHanging = true;
             }
             else
@@ -73,6 +82,17 @@ public class EdgeHang : MonoBehaviour
                 playerMovement.edgeHanging = false;
             }
         }
+    }
+
+    IEnumerator HangTimer()
+    {
+        yield return new WaitForSeconds(3f);
+
+        canHang = false;
+
+        yield return new WaitForSeconds(0.5f);
+
+        canHang = true;
     }
 
     //Checks the game objects tag when collision happens, to make sure if the player will be able to hang.
