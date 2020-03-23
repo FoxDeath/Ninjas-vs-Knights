@@ -230,6 +230,7 @@ public class KnightPlayerMovement : MonoBehaviour
         //If the player is crouching you can't use the jetpack
         if(crouching)
         {
+            audioManager.Stop("Jetpack");
             return;
         }
 
