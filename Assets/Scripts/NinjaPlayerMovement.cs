@@ -23,7 +23,6 @@ public class NinjaPlayerMovement : MonoBehaviour
     private float defaultSpeed;
     private float horizontal;
     private float vertical;
-    private float defaultSpeed;
 
     public bool wallRunning;
     private bool isCrouched;
@@ -73,6 +72,10 @@ public class NinjaPlayerMovement : MonoBehaviour
     {
         this.crouching = crouching;
     }
+    public void SetScoping(bool scoping)
+    {
+        this.scoping = scoping;
+    }
     #endregion
 
     private void Start()
@@ -85,8 +88,6 @@ public class NinjaPlayerMovement : MonoBehaviour
         defaultSpeed = speed;
         move = new Vector3();
         velocity = new Vector3();
-
-        defaultSpeed = speed;
     }
 
     void Update()
@@ -133,6 +134,7 @@ public class NinjaPlayerMovement : MonoBehaviour
         Move();
         MoveAudio();
         Fall();
+        Crouch();
 
         //restricts the max vertical speed
         velocity.y = Mathf.Clamp(velocity.y, -25f, 15f);
@@ -184,6 +186,7 @@ public class NinjaPlayerMovement : MonoBehaviour
         }
     }
 
+    //Calculates the speed depending on the situation
     private void SpeedCalculation()
     {
         if (sprinting)
@@ -196,11 +199,7 @@ public class NinjaPlayerMovement : MonoBehaviour
             {
                 speed = defaultSpeed * 0.6f;
             }
-            else if (crouching && scoping)
-            {
-                speed = defaultSpeed * 0.4f;
-            }
-            else if (!crouching && scoping)
+            else if (scoping)
             {
                 speed = defaultSpeed * 0.4f;
             }
@@ -281,11 +280,10 @@ public class NinjaPlayerMovement : MonoBehaviour
     public void Sprint(bool state)
     {
         //turn on sprint
-        if(state && !sprinting && !scoping)
+        if(state && !crouching && !scoping && !sprinting)
         {
             audioManager.SetPitch("Walking", 2);
             sprinting = true;
-            Crouch(false);
         }
         //turn off sprint
         else if(!state && sprinting)
@@ -352,11 +350,6 @@ public class NinjaPlayerMovement : MonoBehaviour
         {
             audioManager.Stop("Wallrun");
         }
-    }
-
-    public void SetScoping(bool scoping)
-    {
-        this.scoping = scoping;
     }
 
     //pass reference references into functions... obviously lol xdd
