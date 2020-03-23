@@ -24,12 +24,12 @@ public class NinjaPlayerInput : MonoBehaviour
         //if button is pressed and not crouching
         if (context.action.phase == InputActionPhase.Started && !playerMovement.GetSprinting())
         {
-            playerMovement.Crouch(true);
+            playerMovement.SetCrouching(true);
         }
         //if button is released and crouching
         else if (context.action.phase == InputActionPhase.Canceled && playerMovement.GetCrouching())
         {
-            playerMovement.Crouch(false);
+            playerMovement.SetCrouching(false);
         }
         //if button is pressed, sprinting and not sliding
         else if (context.action.phase == InputActionPhase.Started && playerMovement.GetSprinting() && !playerMovement.GetSliding())

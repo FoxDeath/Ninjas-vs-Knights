@@ -13,7 +13,6 @@ public class LoadingBarProgress : MonoBehaviour
 
     void Update()
     {
-        print(image.fillAmount);
         if (image.fillAmount < Loader.GetLoadingProgress())
         {
             image.fillAmount += Loader.GetLoadingProgress()/100;

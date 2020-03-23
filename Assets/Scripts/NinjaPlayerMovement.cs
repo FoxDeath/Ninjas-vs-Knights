@@ -20,10 +20,12 @@ public class NinjaPlayerMovement : MonoBehaviour
     [SerializeField] float wallJumpForce = 20f;
     private float gravity = -25f;
     private float groungDistance = 0.4f;
+    private float defaultSpeed;
     private float horizontal;
     private float vertical;
 
     public bool wallRunning;
+    private bool isCrouched;
     public bool isGrounded;
     public bool edgeHanging;
     public bool edgeClimbing;
@@ -35,6 +37,42 @@ public class NinjaPlayerMovement : MonoBehaviour
     private bool canWallJump;
     private bool wallJumping;
 
+    #region Getters and Setters
+    public float GetVertical()
+    {
+        return vertical;
+    }
+
+    public bool GetEdgeHanging()
+    {
+        return edgeHanging;
+    }
+
+    public void ZeroVelocity()
+    {
+        velocity = Vector3.zero;
+    }
+
+    public bool GetSprinting()
+    {
+        return sprinting;
+    }
+
+    public bool GetSliding()
+    {
+        return sliding;
+    }
+
+    public bool GetCrouching()
+    {
+        return crouching;
+    }
+    public void SetCrouching(bool crouching)
+    {
+        this.crouching = crouching;
+    }
+    #endregion
+
     private void Start()
     {
         controller = gameObject.GetComponent<CharacterController>();
@@ -42,6 +80,7 @@ public class NinjaPlayerMovement : MonoBehaviour
         groundMask = LayerMask.GetMask("Ground");
         audioManager = FindObjectOfType<AudioManager>();
 
+        defaultSpeed = speed;
         move = new Vector3();
         velocity = new Vector3();
     }
@@ -180,7 +219,7 @@ public class NinjaPlayerMovement : MonoBehaviour
     public void Jump()
     {
         //Cant jump while crouching
-        if(crouching)
+        if(isCrouched)
         {
             return;
         }
@@ -213,14 +252,14 @@ public class NinjaPlayerMovement : MonoBehaviour
         {
             audioManager.SetPitch("Walking", 2);
             sprinting = true;
-            speed *= 1.6f;
+            speed = defaultSpeed * 1.6f;
         }
         //turn off sprint
         else if(!state && sprinting)
         {
             audioManager.SetPitch("Walking", 1);
             sprinting = false;
-            speed /= 1.6f;
+            speed = defaultSpeed;
         }
     }
     
@@ -236,25 +275,25 @@ public class NinjaPlayerMovement : MonoBehaviour
         }
     }
 
-    public void Crouch(bool crouching)
+    public void Crouch()
     {
-        //You can't crouch if you are not on the ground
-        if(!isGrounded)
+        //You can't crouch if you are not on the ground or if there is something above you
+        if(!isGrounded || Physics.Raycast(transform.position, Vector3.up, 5f))
         {
             return;
         }
 
         if(crouching)
         {
-            this.crouching = true;
+            isCrouched = true;
             transform.localScale = new Vector3(1f, 0.5f, 1f);
-            speed *= 0.6f;
+            speed = defaultSpeed * 0.6f;
         }
         else
         {
-            this.crouching = false;
+            isCrouched = false;
             transform.localScale = new Vector3(1f, 1f, 1f);
-            speed /= 0.6f;
+            speed  = defaultSpeed;
         }
     }
 
@@ -285,36 +324,6 @@ public class NinjaPlayerMovement : MonoBehaviour
         }
     }
 
-    public float GetVertical()
-    {
-        return vertical;
-    }
-
-    public bool GetEdgeHanging()
-    {
-        return edgeHanging;
-    }
-
-    public void ZeroVelocity()
-    {
-        velocity = Vector3.zero;
-    }
-
-    public bool GetSprinting()
-    {
-        return sprinting;
-    }
-
-    public bool GetSliding()
-    {
-        return sliding;
-    }
-
-    public bool GetCrouching()
-    {
-        return crouching;
-    }
-
     //pass reference references into functions... obviously lol xdd
     public ref Vector3 GetVelocityByReference()
     {
@@ -323,13 +332,13 @@ public class NinjaPlayerMovement : MonoBehaviour
 
     public IEnumerator Sliding()
     {
-        speed *= 1.2f;
+        speed = defaultSpeed * 1.2f;
         sliding = true;
         transform.localScale = new Vector3(1f, 0.5f, 1f);
 
         yield return new WaitForSeconds(0.8f);
 
-        speed /= 1.2f;
+        speed = defaultSpeed;
         transform.localScale = new Vector3(1f, 1f, 1f);
 
         yield return new WaitForSeconds(1.5f);

@@ -20,6 +20,7 @@ public class CrossBow : MonoBehaviour, IWeapon
     [SerializeField] float range = 100f;
     [SerializeField] float fireRate = 1f;
     [SerializeField] float pushForce = 1000f;
+    [SerializeField] float spread = 10f;
     private float nextTimeToFire = 0f;
     private float scopedFOV;
     private float[] scopedFOVs = { 5f, 10f, 15f, 20f };

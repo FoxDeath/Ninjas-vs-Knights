@@ -57,12 +57,12 @@ public class KightPlayerInput : MonoBehaviour
     {
         if (context.action.phase == InputActionPhase.Started && !playerMovement.GetSprinting())
         {
-            playerMovement.Crouch(true);
+            playerMovement.SetCrouching(true);
             
         }
         else if (context.action.phase == InputActionPhase.Canceled && playerMovement.GetCrouching())
         {
-            playerMovement.Crouch(false);
+            playerMovement.SetCrouching(false);
         }
     }
 

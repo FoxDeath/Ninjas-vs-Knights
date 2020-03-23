@@ -40,6 +40,7 @@ public class KnightPlayerMovement : MonoBehaviour
 
     private bool isGrounded;
     private bool crouching;
+    private bool isCrouched;
     private bool sprinting;
     private bool resetFall;
     public bool jetpackOn;
@@ -117,6 +118,7 @@ public class KnightPlayerMovement : MonoBehaviour
         Move();
         MoveAudio();
         Jetpack();
+        Crouch();
 
         Fall();
 
@@ -174,7 +176,7 @@ public class KnightPlayerMovement : MonoBehaviour
     public void Jump()
     {   
         //Cant jump while crouching
-        if(crouching)
+        if(isCrouched)
         {
             return;
         }
@@ -203,58 +205,50 @@ public class KnightPlayerMovement : MonoBehaviour
             {
                 currentForce = 0f;
             }
-
-            if(jetpacking)
-            {
-                speed = speed / 1.5f;
-            }
+            
+            speed = defaultSpeed;
             
             jetpacking = false;
 
             return;
         }
-        //If the jetpack is on and it has fuel the player flies
-        else if(jetpackFuel > 0f)
-        {
-            if(!jetpacking)
+        else
+        {   
+            //If the jetpack is on and it has fuel the player flies
+            if(jetpackFuel > 0f)
             {
-                speed = speed * 1.5f;
-            }
+                speed = defaultSpeed * 1.5f;
 
-            jetpacking = true;
+                if(!audioManager.IsPlaying("Jetpack"))
+                {
+                    audioManager.Play("Jetpack");
+                }
 
-            if(!audioManager.IsPlaying("Jetpack"))
-            {
-                audioManager.Play("Jetpack");
-            }
+                jetpackFuel -= Time.deltaTime;
+                currentForce += Time.deltaTime/10f;
 
-            jetpackFuel -= Time.deltaTime;
-            currentForce += Time.deltaTime/10f;
+                if(currentForce > 1f)
+                {
+                    currentForce = 1f;
+                }
 
-            if(currentForce > 1f)
-            {
-                currentForce = 1f;
+                if(!dashing)
+                {
+                    velocity.y = Mathf.Sqrt(jetpackForce * -2f * gravity * currentForce);
+                }
             }
-
-            if(!dashing)
+            //If the jetpack is on and it has no fuel it stops
+            else if(jetpackFuel <= 0f)
             {
-                velocity.y = Mathf.Sqrt(jetpackForce * -2f * gravity * currentForce);
+                speed = defaultSpeed;
+                
+                jetpacking = false;
+                if(audioManager.IsPlaying("Jetpack"))
+                {
+                    audioManager.Stop("Jetpack");
+                }
             }
-        }
-        //If the jetpack is on and it has no fuel it stops
-        else if(jetpackFuel <= 0f)
-        {
-            if(jetpacking)
-            {
-                speed = speed / 1.5f;
-            }
-            
-            jetpacking = false;
-            if(audioManager.IsPlaying("Jetpack"))
-            {
-                audioManager.Stop("Jetpack");
-            }
-        }
+        } 
     }
 
     public void Sprint(bool state)
@@ -263,13 +257,13 @@ public class KnightPlayerMovement : MonoBehaviour
         {
             audioManager.SetPitch("Walking", audioManager.GetPitch("Walking") * 2f);
             sprinting = true;
-            speed *= 1.6f;
+            speed = defaultSpeed * 1.6f;
         }
         else if(!state && sprinting)
         {
             audioManager.SetPitch("Walking", audioManager.GetPitch("Walking") / 2f);
             sprinting = false;
-            speed /= 1.6f;
+            speed = defaultSpeed;
         }
     }
 
@@ -413,25 +407,25 @@ public class KnightPlayerMovement : MonoBehaviour
         }
     }
     
-    public void Crouch(bool crouching)
-    {   
-        //You can't crouch if you are not on the ground
-        if(!isGrounded)
+    public void Crouch()
+    {
+        //You can't crouch if you are not on the ground or if there is something above you
+        if(!isGrounded || Physics.Raycast(transform.position, Vector3.up, 5f))
         {
             return;
         }
 
         if(crouching)
         {
-            this.crouching = true;
+            isCrouched = true;
             transform.localScale = new Vector3(1f, 0.5f, 1f);
-            speed *= 0.6f;
+            speed = defaultSpeed * 0.6f;
         }
         else
         {
-            this.crouching = false;
+            isCrouched = false;
             transform.localScale = new Vector3(1f, 1f, 1f);
-            speed /= 0.6f;
+            speed  = defaultSpeed;
         }
     }
 }
