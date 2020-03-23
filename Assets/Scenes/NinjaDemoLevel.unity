@@ -3557,6 +3557,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: NinjaPlayer
       objectReference: {fileID: 0}
+    - target: {fileID: 2347466531585119150, guid: db9cc940c73d6d34586caf3eedbe4401,
+        type: 3}
+      propertyPath: hookSpeed
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8437390942318618597, guid: db9cc940c73d6d34586caf3eedbe4401,
+        type: 3}
+      propertyPath: hookTravelSpeed
+      value: 80
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: db9cc940c73d6d34586caf3eedbe4401, type: 3}
 --- !u!1 &1533407728 stripped

@@ -1037,6 +1037,7 @@ GameObject:
   - component: {fileID: 5979411463205964829}
   - component: {fileID: 46135055}
   - component: {fileID: 4827913709872832600}
+  - component: {fileID: 6909353620678892051}
   m_Layer: 8
   m_Name: KnightPlayer
   m_TagString: Untagged
@@ -1320,7 +1321,7 @@ MonoBehaviour:
     m_ActionName: Knight/ScopeZoom[/Keyboard/q]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 6909353620678892051}
         m_MethodName: AOEInput
         m_Mode: 0
         m_Arguments:
@@ -1487,6 +1488,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2bb991a5d36513d4785968bcf422a8df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6909353620678892051
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5979411463758342020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0908278e6ae20e6448b774fbe1119a33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  range: 20
+  damage: 20
+  upwardsForce: 50
+  pushForce: 500
 --- !u!1 &5979411464056459486
 GameObject:
   m_ObjectHideFlags: 0

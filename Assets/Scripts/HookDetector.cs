@@ -1,7 +1,5 @@
 ﻿using UnityEngine;
 
-
-//TO DO: Refactor(Ben)
 public class HookDetector : MonoBehaviour
 {
     private GameObject grapplingHook;
@@ -23,15 +21,6 @@ public class HookDetector : MonoBehaviour
             player.GetComponent<GrapplingHookMovement>().hooking = true;
             grapplingHook.GetComponent<GrapplingHook>().hookedObject = other.gameObject;
             audioManager.Play("GrapplingConnecting", GetComponent<AudioSource>());
-        }
-    }
-
-    //Play audio when detaching
-    private void OnTriggerExit(Collider other)
-    {
-        if(other.tag.Equals("Hookable"))
-        {
-            audioManager.Play("GrapplingDisconnecting", GetComponent<AudioSource>());
         }
     }
 }
