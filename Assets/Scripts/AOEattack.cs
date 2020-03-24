@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 
-public class AOEAttack : MonoBehaviour
+public class AOEattack : MonoBehaviour
 {
     [SerializeField] float range = 20f;
     [SerializeField] float damage = 20f;
