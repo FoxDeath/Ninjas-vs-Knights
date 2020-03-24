@@ -18,7 +18,8 @@ public class NinjaPlayerMovement : MonoBehaviour
     [SerializeField] float speed = 10f;
     [SerializeField] float fallDecrease = 2f;
     [SerializeField] float wallJumpForce = 20f;
-    private float gravity = -25f;
+    private float fallVelocity = 0f;
+    private float gravity = -9.8f;
     private float groungDistance = 0.4f;
     private float defaultSpeed;
     private float horizontal;
@@ -98,6 +99,7 @@ public class NinjaPlayerMovement : MonoBehaviour
             isGrounded = Physics.CheckSphere(groundCheck.position, groungDistance, groundMask);
             if(isGrounded)
             {
+                fallVelocity = 1f;
                 audioManager.Play("Falling");
             }
         }
@@ -114,6 +116,7 @@ public class NinjaPlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
+        print(velocity.y);
         //if game is paused
         if(PauseMenu.GameIsPaused)
         {
@@ -124,6 +127,7 @@ public class NinjaPlayerMovement : MonoBehaviour
         {
             //turns off gravity while hanging on edge
             velocity.y = 0f;
+            fallVelocity = 0f;
         }
         else
         {
@@ -137,7 +141,14 @@ public class NinjaPlayerMovement : MonoBehaviour
         Crouch();
 
         //restricts the max vertical speed
-        velocity.y = Mathf.Clamp(velocity.y, -25f, 15f);
+        if(!isGrounded)
+        {
+            velocity.y = Mathf.Clamp(velocity.y, -40f, 15f);
+        }
+        else
+        {
+            velocity.y = Mathf.Clamp(velocity.y, 0f, 15f); 
+        }
 
         if(!edgeClimbing)
         {
@@ -195,7 +206,7 @@ public class NinjaPlayerMovement : MonoBehaviour
         }
         else
         {
-            if (crouching && !scoping)
+            if (isCrouched && !scoping)
             {
                 speed = defaultSpeed * 0.6f;
             }
@@ -266,6 +277,7 @@ public class NinjaPlayerMovement : MonoBehaviour
             //if grounded play jump sound and move upwards
             audioManager.Play("Jump");
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+            fallVelocity = 10f;
         }
         else if(!isGrounded && !doubleJumped && !edgeClimbing && !wallRunning)
         {
@@ -274,6 +286,7 @@ public class NinjaPlayerMovement : MonoBehaviour
             doubleJumped = true;
             resetFall = true;
             velocity.y = Mathf.Sqrt(jumpHeight * -2.4f * gravity);
+            fallVelocity = 10f;
         }
     }
 
@@ -295,7 +308,7 @@ public class NinjaPlayerMovement : MonoBehaviour
     
     private void Fall()
     {
-        if (velocity.y < 0 && !isGrounded && !resetFall)
+        if (velocity.y < fallVelocity && !isGrounded && !resetFall)
         {
             velocity.y -= fallDecrease;
         }
@@ -386,6 +399,8 @@ public class NinjaPlayerMovement : MonoBehaviour
         velocity.z = wallJumpForce * normal.z;
         velocity.y = Mathf.Sqrt(jumpHeight * 50f);
         move.x = lastMove.x;
+        fallVelocity = 0f;
+        audioManager.Play("Jump");
 
         yield return new WaitForSeconds(0.5f);
 

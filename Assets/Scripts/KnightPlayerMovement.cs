@@ -29,11 +29,11 @@ public class KnightPlayerMovement : MonoBehaviour
     [SerializeField] float chargeDamage = 30f;
     [SerializeField] float maxJetpackFuel = 5f; 
     [SerializeField] float fallDecrease = 0.8f;
+    private float fallVelocity = 0f;
     private float defaultSpeed;
     private float horizontal;
     private float vertical;
-    private float gravity = -25f;
-    private float fallMultiplier = 2.5f;
+    private float gravity = -9.8f;
     private float groungDistance = 0.4f;
     private float currentForce = 0f;
     private float jetpackFuel;
@@ -103,6 +103,7 @@ public class KnightPlayerMovement : MonoBehaviour
             //If it isn't grounded and becomes grounded plays falling sound
             if(isGrounded)
             {
+                fallVelocity = 0f;
                 audioManager.Play("Falling");
             }
         }
@@ -132,7 +133,15 @@ public class KnightPlayerMovement : MonoBehaviour
 
         Fall();
 
-        velocity.y = Mathf.Clamp(velocity.y, -25f, 10f);
+        if(!isGrounded)
+        {
+            velocity.y = Mathf.Clamp(velocity.y, -40f, 10f);
+        }
+        else
+        {
+            velocity.y = Mathf.Clamp(velocity.y, 0f, 10f);
+        }
+
         controller.Move(velocity * Time.deltaTime);
     }
 
@@ -145,7 +154,7 @@ public class KnightPlayerMovement : MonoBehaviour
         }
         else
         {
-            if (crouching && !scoping)
+            if (isCrouched && !scoping)
             {
                 speed = defaultSpeed * 0.6f;
             }
@@ -220,6 +229,7 @@ public class KnightPlayerMovement : MonoBehaviour
         {
             audioManager.Play("Jump");
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+            fallVelocity = 3f;
         }
     }
     
@@ -244,10 +254,15 @@ public class KnightPlayerMovement : MonoBehaviour
             }
             currentForce -= Time.deltaTime/5f;    
             if(currentForce < 0f)
-            {
+            {            
                 currentForce = 0f;
             }
             
+            if(jetpacking)
+            {
+                fallVelocity =  8f;
+            }
+
             jetpacking = false;
 
             return;
@@ -415,14 +430,14 @@ public class KnightPlayerMovement : MonoBehaviour
 
     private void Fall()
     {
-        if (velocity.y < 0 && !isGrounded && !resetFall)
-        {
-            velocity.y -= fallDecrease;
-        }
-        else
-        {
-            resetFall = false;
-        }
+            if (velocity.y < fallVelocity && !isGrounded && !resetFall)
+            {
+                velocity.y -= fallDecrease;
+            }
+            else
+            {
+                resetFall = false;
+            }
     }
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
