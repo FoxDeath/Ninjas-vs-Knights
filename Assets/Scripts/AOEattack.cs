@@ -28,7 +28,7 @@ public class AOEattack : MonoBehaviour
 
         //If we are on the ground cast it
         //If we are not, slam the ground and then cast it with multiplyers
-        if(GetComponent<KnightPlayerMovement>().GetIsGrounded())
+        if(GetComponent<KnightPlayerMovement>().GetGrounded())
         {
             Attack(1f, 1f);
         }
@@ -36,7 +36,7 @@ public class AOEattack : MonoBehaviour
         {
             GetComponent<KnightPlayerMovement>().jetpackOn = false;
             GetComponent<KnightPlayerMovement>().Slam();
-            yield return new WaitWhile(() => !GetComponent<KnightPlayerMovement>().GetIsGrounded());
+            yield return new WaitWhile(() => !GetComponent<KnightPlayerMovement>().GetGrounded());
             Attack(2f, 2f);
         }
 

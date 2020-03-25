@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EdgeClimb : MonoBehaviour
 {
-    private NinjaPlayerMovement playerMovement;
+    private PlayerMovement playerMovement;
     private Animator anim;
 
     private Camera parkourCamera;
@@ -12,7 +12,7 @@ public class EdgeClimb : MonoBehaviour
 
     void Start()
     {
-        playerMovement = GetComponent<NinjaPlayerMovement>();
+        playerMovement = GetComponent<PlayerMovement>();
         anim = GetComponent<Animator>();
 
         parkourCamera = gameObject.transform.Find("Parkour Camera").GetComponent<Camera>();
@@ -57,8 +57,8 @@ public class EdgeClimb : MonoBehaviour
 
 
         //moves the player
-        playerMovement.controller.Move(transform.up * moveVector.y);
-        playerMovement.controller.Move(transform.forward * moveVector.z);
+        playerMovement.GetController().Move(transform.up * moveVector.y);
+        playerMovement.GetController().Move(transform.forward * moveVector.z);
 
         yield break;
     }

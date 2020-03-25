@@ -5,11 +5,13 @@ public class KightPlayerInput : MonoBehaviour
 {
     private KnightPlayerMovement playerMovement;
     private PauseMenu pauseMenu;
+    private EdgeClimb edgeClimb;
 
     void Start()
     {
         playerMovement = GetComponent<KnightPlayerMovement>();
         pauseMenu = FindObjectOfType<PauseMenu>();
+        edgeClimb = GetComponent<EdgeClimb>();
     }
 
     public void MoveInput(InputAction.CallbackContext context)
@@ -19,12 +21,22 @@ public class KightPlayerInput : MonoBehaviour
 
     public void JumpInput(InputAction.CallbackContext context)
     {
+        //if button is pressed
         if (context.action.phase == InputActionPhase.Performed)
         {
-            playerMovement.Jump();
+            if (playerMovement.GetEdgeHanging())
+            {
+                //if edge hanging start edge climb
+                edgeClimb.EdgeClimbStart();
+            }
+            else
+            {
+                //if not edge hanging, just jump
+                playerMovement.Jump();
+            }
         }
     }
-    
+
     public void JetPackInput(InputAction.CallbackContext context)
     {
         if(context.action.phase == InputActionPhase.Performed)
@@ -55,14 +67,20 @@ public class KightPlayerInput : MonoBehaviour
 
     public void CrouchInput(InputAction.CallbackContext context)
     {
+        //if button is pressed and not crouching
         if (context.action.phase == InputActionPhase.Started && !playerMovement.GetSprinting())
         {
             playerMovement.SetCrouching(true);
-            
         }
+        //if button is released and crouching
         else if (context.action.phase == InputActionPhase.Canceled && playerMovement.GetCrouching())
         {
             playerMovement.SetCrouching(false);
+        }
+        //if button is pressed, sprinting and not sliding
+        else if (context.action.phase == InputActionPhase.Started && playerMovement.GetSprinting() && !playerMovement.GetSliding())
+        {
+            StartCoroutine(playerMovement.Sliding());
         }
     }
 
