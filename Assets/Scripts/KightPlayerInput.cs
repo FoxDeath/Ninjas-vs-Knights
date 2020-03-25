@@ -22,9 +22,9 @@ public class KightPlayerInput : MonoBehaviour
 
     public void JumpInput(InputAction.CallbackContext context)
     {
-        if (context.interaction is PressInteraction)
+        
+        if (context.action.phase == InputActionPhase.Started)
         {
-            if (context.action.phase == InputActionPhase.Started)
             if (playerMovement.GetEdgeHanging())
             {
                 //if edge hanging start edge climb
@@ -35,6 +35,7 @@ public class KightPlayerInput : MonoBehaviour
                 //if not edge hanging, just jump
                 playerMovement.Jump();
             }
+        }
 
         if (context.interaction is HoldInteraction)
         {
