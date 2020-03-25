@@ -317,15 +317,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""id"": ""8f80fc03-3940-4607-8564-c3746f1daabe"",
                     ""expectedControlType"": """",
                     ""processors"": """",
-                    ""interactions"": """"
-                },
-                {
-                    ""name"": ""Jetpack Jump"",
-                    ""type"": ""Button"",
-                    ""id"": ""0de5b342-1f49-4aef-8977-d036a7d5e24b"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """"
+                    ""interactions"": ""Hold""
                 },
                 {
                     ""name"": ""Shoot"",
@@ -474,7 +466,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""name"": """",
                     ""id"": ""12564c05-902f-44dc-a813-84b69ad9a1a2"",
                     ""path"": ""<Keyboard>/space"",
-                    ""interactions"": ""Press"",
+                    ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard and Mouse"",
                     ""action"": ""Jump"",
@@ -489,17 +481,6 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": ""Keyboard and Mouse"",
                     ""action"": ""Sprint"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""d7489b9e-8963-45d0-b4e2-93112496242e"",
-                    ""path"": ""<Keyboard>/space"",
-                    ""interactions"": ""Hold"",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard and Mouse"",
-                    ""action"": ""Jetpack Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -573,7 +554,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""name"": """",
                     ""id"": ""688a4861-a63f-4ff4-9c7c-f7dee30a44df"",
                     ""path"": ""<Keyboard>/#(F)"",
-                    ""interactions"": ""Press,Press"",
+                    ""interactions"": ""Press"",
                     ""processors"": """",
                     ""groups"": ""Keyboard and Mouse"",
                     ""action"": ""JatpackCharge"",
@@ -644,7 +625,6 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         m_Knight_Sprint = m_Knight.FindAction("Sprint", throwIfNotFound: true);
         m_Knight_JetpackDash = m_Knight.FindAction("JetpackDash", throwIfNotFound: true);
         m_Knight_Jump = m_Knight.FindAction("Jump", throwIfNotFound: true);
-        m_Knight_JetpackJump = m_Knight.FindAction("Jetpack Jump", throwIfNotFound: true);
         m_Knight_Shoot = m_Knight.FindAction("Shoot", throwIfNotFound: true);
         m_Knight_PauseMenu = m_Knight.FindAction("PauseMenu", throwIfNotFound: true);
         m_Knight_SwitchWeapon = m_Knight.FindAction("SwitchWeapon", throwIfNotFound: true);
@@ -820,7 +800,6 @@ public class @PlayerInput : IInputActionCollection, IDisposable
     private readonly InputAction m_Knight_Sprint;
     private readonly InputAction m_Knight_JetpackDash;
     private readonly InputAction m_Knight_Jump;
-    private readonly InputAction m_Knight_JetpackJump;
     private readonly InputAction m_Knight_Shoot;
     private readonly InputAction m_Knight_PauseMenu;
     private readonly InputAction m_Knight_SwitchWeapon;
@@ -838,7 +817,6 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         public InputAction @Sprint => m_Wrapper.m_Knight_Sprint;
         public InputAction @JetpackDash => m_Wrapper.m_Knight_JetpackDash;
         public InputAction @Jump => m_Wrapper.m_Knight_Jump;
-        public InputAction @JetpackJump => m_Wrapper.m_Knight_JetpackJump;
         public InputAction @Shoot => m_Wrapper.m_Knight_Shoot;
         public InputAction @PauseMenu => m_Wrapper.m_Knight_PauseMenu;
         public InputAction @SwitchWeapon => m_Wrapper.m_Knight_SwitchWeapon;
@@ -871,9 +849,6 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                 @Jump.started -= m_Wrapper.m_KnightActionsCallbackInterface.OnJump;
                 @Jump.performed -= m_Wrapper.m_KnightActionsCallbackInterface.OnJump;
                 @Jump.canceled -= m_Wrapper.m_KnightActionsCallbackInterface.OnJump;
-                @JetpackJump.started -= m_Wrapper.m_KnightActionsCallbackInterface.OnJetpackJump;
-                @JetpackJump.performed -= m_Wrapper.m_KnightActionsCallbackInterface.OnJetpackJump;
-                @JetpackJump.canceled -= m_Wrapper.m_KnightActionsCallbackInterface.OnJetpackJump;
                 @Shoot.started -= m_Wrapper.m_KnightActionsCallbackInterface.OnShoot;
                 @Shoot.performed -= m_Wrapper.m_KnightActionsCallbackInterface.OnShoot;
                 @Shoot.canceled -= m_Wrapper.m_KnightActionsCallbackInterface.OnShoot;
@@ -917,9 +892,6 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                 @Jump.started += instance.OnJump;
                 @Jump.performed += instance.OnJump;
                 @Jump.canceled += instance.OnJump;
-                @JetpackJump.started += instance.OnJetpackJump;
-                @JetpackJump.performed += instance.OnJetpackJump;
-                @JetpackJump.canceled += instance.OnJetpackJump;
                 @Shoot.started += instance.OnShoot;
                 @Shoot.performed += instance.OnShoot;
                 @Shoot.canceled += instance.OnShoot;
@@ -987,7 +959,6 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         void OnSprint(InputAction.CallbackContext context);
         void OnJetpackDash(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
-        void OnJetpackJump(InputAction.CallbackContext context);
         void OnShoot(InputAction.CallbackContext context);
         void OnPauseMenu(InputAction.CallbackContext context);
         void OnSwitchWeapon(InputAction.CallbackContext context);

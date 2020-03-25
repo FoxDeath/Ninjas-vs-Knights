@@ -304,15 +304,7 @@
                     "id": "8f80fc03-3940-4607-8564-c3746f1daabe",
                     "expectedControlType": "",
                     "processors": "",
-                    "interactions": ""
-                },
-                {
-                    "name": "Jetpack Jump",
-                    "type": "Button",
-                    "id": "0de5b342-1f49-4aef-8977-d036a7d5e24b",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": ""
+                    "interactions": "Hold"
                 },
                 {
                     "name": "Shoot",
@@ -461,7 +453,7 @@
                     "name": "",
                     "id": "12564c05-902f-44dc-a813-84b69ad9a1a2",
                     "path": "<Keyboard>/space",
-                    "interactions": "Press",
+                    "interactions": "",
                     "processors": "",
                     "groups": "Keyboard and Mouse",
                     "action": "Jump",
@@ -476,17 +468,6 @@
                     "processors": "",
                     "groups": "Keyboard and Mouse",
                     "action": "Sprint",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "d7489b9e-8963-45d0-b4e2-93112496242e",
-                    "path": "<Keyboard>/space",
-                    "interactions": "Hold",
-                    "processors": "",
-                    "groups": "Keyboard and Mouse",
-                    "action": "Jetpack Jump",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -560,7 +541,7 @@
                     "name": "",
                     "id": "688a4861-a63f-4ff4-9c7c-f7dee30a44df",
                     "path": "<Keyboard>/#(F)",
-                    "interactions": "Press,Press",
+                    "interactions": "Press",
                     "processors": "",
                     "groups": "Keyboard and Mouse",
                     "action": "JatpackCharge",
