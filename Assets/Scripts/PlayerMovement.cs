@@ -18,7 +18,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] protected float jumpHeight = 5f;
     [SerializeField] protected float speed = 10f;
     [SerializeField] protected float fallDecrease = 2f;
-    protected float gravity = -25f;
+    protected float fallVelocity = 0f;
+    protected float gravity = -9.8f;
     protected float groungDistance = 0.4f;
     protected float defaultSpeed;
     protected float horizontal;
@@ -101,6 +102,7 @@ public class PlayerMovement : MonoBehaviour
             isGrounded = Physics.CheckSphere(groundCheck.position, groungDistance, groundMask);
             if (isGrounded)
             {
+                fallVelocity = 1f;
                 audioManager.Play("Falling");
             }
         }
@@ -123,10 +125,21 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
 
+        //restricts the max vertical speed
+        if(!isGrounded)
+        {
+            velocity.y = Mathf.Clamp(velocity.y, -40f, 15f);
+        }
+        else
+        {
+            velocity.y = Mathf.Clamp(velocity.y, 0f, 15f); 
+        }
+
         if (edgeHanging)
         {
             //turns off gravity while hanging on edge
             velocity.y = 0f;
+            fallVelocity = 0f;
         }
         else
         {
@@ -140,7 +153,7 @@ public class PlayerMovement : MonoBehaviour
         Crouch();
 
         //restricts the max vertical speed
-        velocity.y = Mathf.Clamp(velocity.y, -25f, 15f);
+        velocity.y = Mathf.Clamp(velocity.y, -40f, 15f);
 
         if (!edgeClimbing)
         {
@@ -180,7 +193,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
     //Calculates the speed depending on the situation
-    protected void SpeedCalculation()
+    protected virtual void SpeedCalculation()
     {
         if (sprinting)
         {
@@ -188,7 +201,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            if (crouching && !scoping)
+            if (isCrouched && !scoping)
             {
                 speed = defaultSpeed * 0.6f;
             }
@@ -225,7 +238,7 @@ public class PlayerMovement : MonoBehaviour
 
     protected void Fall()
     {
-        if (velocity.y < 0 && !isGrounded && !resetFall)
+        if (velocity.y < fallVelocity && !isGrounded && !resetFall)
         {
             velocity.y -= fallDecrease;
         }
@@ -261,7 +274,7 @@ public class PlayerMovement : MonoBehaviour
     public void Sprint(bool state)
     {
         //turn on sprint
-        if (state && !crouching && !scoping && !sprinting)
+        if (state && !isCrouched && !scoping && !sprinting)
         {
             audioManager.SetPitch("Walking", 2);
             sprinting = true;
@@ -287,6 +300,7 @@ public class PlayerMovement : MonoBehaviour
             //if grounded play jump sound and move upwards
             audioManager.Play("Jump");
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+            fallVelocity = 3f;
         }
     }
 

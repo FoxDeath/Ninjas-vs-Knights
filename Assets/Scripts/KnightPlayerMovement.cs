@@ -13,14 +13,7 @@ public class KnightPlayerMovement : PlayerMovement
     [SerializeField] float chargePushForce = 100f;
     [SerializeField] float upwardsForce = 50f;
     [SerializeField] float chargeDamage = 30f;
-    [SerializeField] float maxJetpackFuel = 5f; 
-    //[SerializeField] float fallDecrease = 0.8f;
-    //private float defaultSpeed;
-    //private float horizontal;
-    //private float vertical;
-    //private float gravity = -25f;
-    //private float groungDistance = 0.4f;
-    private float fallVelocity = 0f;
+    [SerializeField] float maxJetpackFuel = 5f;
     private float currentForce = 0f;
     private float jetpackFuel;
 
@@ -38,39 +31,13 @@ public class KnightPlayerMovement : PlayerMovement
         groundMask = LayerMask.GetMask("Ground");
         fpsCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
         uiManager = FindObjectOfType<UIManager>();
+        audioManager = FindObjectOfType<AudioManager>();
 
-        Application.targetFrameRate = 60;
         move = new Vector3();
         velocity = new Vector3();
         jetpackFuel = maxJetpackFuel;
         defaultSpeed = speed;
-
-        audioManager = FindObjectOfType<AudioManager>();
     }
-
-    //void Update()
-    //{
-    //    //Checks if the player is grounded
-    //    if(!isGrounded)
-    //    {
-    //        isGrounded = Physics.CheckSphere(groundCheck.transform.position, groungDistance, groundMask);
-
-            //If it isn't grounded and becomes grounded plays falling sound
-            if(isGrounded)
-            {
-                fallVelocity = 0f;
-                audioManager.Play("Falling");
-            }
-        }
-        isGrounded = Physics.CheckSphere(groundCheck.transform.position, groungDistance, groundMask);
-
-    //    //if sprinting and moving backwards
-    //    if(sprinting && vertical <= 0)
-    //    {
-    //        Sprint(false);
-    //    }
-    //    SpeedCalculation();
-    //}
 
     protected override void FixedUpdate()
     {
@@ -84,6 +51,7 @@ public class KnightPlayerMovement : PlayerMovement
         {
             //turns off gravity while hanging on edge
             velocity.y = 0f;
+            fallVelocity = 0f;
         }
         else
         {
@@ -110,7 +78,7 @@ public class KnightPlayerMovement : PlayerMovement
     }
 
     //Calculates the speed depending on the situation
-    private void SpeedCalculation()
+    protected override void SpeedCalculation()
     {
         if (sprinting || jetpacking)
         {
@@ -132,77 +100,13 @@ public class KnightPlayerMovement : PlayerMovement
             }
         }
     }
-
-
-    //Sets the move input from the PlayerInput
-    //public void SetMoveInput(Vector2 movementInput)
-    //{
-    //    if (!charging)
-    //    {
-    //        this.movementInput = movementInput;
-    //        horizontal = movementInput.x;
-    //        vertical = movementInput.y;
-    //    }
-    //}
-
-    //Moves the player acording to the "horizontal" and "vertical" atributes
-    //private void Move()
-    //{
-    //    if (isGrounded)
-    //    {
-    //        movement = (transform.right * horizontal + transform.forward * vertical) * speed;
-    //        lastMove = movement;
-    //    }
-    //    else
-    //    {
-    //        controller.Move(lastMove * 0.3f * Time.deltaTime);
-    //        movement = (transform.right * horizontal + transform.forward * vertical) * speed * 0.8f;
-    //    }
-
-    //    controller.Move(movement * Time.deltaTime);
-    //}
-
-    //Plays the moving sound
-    //private void MoveAudio()
-    //{
-    //    if(movement != Vector3.zero && isGrounded)
-    //    {
-    //        if(!audioManager.IsPlaying("Walking"))
-    //        {
-    //            audioManager.Play("Walking");
-    //        }
-    //    }
-    //    else
-    //    {
-    //        if(audioManager.IsPlaying("Walking"))
-    //        {
-    //            audioManager.Stop("Walking");
-    //        }
-    //    }
-    //}
-
-    public void Jump()
-    {   
-        //Cant jump while crouching
-        if(isCrouched)
-        {
-            return;
-        }
-        
-        if (isGrounded)
-        {
-            audioManager.Play("Jump");
-            velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
-            fallVelocity = 3f;
-        }
-    }
     
     public void Jetpack()
     {
         uiManager.SetKnightSliderValue(jetpackFuel / maxJetpackFuel);
         
         //If the player is crouching you can't use the jetpack
-        if(crouching)
+        if(isCrouched)
         {
             audioManager.Stop("Jetpack");
             return;

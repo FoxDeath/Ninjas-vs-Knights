@@ -7,97 +7,14 @@ public class NinjaPlayerMovement : PlayerMovement
     private Vector3 normal;
 
     [SerializeField] float wallJumpForce = 20f;
-    private float fallVelocity = 0f;
-    //private float gravity = -25f;
-    //private float groungDistance = 0.4f;
-    //private float defaultSpeed;
-    //private float horizontal;
-    //private float vertical;
 
     public bool wallRunning;
     private bool doubleJumped;
     private bool canWallJump;
     private bool wallJumping;
 
-    //#region Getters and Setters
-    //public float GetVertical()
-    //{
-    //    return vertical;
-    //}
-
-    //public bool GetEdgeHanging()
-    //{
-    //    return edgeHanging;
-    //}
-
-    //public void ZeroVelocity()
-    //{
-    //    velocity = Vector3.zero;
-    //}
-
-    //public bool GetSprinting()
-    //{
-    //    return sprinting;
-    //}
-
-    //public bool GetSliding()
-    //{
-    //    return sliding;
-    //}
-
-    //public bool GetCrouching()
-    //{
-    //    return crouching;
-    //}
-    //public void SetCrouching(bool crouching)
-    //{
-    //    this.crouching = crouching;
-    //}
-    //public void SetScoping(bool scoping)
-    //{
-    //    this.scoping = scoping;
-    //}
-    //#endregion
-
-    //private void Start()
-    //{
-    //    controller = gameObject.GetComponent<CharacterController>();
-    //    groundCheck = transform.Find("Cylinder").Find("GroundCheck");
-    //    groundMask = LayerMask.GetMask("Ground");
-    //    audioManager = FindObjectOfType<AudioManager>();
-
-    //    defaultSpeed = speed;
-    //    move = new Vector3();
-    //    velocity = new Vector3();
-    //}
-
-    void Update()
-    {
-        //isGrounded is true if the groundCheck object is touching the Ground layer
-        if(!isGrounded)
-        {
-            isGrounded = Physics.CheckSphere(groundCheck.position, groungDistance, groundMask);
-            if(isGrounded)
-            {
-                fallVelocity = 1f;
-                audioManager.Play("Falling");
-            }
-        }
-        isGrounded = Physics.CheckSphere(groundCheck.position, groungDistance, groundMask);
-
-    //    //if sprinting and moving backwards
-    //    if (sprinting && vertical <= 0)
-    //    {
-    //        Sprint(false);
-    //    }
-
-    //    SpeedCalculation();
-    //}
-
     protected override void FixedUpdate()
     {
-        print(velocity.y);
-        //if game is paused
         if (PauseMenu.GameIsPaused)
             {
                 return;
@@ -119,16 +36,6 @@ public class NinjaPlayerMovement : PlayerMovement
         MoveAudio();
         Fall();
         Crouch();
-
-        //restricts the max vertical speed
-        if(!isGrounded)
-        {
-            velocity.y = Mathf.Clamp(velocity.y, -40f, 15f);
-        }
-        else
-        {
-            velocity.y = Mathf.Clamp(velocity.y, 0f, 15f); 
-        }
 
         if (!edgeClimbing)
         {
@@ -158,6 +65,16 @@ public class NinjaPlayerMovement : PlayerMovement
             canWallJump = false;
         }
 
+        //restricts the max vertical speed
+        if(!isGrounded)
+        {
+            velocity.y = Mathf.Clamp(velocity.y, -40f, 15f);
+        }
+        else
+        {
+            velocity.y = Mathf.Clamp(velocity.y, 0f, 15f); 
+        }
+
         if (velocity.x > 0f)
         {
             velocity.x -= wallJumpForce * Time.deltaTime;
@@ -176,37 +93,6 @@ public class NinjaPlayerMovement : PlayerMovement
             velocity.z += wallJumpForce * Time.deltaTime;
         }
     }
-
-    //Calculates the speed depending on the situation
-    private void SpeedCalculation()
-    {
-        if (sprinting)
-        {
-            speed = defaultSpeed * 1.6f;
-        }
-        else
-        {
-            if (isCrouched && !scoping)
-            {
-                speed = defaultSpeed * 0.6f;
-            }
-            else if (scoping)
-            {
-                speed = defaultSpeed * 0.4f;
-            }
-            else
-            {
-                speed = defaultSpeed;
-            }
-        }
-    }
-
-    //gets input from NinjaPlayerInput script
-    //public void SetMoveInput(Vector2 moveInput)
-    //{
-    //    horizontal = moveInput.x;
-    //    vertical = moveInput.y;
-    //}
 
     //moves the player according to its state and attributes
     protected override void Move()
@@ -267,34 +153,6 @@ public class NinjaPlayerMovement : PlayerMovement
             resetFall = true;
             velocity.y = Mathf.Sqrt(jumpHeight * -2.4f * gravity);
             fallVelocity = 10f;
-        }
-    }
-
-    public void Sprint(bool state)
-    {
-        //turn on sprint
-        if(state && !crouching && !scoping && !sprinting)
-        {
-            audioManager.SetPitch("Walking", 2);
-            sprinting = true;
-        }
-        //turn off sprint
-        else if(!state && sprinting)
-        {
-            audioManager.SetPitch("Walking", 1);
-            sprinting = false;
-        }
-    }
-    
-    private void Fall()
-    {
-        if (velocity.y < fallVelocity && !isGrounded && !resetFall)
-        {
-            velocity.y -= fallDecrease;
-        }
-        else
-        {
-            resetFall = false;
         }
     }
 
