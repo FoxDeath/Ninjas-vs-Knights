@@ -2,25 +2,11 @@
 using UnityEngine;
 
 
-//TO DO: Refactor(Radu)
-public class KnightPlayerMovement : MonoBehaviour
+public class KnightPlayerMovement : PlayerMovement
 {
-    [SerializeField] LayerMask groundMask;
-    private CharacterController controller;
     private Camera fpsCamera;
-    private AudioManager audioManager;
     private UIManager uiManager;
 
-    private GameObject groundCheck;
-
-    private Vector3 velocity;
-    private Vector3 movement;
-    private Vector3 lastMove;
-
-    private Vector2 movementInput;
-
-    [SerializeField] float jumpHeight = 3f;
-    [SerializeField] float speed = 7f;
     [SerializeField] float dashForce = 10f;
     [SerializeField] float jetpackForce = 100f;
     [SerializeField] float chargeForce = 5f;
@@ -28,22 +14,16 @@ public class KnightPlayerMovement : MonoBehaviour
     [SerializeField] float upwardsForce = 50f;
     [SerializeField] float chargeDamage = 30f;
     [SerializeField] float maxJetpackFuel = 5f; 
-    [SerializeField] float fallDecrease = 0.8f;
+    //[SerializeField] float fallDecrease = 0.8f;
+    //private float defaultSpeed;
+    //private float horizontal;
+    //private float vertical;
+    //private float gravity = -25f;
+    //private float groungDistance = 0.4f;
     private float fallVelocity = 0f;
-    private float defaultSpeed;
-    private float horizontal;
-    private float vertical;
-    private float gravity = -9.8f;
-    private float groungDistance = 0.4f;
     private float currentForce = 0f;
     private float jetpackFuel;
 
-    private bool isGrounded;
-    private bool crouching;
-    private bool isCrouched;
-    private bool scoping;
-    private bool sprinting;
-    private bool resetFall;
     public bool jetpackOn;
     private bool canCharge = true;
     private bool canDash = true;
@@ -51,41 +31,16 @@ public class KnightPlayerMovement : MonoBehaviour
     private bool charging;
     private bool jetpacking;
 
-    #region Getters and Setters
-    public bool GetIsGrounded() 
-    {
-        return isGrounded;
-    }
-    public bool GetCrouching()
-    {
-        return crouching;
-    }
-    public void SetCrouching(bool crouching)
-    {
-        this.crouching = crouching;
-    }
-    public bool GetSprinting()
-    {
-        return sprinting;
-    }
-    public float GetVertical()
-    {
-        return vertical;
-    }
-    public void SetIsScoped(bool scoping)
-    {
-        this.scoping = scoping;
-    }
-    #endregion
-    private void Start()
+    protected override void Start()
     {
         controller = GetComponent<CharacterController>();
-        groundCheck = GameObject.Find("GroundCheck");
+        groundCheck = transform.Find("Cylinder").Find("GroundCheck");
+        groundMask = LayerMask.GetMask("Ground");
         fpsCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
         uiManager = FindObjectOfType<UIManager>();
 
         Application.targetFrameRate = 60;
-        movement = new Vector3();
+        move = new Vector3();
         velocity = new Vector3();
         jetpackFuel = maxJetpackFuel;
         defaultSpeed = speed;
@@ -93,12 +48,12 @@ public class KnightPlayerMovement : MonoBehaviour
         audioManager = FindObjectOfType<AudioManager>();
     }
 
-    void Update()
-    {
-        //Checks if the player is grounded
-        if(!isGrounded)
-        {
-            isGrounded = Physics.CheckSphere(groundCheck.transform.position, groungDistance, groundMask);
+    //void Update()
+    //{
+    //    //Checks if the player is grounded
+    //    if(!isGrounded)
+    //    {
+    //        isGrounded = Physics.CheckSphere(groundCheck.transform.position, groungDistance, groundMask);
 
             //If it isn't grounded and becomes grounded plays falling sound
             if(isGrounded)
@@ -109,28 +64,37 @@ public class KnightPlayerMovement : MonoBehaviour
         }
         isGrounded = Physics.CheckSphere(groundCheck.transform.position, groungDistance, groundMask);
 
-        //if sprinting and moving backwards
-        if(sprinting && vertical <= 0)
-        {
-            Sprint(false);
-        }
-        SpeedCalculation();
-    }
+    //    //if sprinting and moving backwards
+    //    if(sprinting && vertical <= 0)
+    //    {
+    //        Sprint(false);
+    //    }
+    //    SpeedCalculation();
+    //}
 
-    void FixedUpdate()
+    protected override void FixedUpdate()
     {
         if(PauseMenu.GameIsPaused)
         {
             return;
         }
 
-        velocity.y += gravity * Time.deltaTime;
+
+        if (edgeHanging)
+        {
+            //turns off gravity while hanging on edge
+            velocity.y = 0f;
+        }
+        else
+        {
+            //sets vertical pull
+            velocity.y += gravity * Time.deltaTime;
+        }
 
         Move();
         MoveAudio();
         Jetpack();
         Crouch();
-
         Fall();
 
         if(!isGrounded)
@@ -171,51 +135,51 @@ public class KnightPlayerMovement : MonoBehaviour
 
 
     //Sets the move input from the PlayerInput
-    public void SetMoveInput(Vector2 movementInput)
-    {
-        if (!charging)
-        {
-            this.movementInput = movementInput;
-            horizontal = movementInput.x;
-            vertical = movementInput.y;
-        }
-    }
+    //public void SetMoveInput(Vector2 movementInput)
+    //{
+    //    if (!charging)
+    //    {
+    //        this.movementInput = movementInput;
+    //        horizontal = movementInput.x;
+    //        vertical = movementInput.y;
+    //    }
+    //}
 
     //Moves the player acording to the "horizontal" and "vertical" atributes
-    private void Move()
-    {
-        if (isGrounded)
-        {
-            movement = (transform.right * horizontal + transform.forward * vertical) * speed;
-            lastMove = movement;
-        }
-        else
-        {
-            controller.Move(lastMove * 0.3f * Time.deltaTime);
-            movement = (transform.right * horizontal + transform.forward * vertical) * speed * 0.8f;
-        }
+    //private void Move()
+    //{
+    //    if (isGrounded)
+    //    {
+    //        movement = (transform.right * horizontal + transform.forward * vertical) * speed;
+    //        lastMove = movement;
+    //    }
+    //    else
+    //    {
+    //        controller.Move(lastMove * 0.3f * Time.deltaTime);
+    //        movement = (transform.right * horizontal + transform.forward * vertical) * speed * 0.8f;
+    //    }
 
-        controller.Move(movement * Time.deltaTime);
-    }
+    //    controller.Move(movement * Time.deltaTime);
+    //}
 
     //Plays the moving sound
-    private void MoveAudio()
-    {
-        if(movement != Vector3.zero && isGrounded)
-        {
-            if(!audioManager.IsPlaying("Walking"))
-            {
-                audioManager.Play("Walking");
-            }
-        }
-        else
-        {
-            if(audioManager.IsPlaying("Walking"))
-            {
-                audioManager.Stop("Walking");
-            }
-        }
-    }
+    //private void MoveAudio()
+    //{
+    //    if(movement != Vector3.zero && isGrounded)
+    //    {
+    //        if(!audioManager.IsPlaying("Walking"))
+    //        {
+    //            audioManager.Play("Walking");
+    //        }
+    //    }
+    //    else
+    //    {
+    //        if(audioManager.IsPlaying("Walking"))
+    //        {
+    //            audioManager.Stop("Walking");
+    //        }
+    //    }
+    //}
 
     public void Jump()
     {   
@@ -236,7 +200,7 @@ public class KnightPlayerMovement : MonoBehaviour
     public void Jetpack()
     {
         uiManager.SetKnightSliderValue(jetpackFuel / maxJetpackFuel);
-
+        
         //If the player is crouching you can't use the jetpack
         if(crouching)
         {
@@ -304,20 +268,6 @@ public class KnightPlayerMovement : MonoBehaviour
         } 
     }
 
-    public void Sprint(bool state)
-    {
-        if (state && !crouching && !scoping && !sprinting)
-        {
-            audioManager.SetPitch("Walking", audioManager.GetPitch("Walking") * 2f);
-            sprinting = true;
-        }
-        else if(!state && sprinting)
-        {
-            audioManager.SetPitch("Walking", audioManager.GetPitch("Walking") / 2f);
-            sprinting = false;
-        }
-    }
-
     public void Dash()
     {
         if(canDash)
@@ -340,8 +290,8 @@ public class KnightPlayerMovement : MonoBehaviour
             float oldVertical = vertical;
             float oldHorizontal = horizontal;
 
-            vertical = dashForce * movementInput.y;
-            horizontal = dashForce * movementInput.x;
+            vertical = dashForce * moveInput.y;
+            horizontal = dashForce * moveInput.x;
 
             yield return new WaitForSeconds(0.4f);
             
@@ -412,7 +362,7 @@ public class KnightPlayerMovement : MonoBehaviour
             
             GetComponentInChildren<MouseLook>().mouseSensitivity /= 10;
 
-            vertical = chargeForce * movementInput.y;
+            vertical = chargeForce * moveInput.y;
 
             yield return new WaitForSeconds(2.5f);
 
@@ -428,17 +378,11 @@ public class KnightPlayerMovement : MonoBehaviour
         }
     }
 
-    private void Fall()
+    public void Slam() 
     {
-            if (velocity.y < fallVelocity && !isGrounded && !resetFall)
-            {
-                velocity.y -= fallDecrease;
-            }
-            else
-            {
-                resetFall = false;
-            }
+        velocity.y -= 25f;
     }
+
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
         if (charging)
@@ -456,30 +400,5 @@ public class KnightPlayerMovement : MonoBehaviour
                 hit.rigidbody.AddForce(force);
             }
         }
-    }
-    
-    public void Crouch()
-    {
-        //You can't crouch if you are not on the ground or if there is something above you
-        if(!isGrounded || Physics.Raycast(transform.position, Vector3.up, 5f))
-        {
-            return;
-        }
-
-        if(crouching)
-        {
-            isCrouched = true;
-            transform.localScale = new Vector3(1f, 0.5f, 1f);
-        }
-        else
-        {
-            isCrouched = false;
-            transform.localScale = new Vector3(1f, 1f, 1f);
-        }
-    }
-
-    public void Slam() 
-    {
-        velocity.y -= 25f;
     }
 }

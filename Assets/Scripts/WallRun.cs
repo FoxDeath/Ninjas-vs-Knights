@@ -32,18 +32,18 @@ public class WallRun : MonoBehaviour
         Physics.Raycast(transform.position, transform.forward, out frontCast, 1);
 
 
-        if (rightCast.normal != Vector3.zero && rightCast.transform.tag == "Wall" && !playerMovement.isGrounded)
+        if (rightCast.normal != Vector3.zero && rightCast.transform.tag == "Wall" && !playerMovement.GetGrounded())
         {
             playerMovement.wallRunning = true;
             mouseLook.zRotation = 17f;
         }
-        else if (leftCast.normal != Vector3.zero && leftCast.transform.tag == "Wall" && !playerMovement.isGrounded)
+        else if (leftCast.normal != Vector3.zero && leftCast.transform.tag == "Wall" && !playerMovement.GetGrounded())
         {
             playerMovement.wallRunning = true;
             mouseLook.zRotation = -17f;
         }
         // For climbing walls while looking at them
-        else if (frontCast.normal != Vector3.zero && frontCast.transform.tag == "Wall" && !playerMovement.isGrounded)
+        else if (frontCast.normal != Vector3.zero && frontCast.transform.tag == "Wall" && !playerMovement.GetGrounded())
         {
             playerMovement.wallRunning = true;
             mouseLook.zRotation = 0f;

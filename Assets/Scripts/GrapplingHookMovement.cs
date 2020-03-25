@@ -34,7 +34,7 @@ public class GrapplingHookMovement : MonoBehaviour
             Vector3 hookDir = (hook.transform.position - transform.position) / hookSpeed;
             velocity += hookDir;
         }
-        else if(GetComponent<NinjaPlayerMovement>().isGrounded)
+        else if(GetComponent<NinjaPlayerMovement>().GetGrounded())
         {
             velocity.x = 0f;
             velocity.z = 0f;

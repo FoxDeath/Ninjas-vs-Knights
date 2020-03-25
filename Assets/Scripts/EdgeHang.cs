@@ -17,13 +17,13 @@ public class EdgeHang : MonoBehaviour
     private Quaternion handRotation;
     private Quaternion footRotation;
     private Quaternion footRotationOffset;
-    private NinjaPlayerMovement playerMovement;
+    private PlayerMovement playerMovement;
     private AudioManager audioManager;
 
     void Start()
     {
         audioManager = FindObjectOfType<AudioManager>();
-        playerMovement = GetComponent<NinjaPlayerMovement>();
+        playerMovement = GetComponent<PlayerMovement>();
 
         canHang = true;
     }
