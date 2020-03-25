@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Interactions;
 
 public class KightPlayerInput : MonoBehaviour
 {
@@ -21,9 +22,9 @@ public class KightPlayerInput : MonoBehaviour
 
     public void JumpInput(InputAction.CallbackContext context)
     {
-        //if button is pressed
-        if (context.action.phase == InputActionPhase.Performed)
+        if (context.interaction is PressInteraction)
         {
+            if (context.action.phase == InputActionPhase.Started)
             if (playerMovement.GetEdgeHanging())
             {
                 //if edge hanging start edge climb
@@ -34,18 +35,17 @@ public class KightPlayerInput : MonoBehaviour
                 //if not edge hanging, just jump
                 playerMovement.Jump();
             }
-        }
-    }
 
-    public void JetPackInput(InputAction.CallbackContext context)
-    {
-        if(context.action.phase == InputActionPhase.Performed)
+        if (context.interaction is HoldInteraction)
         {
-            playerMovement.jetpackOn = true;
-        }
-        else if(context.action.phase == InputActionPhase.Canceled)
-        {
-            playerMovement.jetpackOn = false;
+            if (context.action.phase == InputActionPhase.Performed)
+            {
+                playerMovement.jetpackOn = true;
+            }
+            else if(context.action.phase == InputActionPhase.Canceled)
+            {
+                playerMovement.jetpackOn = false;
+            }
         }
     }
 
