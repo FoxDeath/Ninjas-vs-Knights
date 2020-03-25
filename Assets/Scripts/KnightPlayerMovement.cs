@@ -250,7 +250,7 @@ public class KnightPlayerMovement : PlayerMovement
 
     public void Charge()
     {
-        if(canCharge)
+        if(canCharge && !isCrouched)
         {
             StartCoroutine(ChargeBehaviour());
         }
