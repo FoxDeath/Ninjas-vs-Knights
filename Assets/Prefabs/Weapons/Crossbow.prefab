@@ -289,21 +289,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fd14758e061182419ed8d63ac7f82bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 10
-  range: 500
-  fireRate: 1
-  pushForce: 1000
-  fpsCam: {fileID: 0}
-  weaponCam: {fileID: 0}
-  player: {fileID: 0}
   arrowPrefab: {fileID: 2060330078031075764, guid: a10b2059f3bb8d14a8a5b2be069e8cd0,
     type: 3}
   layerMask:
     serializedVersion: 2
-    m_Bits: 567
-  scopeOverlay: {fileID: 0}
-  gameUI: {fileID: 0}
-  shieldAnimator: {fileID: 0}
+    m_Bits: 4663
+  damage: 10
+  range: 500
+  fireRate: 1
+  spread: 10
+  pushForce: 1000
 --- !u!95 &7772930909508445153
 Animator:
   serializedVersion: 3
@@ -618,7 +613,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b165554affc2c2e4a9c8affbe67bba54, type: 2}
+  - {fileID: 2100000, guid: 0fd1ed9785f7f044d96a1558783a4d05, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -697,7 +692,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 53ca1cd8e7594d040b9de3d552a45038, type: 2}
+  - {fileID: 2100000, guid: b165554affc2c2e4a9c8affbe67bba54, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -778,7 +773,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b165554affc2c2e4a9c8affbe67bba54, type: 2}
+  - {fileID: 2100000, guid: 0fd1ed9785f7f044d96a1558783a4d05, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -857,7 +852,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 398bd2021fa219a43a3f582399ba6c61, type: 2}
+  - {fileID: 2100000, guid: 0fd1ed9785f7f044d96a1558783a4d05, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

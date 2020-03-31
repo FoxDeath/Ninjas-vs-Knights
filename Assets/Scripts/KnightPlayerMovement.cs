@@ -122,7 +122,7 @@ public class KnightPlayerMovement : PlayerMovement
         if(!jetpackOn)
         {
             audioManager.Stop("Jetpack");
-            if(isGrounded && jetpackFuel < maxJetpackFuel)
+            if(jetpackFuel < maxJetpackFuel)
             {
                 jetpackFuel += Time.deltaTime * 2;
                     //If the player is crouching you can't use the jetpack
