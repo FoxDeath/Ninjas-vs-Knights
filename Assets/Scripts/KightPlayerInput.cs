@@ -39,11 +39,14 @@ public class KightPlayerInput : MonoBehaviour
 
         if (context.interaction is HoldInteraction)
         {
-            playerMovement.SetJetpackOn(true);
-        }
-        else if(context.action.phase == InputActionPhase.Canceled)
-        {
-            playerMovement.SetJetpackOn(false);
+            if (context.action.phase == InputActionPhase.Performed)
+            {
+                playerMovement.SetJetpackOn(true);
+            }
+            else if(context.action.phase == InputActionPhase.Canceled)
+            {
+                playerMovement.SetJetpackOn(false);
+            }
         }
     }
 
