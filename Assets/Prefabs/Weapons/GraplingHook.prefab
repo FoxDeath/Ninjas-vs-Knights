@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7513951615624341291}
   - component: {fileID: 8539226710010358333}
   - component: {fileID: 48607609029655696}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: GraplingHook
   m_TagString: Hook
   m_Icon: {fileID: 0}
@@ -143,13 +143,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03d5adcd00c8f9b4ab5bbd9c884f1df9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hook: {fileID: 535984671884785884}
-  hookHolder: {fileID: 4471904763855225759}
-  player: {fileID: 0}
-  hookTravelSpeed: 40
-  fired: 0
   hookedObject: {fileID: 0}
+  hookTravelSpeed: 40
   maxDistance: 40
+  detachDistance: 5
+  firing: 0
 --- !u!1 &4471904763855225759
 GameObject:
   m_ObjectHideFlags: 0
@@ -159,7 +157,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4471904763855225758}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: HookHolder
   m_TagString: Hook
   m_Icon: {fileID: 0}
@@ -199,6 +197,16 @@ PrefabInstance:
     - target: {fileID: 1506200369, guid: f8e414655bffb9c4b87db9b8acbcfe0f, type: 3}
       propertyPath: player
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1713437435054929133, guid: f8e414655bffb9c4b87db9b8acbcfe0f,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 4483336128095414015, guid: f8e414655bffb9c4b87db9b8acbcfe0f,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4940581727650785425, guid: f8e414655bffb9c4b87db9b8acbcfe0f,
         type: 3}
@@ -255,19 +263,38 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5104161280433687051, guid: f8e414655bffb9c4b87db9b8acbcfe0f,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 6516388497403009057, guid: f8e414655bffb9c4b87db9b8acbcfe0f,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 7976758220885170396, guid: f8e414655bffb9c4b87db9b8acbcfe0f,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 8170666735723209036, guid: f8e414655bffb9c4b87db9b8acbcfe0f,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 8271741696203545218, guid: f8e414655bffb9c4b87db9b8acbcfe0f,
         type: 3}
       propertyPath: m_Name
       value: Hook
       objectReference: {fileID: 0}
+    - target: {fileID: 8271741696203545218, guid: f8e414655bffb9c4b87db9b8acbcfe0f,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f8e414655bffb9c4b87db9b8acbcfe0f, type: 3}
---- !u!1 &535984671884785884 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8271741696203545218, guid: f8e414655bffb9c4b87db9b8acbcfe0f,
-    type: 3}
-  m_PrefabInstance: {fileID: 8483394146088837726}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3543043045570759375 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4940581727650785425, guid: f8e414655bffb9c4b87db9b8acbcfe0f,
@@ -281,6 +308,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7513951615624341291}
     m_Modifications:
+    - target: {fileID: 2190164738363666202, guid: d20861373545fc84593b422b1bc8908b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 3036411101573023838, guid: d20861373545fc84593b422b1bc8908b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 5819702731919173187, guid: d20861373545fc84593b422b1bc8908b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -336,10 +373,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 270
       objectReference: {fileID: 0}
+    - target: {fileID: 5946541029381178585, guid: d20861373545fc84593b422b1bc8908b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 7392910662894048336, guid: d20861373545fc84593b422b1bc8908b,
         type: 3}
       propertyPath: m_Name
       value: Grapling Hook
+      objectReference: {fileID: 0}
+    - target: {fileID: 7392910662894048336, guid: d20861373545fc84593b422b1bc8908b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 8854331393766397454, guid: d20861373545fc84593b422b1bc8908b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d20861373545fc84593b422b1bc8908b, type: 3}

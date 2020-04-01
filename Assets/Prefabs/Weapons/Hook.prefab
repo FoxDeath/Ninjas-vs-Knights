@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8260822988704306298}
   - component: {fileID: 2616153472988315070}
   - component: {fileID: 5380643213526176364}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Claw 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -90,7 +90,7 @@ GameObject:
   - component: {fileID: 5988107995252223231}
   - component: {fileID: 3013762937744477275}
   - component: {fileID: 3544589620305466424}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Claw 4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -169,7 +169,7 @@ GameObject:
   - component: {fileID: 5528139353531018802}
   - component: {fileID: 2164781282339885001}
   - component: {fileID: 2410118251614566773}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -248,7 +248,7 @@ GameObject:
   - component: {fileID: 2745016043672004730}
   - component: {fileID: 3643195005601555268}
   - component: {fileID: 2753988344102905380}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Claw 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -327,7 +327,7 @@ GameObject:
   - component: {fileID: 7904329747850892007}
   - component: {fileID: 5374878955460220511}
   - component: {fileID: 6049237528894406894}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Grip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -406,7 +406,7 @@ GameObject:
   - component: {fileID: 7209648649112863893}
   - component: {fileID: 1220221924240515544}
   - component: {fileID: 5652199629279224175}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Claw 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -487,7 +487,7 @@ GameObject:
   - component: {fileID: 1506200368}
   - component: {fileID: 1506200369}
   - component: {fileID: 6814390491094433175}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Hook
   m_TagString: Hook
   m_Icon: {fileID: 0}
@@ -555,8 +555,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8c05d45d535b1f42a7efc6be644054f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hookHolder: {fileID: 0}
-  player: {fileID: 0}
 --- !u!82 &6814390491094433175
 AudioSource:
   m_ObjectHideFlags: 0

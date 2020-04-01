@@ -28,29 +28,48 @@ public class PlayerMovement : MonoBehaviour
     protected bool isGrounded;
     protected bool crouching;
     protected bool isCrouched;
-    public bool edgeHanging;
-    public bool edgeClimbing;
+    protected bool edgeHanging;
+    protected bool edgeClimbing;
     protected bool sliding;
     protected bool scoping;
     protected bool sprinting;
     protected bool resetFall;
+    protected bool canSlide = true;
 
     #region Getters and Setters
     public CharacterController GetController() 
     {
         return controller;
     }
+
     public float GetVertical()
     {
         return vertical;
     }
+
     public bool GetGrounded()
     {
         return isGrounded;
     }
+
     public bool GetEdgeHanging()
     {
         return edgeHanging;
+    }
+
+    public void SetEdgeHanging(bool edgeHanging)
+    {
+        this.edgeHanging = edgeHanging;
+    }
+    
+    public bool GetEdgeClimbing()
+    {
+        return edgeClimbing;
+    }
+
+    public void SetEdgeClimbing(bool edgeClimbing)
+    {
+        this.edgeClimbing = edgeClimbing;
     }
 
     public void ZeroVelocity()
@@ -63,19 +82,21 @@ public class PlayerMovement : MonoBehaviour
         return sprinting;
     }
 
-    public bool GetSliding()
+    public bool GetCanSlide()
     {
-        return sliding;
+        return canSlide;
     }
 
     public bool GetCrouching()
     {
         return crouching;
     }
+
     public void SetCrouching(bool crouching)
     {
         this.crouching = crouching;
     }
+
     public void SetScoping(bool scoping)
     {
         this.scoping = scoping;
@@ -195,17 +216,21 @@ public class PlayerMovement : MonoBehaviour
     //Calculates the speed depending on the situation
     protected virtual void SpeedCalculation()
     {
-        if (sprinting)
+        if(sliding && sprinting)
+        {
+            speed = defaultSpeed * 2f;
+        }
+        else if(!sliding && sprinting)
         {
             speed = defaultSpeed * 1.6f;
         }
         else
         {
-            if (isCrouched && !scoping)
+            if(isCrouched && !scoping)
             {
                 speed = defaultSpeed * 0.6f;
             }
-            else if (scoping)
+            else if(scoping)
             {
                 speed = defaultSpeed * 0.4f;
             }
@@ -229,7 +254,7 @@ public class PlayerMovement : MonoBehaviour
             isCrouched = true;
             transform.localScale = new Vector3(1f, 0.5f, 1f);
         }
-        else
+        else if(!sliding)
         {
             isCrouched = false;
             transform.localScale = new Vector3(1f, 1f, 1f);
@@ -312,17 +337,27 @@ public class PlayerMovement : MonoBehaviour
 
     public IEnumerator Sliding()
     {
-        speed = defaultSpeed * 1.2f;
         sliding = true;
+        canSlide = false;
+
         transform.localScale = new Vector3(1f, 0.5f, 1f);
 
-        yield return new WaitForSeconds(0.8f);
+        yield return new WaitForSeconds(1f);
 
-        speed = defaultSpeed;
-        transform.localScale = new Vector3(1f, 1f, 1f);
-
-        yield return new WaitForSeconds(1.5f);
+        if(!Physics.Raycast(transform.position, Vector3.up, 5f))
+        {
+            transform.localScale = new Vector3(1f, 1f, 1f);
+        }
+        else
+        {
+            isCrouched = true;
+            Sprint(false);
+        }
 
         sliding = false;
+
+        yield return new WaitForSeconds(2f);
+
+        canSlide = true;
     }
 }
