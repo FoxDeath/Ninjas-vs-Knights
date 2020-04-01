@@ -91,7 +91,10 @@ public class PlayerMovement : MonoBehaviour
     {
         return crouching;
     }
-
+    public bool GetScoping()
+    {
+        return scoping;
+    }
     public void SetCrouching(bool crouching)
     {
         this.crouching = crouching;

@@ -5,6 +5,7 @@ public class Health : MonoBehaviour
 {
     [SerializeField] float maxHealth = 100f;
     [SerializeField] float regenPerSec = 5f;
+    [SerializeField] float damageReduPercentage = 50f;
     private float health;
 
     private bool regenerating;
@@ -39,9 +40,15 @@ public class Health : MonoBehaviour
     //The Players health will go down when he takes damage.
     public void TakeDamage(float damage)
     {
-        print(damage);
-        health -= damage;
-        print(health);
+        PlayerMovement movement = GetComponent<KnightPlayerMovement>();
+        if(movement != null && movement.GetScoping())
+        {
+            health -= damage * (damageReduPercentage / 100);
+        }
+        else
+        {
+            health -= damage;
+        }
 
         regenerating = false;
 
@@ -56,9 +63,6 @@ public class Health : MonoBehaviour
 
     IEnumerator RegenCooldown() 
     {
-
-        print("asd");
-
         yield return new WaitForSeconds(3f);
 
         regenerating = true;
