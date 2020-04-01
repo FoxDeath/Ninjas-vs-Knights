@@ -92,6 +92,14 @@
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "Stimpack",
+                    "type": "Button",
+                    "id": "e5f7795b-df4e-4ad6-b648-00c744423746",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -259,6 +267,17 @@
                     "action": "SwitchWeapon",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7e651270-5f3e-4d4d-94ab-53fe2b96355d",
+                    "path": "<Keyboard>/v",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Stimpack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -366,6 +385,14 @@
                     "name": "AOEAttack",
                     "type": "Button",
                     "id": "1af5e068-4066-42de-a401-6cb0c33b7e98",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Stimpack",
+                    "type": "Button",
+                    "id": "bb120c0b-518c-4c39-93da-54769bc7e018",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": ""
@@ -556,6 +583,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "AOEAttack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "49e484b3-7026-4caf-9155-60f61d2d8325",
+                    "path": "<Keyboard>/v",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Stimpack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

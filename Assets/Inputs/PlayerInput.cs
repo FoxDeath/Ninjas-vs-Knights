@@ -105,6 +105,14 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Stimpack"",
+                    ""type"": ""Button"",
+                    ""id"": ""e5f7795b-df4e-4ad6-b648-00c744423746"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -272,6 +280,17 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""action"": ""SwitchWeapon"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7e651270-5f3e-4d4d-94ab-53fe2b96355d"",
+                    ""path"": ""<Keyboard>/v"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Stimpack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -379,6 +398,14 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""name"": ""AOEAttack"",
                     ""type"": ""Button"",
                     ""id"": ""1af5e068-4066-42de-a401-6cb0c33b7e98"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Stimpack"",
+                    ""type"": ""Button"",
+                    ""id"": ""bb120c0b-518c-4c39-93da-54769bc7e018"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
@@ -571,6 +598,17 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""action"": ""AOEAttack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""49e484b3-7026-4caf-9155-60f61d2d8325"",
+                    ""path"": ""<Keyboard>/v"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Stimpack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -618,6 +656,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         m_Ninja_Crouch = m_Ninja.FindAction("Crouch", throwIfNotFound: true);
         m_Ninja_PauseMenu = m_Ninja.FindAction("PauseMenu", throwIfNotFound: true);
         m_Ninja_SwitchWeapon = m_Ninja.FindAction("SwitchWeapon", throwIfNotFound: true);
+        m_Ninja_Stimpack = m_Ninja.FindAction("Stimpack", throwIfNotFound: true);
         // Knight
         m_Knight = asset.FindActionMap("Knight", throwIfNotFound: true);
         m_Knight_Look = m_Knight.FindAction("Look", throwIfNotFound: true);
@@ -633,6 +672,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         m_Knight_ScopeZoom = m_Knight.FindAction("ScopeZoom", throwIfNotFound: true);
         m_Knight_JatpackCharge = m_Knight.FindAction("JatpackCharge", throwIfNotFound: true);
         m_Knight_AOEAttack = m_Knight.FindAction("AOEAttack", throwIfNotFound: true);
+        m_Knight_Stimpack = m_Knight.FindAction("Stimpack", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -693,6 +733,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
     private readonly InputAction m_Ninja_Crouch;
     private readonly InputAction m_Ninja_PauseMenu;
     private readonly InputAction m_Ninja_SwitchWeapon;
+    private readonly InputAction m_Ninja_Stimpack;
     public struct NinjaActions
     {
         private @PlayerInput m_Wrapper;
@@ -708,6 +749,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         public InputAction @Crouch => m_Wrapper.m_Ninja_Crouch;
         public InputAction @PauseMenu => m_Wrapper.m_Ninja_PauseMenu;
         public InputAction @SwitchWeapon => m_Wrapper.m_Ninja_SwitchWeapon;
+        public InputAction @Stimpack => m_Wrapper.m_Ninja_Stimpack;
         public InputActionMap Get() { return m_Wrapper.m_Ninja; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -750,6 +792,9 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                 @SwitchWeapon.started -= m_Wrapper.m_NinjaActionsCallbackInterface.OnSwitchWeapon;
                 @SwitchWeapon.performed -= m_Wrapper.m_NinjaActionsCallbackInterface.OnSwitchWeapon;
                 @SwitchWeapon.canceled -= m_Wrapper.m_NinjaActionsCallbackInterface.OnSwitchWeapon;
+                @Stimpack.started -= m_Wrapper.m_NinjaActionsCallbackInterface.OnStimpack;
+                @Stimpack.performed -= m_Wrapper.m_NinjaActionsCallbackInterface.OnStimpack;
+                @Stimpack.canceled -= m_Wrapper.m_NinjaActionsCallbackInterface.OnStimpack;
             }
             m_Wrapper.m_NinjaActionsCallbackInterface = instance;
             if (instance != null)
@@ -787,6 +832,9 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                 @SwitchWeapon.started += instance.OnSwitchWeapon;
                 @SwitchWeapon.performed += instance.OnSwitchWeapon;
                 @SwitchWeapon.canceled += instance.OnSwitchWeapon;
+                @Stimpack.started += instance.OnStimpack;
+                @Stimpack.performed += instance.OnStimpack;
+                @Stimpack.canceled += instance.OnStimpack;
             }
         }
     }
@@ -808,6 +856,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
     private readonly InputAction m_Knight_ScopeZoom;
     private readonly InputAction m_Knight_JatpackCharge;
     private readonly InputAction m_Knight_AOEAttack;
+    private readonly InputAction m_Knight_Stimpack;
     public struct KnightActions
     {
         private @PlayerInput m_Wrapper;
@@ -825,6 +874,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         public InputAction @ScopeZoom => m_Wrapper.m_Knight_ScopeZoom;
         public InputAction @JatpackCharge => m_Wrapper.m_Knight_JatpackCharge;
         public InputAction @AOEAttack => m_Wrapper.m_Knight_AOEAttack;
+        public InputAction @Stimpack => m_Wrapper.m_Knight_Stimpack;
         public InputActionMap Get() { return m_Wrapper.m_Knight; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -873,6 +923,9 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                 @AOEAttack.started -= m_Wrapper.m_KnightActionsCallbackInterface.OnAOEAttack;
                 @AOEAttack.performed -= m_Wrapper.m_KnightActionsCallbackInterface.OnAOEAttack;
                 @AOEAttack.canceled -= m_Wrapper.m_KnightActionsCallbackInterface.OnAOEAttack;
+                @Stimpack.started -= m_Wrapper.m_KnightActionsCallbackInterface.OnStimpack;
+                @Stimpack.performed -= m_Wrapper.m_KnightActionsCallbackInterface.OnStimpack;
+                @Stimpack.canceled -= m_Wrapper.m_KnightActionsCallbackInterface.OnStimpack;
             }
             m_Wrapper.m_KnightActionsCallbackInterface = instance;
             if (instance != null)
@@ -916,6 +969,9 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                 @AOEAttack.started += instance.OnAOEAttack;
                 @AOEAttack.performed += instance.OnAOEAttack;
                 @AOEAttack.canceled += instance.OnAOEAttack;
+                @Stimpack.started += instance.OnStimpack;
+                @Stimpack.performed += instance.OnStimpack;
+                @Stimpack.canceled += instance.OnStimpack;
             }
         }
     }
@@ -951,6 +1007,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         void OnCrouch(InputAction.CallbackContext context);
         void OnPauseMenu(InputAction.CallbackContext context);
         void OnSwitchWeapon(InputAction.CallbackContext context);
+        void OnStimpack(InputAction.CallbackContext context);
     }
     public interface IKnightActions
     {
@@ -967,5 +1024,6 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         void OnScopeZoom(InputAction.CallbackContext context);
         void OnJatpackCharge(InputAction.CallbackContext context);
         void OnAOEAttack(InputAction.CallbackContext context);
+        void OnStimpack(InputAction.CallbackContext context);
     }
 }

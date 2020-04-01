@@ -104,8 +104,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.2, y: 1.8, z: 1.2}
   m_Children:
-  - {fileID: 5542691457358024264}
   - {fileID: 3000515820013477073}
+  - {fileID: 5542691457358024264}
   m_Father: {fileID: 5979411463758342022}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -188,6 +188,8 @@ GameObject:
   - component: {fileID: 7083433074653318271}
   - component: {fileID: 1371387462330259890}
   - component: {fileID: 9005027085412411315}
+  - component: {fileID: 5137474897669596240}
+  - component: {fileID: 4238440793053572482}
   m_Layer: 8
   m_Name: KnightPlayer
   m_TagString: Player
@@ -332,21 +334,6 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 8f80fc03-3940-4607-8564-c3746f1daabe
     m_ActionName: Knight/Jump[/Keyboard/space]
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4827913709872832600}
-        m_MethodName: JetPackInput
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 0de5b342-1f49-4aef-8977-d036a7d5e24b
-    m_ActionName: Knight/Jetpack Jump[/Keyboard/space]
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 567666113}
@@ -499,6 +486,14 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 99442510-9d27-4c80-b1b4-d328aa5fb7d1
     m_ActionName: Knight/JatpackCharge[/Keyboard/f]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: e5f7795b-df4e-4ad6-b648-00c744423746
+    m_ActionName: Ninja/Stimpack[/Keyboard/v]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: bb120c0b-518c-4c39-93da-54769bc7e018
+    m_ActionName: Knight/Stimpack[/Keyboard/v]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Knight
@@ -519,8 +514,6 @@ MonoBehaviour:
   jumpHeight: 3
   speed: 7
   fallDecrease: 2
-  edgeHanging: 0
-  edgeClimbing: 0
   dashForce: 10
   jetpackForce: 100
   chargeForce: 5
@@ -528,7 +521,6 @@ MonoBehaviour:
   upwardsForce: 50
   chargeDamage: 0
   maxJetpackFuel: 5
-  jetpackOn: 0
 --- !u!82 &46135055
 AudioSource:
   m_ObjectHideFlags: 0
@@ -696,6 +688,32 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &5137474897669596240
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5979411463758342020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 047425db26f939343be3277c0bbb6792, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+--- !u!114 &4238440793053572482
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5979411463758342020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f15776e49a33e8947877c3340cf743ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healPercentage: 75
 --- !u!1 &5979411464056459486
 GameObject:
   m_ObjectHideFlags: 0
@@ -1222,7 +1240,7 @@ Transform:
   m_LocalScale: {x: 0.83333325, y: 0.5555556, z: 0.83333325}
   m_Children: []
   m_Father: {fileID: 5979411462874763793}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &5948121875822158331
 PrefabInstance:
@@ -1234,17 +1252,17 @@ PrefabInstance:
     - target: {fileID: 116019000963775216, guid: 560333b2c3360ff4ab708a7757b3c9ed,
         type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 645303787585421418, guid: 560333b2c3360ff4ab708a7757b3c9ed,
         type: 3}
       propertyPath: m_RootOrder
-      value: 14
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 1106121025858485738, guid: 560333b2c3360ff4ab708a7757b3c9ed,
         type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2188856996935430067, guid: 560333b2c3360ff4ab708a7757b3c9ed,
         type: 3}
@@ -1284,7 +1302,7 @@ PrefabInstance:
     - target: {fileID: 2188856996935430067, guid: 560333b2c3360ff4ab708a7757b3c9ed,
         type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2188856996935430067, guid: 560333b2c3360ff4ab708a7757b3c9ed,
         type: 3}
@@ -1309,12 +1327,12 @@ PrefabInstance:
     - target: {fileID: 3026251667423714143, guid: 560333b2c3360ff4ab708a7757b3c9ed,
         type: 3}
       propertyPath: m_RootOrder
-      value: 11
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 3972447432974004231, guid: 560333b2c3360ff4ab708a7757b3c9ed,
         type: 3}
       propertyPath: m_RootOrder
-      value: 10
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 5757465926646422823, guid: 560333b2c3360ff4ab708a7757b3c9ed,
         type: 3}
@@ -1324,22 +1342,22 @@ PrefabInstance:
     - target: {fileID: 5792931061676064037, guid: 560333b2c3360ff4ab708a7757b3c9ed,
         type: 3}
       propertyPath: m_RootOrder
-      value: 9
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 7503410254112202036, guid: 560333b2c3360ff4ab708a7757b3c9ed,
         type: 3}
       propertyPath: m_RootOrder
-      value: 12
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 8175802822122269296, guid: 560333b2c3360ff4ab708a7757b3c9ed,
         type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 8768793603629694877, guid: 560333b2c3360ff4ab708a7757b3c9ed,
         type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 560333b2c3360ff4ab708a7757b3c9ed, type: 3}
