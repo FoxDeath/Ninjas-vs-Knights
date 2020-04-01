@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7629790998763009463}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -38,6 +38,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7629790998763009463}
     m_Modifications:
+    - target: {fileID: -7462036371361415008, guid: 8d9e9bbbd95fac141842ea6ed6f30861,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: -4425609515867240179, guid: 8d9e9bbbd95fac141842ea6ed6f30861,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 8d9e9bbbd95fac141842ea6ed6f30861,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -108,10 +118,75 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.1
       objectReference: {fileID: 0}
+    - target: {fileID: -2397996973257786244, guid: 8d9e9bbbd95fac141842ea6ed6f30861,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 6ba36b8012470234ca1064fd89a48817, type: 2}
+    - target: {fileID: -1496370195891330378, guid: 8d9e9bbbd95fac141842ea6ed6f30861,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: b165554affc2c2e4a9c8affbe67bba54, type: 2}
     - target: {fileID: -927199367670048503, guid: 8d9e9bbbd95fac141842ea6ed6f30861,
         type: 3}
       propertyPath: m_Name
       value: ArrowModel
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 8d9e9bbbd95fac141842ea6ed6f30861,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: -594094835925579944, guid: 8d9e9bbbd95fac141842ea6ed6f30861,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: -492420421572216379, guid: 8d9e9bbbd95fac141842ea6ed6f30861,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 608615394619914483, guid: 8d9e9bbbd95fac141842ea6ed6f30861,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: b165554affc2c2e4a9c8affbe67bba54, type: 2}
+    - target: {fileID: 1323765397811007978, guid: 8d9e9bbbd95fac141842ea6ed6f30861,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: b165554affc2c2e4a9c8affbe67bba54, type: 2}
+    - target: {fileID: 2502203975881118265, guid: 8d9e9bbbd95fac141842ea6ed6f30861,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3667633384733631754, guid: 8d9e9bbbd95fac141842ea6ed6f30861,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4063835366044962077, guid: 8d9e9bbbd95fac141842ea6ed6f30861,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: b19ba833fe735354db4a7ccf364f3e69, type: 2}
+    - target: {fileID: 4695666576454475813, guid: 8d9e9bbbd95fac141842ea6ed6f30861,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5490870052100550915, guid: 8d9e9bbbd95fac141842ea6ed6f30861,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: b165554affc2c2e4a9c8affbe67bba54, type: 2}
+    - target: {fileID: 7469484624682501897, guid: 8d9e9bbbd95fac141842ea6ed6f30861,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8d9e9bbbd95fac141842ea6ed6f30861, type: 3}
