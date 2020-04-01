@@ -32,7 +32,7 @@ public class NinjaPlayerInput : MonoBehaviour
             playerMovement.SetCrouching(false);
         }
         //if button is pressed, sprinting and not sliding
-        else if (context.action.phase == InputActionPhase.Started && playerMovement.GetSprinting() && !playerMovement.GetSliding())
+        else if (context.action.phase == InputActionPhase.Started && playerMovement.GetSprinting() && playerMovement.GetCanSlide())
         {
             StartCoroutine(playerMovement.Sliding());
         }

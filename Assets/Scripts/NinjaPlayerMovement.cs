@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class NinjaPlayerMovement : PlayerMovement
 {
-    private Vector3 normal;
+    public Vector3 normal;
+    public Vector3 runningVector;
 
     [SerializeField] float wallJumpForce = 20f;
 
@@ -54,7 +55,7 @@ public class NinjaPlayerMovement : PlayerMovement
             //sets vertical pull attributes for wall running
             gravity = 0f;
             velocity.y -= 0.25f;
-            fallDecrease = 0.1f;
+            fallDecrease = 0f;
             canWallJump = true;
         }
         else
@@ -97,13 +98,13 @@ public class NinjaPlayerMovement : PlayerMovement
     //moves the player according to its state and attributes
     protected override void Move()
     {
-        if (isGrounded && !wallJumping)
+        if (isGrounded && !wallJumping && !wallRunning)
         {
             doubleJumped = false;
             move = (transform.right * horizontal + transform.forward * vertical) * speed;
             lastMove = move;
         }
-        else if (!wallJumping)
+        else if (!wallJumping && !wallRunning)
         {
             if (!edgeClimbing && !edgeHanging)
             {
@@ -121,6 +122,10 @@ public class NinjaPlayerMovement : PlayerMovement
             {
                 move = (transform.right * horizontal + transform.forward * vertical) * speed * 0.8f;
             }
+        }
+        else if(wallRunning)
+        {
+            move = new Vector3(runningVector.x * speed, 0f, runningVector.z * speed);
         }
         controller.Move(move * Time.deltaTime);
     }
@@ -170,7 +175,7 @@ public class NinjaPlayerMovement : PlayerMovement
             audioManager.Stop("Walking");
         }
 
-        if (moveInput != Vector2.zero && wallRunning)
+        if (wallRunning)
         {
             if (!audioManager.IsPlaying("Wallrun"))
             {
@@ -189,22 +194,16 @@ public class NinjaPlayerMovement : PlayerMovement
         {
             doubleJumped = true;
         }
-
+        StartCoroutine(GetComponent<WallRun>().EndWallrun());
         wallJumping = true;
         velocity.x = wallJumpForce * normal.x;
         velocity.z = wallJumpForce * normal.z;
         velocity.y = Mathf.Sqrt(jumpHeight * 50f);
-        move.x = lastMove.x;
         fallVelocity = 0f;
         audioManager.Play("Jump");
 
         yield return new WaitForSeconds(0.5f);
 
         wallJumping = false;
-    }
-
-    void OnControllerColliderHit(ControllerColliderHit hit)
-    {
-        normal = hit.normal;
     }
 }

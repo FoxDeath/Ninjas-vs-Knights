@@ -41,11 +41,11 @@ public class KightPlayerInput : MonoBehaviour
         {
             if (context.action.phase == InputActionPhase.Performed)
             {
-                playerMovement.jetpackOn = true;
+                playerMovement.SetJetpackOn(true);
             }
             else if(context.action.phase == InputActionPhase.Canceled)
             {
-                playerMovement.jetpackOn = false;
+                playerMovement.SetJetpackOn(false);
             }
         }
     }
@@ -69,7 +69,7 @@ public class KightPlayerInput : MonoBehaviour
     public void CrouchInput(InputAction.CallbackContext context)
     {
         //if button is pressed and not crouching
-        if (context.action.phase == InputActionPhase.Started && !playerMovement.GetSprinting())
+        if (context.action.phase == InputActionPhase.Started && !playerMovement.GetSprinting() && !playerMovement.GetDashing())
         {
             playerMovement.SetCrouching(true);
         }
@@ -79,7 +79,7 @@ public class KightPlayerInput : MonoBehaviour
             playerMovement.SetCrouching(false);
         }
         //if button is pressed, sprinting and not sliding
-        else if (context.action.phase == InputActionPhase.Started && playerMovement.GetSprinting() && !playerMovement.GetSliding())
+        else if (context.action.phase == InputActionPhase.Started && playerMovement.GetSprinting() && playerMovement.GetCanSlide())
         {
             StartCoroutine(playerMovement.Sliding());
         }

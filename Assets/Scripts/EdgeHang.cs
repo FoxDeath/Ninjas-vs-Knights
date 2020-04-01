@@ -64,22 +64,18 @@ public class EdgeHang : MonoBehaviour
         {
             if(!handIK && footIK)
             {
-                if(!playerMovement.edgeHanging)
+                if(!playerMovement.GetEdgeHanging())
                 {       
                     audioManager.Play("EdgeHang");
                     playerMovement.ZeroVelocity();
-                }
-
-                if(playerMovement.edgeHanging == false)
-                {
                     StartCoroutine(HangTimer());
                 }
 
-                playerMovement.edgeHanging = true;
+                playerMovement.SetEdgeHanging(true);
             }
             else
             {
-                playerMovement.edgeHanging = false;
+                playerMovement.SetEdgeHanging(false);
             }
         }
     }

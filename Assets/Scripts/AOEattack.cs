@@ -34,7 +34,7 @@ public class AOEattack : MonoBehaviour
         }
         else
         {
-            GetComponent<KnightPlayerMovement>().jetpackOn = false;
+            GetComponent<KnightPlayerMovement>().SetJetpackOn(false);
             GetComponent<KnightPlayerMovement>().Slam();
             yield return new WaitWhile(() => !GetComponent<KnightPlayerMovement>().GetGrounded());
             Attack(2f, 2f);
