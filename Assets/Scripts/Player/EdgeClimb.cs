@@ -37,12 +37,12 @@ public class EdgeClimb : MonoBehaviour
         //plays sound
         FindObjectOfType<AudioManager>().Play("Climb");
 
-        playerMovement.edgeHanging = false;
-        playerMovement.edgeClimbing = true;
+        playerMovement.SetEdgeHanging(false);
+        playerMovement.SetEdgeClimbing(true);
 
         yield return new WaitForSeconds(1f);
         
-        playerMovement.edgeClimbing = false;
+        playerMovement.SetEdgeClimbing(false);
 
         //switches cameras back to default
         mainCamera.gameObject.SetActive(true);

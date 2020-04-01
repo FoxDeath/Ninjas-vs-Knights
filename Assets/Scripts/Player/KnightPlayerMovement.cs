@@ -17,12 +17,21 @@ public class KnightPlayerMovement : PlayerMovement
     private float currentForce = 0f;
     private float jetpackFuel;
 
-    public bool jetpackOn;
+    private bool jetpackOn;
     private bool canCharge = true;
     private bool canDash = true;
     private bool dashing;
     private bool charging;
     private bool jetpacking;
+
+    public bool GetDashing()
+    {
+        return dashing;
+    }
+    public void SetJetpackOn(bool jetpackOn)
+    {
+        this.jetpackOn = jetpackOn;
+    }
 
     protected override void Start()
     {
@@ -47,7 +56,7 @@ public class KnightPlayerMovement : PlayerMovement
         }
 
 
-        if (edgeHanging)
+        if(edgeHanging)
         {
             //turns off gravity while hanging on edge
             velocity.y = 0f;
@@ -65,11 +74,11 @@ public class KnightPlayerMovement : PlayerMovement
         Crouch();
         Fall();
 
-        if(!isGrounded)
+        if(!isGrounded && !dashing)
         {
             velocity.y = Mathf.Clamp(velocity.y, -40f, 10f);
         }
-        else
+        else if(!dashing)
         {
             velocity.y = Mathf.Clamp(velocity.y, 0f, 10f);
         }
@@ -80,7 +89,11 @@ public class KnightPlayerMovement : PlayerMovement
     //Calculates the speed depending on the situation
     protected override void SpeedCalculation()
     {
-        if (sprinting || jetpacking)
+        if(sliding)
+        {
+            speed = defaultSpeed * 2f;
+        }
+        else if(!sliding && (sprinting || jetpacking))
         {
             speed = defaultSpeed * 1.6f;
         }
@@ -104,13 +117,6 @@ public class KnightPlayerMovement : PlayerMovement
     public void Jetpack()
     {
         uiManager.SetKnightSliderValue(jetpackFuel / maxJetpackFuel);
-        
-        //If the player is crouching you can't use the jetpack
-        if(isCrouched)
-        {
-            audioManager.Stop("Jetpack");
-            return;
-        }
 
         //If the jetpack is off stops the sound and recharges the jetpack
         if(!jetpackOn)
@@ -119,6 +125,11 @@ public class KnightPlayerMovement : PlayerMovement
             if(jetpackFuel < maxJetpackFuel)
             {
                 jetpackFuel += Time.deltaTime * 2;
+                    //If the player is crouching you can't use the jetpack
+                    if(isCrouched || sliding)
+                    {
+                        return;
+                    }
             }
             currentForce -= Time.deltaTime/5f;    
             if(currentForce < 0f)
@@ -174,7 +185,7 @@ public class KnightPlayerMovement : PlayerMovement
 
     public void Dash()
     {
-        if(canDash)
+        if(canDash && !isCrouched)
         {
             StartCoroutine(DashBehaviour());
         }
@@ -230,8 +241,7 @@ public class KnightPlayerMovement : PlayerMovement
             horizontal = dashForce * localForward.x;
 
             gravity = 0f;
-            velocity.y = dashForce * localForward.y;
-
+            velocity.y = dashForce * 5 * localForward.y;
             yield return new WaitForSeconds(0.4f);
             
             dashing = false;

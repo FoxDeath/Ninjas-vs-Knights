@@ -542,10 +542,6 @@ MonoBehaviour:
     m_ActionName: Knight/Jump[/Keyboard/space]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: 0de5b342-1f49-4aef-8977-d036a7d5e24b
-    m_ActionName: Knight/Jetpack Jump[/Keyboard/space]
-  - m_PersistentCalls:
-      m_Calls: []
     m_ActionId: f55b3568-3a37-4acc-8116-feb32b73bab9
     m_ActionName: Knight/Shoot[/Mouse/leftButton]
   - m_PersistentCalls:
@@ -656,8 +652,6 @@ MonoBehaviour:
   jumpHeight: 5
   speed: 10
   fallDecrease: 2
-  edgeHanging: 0
-  edgeClimbing: 0
   normal: {x: 0, y: 0, z: 0}
   runningVector: {x: 0, y: 0, z: 0}
   wallJumpForce: 25
@@ -954,6 +948,25 @@ MonoBehaviour:
   m_BeforeTransparentBundles: []
   m_BeforeStackBundles: []
   m_AfterStackBundles: []
+--- !u!95 &2900928103347324759
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7040241951151823806}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ba814e7ec6743a64e860cfe67661ca56, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &8431848206675175885
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1151,6 +1164,12 @@ PrefabInstance:
       objectReference: {fileID: 2056603104854673355}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2fdda716840d5134982c2ddfabb5fed6, type: 3}
+--- !u!1 &7040241951151823806 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1443655227300184267, guid: 2fdda716840d5134982c2ddfabb5fed6,
+    type: 3}
+  m_PrefabInstance: {fileID: 8483394145403542389}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2161157347251780702 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7513951615624341291, guid: 2fdda716840d5134982c2ddfabb5fed6,
@@ -1163,7 +1182,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 8483394145403542389}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 7040241951151823806}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 03d5adcd00c8f9b4ab5bbd9c884f1df9, type: 3}
