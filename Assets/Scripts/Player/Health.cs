@@ -94,7 +94,7 @@ public class Health : MonoBehaviour
     {
         print("heal bic");
         Medkit medkit = other.GetComponent<Medkit>();
-        if (medkit)
+        if (medkit && health < maxHealth)
         {
             Heal(medkit.GetHealAmmount());
             GameObject.Destroy(other.gameObject);
