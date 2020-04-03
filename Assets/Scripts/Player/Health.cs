@@ -89,4 +89,15 @@ public class Health : MonoBehaviour
             regenerating = false;
         }
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        print("heal bic");
+        Medkit medkit = other.GetComponent<Medkit>();
+        if (medkit)
+        {
+            Heal(medkit.GetHealAmmount());
+            GameObject.Destroy(other.gameObject);
+        }
+    }
 }
