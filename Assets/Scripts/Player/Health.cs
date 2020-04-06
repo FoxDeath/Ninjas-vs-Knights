@@ -16,6 +16,10 @@ public class Health : MonoBehaviour
     {
         return maxHealth;
     }
+    public float GetCurrentHealth()
+    {
+        return health;
+    }
 
     void Start()
     {
@@ -92,7 +96,6 @@ public class Health : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        print("heal bic");
         Medkit medkit = other.GetComponent<Medkit>();
         if (medkit && health < maxHealth)
         {

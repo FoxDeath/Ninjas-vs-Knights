@@ -4,11 +4,18 @@ using UnityEngine.InputSystem;
 
 public class Stimpack : MonoBehaviour
 {
+    private Health health;
+
     private bool stimpacking;
+
+    void Awake()
+    {
+        health = FindObjectOfType<Health>();
+    }
 
     [SerializeField] float healPercentage = 75f;
     public void StimpackInput(InputAction.CallbackContext context)
-    {
+    {   
         if(context.action.phase == InputActionPhase.Performed && !stimpacking)
         {
             StartCoroutine(StimpackBehaviour());
@@ -18,12 +25,19 @@ public class Stimpack : MonoBehaviour
     //Casting the abilty
     IEnumerator StimpackBehaviour()
     {
-        stimpacking = true;
+        if(health.GetMaxHealt() >= health.GetCurrentHealth())
+        {
+            yield return null;
+        }
+        else
+        {
+            stimpacking = true;
 
-        GetComponent<Health>().Heal(GetComponent<Health>().GetMaxHealt() * (healPercentage / 100));
-        FindObjectOfType<UIManager>().ResetStimpack();
-        yield return new WaitForSeconds(10f);
+            health.Heal(GetComponent<Health>().GetMaxHealt() * (healPercentage / 100));
+            FindObjectOfType<UIManager>().ResetStimpack();
+            yield return new WaitForSeconds(10f);
 
-        stimpacking = false;
+            stimpacking = false;
+        }
     }
 }

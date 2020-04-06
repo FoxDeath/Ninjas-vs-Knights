@@ -112,12 +112,14 @@ public class UIManager : MonoBehaviour
         healthSlider.value = health; 
     }
 
+    //Resets the stimpack fill value to 0 and starts refiling it
     public void ResetStimpack()
     {
         stimpackFill.fillAmount = 0f;
         stimpackFilling = true;
     }
 
+    //Refils the stimpack for 10 seconds
     private void FillingStimpack()
     {
         if(stimpackFilling)
