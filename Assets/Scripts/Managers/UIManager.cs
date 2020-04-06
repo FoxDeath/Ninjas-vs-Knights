@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class UIManager : MonoBehaviour
 {
@@ -15,10 +16,15 @@ public class UIManager : MonoBehaviour
     private TextMeshProUGUI[] texts;
     private Slider knightSlider;
     private Slider healthSlider;
+    private Image stimpackFill;
+
+    private bool stimpackFilling;
 
     void Update()
     {
         SceneManager.sceneLoaded += OnSceneWasLoaded;
+
+        FillingStimpack();
     }
 
     void OnSceneWasLoaded(Scene scene, LoadSceneMode mode)
@@ -36,15 +42,17 @@ public class UIManager : MonoBehaviour
             texts = ui.transform.Find("NinjaUI").Find("AmmoCounter").GetComponentsInChildren<TextMeshProUGUI>();
             ninjaUI = ui.transform.Find("NinjaUI").gameObject;
             healthSlider = ninjaUI.transform.Find("HealthBar").GetComponent<Slider>();
+            stimpackFill = ninjaUI.transform.Find("Stimpack").Find("StimpackFill").GetComponent<Image>();
         }
         else
         {
-            //if current player is a knight, it gets the ninja assets
+            //if current player is a knight, it gets the knight assets
             knightUI = ui.transform.Find("KnightUI").gameObject;
             texts = knightUI.transform.Find("AmmoCounter").GetComponentsInChildren<TextMeshProUGUI>();
             knightSlider = knightUI.transform.Find("FuelSlider").GetComponent<Slider>();
             healthSlider = knightUI.transform.Find("HealthBar").GetComponent<Slider>();
             knightScopeOverlay = ui.transform.Find("ScopeOverlay").gameObject;
+            stimpackFill = knightUI.transform.Find("Stimpack").Find("StimpackFill").GetComponent<Image>();
         }
 
         //gets and sets the number of current and max ammo
@@ -102,5 +110,23 @@ public class UIManager : MonoBehaviour
     public void SetHealth(float health)
     {
         healthSlider.value = health; 
+    }
+
+    public void ResetStimpack()
+    {
+        stimpackFill.fillAmount = 0f;
+        stimpackFilling = true;
+    }
+
+    private void FillingStimpack()
+    {
+        if(stimpackFilling)
+        {
+            stimpackFill.fillAmount += 1f / 10f * Time.deltaTime;
+            if(stimpackFill.fillAmount == 1f)
+            {
+                stimpackFilling = false;
+            }
+        }
     }
 }

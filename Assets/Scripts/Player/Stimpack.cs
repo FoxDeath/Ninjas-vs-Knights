@@ -21,7 +21,7 @@ public class Stimpack : MonoBehaviour
         stimpacking = true;
 
         GetComponent<Health>().Heal(GetComponent<Health>().GetMaxHealt() * (healPercentage / 100));
-
+        FindObjectOfType<UIManager>().ResetStimpack();
         yield return new WaitForSeconds(10f);
 
         stimpacking = false;
