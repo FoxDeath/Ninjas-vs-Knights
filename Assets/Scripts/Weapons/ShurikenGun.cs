@@ -55,11 +55,8 @@ public class ShurikenGun :  MonoBehaviour, IWeapon
                 StartCoroutine(Reloading());
                 return;
             }
-            animator.SetBool("Firing", true);
-        }
-        else
-        {
-            animator.SetBool("Firing", false);
+            
+            animator.SetTrigger("Firing");
         }
     }
 

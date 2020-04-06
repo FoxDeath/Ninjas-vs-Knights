@@ -54,7 +54,7 @@ public class Target : MonoBehaviour
 
     void OnCollisionEnter(Collision other)
     {
-        if(other.gameObject.name.Equals("ShurikenModel"))
+        if(other.gameObject.name.Equals("ShurikenModel") || other.gameObject.name.Equals("SpearGunLaserModel"))
         {
             Vector3 force = transform.localPosition - other.transform.localPosition;
             myRigidbody.velocity = new Vector3(other.transform.right.x * force.x, other.transform.up.y * force.y, other.transform.forward.z * force.z);
