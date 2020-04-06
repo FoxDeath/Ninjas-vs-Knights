@@ -1,0 +1,396 @@
+fileFormatVersion: 2
+guid: df2fedcaaac89f44daf95d5c85d04bba
+ModelImporter:
+  serializedVersion: 19300
+  internalIDToNameTable:
+  - first:
+      74: 4857117105471196495
+    second: Grip|BodyAction
+  - first:
+      74: 6019365528725661647
+    second: Grip|CubeAction
+  - first:
+      74: 4673236138641803139
+    second: Grip|CubeAction.001
+  - first:
+      74: 8228061612263127987
+    second: Grip|CubeAction.004
+  - first:
+      74: 842502769034125140
+    second: Grip|CubeAction.005
+  - first:
+      74: 7120758206077363789
+    second: Grip|CubeAction.006
+  - first:
+      74: -8635784419444566313
+    second: Grip|CylinderAction
+  - first:
+      74: 7223809183461201867
+    second: Grip|CylinderAction.001
+  - first:
+      74: 3202460479104583909
+    second: Grip|CylinderAction.002
+  - first:
+      74: -873720198369977335
+    second: Grip|GripAction
+  - first:
+      74: 4219266326801906582
+    second: Body|BodyAction
+  - first:
+      74: -7687050157170287468
+    second: Body|CubeAction
+  - first:
+      74: -1117962325520212446
+    second: Body|CubeAction.001
+  - first:
+      74: -7119515773534053246
+    second: Body|CubeAction.004
+  - first:
+      74: -4640635209081516617
+    second: Body|CubeAction.005
+  - first:
+      74: -5438274764977710922
+    second: Body|CubeAction.006
+  - first:
+      74: -5551098821158764661
+    second: Body|CylinderAction
+  - first:
+      74: -2072582118085520068
+    second: Body|CylinderAction.001
+  - first:
+      74: 2663121700898443222
+    second: Body|CylinderAction.002
+  - first:
+      74: -1013348039441641850
+    second: Body|GripAction
+  - first:
+      74: -6589953262788266215
+    second: Handle|BodyAction
+  - first:
+      74: -1931290554338324711
+    second: Handle|CubeAction
+  - first:
+      74: -442715387787687720
+    second: Handle|CubeAction.001
+  - first:
+      74: 6997544916783821611
+    second: Handle|CubeAction.004
+  - first:
+      74: -2338746199887205944
+    second: Handle|CubeAction.005
+  - first:
+      74: -6521557246309008100
+    second: Handle|CubeAction.006
+  - first:
+      74: -6343579259334509322
+    second: Handle|CylinderAction
+  - first:
+      74: -8390468664709266219
+    second: Handle|CylinderAction.001
+  - first:
+      74: -8803728093808636063
+    second: Handle|CylinderAction.002
+  - first:
+      74: 2567580497761415920
+    second: Handle|GripAction
+  - first:
+      74: -3014867527071379332
+    second: Barrel|BodyAction
+  - first:
+      74: -8909310570428084064
+    second: Barrel|CubeAction
+  - first:
+      74: -1580773305530323221
+    second: Barrel|CubeAction.001
+  - first:
+      74: -2179298146546349977
+    second: Barrel|CubeAction.004
+  - first:
+      74: 2688125256742333143
+    second: Barrel|CubeAction.005
+  - first:
+      74: -7373702593676278196
+    second: Barrel|CubeAction.006
+  - first:
+      74: 3638216930790031039
+    second: Barrel|CylinderAction
+  - first:
+      74: -3153115434384026500
+    second: Barrel|CylinderAction.001
+  - first:
+      74: 2032137594763646847
+    second: Barrel|CylinderAction.002
+  - first:
+      74: 3399570250343857259
+    second: Barrel|GripAction
+  - first:
+      74: 5713919284886624897
+    second: Slingshot 1|BodyAction
+  - first:
+      74: 2903900458470326527
+    second: Slingshot 1|CubeAction
+  - first:
+      74: -477408737336179054
+    second: Slingshot 1|CubeAction.001
+  - first:
+      74: -4560949956920869059
+    second: Slingshot 1|CubeAction.004
+  - first:
+      74: 5635635643050795860
+    second: Slingshot 1|CubeAction.005
+  - first:
+      74: -4407209631057262069
+    second: Slingshot 1|CubeAction.006
+  - first:
+      74: 9143673401303478559
+    second: Slingshot 1|CylinderAction
+  - first:
+      74: 4986312559492212649
+    second: Slingshot 1|CylinderAction.001
+  - first:
+      74: 5401531011274900300
+    second: Slingshot 1|CylinderAction.002
+  - first:
+      74: -2377964673385024360
+    second: Slingshot 1|GripAction
+  - first:
+      74: 8213646614413294029
+    second: Slingshot 2|BodyAction
+  - first:
+      74: -7521637347863677052
+    second: Slingshot 2|CubeAction
+  - first:
+      74: 4401676081749454958
+    second: Slingshot 2|CubeAction.001
+  - first:
+      74: -2539321782752525427
+    second: Slingshot 2|CubeAction.004
+  - first:
+      74: -7139800288332482144
+    second: Slingshot 2|CubeAction.005
+  - first:
+      74: -2637985887899124857
+    second: Slingshot 2|CubeAction.006
+  - first:
+      74: 6518116465029105104
+    second: Slingshot 2|CylinderAction
+  - first:
+      74: -5253213054635674440
+    second: Slingshot 2|CylinderAction.001
+  - first:
+      74: -6881799648474635825
+    second: Slingshot 2|CylinderAction.002
+  - first:
+      74: -9176498719960116603
+    second: Slingshot 2|GripAction
+  - first:
+      74: -2113228095776656384
+    second: Slingshot 3|BodyAction
+  - first:
+      74: -7565297150907875862
+    second: Slingshot 3|CubeAction
+  - first:
+      74: 1802396412573964805
+    second: Slingshot 3|CubeAction.001
+  - first:
+      74: -6514314105102632651
+    second: Slingshot 3|CubeAction.004
+  - first:
+      74: 2416712052108397491
+    second: Slingshot 3|CubeAction.005
+  - first:
+      74: 6014919861438893247
+    second: Slingshot 3|CubeAction.006
+  - first:
+      74: 5014967886373188681
+    second: Slingshot 3|CylinderAction
+  - first:
+      74: -4216609537837345703
+    second: Slingshot 3|CylinderAction.001
+  - first:
+      74: -28882348729904155
+    second: Slingshot 3|CylinderAction.002
+  - first:
+      74: -7981455828103959729
+    second: Slingshot 3|GripAction
+  - first:
+      74: -8171249048132716986
+    second: String 1|BodyAction
+  - first:
+      74: 2486645655378806554
+    second: String 1|CubeAction
+  - first:
+      74: 3833190935727158589
+    second: String 1|CubeAction.001
+  - first:
+      74: -6820599057783434979
+    second: String 1|CubeAction.004
+  - first:
+      74: 8150248662153832237
+    second: String 1|CubeAction.005
+  - first:
+      74: 363336946822871162
+    second: String 1|CubeAction.006
+  - first:
+      74: 5268992690456032273
+    second: String 1|CylinderAction
+  - first:
+      74: -832523193890543264
+    second: String 1|CylinderAction.001
+  - first:
+      74: -5567531948303166039
+    second: String 1|CylinderAction.002
+  - first:
+      74: -301622578346246709
+    second: String 1|GripAction
+  - first:
+      74: 7779997776587160165
+    second: String 2|BodyAction
+  - first:
+      74: 1927167834090109913
+    second: String 2|CubeAction
+  - first:
+      74: 3936295392114913697
+    second: String 2|CubeAction.001
+  - first:
+      74: -506269063947470159
+    second: String 2|CubeAction.004
+  - first:
+      74: -2267527259401416433
+    second: String 2|CubeAction.005
+  - first:
+      74: -6763373075098872116
+    second: String 2|CubeAction.006
+  - first:
+      74: 1236679855070445168
+    second: String 2|CylinderAction
+  - first:
+      74: 68360027389590619
+    second: String 2|CylinderAction.001
+  - first:
+      74: -2195574462496701035
+    second: String 2|CylinderAction.002
+  - first:
+      74: 3140602791920982589
+    second: String 2|GripAction
+  - first:
+      74: 91065183487739989
+    second: Handle 2|BodyAction
+  - first:
+      74: 5330470521872548768
+    second: Handle 2|CubeAction
+  - first:
+      74: -8436404766354797052
+    second: Handle 2|CubeAction.001
+  - first:
+      74: 6878985603478103632
+    second: Handle 2|CubeAction.004
+  - first:
+      74: 7590244921501706539
+    second: Handle 2|CubeAction.005
+  - first:
+      74: -7923289713796474259
+    second: Handle 2|CubeAction.006
+  - first:
+      74: 4498725769887535067
+    second: Handle 2|CylinderAction
+  - first:
+      74: 1150787572343642645
+    second: Handle 2|CylinderAction.001
+  - first:
+      74: -8247386481801272744
+    second: Handle 2|CylinderAction.002
+  - first:
+      74: -2545496725758491970
+    second: Handle 2|GripAction
+  externalObjects: {}
+  materials:
+    materialImportMode: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    meshOptimizationFlags: -1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 1
+  humanDescription:
+    serializedVersion: 3
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 1
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 2
+  humanoidOversampling: 1
+  avatarSetup: 0
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

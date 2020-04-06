@@ -403,6 +403,14 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
+                    ""name"": ""Reload"",
+                    ""type"": ""Button"",
+                    ""id"": ""e9a3d5d3-59dc-4a14-8554-0c7216a6d547"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
                     ""name"": ""Stimpack"",
                     ""type"": ""Button"",
                     ""id"": ""bb120c0b-518c-4c39-93da-54769bc7e018"",
@@ -601,6 +609,17 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""51e931db-44aa-4447-93e0-f0ad9070b0dc"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard and Mouse"",
+                    ""action"": ""Reload"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""49e484b3-7026-4caf-9155-60f61d2d8325"",
                     ""path"": ""<Keyboard>/v"",
                     ""interactions"": ""Press"",
@@ -672,6 +691,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         m_Knight_ScopeZoom = m_Knight.FindAction("ScopeZoom", throwIfNotFound: true);
         m_Knight_JatpackCharge = m_Knight.FindAction("JatpackCharge", throwIfNotFound: true);
         m_Knight_AOEAttack = m_Knight.FindAction("AOEAttack", throwIfNotFound: true);
+        m_Knight_Reload = m_Knight.FindAction("Reload", throwIfNotFound: true);
         m_Knight_Stimpack = m_Knight.FindAction("Stimpack", throwIfNotFound: true);
     }
 
@@ -856,6 +876,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
     private readonly InputAction m_Knight_ScopeZoom;
     private readonly InputAction m_Knight_JatpackCharge;
     private readonly InputAction m_Knight_AOEAttack;
+    private readonly InputAction m_Knight_Reload;
     private readonly InputAction m_Knight_Stimpack;
     public struct KnightActions
     {
@@ -874,6 +895,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         public InputAction @ScopeZoom => m_Wrapper.m_Knight_ScopeZoom;
         public InputAction @JatpackCharge => m_Wrapper.m_Knight_JatpackCharge;
         public InputAction @AOEAttack => m_Wrapper.m_Knight_AOEAttack;
+        public InputAction @Reload => m_Wrapper.m_Knight_Reload;
         public InputAction @Stimpack => m_Wrapper.m_Knight_Stimpack;
         public InputActionMap Get() { return m_Wrapper.m_Knight; }
         public void Enable() { Get().Enable(); }
@@ -923,6 +945,9 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                 @AOEAttack.started -= m_Wrapper.m_KnightActionsCallbackInterface.OnAOEAttack;
                 @AOEAttack.performed -= m_Wrapper.m_KnightActionsCallbackInterface.OnAOEAttack;
                 @AOEAttack.canceled -= m_Wrapper.m_KnightActionsCallbackInterface.OnAOEAttack;
+                @Reload.started -= m_Wrapper.m_KnightActionsCallbackInterface.OnReload;
+                @Reload.performed -= m_Wrapper.m_KnightActionsCallbackInterface.OnReload;
+                @Reload.canceled -= m_Wrapper.m_KnightActionsCallbackInterface.OnReload;
                 @Stimpack.started -= m_Wrapper.m_KnightActionsCallbackInterface.OnStimpack;
                 @Stimpack.performed -= m_Wrapper.m_KnightActionsCallbackInterface.OnStimpack;
                 @Stimpack.canceled -= m_Wrapper.m_KnightActionsCallbackInterface.OnStimpack;
@@ -969,6 +994,9 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                 @AOEAttack.started += instance.OnAOEAttack;
                 @AOEAttack.performed += instance.OnAOEAttack;
                 @AOEAttack.canceled += instance.OnAOEAttack;
+                @Reload.started += instance.OnReload;
+                @Reload.performed += instance.OnReload;
+                @Reload.canceled += instance.OnReload;
                 @Stimpack.started += instance.OnStimpack;
                 @Stimpack.performed += instance.OnStimpack;
                 @Stimpack.canceled += instance.OnStimpack;
@@ -1024,6 +1052,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         void OnScopeZoom(InputAction.CallbackContext context);
         void OnJatpackCharge(InputAction.CallbackContext context);
         void OnAOEAttack(InputAction.CallbackContext context);
+        void OnReload(InputAction.CallbackContext context);
         void OnStimpack(InputAction.CallbackContext context);
     }
 }

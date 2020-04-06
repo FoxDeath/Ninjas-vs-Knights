@@ -65,13 +65,9 @@ public class GrapplingHook : MonoBehaviour
     {
         if(!firing && context.action.phase == InputActionPhase.Started)
         {
-            animator.SetBool("Firing", true);
+            animator.SetTrigger("Firing");
             audioManager.Play("GrapplingShooting");
             muzzleFlash.Play();
-        }
-        else
-        {
-            animator.SetBool("Firing", false);
         }
         
         firing = true;
