@@ -25,7 +25,7 @@ public class Stimpack : MonoBehaviour
     //Casting the abilty
     IEnumerator StimpackBehaviour()
     {
-        if(health.GetMaxHealt() >= health.GetCurrentHealth())
+        if(health.GetMaxHealt() == health.GetCurrentHealth())
         {
             yield return null;
         }
