@@ -25,6 +25,7 @@ public class Medkit : MonoBehaviour
         Oscilate();
     }
 
+    //Rotates and moves the medpack so it looks nice
     private void Oscilate()
     {
         transform.rotation *= Quaternion.Euler(0f, 1f, 0f);
