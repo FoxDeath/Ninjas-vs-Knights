@@ -505,6 +505,10 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: bb120c0b-518c-4c39-93da-54769bc7e018
     m_ActionName: Knight/Stimpack[/Keyboard/v]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: e9a3d5d3-59dc-4a14-8554-0c7216a6d547
+    m_ActionName: Knight/Reload[/Keyboard/r]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Knight
@@ -1447,36 +1451,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Crossbow
       objectReference: {fileID: 0}
-    - target: {fileID: 6251749267340565909, guid: 28956da47e9c0cb4e8ce576262cd0f9c,
-        type: 3}
-      propertyPath: fpsCam
-      value: 
-      objectReference: {fileID: 5979411464056459426}
-    - target: {fileID: 6251749267340565909, guid: 28956da47e9c0cb4e8ce576262cd0f9c,
-        type: 3}
-      propertyPath: weaponCam
-      value: 
-      objectReference: {fileID: 2098008026}
-    - target: {fileID: 6251749267340565909, guid: 28956da47e9c0cb4e8ce576262cd0f9c,
-        type: 3}
-      propertyPath: player
-      value: 
-      objectReference: {fileID: 5979411463758342020}
-    - target: {fileID: 6251749267340565909, guid: 28956da47e9c0cb4e8ce576262cd0f9c,
-        type: 3}
-      propertyPath: shieldAnimator
-      value: 
-      objectReference: {fileID: 1656160948}
-    - target: {fileID: 6251749267340565909, guid: 28956da47e9c0cb4e8ce576262cd0f9c,
-        type: 3}
-      propertyPath: damage
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 6251749267340565909, guid: 28956da47e9c0cb4e8ce576262cd0f9c,
-        type: 3}
-      propertyPath: fireRate
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 28956da47e9c0cb4e8ce576262cd0f9c, type: 3}
 --- !u!4 &6035998695772799603 stripped
@@ -1574,12 +1548,6 @@ PrefabInstance:
 --- !u!4 &1656160947 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7164216275327251905, guid: ca21aacd68ae0b44fa214d89193c890b,
-    type: 3}
-  m_PrefabInstance: {fileID: 7164216275886208882}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &1656160948 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 7164216275327251910, guid: ca21aacd68ae0b44fa214d89193c890b,
     type: 3}
   m_PrefabInstance: {fileID: 7164216275886208882}
   m_PrefabAsset: {fileID: 0}
