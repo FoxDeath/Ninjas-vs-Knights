@@ -14,9 +14,11 @@ public class EdgeHang : MonoBehaviour
     private Vector3 footPosition;
     private Vector3 footOffset;
     private Vector3 handOriginalPosition;
+
     private Quaternion handRotation;
     private Quaternion footRotation;
     private Quaternion footRotationOffset;
+    
     private PlayerMovement playerMovement;
     private AudioManager audioManager;
 

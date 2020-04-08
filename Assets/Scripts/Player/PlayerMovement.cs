@@ -124,6 +124,7 @@ public class PlayerMovement : MonoBehaviour
         if (!isGrounded)
         {
             isGrounded = Physics.CheckSphere(groundCheck.position, groungDistance, groundMask);
+
             if (isGrounded)
             {
                 fallVelocity = 1f;
@@ -133,7 +134,7 @@ public class PlayerMovement : MonoBehaviour
         isGrounded = Physics.CheckSphere(groundCheck.position, groungDistance, groundMask);
 
         //if sprinting and moving backwards
-        if (sprinting && vertical <= 0)
+        if (sprinting && vertical <= 0 && isGrounded && !edgeClimbing)
         {
             Sprint(false);
         }
@@ -144,7 +145,7 @@ public class PlayerMovement : MonoBehaviour
     protected virtual void FixedUpdate()
     {
         //if game is paused
-        if (PauseMenu.GameIsPaused)
+        if(PauseMenu.GameIsPaused)
         {
             return;
         }
@@ -189,26 +190,26 @@ public class PlayerMovement : MonoBehaviour
     //moves the player according to its state and attributes
     protected virtual void Move()
     {
-        if (isGrounded)
+        if(isGrounded)
         {
             move = (transform.right * horizontal + transform.forward * vertical) * speed;
             lastMove = move;
         }
         else
         {
-            if (!edgeClimbing && !edgeHanging)
+            if(!edgeClimbing && !edgeHanging)
             {
                 controller.Move(lastMove * 0.3f * Time.deltaTime);
                 move = (transform.right * horizontal + transform.forward * vertical) * speed * 0.8f;
             }
 
-            if (edgeHanging && !edgeClimbing)
+            if(edgeHanging && !edgeClimbing)
             {
                 vertical = Mathf.Clamp(vertical, -1f, 0f);
                 move = (transform.right * horizontal + transform.forward * vertical) * speed * 0.8f;
             }
 
-            if (!edgeClimbing)
+            if(!edgeClimbing)
             {
                 move = (transform.right * horizontal + transform.forward * vertical) * speed * 0.8f;
             }
@@ -247,12 +248,12 @@ public class PlayerMovement : MonoBehaviour
     public void Crouch()
     {
         //You can't crouch if you are not on the ground or if there is something above you
-        if (!isGrounded || Physics.Raycast(transform.position, Vector3.up, 5f))
+        if(!isGrounded || Physics.Raycast(transform.position, Vector3.up, 5f))
         {
             return;
         }
 
-        if (crouching)
+        if(crouching)
         {
             isCrouched = true;
             transform.localScale = new Vector3(1f, 0.5f, 1f);
@@ -266,7 +267,7 @@ public class PlayerMovement : MonoBehaviour
 
     protected void Fall()
     {
-        if (velocity.y < fallVelocity && !isGrounded && !resetFall)
+        if(velocity.y < fallVelocity && !isGrounded && !resetFall)
         {
             velocity.y -= fallDecrease;
         }
@@ -302,13 +303,13 @@ public class PlayerMovement : MonoBehaviour
     public void Sprint(bool state)
     {
         //turn on sprint
-        if (state && !isCrouched && !scoping && !sprinting)
+        if(state && !isCrouched && !scoping && !sprinting)
         {
             audioManager.SetPitch("Walking", 2);
             sprinting = true;
         }
         //turn off sprint
-        else if (!state && sprinting)
+        else if(!state && sprinting)
         {
             audioManager.SetPitch("Walking", 1);
             sprinting = false;
@@ -318,12 +319,12 @@ public class PlayerMovement : MonoBehaviour
     public virtual void Jump()
     {
         //Cant jump while crouching
-        if (isCrouched)
+        if(isCrouched)
         {
             return;
         }
 
-        else if (isGrounded)
+        else if(isGrounded)
         {
             //if grounded play jump sound and move upwards
             audioManager.Play("Jump");

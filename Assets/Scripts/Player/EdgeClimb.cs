@@ -6,6 +6,7 @@ public class EdgeClimb : MonoBehaviour
 {
     private PlayerMovement playerMovement;
     private Animator anim;
+    private PlayerInput playerInput;
 
     private Camera parkourCamera;
     private Camera mainCamera;
@@ -14,6 +15,8 @@ public class EdgeClimb : MonoBehaviour
     {
         playerMovement = GetComponent<PlayerMovement>();
         anim = GetComponent<Animator>();
+        playerInput = new PlayerInput();
+        playerInput.Enable();
 
         parkourCamera = gameObject.transform.Find("Parkour Camera").GetComponent<Camera>();
         mainCamera = gameObject.transform.Find("Main Camera").GetComponent<Camera>();
@@ -41,12 +44,21 @@ public class EdgeClimb : MonoBehaviour
         playerMovement.SetEdgeClimbing(true);
 
         yield return new WaitForSeconds(1f);
-        
+
         playerMovement.SetEdgeClimbing(false);
 
         //switches cameras back to default
         mainCamera.gameObject.SetActive(true);
         parkourCamera.gameObject.SetActive(false);
+
+        if (gameObject.GetComponent<KnightPlayerMovement>() != null)
+        {
+            playerMovement.SetMoveInput(playerInput.Knight.Movement.ReadValue<Vector2>());
+        }
+        else
+        {
+            playerMovement.SetMoveInput(playerInput.Ninja.Movement.ReadValue<Vector2>());
+        }
     }
 
     IEnumerator MovePlayer()
