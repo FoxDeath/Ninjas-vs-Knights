@@ -32,8 +32,6 @@ public class UIManager : MonoBehaviour
 
     private Vector2 moveInput;
 
-    private Vector2 moveInput = new Vector2();
-
     private static bool inArrowMenu = false;
 
     public static UIManager GetInstance()
@@ -49,11 +47,6 @@ public class UIManager : MonoBehaviour
     void Update()
     {
         SceneManager.sceneLoaded += OnSceneWasLoaded;
-
-        if(inArrowMenu)
-        {
-            ArrowSelectBehaviour();
-        }
 
         FillingStimpack();
     }
