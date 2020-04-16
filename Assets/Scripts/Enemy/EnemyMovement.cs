@@ -10,6 +10,18 @@ public class EnemyMovement : MonoBehaviour
 
     private Transform player;
 
+    #region Getters and Setters
+    public float GetSpeed()
+    {
+        return speed;
+    }
+
+    public void SetSpeed(float speed)
+    {
+        this.speed = speed;
+    }
+    #endregion
+
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
