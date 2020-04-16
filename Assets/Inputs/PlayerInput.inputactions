@@ -43,7 +43,7 @@
                     "id": "174db001-2c17-4ee9-b135-01e3d5573dad",
                     "expectedControlType": "",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "Hold(duration=0.1,pressPoint=0.1)"
                 },
                 {
                     "name": "Scope",
@@ -51,7 +51,7 @@
                     "id": "3558cc0b-596e-468e-b70c-d418962defaf",
                     "expectedControlType": "",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "Hold(duration=0.01,pressPoint=0.01)"
                 },
                 {
                     "name": "Reload",
@@ -89,6 +89,14 @@
                     "name": "SwitchWeapon",
                     "type": "Value",
                     "id": "2d82f41a-d418-47d2-b863-dc6db34d7571",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "LookPosition",
+                    "type": "Value",
+                    "id": "81145bce-9fd2-4242-b677-dde3d491f35f",
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": ""
@@ -195,7 +203,7 @@
                     "name": "",
                     "id": "cbec5257-5027-498f-a9e2-702e97f2f45e",
                     "path": "<Mouse>/leftButton",
-                    "interactions": "Press",
+                    "interactions": "",
                     "processors": "",
                     "groups": "Keyboard and Mouse",
                     "action": "Fire",
@@ -206,7 +214,7 @@
                     "name": "",
                     "id": "d185bede-461d-4e83-832f-e5ec3b55d642",
                     "path": "<Mouse>/rightButton",
-                    "interactions": "Press",
+                    "interactions": "",
                     "processors": "",
                     "groups": "Keyboard and Mouse",
                     "action": "Scope",
@@ -265,6 +273,17 @@
                     "processors": "",
                     "groups": "Keyboard and Mouse",
                     "action": "SwitchWeapon",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "11b5e546-2d1e-42fe-82e9-01fda1e20cd2",
+                    "path": "<Mouse>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard and Mouse",
+                    "action": "LookPosition",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

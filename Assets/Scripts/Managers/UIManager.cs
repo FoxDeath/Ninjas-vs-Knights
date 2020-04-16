@@ -2,23 +2,47 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
 using System.Collections;
 
 public class UIManager : MonoBehaviour
 {
+    private static UIManager instance;
+
     private GameObject ui;
     private GameObject knightScopeOverlay;
     private GameObject knightUI;
     private GameObject ninjaUI;
+    private GameObject arrowSelect;
 
     private TextMeshProUGUI currentAmmo;
     private TextMeshProUGUI maxAmmo;
     private TextMeshProUGUI[] texts;
     private Slider knightSlider;
     private Slider healthSlider;
+    private MouseLook mouseLook;
     private Image stimpackFill;
+    private Bow bow;
+    [SerializeField] static Color normalColor = new Color(0f / 255f, 0f / 255f, 0f / 255f, 188f / 255f);
+    [SerializeField] static Color highlightedColor = new Color(224f / 255f, 114f / 255f, 0f / 255f, 255f / 255f);
+    private static Image[] radialOptions;
 
+    private static string selectedOption;
     private bool stimpackFilling;
+
+    private Vector2 moveInput;
+
+    private static bool inArrowMenu = false;
+
+    public static UIManager GetInstance()
+    {
+        return instance;
+    }
+
+    private void Awake()
+    {
+        instance = this;
+    }
 
     void Update()
     {
@@ -30,7 +54,7 @@ public class UIManager : MonoBehaviour
     void OnSceneWasLoaded(Scene scene, LoadSceneMode mode)
     {
         ui = GameObject.Find("UI");
-        
+
         if(ui == null)
         {
             return;
@@ -42,7 +66,16 @@ public class UIManager : MonoBehaviour
             texts = ui.transform.Find("NinjaUI").Find("AmmoCounter").GetComponentsInChildren<TextMeshProUGUI>();
             ninjaUI = ui.transform.Find("NinjaUI").gameObject;
             healthSlider = ninjaUI.transform.Find("HealthBar").GetComponent<Slider>();
+            arrowSelect = ui.transform.Find("NinjaUI").Find("ArrowSelect").gameObject;
+            arrowSelect = arrowSelect.transform.Find("Wheel").gameObject;
+            mouseLook = GameObject.Find("NinjaPlayer").transform.Find("Main Camera").GetComponent<MouseLook>();
             stimpackFill = ninjaUI.transform.Find("Stimpack").Find("StimpackFill").GetComponent<Image>();
+
+            radialOptions = new Image[arrowSelect.transform.childCount];
+            for(int i = 0; i < arrowSelect.transform.childCount; i++)
+            {
+                radialOptions[i] = arrowSelect.transform.GetChild(i).GetComponent<Image>();
+            }
         }
         else
         {
@@ -67,6 +100,81 @@ public class UIManager : MonoBehaviour
                 maxAmmo = text;
             }
         }
+    }
+
+    public void ArrowMenuInput(InputAction.CallbackContext context)
+    {
+        if (inArrowMenu)
+        {
+            moveInput.x = context.ReadValue<Vector2>().x - (Screen.width / 2f);
+            moveInput.y = context.ReadValue<Vector2>().y - (Screen.height / 2f);
+            moveInput.Normalize();
+
+            if (moveInput != Vector2.zero)
+            {
+                float angle = Mathf.Atan2(moveInput.y, -moveInput.x) / Mathf.PI;
+                angle *= 180f;
+                angle += 90f;
+
+                if (angle < 0f)
+                {
+                    angle += 360f;
+                }
+
+                for(int i = 0; i < radialOptions.Length; i++)
+                {
+                    if(angle > i * 90 && angle < (i + 1) * 90)
+                    {
+                        radialOptions[i].color = highlightedColor;
+                        selectedOption = radialOptions[i].name;
+                    }
+                    else
+                    {
+                        radialOptions[i].color = normalColor;
+                    }
+                }
+            }
+        }
+    }
+
+    public void SetArrowMenuState(bool state)
+    {
+        if (bow == null)
+        {
+            bow = GameObject.Find("NinjaPlayer").transform.Find("Main Camera").Find("Bow").GetComponent<Bow>();
+        }
+
+        arrowSelect.SetActive(state);
+        inArrowMenu = state;
+
+        if (state)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            mouseLook.SetCanLook(false);
+            mouseLook.SetSensitivity(mouseLook.GetSensitivity() * 0.5f);
+
+            foreach (TextMeshProUGUI text in texts)
+            {
+                text.gameObject.SetActive(false);
+            }
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            mouseLook.SetCanLook(true);
+            mouseLook.SetSensitivity(mouseLook.GetSensitivity() / 0.5f);
+
+            foreach (TextMeshProUGUI text in texts)
+            {
+                text.gameObject.SetActive(true);
+            }
+
+            bow.SetCurrentArrow(selectedOption);
+        }
+    }
+    public bool GetArrowMenuState()
+    {
+        return inArrowMenu;
     }
 
     public void SetMaxAmmo(int ammo)

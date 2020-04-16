@@ -42,7 +42,7 @@ public class ShurikenGun :  MonoBehaviour, IWeapon
     //Fires the Gun when the input is performed, lowers the current ammo, and automatically starts reloading when running out of ammo.
     public void FireInput(InputAction.CallbackContext context)
     {
-        if(context.phase == InputActionPhase.Performed && Time.time >= nextTimeToFire && !reloading)
+        if(context.phase == InputActionPhase.Started && Time.time >= nextTimeToFire && !reloading)
         {
             if(currentAmmo > 0)
             {

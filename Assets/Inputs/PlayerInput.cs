@@ -56,7 +56,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""id"": ""174db001-2c17-4ee9-b135-01e3d5573dad"",
                     ""expectedControlType"": """",
                     ""processors"": """",
-                    ""interactions"": """"
+                    ""interactions"": ""Hold(duration=0.1,pressPoint=0.1)""
                 },
                 {
                     ""name"": ""Scope"",
@@ -64,7 +64,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""id"": ""3558cc0b-596e-468e-b70c-d418962defaf"",
                     ""expectedControlType"": """",
                     ""processors"": """",
-                    ""interactions"": """"
+                    ""interactions"": ""Hold(duration=0.01,pressPoint=0.01)""
                 },
                 {
                     ""name"": ""Reload"",
@@ -102,6 +102,14 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""name"": ""SwitchWeapon"",
                     ""type"": ""Value"",
                     ""id"": ""2d82f41a-d418-47d2-b863-dc6db34d7571"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""LookPosition"",
+                    ""type"": ""Value"",
+                    ""id"": ""81145bce-9fd2-4242-b677-dde3d491f35f"",
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """"
@@ -208,7 +216,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""name"": """",
                     ""id"": ""cbec5257-5027-498f-a9e2-702e97f2f45e"",
                     ""path"": ""<Mouse>/leftButton"",
-                    ""interactions"": ""Press"",
+                    ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard and Mouse"",
                     ""action"": ""Fire"",
@@ -219,7 +227,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""name"": """",
                     ""id"": ""d185bede-461d-4e83-832f-e5ec3b55d642"",
                     ""path"": ""<Mouse>/rightButton"",
-                    ""interactions"": ""Press"",
+                    ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard and Mouse"",
                     ""action"": ""Scope"",
@@ -278,6 +286,17 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": ""Keyboard and Mouse"",
                     ""action"": ""SwitchWeapon"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""11b5e546-2d1e-42fe-82e9-01fda1e20cd2"",
+                    ""path"": ""<Mouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard and Mouse"",
+                    ""action"": ""LookPosition"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -675,6 +694,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         m_Ninja_Crouch = m_Ninja.FindAction("Crouch", throwIfNotFound: true);
         m_Ninja_PauseMenu = m_Ninja.FindAction("PauseMenu", throwIfNotFound: true);
         m_Ninja_SwitchWeapon = m_Ninja.FindAction("SwitchWeapon", throwIfNotFound: true);
+        m_Ninja_LookPosition = m_Ninja.FindAction("LookPosition", throwIfNotFound: true);
         m_Ninja_Stimpack = m_Ninja.FindAction("Stimpack", throwIfNotFound: true);
         // Knight
         m_Knight = asset.FindActionMap("Knight", throwIfNotFound: true);
@@ -753,6 +773,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
     private readonly InputAction m_Ninja_Crouch;
     private readonly InputAction m_Ninja_PauseMenu;
     private readonly InputAction m_Ninja_SwitchWeapon;
+    private readonly InputAction m_Ninja_LookPosition;
     private readonly InputAction m_Ninja_Stimpack;
     public struct NinjaActions
     {
@@ -769,6 +790,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         public InputAction @Crouch => m_Wrapper.m_Ninja_Crouch;
         public InputAction @PauseMenu => m_Wrapper.m_Ninja_PauseMenu;
         public InputAction @SwitchWeapon => m_Wrapper.m_Ninja_SwitchWeapon;
+        public InputAction @LookPosition => m_Wrapper.m_Ninja_LookPosition;
         public InputAction @Stimpack => m_Wrapper.m_Ninja_Stimpack;
         public InputActionMap Get() { return m_Wrapper.m_Ninja; }
         public void Enable() { Get().Enable(); }
@@ -812,6 +834,9 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                 @SwitchWeapon.started -= m_Wrapper.m_NinjaActionsCallbackInterface.OnSwitchWeapon;
                 @SwitchWeapon.performed -= m_Wrapper.m_NinjaActionsCallbackInterface.OnSwitchWeapon;
                 @SwitchWeapon.canceled -= m_Wrapper.m_NinjaActionsCallbackInterface.OnSwitchWeapon;
+                @LookPosition.started -= m_Wrapper.m_NinjaActionsCallbackInterface.OnLookPosition;
+                @LookPosition.performed -= m_Wrapper.m_NinjaActionsCallbackInterface.OnLookPosition;
+                @LookPosition.canceled -= m_Wrapper.m_NinjaActionsCallbackInterface.OnLookPosition;
                 @Stimpack.started -= m_Wrapper.m_NinjaActionsCallbackInterface.OnStimpack;
                 @Stimpack.performed -= m_Wrapper.m_NinjaActionsCallbackInterface.OnStimpack;
                 @Stimpack.canceled -= m_Wrapper.m_NinjaActionsCallbackInterface.OnStimpack;
@@ -852,6 +877,9 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                 @SwitchWeapon.started += instance.OnSwitchWeapon;
                 @SwitchWeapon.performed += instance.OnSwitchWeapon;
                 @SwitchWeapon.canceled += instance.OnSwitchWeapon;
+                @LookPosition.started += instance.OnLookPosition;
+                @LookPosition.performed += instance.OnLookPosition;
+                @LookPosition.canceled += instance.OnLookPosition;
                 @Stimpack.started += instance.OnStimpack;
                 @Stimpack.performed += instance.OnStimpack;
                 @Stimpack.canceled += instance.OnStimpack;
@@ -1035,6 +1063,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         void OnCrouch(InputAction.CallbackContext context);
         void OnPauseMenu(InputAction.CallbackContext context);
         void OnSwitchWeapon(InputAction.CallbackContext context);
+        void OnLookPosition(InputAction.CallbackContext context);
         void OnStimpack(InputAction.CallbackContext context);
     }
     public interface IKnightActions
