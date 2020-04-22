@@ -184,6 +184,34 @@ MonoBehaviour:
     loop: 1
     isPlaying: 0
     source: {fileID: 0}
+  - name: GrenadeExplode
+    clip: {fileID: 8300000, guid: 80465b0ecec7e2b4e995fbd50d45385b, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    isPlaying: 0
+    source: {fileID: 0}
+  - name: GrenadeShoot
+    clip: {fileID: 8300000, guid: 9115ad925265fa642a3a2c34d492f3fe, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    isPlaying: 0
+    source: {fileID: 0}
+  - name: GrenadeBounce
+    clip: {fileID: 8300000, guid: bdd1bc0cbe8403749a80baf90f6e93cc, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    isPlaying: 0
+    source: {fileID: 0}
+  - name: Pickup
+    clip: {fileID: 8300000, guid: 26ecfe050b26ad34a91e557792c17262, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    isPlaying: 0
+    source: {fileID: 0}
   - name: Hit
     clip: {fileID: 8300000, guid: 5dd843536cf4fcf44a84876bdf1175af, type: 3}
     volume: 1
