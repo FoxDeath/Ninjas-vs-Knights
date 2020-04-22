@@ -436,6 +436,14 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Grenade"",
+                    ""type"": ""Button"",
+                    ""id"": ""1d571656-9513-47bd-aeee-9ccae193195a"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -647,6 +655,17 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""action"": ""Stimpack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9c6e8946-7a92-4704-82a8-31b76c3eaf79"",
+                    ""path"": ""<Keyboard>/g"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Grenade"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -713,6 +732,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         m_Knight_AOEAttack = m_Knight.FindAction("AOEAttack", throwIfNotFound: true);
         m_Knight_Reload = m_Knight.FindAction("Reload", throwIfNotFound: true);
         m_Knight_Stimpack = m_Knight.FindAction("Stimpack", throwIfNotFound: true);
+        m_Knight_Grenade = m_Knight.FindAction("Grenade", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -906,6 +926,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
     private readonly InputAction m_Knight_AOEAttack;
     private readonly InputAction m_Knight_Reload;
     private readonly InputAction m_Knight_Stimpack;
+    private readonly InputAction m_Knight_Grenade;
     public struct KnightActions
     {
         private @PlayerInput m_Wrapper;
@@ -925,6 +946,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         public InputAction @AOEAttack => m_Wrapper.m_Knight_AOEAttack;
         public InputAction @Reload => m_Wrapper.m_Knight_Reload;
         public InputAction @Stimpack => m_Wrapper.m_Knight_Stimpack;
+        public InputAction @Grenade => m_Wrapper.m_Knight_Grenade;
         public InputActionMap Get() { return m_Wrapper.m_Knight; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -979,6 +1001,9 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                 @Stimpack.started -= m_Wrapper.m_KnightActionsCallbackInterface.OnStimpack;
                 @Stimpack.performed -= m_Wrapper.m_KnightActionsCallbackInterface.OnStimpack;
                 @Stimpack.canceled -= m_Wrapper.m_KnightActionsCallbackInterface.OnStimpack;
+                @Grenade.started -= m_Wrapper.m_KnightActionsCallbackInterface.OnGrenade;
+                @Grenade.performed -= m_Wrapper.m_KnightActionsCallbackInterface.OnGrenade;
+                @Grenade.canceled -= m_Wrapper.m_KnightActionsCallbackInterface.OnGrenade;
             }
             m_Wrapper.m_KnightActionsCallbackInterface = instance;
             if (instance != null)
@@ -1028,6 +1053,9 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                 @Stimpack.started += instance.OnStimpack;
                 @Stimpack.performed += instance.OnStimpack;
                 @Stimpack.canceled += instance.OnStimpack;
+                @Grenade.started += instance.OnGrenade;
+                @Grenade.performed += instance.OnGrenade;
+                @Grenade.canceled += instance.OnGrenade;
             }
         }
     }
@@ -1083,5 +1111,6 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         void OnAOEAttack(InputAction.CallbackContext context);
         void OnReload(InputAction.CallbackContext context);
         void OnStimpack(InputAction.CallbackContext context);
+        void OnGrenade(InputAction.CallbackContext context);
     }
 }

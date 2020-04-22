@@ -9,6 +9,7 @@ TagManager:
   - Hookable
   - Wall
   - EdgeHang
+  - Grenade
   layers:
   - Default
   - TransparentFX
