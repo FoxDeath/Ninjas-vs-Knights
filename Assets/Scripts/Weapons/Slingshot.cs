@@ -5,37 +5,32 @@ using UnityEngine.InputSystem;
 public class Slingshot : MonoBehaviour
 {
     [SerializeField] GameObject grenadePrefab;
+    [SerializeField] GameObject grenadeLauncher;
     private AudioManager audioManager;
-    private GameObject bulletEmitter;
+    [SerializeField] GameObject bulletEmitter;
     private ParticleSystem muzzleFlash;
 
     [SerializeField] float cooldown = 0.5f;
     [SerializeField] float force = 20f;
-    [SerializeField] float maxGrenades = 5f;
-    private float currentGrenades = 0f;
+    [SerializeField] int maxGrenades = 5;
+    private int currentGrenades = 0;
 
     private bool grenading;
-
-    public float GetMaxGrenades() 
-    {
-        return maxGrenades;
-    }
-
-    public float GetCurrentGrenades()
-    {
-        return currentGrenades;
-    }
 
     private void Start()
     {
         audioManager = FindObjectOfType<AudioManager>();
-        bulletEmitter = GameObject.Find("SlingshotGrenadeEmitter");
         muzzleFlash = GetComponentInChildren<ParticleSystem>();
     }
 
-    public void GrenadeInput(InputAction.CallbackContext context)
+    private void Update() 
     {
-        if(context.action.phase == InputActionPhase.Performed && !grenading && currentGrenades > 0f)
+        UIManager.GetInstance().SetGrenadeCount(currentGrenades);    
+    }
+
+    public void Grenade()
+    {
+        if(!grenading && currentGrenades > 0)
         {
             StartCoroutine(GrenadeBehaviour());
         }
@@ -44,11 +39,15 @@ public class Slingshot : MonoBehaviour
     //Shoots the grenades.
     IEnumerator GrenadeBehaviour() 
     {
+        WeaponSwitch weaponSwitch = FindObjectOfType<WeaponSwitch>();
         grenading = true;
 
         currentGrenades--;
 
-        SlingshotAnim.DoAnimationTrue();
+        grenadeLauncher.SetActive(true);
+        weaponSwitch.SetCurrentWeapon(false);
+
+        SlingshotAnim.DoAnimation(true);
 
         yield return new WaitForSeconds(0.5f);
 
@@ -61,7 +60,12 @@ public class Slingshot : MonoBehaviour
 
         rb.AddForce(mainCamera.transform.forward * force, ForceMode.VelocityChange);
 
-        SlingshotAnim.DoAnimationFalse();
+        SlingshotAnim.DoAnimation(false);
+
+        yield return new WaitForSeconds(0.5f);
+
+        weaponSwitch.SetCurrentWeapon(true);
+        grenadeLauncher.SetActive(false);
 
         yield return new WaitForSeconds(cooldown);
 

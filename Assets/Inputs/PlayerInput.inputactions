@@ -38,30 +38,6 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Fire",
-                    "type": "Button",
-                    "id": "174db001-2c17-4ee9-b135-01e3d5573dad",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "Hold(duration=0.1,pressPoint=0.1)"
-                },
-                {
-                    "name": "Scope",
-                    "type": "Button",
-                    "id": "3558cc0b-596e-468e-b70c-d418962defaf",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "Hold(duration=0.01,pressPoint=0.01)"
-                },
-                {
-                    "name": "Reload",
-                    "type": "Button",
-                    "id": "2458a1fb-d161-492e-9046-eaec27acac96",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
                     "name": "Grapling Hook",
                     "type": "Button",
                     "id": "4c0a85ae-4079-45df-bd15-ebea32cffde3",
@@ -209,39 +185,6 @@
                 },
                 {
                     "name": "",
-                    "id": "cbec5257-5027-498f-a9e2-702e97f2f45e",
-                    "path": "<Mouse>/leftButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard and Mouse",
-                    "action": "Fire",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "d185bede-461d-4e83-832f-e5ec3b55d642",
-                    "path": "<Mouse>/rightButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard and Mouse",
-                    "action": "Scope",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "b40185fc-6e07-4f54-b962-f299bb545fc8",
-                    "path": "<Keyboard>/#(R)",
-                    "interactions": "Press",
-                    "processors": "",
-                    "groups": "Keyboard and Mouse",
-                    "action": "Reload",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "36796939-65e8-4c7c-94c2-e9452eb1a729",
                     "path": "<Mouse>/middleButton",
                     "interactions": "Hold",
@@ -364,14 +307,6 @@
                     "interactions": "Hold"
                 },
                 {
-                    "name": "Shoot",
-                    "type": "Button",
-                    "id": "f55b3568-3a37-4acc-8116-feb32b73bab9",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
                     "name": "PauseMenu",
                     "type": "Button",
                     "id": "42ee6374-1e9b-494c-b053-e59af83cb8c1",
@@ -396,22 +331,6 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Scope",
-                    "type": "Button",
-                    "id": "cb2acbdb-76c3-460e-b4b7-5a669e1b7c31",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
-                    "name": "ScopeZoom",
-                    "type": "Button",
-                    "id": "ee974e1e-f8ab-442b-a957-cee121c1205c",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
                     "name": "JatpackCharge",
                     "type": "Button",
                     "id": "99442510-9d27-4c80-b1b4-d328aa5fb7d1",
@@ -428,42 +347,15 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Reload",
-                    "type": "Button",
-                    "id": "e9a3d5d3-59dc-4a14-8554-0c7216a6d547",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
                     "name": "Stimpack",
                     "type": "Button",
                     "id": "bb120c0b-518c-4c39-93da-54769bc7e018",
                     "expectedControlType": "",
                     "processors": "",
-                    "interactions": ""
-                },
-                {
-                    "name": "Grenade",
-                    "type": "Button",
-                    "id": "1d571656-9513-47bd-aeee-9ccae193195a",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": ""
+                    "interactions": "Press"
                 }
             ],
             "bindings": [
-                {
-                    "name": "",
-                    "id": "999c697c-fa11-4df5-8f21-296afb5d0fe9",
-                    "path": "<Mouse>/leftButton",
-                    "interactions": "Press",
-                    "processors": "",
-                    "groups": "Keyboard and Mouse",
-                    "action": "Shoot",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
                 {
                     "name": "",
                     "id": "1ac083a0-9a04-4ec2-9919-cd3caa11dc8b",
@@ -598,28 +490,6 @@
                 },
                 {
                     "name": "",
-                    "id": "7575e7dd-40fe-4d8f-a84d-426e34f0a26c",
-                    "path": "<Mouse>/rightButton",
-                    "interactions": "Press",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Scope",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "c9e1b4d3-6f56-4880-8f58-d80dc850cd47",
-                    "path": "<Keyboard>/q",
-                    "interactions": "Press",
-                    "processors": "",
-                    "groups": "Keyboard and Mouse",
-                    "action": "ScopeZoom",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "688a4861-a63f-4ff4-9c7c-f7dee30a44df",
                     "path": "<Keyboard>/#(F)",
                     "interactions": "Press",
@@ -642,9 +512,117 @@
                 },
                 {
                     "name": "",
+                    "id": "e6224f8c-cffb-4ed7-ab94-6218498bc3e5",
+                    "path": "<Keyboard>/v",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard and Mouse",
+                    "action": "Stimpack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Weapon",
+            "id": "51b287e4-ab2b-4ff9-a3ba-ddf9f2390903",
+            "actions": [
+                {
+                    "name": "Reload",
+                    "type": "Button",
+                    "id": "d0177fad-de37-4d4c-ae08-b6e1b0f69e12",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Press"
+                },
+                {
+                    "name": "ScopeZoom",
+                    "type": "Button",
+                    "id": "9aab2f80-be9d-4b02-955a-6f6400162694",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press"
+                },
+                {
+                    "name": "Scope",
+                    "type": "Button",
+                    "id": "0a2aa2c1-ecb7-4c0a-9785-246cf1f17896",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Press"
+                },
+                {
+                    "name": "Fire",
+                    "type": "Button",
+                    "id": "51d6c75b-66c3-48cb-afbc-0ffe21d26190",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Press"
+                },
+                {
+                    "name": "FireCharge",
+                    "type": "Button",
+                    "id": "9c1c94d4-b000-4f33-adb1-a68149a3cf69",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Hold"
+                },
+                {
+                    "name": "Charge",
+                    "type": "Button",
+                    "id": "6ce10f68-eb44-4e14-a5a1-8b20806a2ce4",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Hold"
+                },
+                {
+                    "name": "Grenade",
+                    "type": "Button",
+                    "id": "d079cde1-3934-4c5a-88f9-a1ed4c4aae73",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Press"
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "51c3dce5-a881-4772-8d17-5c7d97cd09a4",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard and Mouse",
+                    "action": "Fire",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1ec654fb-0bc9-414f-bc80-6cd0ce6b0523",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard and Mouse",
+                    "action": "Scope",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "667b968a-88e7-44d4-84cd-6b1779f56b7d",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard and Mouse",
+                    "action": "ScopeZoom",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "51e931db-44aa-4447-93e0-f0ad9070b0dc",
                     "path": "<Keyboard>/r",
-                    "interactions": "Press",
+                    "interactions": "",
                     "processors": "",
                     "groups": "Keyboard and Mouse",
                     "action": "Reload",
@@ -664,9 +642,31 @@
                 },
                 {
                     "name": "",
+                    "id": "917851e7-84f2-448b-b8c0-cfa6a919d067",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard and Mouse",
+                    "action": "Charge",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3c94b8a8-d564-42b3-805b-6e283b6c145f",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard and Mouse",
+                    "action": "FireCharge",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "9c6e8946-7a92-4704-82a8-31b76c3eaf79",
                     "path": "<Keyboard>/g",
-                    "interactions": "Press",
+                    "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Grenade",

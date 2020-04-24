@@ -2,14 +2,14 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class ShurikenGun :  MonoBehaviour, IWeapon
+public class ShurikenGun :  MonoBehaviour
 {
     [SerializeField] GameObject bullet;
     private GameObject bulletEmiter;
     private AudioManager audioManager;
     private UIManager uiManager;
     private Animator animator;
-    private NinjaPlayerMovement ninjaMovement;
+    private PlayerMovement playerMovement;
     private ParticleSystem muzzleFlash;
     
     [SerializeField] float speed = 100f;
@@ -27,7 +27,7 @@ public class ShurikenGun :  MonoBehaviour, IWeapon
     //The Gun starts with maximum ammo.
     void Start()
     {
-        ninjaMovement = GameObject.Find("NinjaPlayer").GetComponent<NinjaPlayerMovement>();
+        playerMovement = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
         audioManager = FindObjectOfType<AudioManager>();
         animator = GetComponent<Animator>();
         currentAmmo = maxAmmo;
@@ -39,90 +39,91 @@ public class ShurikenGun :  MonoBehaviour, IWeapon
         bulletEmiter = GameObject.Find("ShurikenEmitter");
     }
 
-    //Fires the Gun when the input is performed, lowers the current ammo, and automatically starts reloading when running out of ammo.
-    public void FireInput(InputAction.CallbackContext context)
-    {
-        if(context.phase == InputActionPhase.Started && Time.time >= nextTimeToFire && !reloading)
-        {
-            if(currentAmmo > 0)
-            {
-                currentAmmo--;
-                nextTimeToFire = Time.time + 1f / fireRate;
-                Fire();
-            }
-            else
-            {
-                StartCoroutine(Reloading());
-                return;
-            }
-            
-            animator.SetTrigger("Firing");
-        }
-    }
-
     void Update()
     {
         uiManager.SetCurrentAmmo(currentAmmo);
+        uiManager.SetMaxAmmo(maxAmmo);
     }
 
     //Makes the Gun fire a temporary shuriken, and destroyes that temporary shuriken after a few seconds.
     //The shuriken has spread, but only when the Gun isn't scoped.
-    void Fire()
+    public void Fire()
     {
-        muzzleFlash.Play();
-        audioManager.Play("ShurikenShoot");
-
-        Vector3 shootDirection = bulletEmiter.transform.forward;
-
-        shootDirection.x += Random.Range(-spread, spread);
-        shootDirection.y += Random.Range(-spread, spread);
-
-        GameObject instantiateBullet = Instantiate(bullet, bulletEmiter.transform.position, bulletEmiter.transform.rotation);
-        Rigidbody temporaryRigidbody = instantiateBullet.GetComponentInChildren<Rigidbody>();
-
-        if(!scoping)
+        if(Time.time >= nextTimeToFire && !reloading)
         {
-            temporaryRigidbody.AddForce(shootDirection * speed);
-        }
-        else
-        {
-            temporaryRigidbody.AddForce(bulletEmiter.transform.forward * speed);
-        }
+            if(currentAmmo > 0)
+            {
+                Ray ray = GameObject.Find("Main Camera").GetComponent<Camera>().ViewportPointToRay(new Vector3(0.5F, 0.5F, 0));
+                RaycastHit hit ;
 
-        Destroy(instantiateBullet, 2f);
+                Vector3 targetPoint ;
+                if (Physics.Raycast(ray, out hit))
+                {
+                    targetPoint = hit.point;
+                }
+                else
+                {
+                    targetPoint = ray.GetPoint(1000f);
+                }
+
+                currentAmmo--;
+                nextTimeToFire = Time.time + 1f / fireRate;
+                muzzleFlash.Play();
+                audioManager.Play("ShurikenShoot");
+
+                targetPoint.x += Random.Range(-spread, spread);
+                targetPoint.y += Random.Range(-spread, spread);
+
+                GameObject instantiateBullet = Instantiate(bullet, bulletEmiter.transform.position, bulletEmiter.transform.rotation);
+                Rigidbody temporaryRigidbody = instantiateBullet.GetComponentInChildren<Rigidbody>();
+
+                temporaryRigidbody.velocity = (targetPoint - bulletEmiter.transform.position).normalized * speed;
+
+                Destroy(instantiateBullet, 2f);
+            }
+            else
+            {
+                StartCoroutine(ReloadingBehaviour());
+                return;
+            }
+            animator.SetTrigger("Firing");
+        }
     }
 
-    //Scopes the Gun.
-    public void ScopeInput(InputAction.CallbackContext context)
+    public void Scope()
     {
-        if(context.phase == InputActionPhase.Performed)
-        {
-            scoping = !scoping;
-            animator.SetBool("Scoped", scoping);
-            ninjaMovement.SetScoping(scoping);
-            ninjaMovement.Sprint(false);
-        }
+        scoping = !scoping;
+        animator.SetBool("Scoped", scoping);
+        playerMovement.SetScoping(scoping);
+        playerMovement.Sprint(false);
     }
 
-    //Reloads the Gun.
-    public void ReloadInput(InputAction.CallbackContext context)
+    public void Reload()
     {
         if(reloading)
         {
             return;
         }
-        
-        if(context.phase == InputActionPhase.Performed || currentAmmo <= 0)
+
+        if(currentAmmo < maxAmmo)
         {
-            if(currentAmmo < maxAmmo)
-            {
-                StartCoroutine(Reloading());
-                return;
-            }
+            StartCoroutine(ReloadingBehaviour());
         }
     }
 
-    IEnumerator Reloading()
+    public void SetInactive()
+    {
+        reloading = false;
+        audioManager.Stop("Reload");
+        audioManager.Stop("ShurikenShoot");
+        if(scoping)
+        {
+            Scope();
+        }
+        gameObject.SetActive(false);
+    }
+
+    IEnumerator ReloadingBehaviour()
     {
         reloading = true;
 

@@ -4,18 +4,13 @@ public class SlingshotAnim : MonoBehaviour
 {
     private static Animator animator;
 
-    void Start()
+    void Awake()
     {
         animator = GetComponent<Animator>();
     }
 
-    public static void DoAnimationTrue()
+    public static void DoAnimation(bool state)
     {
-        animator.SetBool("Equipped", true);
-    }
-
-    public static void DoAnimationFalse()
-    {
-        animator.SetBool("Equipped", false);
+        animator.SetBool("Equipped", state);
     }
 }
