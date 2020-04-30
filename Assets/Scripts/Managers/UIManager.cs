@@ -44,6 +44,7 @@ public class UIManager : MonoBehaviour
         instance = this;
     }
 
+
     void Update()
     {
         SceneManager.sceneLoaded += OnSceneWasLoaded;
@@ -65,6 +66,7 @@ public class UIManager : MonoBehaviour
             //if current player is a ninja, it gets the ninja assets
             texts = ui.transform.Find("NinjaUI").Find("AmmoCounter").GetComponentsInChildren<TextMeshProUGUI>();
             ninjaUI = ui.transform.Find("NinjaUI").gameObject;
+           // flashUI = ui.transform.Find("FlashUI").gameObject;
             healthSlider = ninjaUI.transform.Find("HealthBar").GetComponent<Slider>();
             arrowSelect = ui.transform.Find("NinjaUI").Find("ArrowSelect").gameObject;
             arrowSelect = arrowSelect.transform.Find("Wheel").gameObject;
@@ -208,7 +210,7 @@ public class UIManager : MonoBehaviour
     {
         knightUI.SetActive(state);
     }
-
+ 
     public void SetMaxHealth(float health)
     {
         healthSlider.maxValue = health;
