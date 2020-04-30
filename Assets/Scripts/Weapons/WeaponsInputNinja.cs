@@ -22,6 +22,9 @@ public class WeaponsInputNinja : MonoBehaviour
     {
         if(currentWeapon != weaponSwitch.GetCurrentNinjaWeapon())
         {
+            playerInput.Dispose();
+            playerInput = new PlayerInput();
+            playerInput.Enable();
             currentWeapon = weaponSwitch.GetCurrentNinjaWeapon();
         }
 

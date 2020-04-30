@@ -190,7 +190,6 @@ public class UIManager : MonoBehaviour
             {
                 text.gameObject.SetActive(true);
             }
-
             bow.SetCurrentArrow(selectedOption);
         }
     }
