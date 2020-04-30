@@ -6,9 +6,9 @@ public class KunaiNadeInput : MonoBehaviour
 {
     [SerializeField] GameObject kunaiPrefab;
     [SerializeField] float throwForce = 50f;
-    [SerializeField] float maxKunai = 4;
+    [SerializeField] int maxKunai = 4;
 
-    private float currentKunai;
+    private int currentKunai;
     private GameObject bulletEmitter;
     private bool threw;
 
@@ -16,6 +16,11 @@ public class KunaiNadeInput : MonoBehaviour
     {
         currentKunai = maxKunai;
         bulletEmitter = GameObject.Find("KunaiEmitter");
+    }
+
+    private void Update() 
+    {
+        UIManager.GetInstance().SetGrenadeCount(currentKunai);    
     }
 
     public void ThrowKunai()

@@ -3566,6 +3566,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1591953461}
     m_Modifications:
+    - target: {fileID: 1589619377356783679, guid: cf791bb89b4d3714b86f57655954dcfc,
+        type: 3}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1589619377356783679, guid: cf791bb89b4d3714b86f57655954dcfc,
+        type: 3}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1589619377997311168, guid: cf791bb89b4d3714b86f57655954dcfc,
+        type: 3}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1589619377997311168, guid: cf791bb89b4d3714b86f57655954dcfc,
+        type: 3}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2490746897580884107, guid: cf791bb89b4d3714b86f57655954dcfc,
         type: 3}
       propertyPath: m_havePropertiesChanged
@@ -3685,11 +3705,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: NinjaUI
-      objectReference: {fileID: 0}
-    - target: {fileID: 3635412755623866359, guid: cf791bb89b4d3714b86f57655954dcfc,
-        type: 3}
-      propertyPath: m_IgnoreReversedGraphics
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3635412756261805643, guid: cf791bb89b4d3714b86f57655954dcfc,
         type: 3}

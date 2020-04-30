@@ -78,7 +78,7 @@ public class UIManager : MonoBehaviour
             fills = new List<Image>();
             texts = ui.transform.Find("NinjaUI").Find("AmmoCounter").GetComponentsInChildren<TextMeshProUGUI>();
             ninjaUI = ui.transform.Find("NinjaUI").gameObject;
-           // flashUI = ui.transform.Find("FlashUI").gameObject;
+            grenadeCount = ninjaUI.transform.Find("Grenade").Find("GrenadeCount").GetComponent<TextMeshProUGUI>();
             healthSlider = ninjaUI.transform.Find("HealthBar").GetComponent<Slider>();
             arrowSelect = ui.transform.Find("NinjaUI").Find("ArrowSelect").gameObject;
             arrowSelect = arrowSelect.transform.Find("Wheel").gameObject;
