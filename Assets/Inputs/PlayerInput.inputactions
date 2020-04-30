@@ -108,6 +108,14 @@
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "Kunai",
+                    "type": "Button",
+                    "id": "e12a980b-a075-4bb0-abbc-c1705ece4a02",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -295,6 +303,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Stimpack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "96c7538a-bbbc-4286-b80c-6fda0f83b888",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard and Mouse",
+                    "action": "Kunai",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
