@@ -128,7 +128,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""id"": ""e12a980b-a075-4bb0-abbc-c1705ece4a02"",
                     ""expectedControlType"": """",
                     ""processors"": """",
-                    ""interactions"": """"
+                    ""interactions"": ""Press""
                 }
             ],
             ""bindings"": [
