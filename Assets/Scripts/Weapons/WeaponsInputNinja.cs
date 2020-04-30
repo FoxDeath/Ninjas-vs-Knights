@@ -20,26 +20,60 @@ public class WeaponsInputNinja : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(currentWeapon != weaponSwitch.GetCurrentNinjaWeapon())
+        SetCurrentWeapon();
+
+        CanShoot();
+
+        WeaponsInput();
+
+        GrenadeInput();
+    }
+
+    private void SetCurrentWeapon()
+    {
+        if (currentWeapon != weaponSwitch.GetCurrentNinjaWeapon())
         {
             playerInput.Dispose();
             playerInput = new PlayerInput();
             playerInput.Enable();
             currentWeapon = weaponSwitch.GetCurrentNinjaWeapon();
         }
+    }
 
+    private void CanShoot()
+    {
+        if (!GetComponent<WeaponSwitch>().canSwitch)
+        {
+            playerInput.Disable();
+        }
+        else
+        {
+            playerInput.Enable();
+        }
+    }
+
+    private void WeaponsInput()
+    {
         switch ((int)currentWeapon)
         {
             case 0:
                 ShurikenGunInput();
-            break;
+                break;
 
             case 1:
                 BowInput();
-            break;
+                break;
 
             default:
-            return;
+                return;
+        }
+    }
+
+    private void GrenadeInput()
+    {
+        if (playerInput.Weapon.Grenade.triggered)
+        {
+            FindObjectOfType<KunaiNadeInput>().ThrowKunai();
         }
     }
 

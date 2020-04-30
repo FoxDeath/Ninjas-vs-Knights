@@ -149,18 +149,6 @@ public class Bow : MonoBehaviour
         }
     }
 
-    public void SwitchArrowInput(InputAction.CallbackContext context)
-    {
-        if (context.action.phase == InputActionPhase.Started)
-        {
-            SetArrowMenuState(true);
-        }
-        else if(context.action.phase == InputActionPhase.Canceled)
-        {
-            SetArrowMenuState(false);
-        }
-    }
-
     public void SetArrowMenuState(bool state)
     {
         UIManager.GetInstance().SetArrowMenuState(state);

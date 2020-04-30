@@ -647,7 +647,19 @@ MonoBehaviour:
     m_ActionId: 51d6c75b-66c3-48cb-afbc-0ffe21d26190
     m_ActionName: Weapon/Fire[/Mouse/leftButton]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5367521280735661091, guid: fef35951e1f62e148984662dfc49faf1,
+          type: 3}
+        m_MethodName: ArrowMenuInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 81145bce-9fd2-4242-b677-dde3d491f35f
     m_ActionName: Ninja/LookPosition[/Mouse/position]
   - m_PersistentCalls:

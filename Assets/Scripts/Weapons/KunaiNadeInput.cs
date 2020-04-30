@@ -17,21 +17,18 @@ public class KunaiNadeInput : MonoBehaviour
         currentKunai = maxKunai;
         bulletEmitter = GameObject.Find("KunaiEmitter");
     }
-  
-    public void KunaiInput(InputAction.CallbackContext context)
+
+    public void ThrowKunai()
     {
-        if (context.phase == InputActionPhase.Performed)
+        if (currentKunai > 0f)
         {
-            if (currentKunai > 0f)
-            {
-                currentKunai--;
-                StartCoroutine(ThrowKunai());
-                threw = true;
-            }          
+            currentKunai--;
+            StartCoroutine(ThrowKunaiBehaviour());
+            threw = true;
         }
     }
 
-    public IEnumerator ThrowKunai()
+    private IEnumerator ThrowKunaiBehaviour()
     {
         Transform mainCamera = gameObject.transform.Find("Main Camera").transform;
         GameObject kunai = Instantiate(kunaiPrefab, bulletEmitter.transform.position, bulletEmitter.transform.rotation);
