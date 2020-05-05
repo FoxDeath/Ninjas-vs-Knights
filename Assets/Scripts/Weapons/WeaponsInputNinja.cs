@@ -106,7 +106,7 @@ public class WeaponsInputNinja : MonoBehaviour
             };
             playerInput.Weapon.FireCharge.canceled += _ =>
             {
-                StartCoroutine(bow.Fire());
+                bow.Fire();
             };
         }
 

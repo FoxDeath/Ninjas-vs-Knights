@@ -105,7 +105,19 @@ public class Bow : MonoBehaviour
         }
     }
 
-    public IEnumerator Fire()
+    public void Fire()
+    {
+        if(CanShoot())
+        {
+            StartCoroutine(FireBehaviour());
+        }
+        else
+        {
+            return;
+        }
+    }
+
+    private IEnumerator FireBehaviour()
     {
         if(canShoot)
         {
