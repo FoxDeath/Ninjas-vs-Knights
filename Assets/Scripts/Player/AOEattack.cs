@@ -41,6 +41,7 @@ public class AOEattack : MonoBehaviour
         }
 
         //15 second cooldown
+        FindObjectOfType<UIManager>().ResetFill("AOEFill");
         yield return new WaitForSeconds(15f);
 
         //End cooldown

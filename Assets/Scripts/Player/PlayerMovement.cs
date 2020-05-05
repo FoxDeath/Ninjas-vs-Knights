@@ -35,6 +35,7 @@ public class PlayerMovement : MonoBehaviour
     protected bool sprinting;
     protected bool resetFall;
     protected bool canSlide = true;
+    protected bool charging;
 
     #region Getters and Setters
     public CharacterController GetController() 
@@ -248,7 +249,7 @@ public class PlayerMovement : MonoBehaviour
     public void Crouch()
     {
         //You can't crouch if you are not on the ground or if there is something above you
-        if(!isGrounded || Physics.Raycast(transform.position, Vector3.up, 5f))
+        if (!isGrounded || Physics.Raycast(transform.position, Vector3.up, 5f) || charging)
         {
             return;
         }
@@ -280,6 +281,11 @@ public class PlayerMovement : MonoBehaviour
     //gets input from PlayerInputSrcipt script
     public void SetMoveInput(Vector2 moveInput)
     {
+        if(charging)
+        {
+            return;
+        }
+        
         this.moveInput = moveInput;
         horizontal = moveInput.x;
         vertical = moveInput.y;

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class CrossBow : MonoBehaviour, IWeapon
+public class CrossBow : MonoBehaviour
 {
     [SerializeField] GameObject arrowPrefab;
     [SerializeField] LayerMask layerMask;
@@ -26,10 +26,13 @@ public class CrossBow : MonoBehaviour, IWeapon
 
     private int currentScopedFOV;
 
+    private Quaternion startingRotation;
+
     private bool scoping;
 
     void Start()
     {
+        uiManager = (UIManager)FindObjectOfType(typeof(UIManager));
         audioManager = FindObjectOfType<AudioManager>();
         crossbowAnimator = GetComponent<Animator>();
         muzzleFlash = GetComponentInChildren<ParticleSystem>();
@@ -38,18 +41,20 @@ public class CrossBow : MonoBehaviour, IWeapon
         weaponCam = GameObject.Find("WeaponCamera").GetComponent<Camera>();
         player = GameObject.Find("KnightPlayer");
 
-        uiManager = FindObjectOfType<UIManager>();
         uiManager.SetMaxAmmo(1);
         uiManager.SetCurrentAmmo(1);
 
         currentScopedFOV = scopedFOVs.Length - 1;
         scopedFOV = scopedFOVs[currentScopedFOV];
         maxMouseSensitivity = fpsCam.GetComponent<MouseLook>().mouseSensitivity;
+
+        startingRotation = transform.localRotation;
     }
 
     void Update()
     {
         SetAmmo();
+        uiManager.SetMaxAmmo(1);
     }
 
     private void SetAmmo()
@@ -64,59 +69,51 @@ public class CrossBow : MonoBehaviour, IWeapon
         }
     }
 
-    public void FireInput(InputAction.CallbackContext context)
+    public void Fire()
     {
-        if(context.phase == InputActionPhase.Performed && Time.time >= nextTimeToFire)
+        if(Time.time >= nextTimeToFire)
         {
             nextTimeToFire = Time.time + 1 / fireRate;
-            crossbowAnimator.SetBool("Reloading", true);
-            Fire();
-        }
-        else
-        {
-            crossbowAnimator.SetBool("Reloading", false);
-        }
-    }
+            crossbowAnimator.SetTrigger("Reloading");
 
-    private void Fire()
-    {
-        Vector3 forwardVector = CalculatingSpread();
+            Vector3 forwardVector = CalculatingSpread();
 
-        if(scoping)
-        {
-            forwardVector = fpsCam.transform.forward;
-        }
-
-        Debug.DrawRay(fpsCam.transform.position, (fpsCam.transform.forward * range) + new Vector3(Random.Range(0.1f, 1f), Random.Range(0.1f, 1f), Random.Range(0.1f, 1f)));
-        RaycastHit hit;
-
-        audioManager.Play("Laser");
-        muzzleFlash.Play();
-
-        //Checks if the raycast hits anything and if it is a target then it takes damage
-        if(Physics.Raycast(fpsCam.transform.position, forwardVector, out hit, range, layerMask))
-        {
-            Target target = hit.transform.GetComponent<Target>();
-
-            if(target)
+            if(scoping)
             {
-                target.TakeDamage(damage);
+                forwardVector = fpsCam.transform.forward;
             }
-        }
 
-        //If the target has a rigidbody then it pushes it
-        if(hit.rigidbody)
-        {
-            hit.rigidbody.AddForce(-hit.normal * pushForce);
-        }
+            Debug.DrawRay(fpsCam.transform.position, (fpsCam.transform.forward * range) + new Vector3(Random.Range(0.1f, 1f), Random.Range(0.1f, 1f), Random.Range(0.1f, 1f)));
+            RaycastHit hit;
 
-        //If the target has a transform that isn't the player then it puts an arrow in it
-        if(hit.transform && hit.transform != player.transform)
-        {
-            GameObject arrow = Instantiate(arrowPrefab, hit.point, fpsCam.transform.rotation);
-            arrow.transform.parent = hit.transform;
-            Destroy(arrow, 2.5f);
-        }
+            audioManager.Play("Laser");
+            muzzleFlash.Play();
+
+            //Checks if the raycast hits anything and if it is a target then it takes damage
+            if(Physics.Raycast(fpsCam.transform.position, forwardVector, out hit, range, layerMask))
+            {
+                Target target = hit.transform.GetComponent<Target>();
+
+                if(target)
+                {
+                    target.TakeDamage(damage);
+                }
+            }
+
+            //If the target has a rigidbody then it pushes it
+            if(hit.rigidbody)
+            {
+                hit.rigidbody.AddForce(-hit.normal * pushForce);
+            }
+
+            //If the target has a transform that isn't the player then it puts an arrow in it
+            if(hit.transform && hit.transform != player.transform)
+            {
+                GameObject arrow = Instantiate(arrowPrefab, hit.point, fpsCam.transform.rotation);
+                arrow.transform.parent = hit.transform;
+                Destroy(arrow, 2.5f);
+            }
+        } 
     }
 
     //Calculating the spread of the crossbow
@@ -132,37 +129,41 @@ public class CrossBow : MonoBehaviour, IWeapon
         return forwardVector;
     }
 
-    public void ScopeInput(InputAction.CallbackContext context)
+    public void Scope()
     {
-        if(context.phase == InputActionPhase.Performed)
-        {
-            scoping = !scoping;
-            player.GetComponent<KnightPlayerMovement>().SetScoping(scoping);
-            player.GetComponent<KnightPlayerMovement>().Sprint(false);
-            crossbowAnimator.SetBool("Scoped", scoping);
-            shieldAnimator.SetBool("Scoped", scoping);
-            Invoke("Scope", 0.15f);
-        }
+        scoping = !scoping;
+        player.GetComponent<KnightPlayerMovement>().SetScoping(scoping);
+        player.GetComponent<KnightPlayerMovement>().Sprint(false);
+        crossbowAnimator.SetBool("Scoped", scoping);
+        shieldAnimator.SetBool("Scoped", scoping);
+        Invoke("ScopeBehaviour", 0.15f);
     }
 
-    //Iterates trough different levels of zoom
-    public void ScopeZoomInput(InputAction.CallbackContext context)
+    public void ScopeZoom()
     {
-        if(context.phase == InputActionPhase.Performed)
+        if (currentScopedFOV <= 0)
         {
-            if(currentScopedFOV <= 0)
-            {
-                currentScopedFOV = scopedFOVs.Length;
-                fpsCam.GetComponent<MouseLook>().mouseSensitivity = 10f;
-            }
+            currentScopedFOV = scopedFOVs.Length;
+            fpsCam.GetComponent<MouseLook>().mouseSensitivity = 10f;
+        }
 
-            currentScopedFOV--;
-            scopedFOV = scopedFOVs[currentScopedFOV];
+        currentScopedFOV--;
+        scopedFOV = scopedFOVs[currentScopedFOV];
+        ScopeBehaviour();
+    }
+    
+    public void SetInactive()
+    {            
+        audioManager.Stop("Laser");
+        if(scoping)
+        {
             Scope();
         }
+        transform.localRotation = startingRotation;
+        gameObject.SetActive(false);
     }
 
-    private void Scope()
+    private void ScopeBehaviour()
     {
         uiManager.SetKnightUIActive(!scoping);
         uiManager.SetKnightScopeOverlayActive(scoping);

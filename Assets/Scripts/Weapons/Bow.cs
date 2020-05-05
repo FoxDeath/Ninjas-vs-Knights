@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
+using System.Collections;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Interactions;
 
-public class Bow : MonoBehaviour, IWeapon
+public class Bow : MonoBehaviour
 {
     private UIManager uiManager;
 
@@ -32,7 +33,15 @@ public class Bow : MonoBehaviour, IWeapon
     private int currentSlowArrows;
     private int currentExplosiveArrows;
 
+    private Quaternion startingRotation;
+
     private bool charging;
+    private bool canShoot = true;
+
+    public void SetCharging(bool charging)
+    {
+        this.charging = charging;
+    }
 
     void Start()
     {
@@ -45,6 +54,8 @@ public class Bow : MonoBehaviour, IWeapon
         currentExplosiveArrows = maxArrows;
         UIManager.GetInstance().SetMaxAmmo(maxArrows);
         UIManager.GetInstance().SetCurrentAmmo(currentRegularArrows);
+
+        startingRotation = transform.localRotation;
     }
 
     void Update()
@@ -53,74 +64,106 @@ public class Bow : MonoBehaviour, IWeapon
         {
             charge += Time.deltaTime * chargeRate;
         }
+
+         switch(currentType)
+        {
+            case arrowTypes.Fire:
+                UIManager.GetInstance().SetCurrentAmmo(currentFireArrows);
+                break;
+
+            case arrowTypes.Regular:
+                UIManager.GetInstance().SetCurrentAmmo(currentRegularArrows);
+                break;
+
+            case arrowTypes.Slow:
+                UIManager.GetInstance().SetCurrentAmmo(currentSlowArrows);
+                break;
+                
+            case arrowTypes.Explosion:
+                UIManager.GetInstance().SetCurrentAmmo(currentExplosiveArrows);
+                break;
+        }
     }
 
-    public void FireInput(InputAction.CallbackContext context)
+    public bool CanShoot()
     {
         if ((currentType == arrowTypes.Explosion && currentExplosiveArrows > 0) || (currentType == arrowTypes.Fire && currentFireArrows > 0) ||
-            (currentType == arrowTypes.Regular && currentRegularArrows > 0) || (currentType == arrowTypes.Slow && currentSlowArrows > 0))
+                    (currentType == arrowTypes.Regular && currentRegularArrows > 0) || (currentType == arrowTypes.Slow && currentSlowArrows > 0))
         {
             if (!UIManager.GetInstance().GetArrowMenuState())
             {
-                if (context.interaction is HoldInteraction)
-                {
-                    if (context.action.phase == InputActionPhase.Started)
-                    {
-                        charging = true;
-                    }
-                    else if (context.action.phase == InputActionPhase.Canceled)
-                    {
-                        Rigidbody arrow = null;
-
-                        switch (currentType)
-                        {
-                            case arrowTypes.Regular:
-                                currentRegularArrows--;
-                                UIManager.GetInstance().SetCurrentAmmo(currentRegularArrows);
-                                arrow = Instantiate(regularArrowObj, emmiter.transform.position, emmiter.transform.rotation).GetComponent<Rigidbody>();
-                                arrow.AddForce(emmiter.transform.forward * charge, ForceMode.Impulse);
-                                break;
-
-                            case arrowTypes.Fire:
-                                currentFireArrows--;
-                                UIManager.GetInstance().SetCurrentAmmo(currentFireArrows);
-                                arrow = Instantiate(fireArrowObj, emmiter.transform.position, emmiter.transform.rotation).GetComponent<Rigidbody>();
-                                arrow.AddForce(emmiter.transform.forward * charge, ForceMode.Impulse);
-                                break;
-
-                            case arrowTypes.Explosion:
-                                currentExplosiveArrows--;
-                                UIManager.GetInstance().SetCurrentAmmo(currentExplosiveArrows);
-                                arrow = Instantiate(explosiveArrowObj, emmiter.transform.position, emmiter.transform.rotation).GetComponent<Rigidbody>();
-                                arrow.AddForce(emmiter.transform.forward * charge, ForceMode.Impulse);
-                                break;
-
-                            case arrowTypes.Slow:
-                                currentSlowArrows--;
-                                UIManager.GetInstance().SetCurrentAmmo(currentSlowArrows);
-                                arrow = Instantiate(slowArrowObj, emmiter.transform.position, emmiter.transform.rotation).GetComponent<Rigidbody>();
-                                arrow.AddForce(emmiter.transform.forward * charge, ForceMode.Impulse);
-                                break;
-                        }
-
-                        charging = false;
-                        charge = 0f;
-                    }
-                }
+                return true;
             }
+            else
+            {
+                return false;
+            }
+        }
+        else
+        {
+            return false;
         }
     }
 
-    public void SwitchArrowInput(InputAction.CallbackContext context)
+    public void Fire()
     {
-        if (context.action.phase == InputActionPhase.Started)
+        if(CanShoot())
         {
-            UIManager.GetInstance().SetArrowMenuState(true);
+            StartCoroutine(FireBehaviour());
         }
-        else if(context.action.phase == InputActionPhase.Canceled)
+        else
         {
-            UIManager.GetInstance().SetArrowMenuState(false);
+            return;
         }
+    }
+
+    private IEnumerator FireBehaviour()
+    {
+        if(canShoot)
+        {
+            Rigidbody arrow = null;
+
+            switch (currentType)
+            {
+                case arrowTypes.Regular:
+                    currentRegularArrows--;
+                    UIManager.GetInstance().SetCurrentAmmo(currentRegularArrows);
+                    arrow = Instantiate(regularArrowObj, emmiter.transform.position, emmiter.transform.rotation).GetComponent<Rigidbody>();
+                    arrow.AddForce(emmiter.transform.forward * charge, ForceMode.Impulse);
+                    break;
+
+                case arrowTypes.Fire:
+                    currentFireArrows--;
+                    UIManager.GetInstance().SetCurrentAmmo(currentFireArrows);
+                    arrow = Instantiate(fireArrowObj, emmiter.transform.position, emmiter.transform.rotation).GetComponent<Rigidbody>();
+                    arrow.AddForce(emmiter.transform.forward * charge, ForceMode.Impulse);
+                    break;
+
+                case arrowTypes.Explosion:
+                    currentExplosiveArrows--;
+                    UIManager.GetInstance().SetCurrentAmmo(currentExplosiveArrows);
+                    arrow = Instantiate(explosiveArrowObj, emmiter.transform.position, emmiter.transform.rotation).GetComponent<Rigidbody>();
+                    arrow.AddForce(emmiter.transform.forward * charge, ForceMode.Impulse);
+                    break;
+
+                case arrowTypes.Slow:
+                    currentSlowArrows--;
+                    UIManager.GetInstance().SetCurrentAmmo(currentSlowArrows);
+                    arrow = Instantiate(slowArrowObj, emmiter.transform.position, emmiter.transform.rotation).GetComponent<Rigidbody>();
+                    arrow.AddForce(emmiter.transform.forward * charge, ForceMode.Impulse);
+                    break;
+            }
+            charging = false;
+            charge = 0f;
+            canShoot = false;
+            yield return new WaitForSeconds(1f);
+            canShoot = true;
+        }
+    }
+
+    public void SetArrowMenuState(bool state)
+    {
+        UIManager.GetInstance().SetArrowMenuState(state);
     }
 
     public void SetCurrentArrow(string name)
@@ -147,5 +190,11 @@ public class Bow : MonoBehaviour, IWeapon
                 UIManager.GetInstance().SetCurrentAmmo(currentExplosiveArrows);
                 break;
         }
+    }
+
+    public void SetInactive()
+    {
+        transform.localRotation = startingRotation;
+        gameObject.SetActive(false);
     }
 }

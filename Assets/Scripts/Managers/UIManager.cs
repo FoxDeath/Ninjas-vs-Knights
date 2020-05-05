@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Collections.Generic;
 using UnityEngine.InputSystem;
 using System.Collections;
 
@@ -15,13 +16,18 @@ public class UIManager : MonoBehaviour
     private GameObject ninjaUI;
     private GameObject arrowSelect;
 
+    private TextMeshProUGUI grenadeCount;
     private TextMeshProUGUI currentAmmo;
     private TextMeshProUGUI maxAmmo;
     private TextMeshProUGUI[] texts;
     private Slider knightSlider;
     private Slider healthSlider;
+    private List<Image> fills;
     private MouseLook mouseLook;
     private Image stimpackFill;
+    private Image dashFill;
+    private Image chargeFill;
+    private Image AOEFill;
     private Bow bow;
     [SerializeField] static Color normalColor = new Color(0f / 255f, 0f / 255f, 0f / 255f, 188f / 255f);
     [SerializeField] static Color highlightedColor = new Color(224f / 255f, 114f / 255f, 0f / 255f, 255f / 255f);
@@ -29,6 +35,8 @@ public class UIManager : MonoBehaviour
 
     private static string selectedOption;
     private bool stimpackFilling;
+    private bool dashFilling;
+    private bool chargeFilling;
 
     private Vector2 moveInput;
 
@@ -49,7 +57,10 @@ public class UIManager : MonoBehaviour
     {
         SceneManager.sceneLoaded += OnSceneWasLoaded;
 
-        FillingStimpack();
+        FillingAbility(dashFill, 2.4f);
+        FillingAbility(stimpackFill, 10f);
+        FillingAbility(chargeFill, 12.5f);
+        FillingAbility(AOEFill, 15f);
     }
 
     void OnSceneWasLoaded(Scene scene, LoadSceneMode mode)
@@ -64,14 +75,16 @@ public class UIManager : MonoBehaviour
         if(ui.transform.Find("NinjaUI") != null)
         {
             //if current player is a ninja, it gets the ninja assets
+            fills = new List<Image>();
             texts = ui.transform.Find("NinjaUI").Find("AmmoCounter").GetComponentsInChildren<TextMeshProUGUI>();
             ninjaUI = ui.transform.Find("NinjaUI").gameObject;
-           // flashUI = ui.transform.Find("FlashUI").gameObject;
+            grenadeCount = ninjaUI.transform.Find("Grenade").Find("GrenadeCount").GetComponent<TextMeshProUGUI>();
             healthSlider = ninjaUI.transform.Find("HealthBar").GetComponent<Slider>();
             arrowSelect = ui.transform.Find("NinjaUI").Find("ArrowSelect").gameObject;
             arrowSelect = arrowSelect.transform.Find("Wheel").gameObject;
             mouseLook = GameObject.Find("NinjaPlayer").transform.Find("Main Camera").GetComponent<MouseLook>();
             stimpackFill = ninjaUI.transform.Find("Stimpack").Find("StimpackFill").GetComponent<Image>();
+            fills.Add(stimpackFill);
 
             radialOptions = new Image[arrowSelect.transform.childCount];
             for(int i = 0; i < arrowSelect.transform.childCount; i++)
@@ -82,12 +95,21 @@ public class UIManager : MonoBehaviour
         else
         {
             //if current player is a knight, it gets the knight assets
+            fills = new List<Image>();
             knightUI = ui.transform.Find("KnightUI").gameObject;
+            grenadeCount = knightUI.transform.Find("Grenade").Find("GrenadeCount").GetComponent<TextMeshProUGUI>();
             texts = knightUI.transform.Find("AmmoCounter").GetComponentsInChildren<TextMeshProUGUI>();
             knightSlider = knightUI.transform.Find("FuelSlider").GetComponent<Slider>();
             healthSlider = knightUI.transform.Find("HealthBar").GetComponent<Slider>();
             knightScopeOverlay = ui.transform.Find("ScopeOverlay").gameObject;
             stimpackFill = knightUI.transform.Find("Stimpack").Find("StimpackFill").GetComponent<Image>();
+            fills.Add(stimpackFill);
+            dashFill = knightUI.transform.Find("Dash").Find("DashFill").GetComponent<Image>();
+            fills.Add(dashFill);
+            chargeFill = knightUI.transform.Find("Charge").Find("ChargeFill").GetComponent<Image>();
+            fills.Add(chargeFill);
+            AOEFill = knightUI.transform.Find("AOE").Find("AOEFill").GetComponent<Image>();
+            fills.Add(AOEFill);
         }
 
         //gets and sets the number of current and max ammo
@@ -153,7 +175,6 @@ public class UIManager : MonoBehaviour
         {
             Cursor.lockState = CursorLockMode.None;
             mouseLook.SetCanLook(false);
-            mouseLook.SetSensitivity(mouseLook.GetSensitivity() * 0.5f);
 
             foreach (TextMeshProUGUI text in texts)
             {
@@ -164,13 +185,11 @@ public class UIManager : MonoBehaviour
         {
             Cursor.lockState = CursorLockMode.Locked;
             mouseLook.SetCanLook(true);
-            mouseLook.SetSensitivity(mouseLook.GetSensitivity() / 0.5f);
 
             foreach (TextMeshProUGUI text in texts)
             {
                 text.gameObject.SetActive(true);
             }
-
             bow.SetCurrentArrow(selectedOption);
         }
     }
@@ -187,6 +206,11 @@ public class UIManager : MonoBehaviour
     public void SetCurrentAmmo(int ammo)
     {
         currentAmmo.text = ammo.ToString();
+    }
+
+    public void SetGrenadeCount(int count)
+    {
+        grenadeCount.text = count.ToString();
     }
 
     public void SetKnightSliderValue(float value)
@@ -222,23 +246,26 @@ public class UIManager : MonoBehaviour
         healthSlider.value = health; 
     }
 
-    //Resets the stimpack fill value to 0 and starts refiling it
-    public void ResetStimpack()
+    //Resets the fill value to 0 and starts refiling it
+    public void ResetFill(string name)
     {
-        stimpackFill.fillAmount = 0f;
-        stimpackFilling = true;
-    }
-
-    //Refils the stimpack for 10 seconds
-    private void FillingStimpack()
-    {
-        if(stimpackFilling)
+        foreach(Image fill in fills)
         {
-            stimpackFill.fillAmount += 1f / 10f * Time.deltaTime;
-            if(stimpackFill.fillAmount == 1f)
+            if(fill.name.Equals(name))
             {
-                stimpackFilling = false;
+                fill.fillAmount = 0f;
             }
         }
+    }
+
+    //Refils the fillAmount for cooldown seconds if the fill is not null or full
+    private void FillingAbility(Image fill, float cooldown)
+    {
+        if(fill == null || (fill != null && fill.fillAmount == 1f))
+        {
+            return;
+        }
+
+        fill.fillAmount += 1f / cooldown * Time.deltaTime;
     }
 }

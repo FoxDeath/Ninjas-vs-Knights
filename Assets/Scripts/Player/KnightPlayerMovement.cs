@@ -21,7 +21,6 @@ public class KnightPlayerMovement : PlayerMovement
     private bool canCharge = true;
     private bool canDash = true;
     private bool dashing;
-    private bool charging;
     private bool jetpacking;
 
     public bool GetDashing()
@@ -198,27 +197,24 @@ public class KnightPlayerMovement : PlayerMovement
         {
             canDash = false;
             dashing = true;
-            uiManager.SetKnightSliderColour(Color.red);
 
             audioManager.Play("Jetpack Dash");
-
-            float oldVertical = vertical;
-            float oldHorizontal = horizontal;
 
             vertical = dashForce * moveInput.y;
             horizontal = dashForce * moveInput.x;
 
+
+            uiManager.ResetFill("DashFill");
             yield return new WaitForSeconds(0.4f);
             
             dashing = false;
 
-            vertical = oldVertical;
-            horizontal = oldHorizontal;
+
+            SetMoveInput(moveInput);
 
             yield return new WaitForSeconds(2f);
 
             canDash = true;
-            uiManager.SetKnightSliderColour(Color.green);
         }
         //If the player is not on the ground and you dash it dashes in the direction he is looking at
         if(!isGrounded)
@@ -226,12 +222,8 @@ public class KnightPlayerMovement : PlayerMovement
             canDash = false;
             dashing = true;
 
-            uiManager.SetKnightSliderColour(Color.red);
-
             audioManager.Play("Jetpack Dash");
 
-            float oldVerticalX = this.vertical;
-            float oldVerticalY = this.horizontal;
             float oldHorizontal = this.velocity.y;
             float oldGravity = this.gravity;
 
@@ -242,19 +234,20 @@ public class KnightPlayerMovement : PlayerMovement
 
             gravity = 0f;
             velocity.y = dashForce * 5 * localForward.y;
+
+            uiManager.ResetFill("DashFill");            
             yield return new WaitForSeconds(0.4f);
             
             dashing = false;
 
-            vertical = oldVerticalX;
-            horizontal = oldVerticalY;
+            SetMoveInput(moveInput);
+            lastMove = Vector3.zero;
             velocity.y = oldHorizontal;
             gravity = oldGravity;
 
             yield return new WaitForSeconds(2f);
 
             canDash = true;
-            uiManager.SetKnightSliderColour(Color.green);
         }
     }
 
@@ -278,6 +271,7 @@ public class KnightPlayerMovement : PlayerMovement
 
             vertical = chargeForce * moveInput.y;
 
+            uiManager.ResetFill("ChargeFill");
             yield return new WaitForSeconds(2.5f);
 
             charging = false;

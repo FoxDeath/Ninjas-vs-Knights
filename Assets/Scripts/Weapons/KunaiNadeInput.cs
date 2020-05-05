@@ -6,9 +6,9 @@ public class KunaiNadeInput : MonoBehaviour
 {
     [SerializeField] GameObject kunaiPrefab;
     [SerializeField] float throwForce = 50f;
-    [SerializeField] float maxKunai = 4;
+    [SerializeField] int maxKunai = 4;
 
-    private float currentKunai;
+    private int currentKunai;
     private GameObject bulletEmitter;
     private bool threw;
 
@@ -17,21 +17,23 @@ public class KunaiNadeInput : MonoBehaviour
         currentKunai = maxKunai;
         bulletEmitter = GameObject.Find("KunaiEmitter");
     }
-  
-    public void KunaiInput(InputAction.CallbackContext context)
+
+    private void Update() 
     {
-        if (context.phase == InputActionPhase.Performed)
+        UIManager.GetInstance().SetGrenadeCount(currentKunai);    
+    }
+
+    public void ThrowKunai()
+    {
+        if (currentKunai > 0f)
         {
-            if (currentKunai > 0f)
-            {
-                currentKunai--;
-                StartCoroutine(ThrowKunai());
-                threw = true;
-            }          
+            currentKunai--;
+            StartCoroutine(ThrowKunaiBehaviour());
+            threw = true;
         }
     }
 
-    public IEnumerator ThrowKunai()
+    private IEnumerator ThrowKunaiBehaviour()
     {
         Transform mainCamera = gameObject.transform.Find("Main Camera").transform;
         GameObject kunai = Instantiate(kunaiPrefab, bulletEmitter.transform.position, bulletEmitter.transform.rotation);

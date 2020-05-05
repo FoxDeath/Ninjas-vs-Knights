@@ -51,30 +51,6 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""Fire"",
-                    ""type"": ""Button"",
-                    ""id"": ""174db001-2c17-4ee9-b135-01e3d5573dad"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": ""Hold(duration=0.1,pressPoint=0.1)""
-                },
-                {
-                    ""name"": ""Scope"",
-                    ""type"": ""Button"",
-                    ""id"": ""3558cc0b-596e-468e-b70c-d418962defaf"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": ""Hold(duration=0.01,pressPoint=0.01)""
-                },
-                {
-                    ""name"": ""Reload"",
-                    ""type"": ""Button"",
-                    ""id"": ""2458a1fb-d161-492e-9046-eaec27acac96"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """"
-                },
-                {
                     ""name"": ""Grapling Hook"",
                     ""type"": ""Button"",
                     ""id"": ""4c0a85ae-4079-45df-bd15-ebea32cffde3"",
@@ -222,39 +198,6 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""cbec5257-5027-498f-a9e2-702e97f2f45e"",
-                    ""path"": ""<Mouse>/leftButton"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard and Mouse"",
-                    ""action"": ""Fire"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""d185bede-461d-4e83-832f-e5ec3b55d642"",
-                    ""path"": ""<Mouse>/rightButton"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard and Mouse"",
-                    ""action"": ""Scope"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""b40185fc-6e07-4f54-b962-f299bb545fc8"",
-                    ""path"": ""<Keyboard>/#(R)"",
-                    ""interactions"": ""Press"",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard and Mouse"",
-                    ""action"": ""Reload"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""36796939-65e8-4c7c-94c2-e9452eb1a729"",
                     ""path"": ""<Mouse>/middleButton"",
                     ""interactions"": ""Hold"",
@@ -377,14 +320,6 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""interactions"": ""Hold""
                 },
                 {
-                    ""name"": ""Shoot"",
-                    ""type"": ""Button"",
-                    ""id"": ""f55b3568-3a37-4acc-8116-feb32b73bab9"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """"
-                },
-                {
                     ""name"": ""PauseMenu"",
                     ""type"": ""Button"",
                     ""id"": ""42ee6374-1e9b-494c-b053-e59af83cb8c1"",
@@ -409,22 +344,6 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""Scope"",
-                    ""type"": ""Button"",
-                    ""id"": ""cb2acbdb-76c3-460e-b4b7-5a669e1b7c31"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """"
-                },
-                {
-                    ""name"": ""ScopeZoom"",
-                    ""type"": ""Button"",
-                    ""id"": ""ee974e1e-f8ab-442b-a957-cee121c1205c"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """"
-                },
-                {
                     ""name"": ""JatpackCharge"",
                     ""type"": ""Button"",
                     ""id"": ""99442510-9d27-4c80-b1b4-d328aa5fb7d1"",
@@ -441,42 +360,15 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""Reload"",
-                    ""type"": ""Button"",
-                    ""id"": ""e9a3d5d3-59dc-4a14-8554-0c7216a6d547"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """"
-                },
-                {
                     ""name"": ""Stimpack"",
                     ""type"": ""Button"",
                     ""id"": ""bb120c0b-518c-4c39-93da-54769bc7e018"",
                     ""expectedControlType"": """",
                     ""processors"": """",
-                    ""interactions"": """"
-                },
-                {
-                    ""name"": ""Grenade"",
-                    ""type"": ""Button"",
-                    ""id"": ""1d571656-9513-47bd-aeee-9ccae193195a"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """"
+                    ""interactions"": ""Press""
                 }
             ],
             ""bindings"": [
-                {
-                    ""name"": """",
-                    ""id"": ""999c697c-fa11-4df5-8f21-296afb5d0fe9"",
-                    ""path"": ""<Mouse>/leftButton"",
-                    ""interactions"": ""Press"",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard and Mouse"",
-                    ""action"": ""Shoot"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
                 {
                     ""name"": """",
                     ""id"": ""1ac083a0-9a04-4ec2-9919-cd3caa11dc8b"",
@@ -611,28 +503,6 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""7575e7dd-40fe-4d8f-a84d-426e34f0a26c"",
-                    ""path"": ""<Mouse>/rightButton"",
-                    ""interactions"": ""Press"",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Scope"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""c9e1b4d3-6f56-4880-8f58-d80dc850cd47"",
-                    ""path"": ""<Keyboard>/q"",
-                    ""interactions"": ""Press"",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard and Mouse"",
-                    ""action"": ""ScopeZoom"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""688a4861-a63f-4ff4-9c7c-f7dee30a44df"",
                     ""path"": ""<Keyboard>/#(F)"",
                     ""interactions"": ""Press"",
@@ -655,9 +525,117 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""e6224f8c-cffb-4ed7-ab94-6218498bc3e5"",
+                    ""path"": ""<Keyboard>/v"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard and Mouse"",
+                    ""action"": ""Stimpack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""Weapon"",
+            ""id"": ""51b287e4-ab2b-4ff9-a3ba-ddf9f2390903"",
+            ""actions"": [
+                {
+                    ""name"": ""Reload"",
+                    ""type"": ""Button"",
+                    ""id"": ""d0177fad-de37-4d4c-ae08-b6e1b0f69e12"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": ""Press""
+                },
+                {
+                    ""name"": ""ScopeZoom"",
+                    ""type"": ""Button"",
+                    ""id"": ""9aab2f80-be9d-4b02-955a-6f6400162694"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press""
+                },
+                {
+                    ""name"": ""Scope"",
+                    ""type"": ""Button"",
+                    ""id"": ""0a2aa2c1-ecb7-4c0a-9785-246cf1f17896"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": ""Press""
+                },
+                {
+                    ""name"": ""Fire"",
+                    ""type"": ""Button"",
+                    ""id"": ""51d6c75b-66c3-48cb-afbc-0ffe21d26190"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": ""Press""
+                },
+                {
+                    ""name"": ""FireCharge"",
+                    ""type"": ""Button"",
+                    ""id"": ""9c1c94d4-b000-4f33-adb1-a68149a3cf69"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": ""Hold""
+                },
+                {
+                    ""name"": ""Charge"",
+                    ""type"": ""Button"",
+                    ""id"": ""6ce10f68-eb44-4e14-a5a1-8b20806a2ce4"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": ""Hold""
+                },
+                {
+                    ""name"": ""Grenade"",
+                    ""type"": ""Button"",
+                    ""id"": ""d079cde1-3934-4c5a-88f9-a1ed4c4aae73"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": ""Press""
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""51c3dce5-a881-4772-8d17-5c7d97cd09a4"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard and Mouse"",
+                    ""action"": ""Fire"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1ec654fb-0bc9-414f-bc80-6cd0ce6b0523"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard and Mouse"",
+                    ""action"": ""Scope"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""667b968a-88e7-44d4-84cd-6b1779f56b7d"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard and Mouse"",
+                    ""action"": ""ScopeZoom"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""51e931db-44aa-4447-93e0-f0ad9070b0dc"",
                     ""path"": ""<Keyboard>/r"",
-                    ""interactions"": ""Press"",
+                    ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard and Mouse"",
                     ""action"": ""Reload"",
@@ -677,9 +655,31 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""917851e7-84f2-448b-b8c0-cfa6a919d067"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard and Mouse"",
+                    ""action"": ""Charge"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3c94b8a8-d564-42b3-805b-6e283b6c145f"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard and Mouse"",
+                    ""action"": ""FireCharge"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""9c6e8946-7a92-4704-82a8-31b76c3eaf79"",
                     ""path"": ""<Keyboard>/g"",
-                    ""interactions"": ""Press"",
+                    ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Grenade"",
@@ -725,9 +725,6 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         m_Ninja_Movement = m_Ninja.FindAction("Movement", throwIfNotFound: true);
         m_Ninja_Jump = m_Ninja.FindAction("Jump", throwIfNotFound: true);
         m_Ninja_Sprint = m_Ninja.FindAction("Sprint", throwIfNotFound: true);
-        m_Ninja_Fire = m_Ninja.FindAction("Fire", throwIfNotFound: true);
-        m_Ninja_Scope = m_Ninja.FindAction("Scope", throwIfNotFound: true);
-        m_Ninja_Reload = m_Ninja.FindAction("Reload", throwIfNotFound: true);
         m_Ninja_GraplingHook = m_Ninja.FindAction("Grapling Hook", throwIfNotFound: true);
         m_Ninja_Crouch = m_Ninja.FindAction("Crouch", throwIfNotFound: true);
         m_Ninja_PauseMenu = m_Ninja.FindAction("PauseMenu", throwIfNotFound: true);
@@ -742,17 +739,21 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         m_Knight_Sprint = m_Knight.FindAction("Sprint", throwIfNotFound: true);
         m_Knight_JetpackDash = m_Knight.FindAction("JetpackDash", throwIfNotFound: true);
         m_Knight_Jump = m_Knight.FindAction("Jump", throwIfNotFound: true);
-        m_Knight_Shoot = m_Knight.FindAction("Shoot", throwIfNotFound: true);
         m_Knight_PauseMenu = m_Knight.FindAction("PauseMenu", throwIfNotFound: true);
         m_Knight_SwitchWeapon = m_Knight.FindAction("SwitchWeapon", throwIfNotFound: true);
         m_Knight_Crouch = m_Knight.FindAction("Crouch", throwIfNotFound: true);
-        m_Knight_Scope = m_Knight.FindAction("Scope", throwIfNotFound: true);
-        m_Knight_ScopeZoom = m_Knight.FindAction("ScopeZoom", throwIfNotFound: true);
         m_Knight_JatpackCharge = m_Knight.FindAction("JatpackCharge", throwIfNotFound: true);
         m_Knight_AOEAttack = m_Knight.FindAction("AOEAttack", throwIfNotFound: true);
-        m_Knight_Reload = m_Knight.FindAction("Reload", throwIfNotFound: true);
         m_Knight_Stimpack = m_Knight.FindAction("Stimpack", throwIfNotFound: true);
-        m_Knight_Grenade = m_Knight.FindAction("Grenade", throwIfNotFound: true);
+        // Weapon
+        m_Weapon = asset.FindActionMap("Weapon", throwIfNotFound: true);
+        m_Weapon_Reload = m_Weapon.FindAction("Reload", throwIfNotFound: true);
+        m_Weapon_ScopeZoom = m_Weapon.FindAction("ScopeZoom", throwIfNotFound: true);
+        m_Weapon_Scope = m_Weapon.FindAction("Scope", throwIfNotFound: true);
+        m_Weapon_Fire = m_Weapon.FindAction("Fire", throwIfNotFound: true);
+        m_Weapon_FireCharge = m_Weapon.FindAction("FireCharge", throwIfNotFound: true);
+        m_Weapon_Charge = m_Weapon.FindAction("Charge", throwIfNotFound: true);
+        m_Weapon_Grenade = m_Weapon.FindAction("Grenade", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -806,9 +807,6 @@ public class @PlayerInput : IInputActionCollection, IDisposable
     private readonly InputAction m_Ninja_Movement;
     private readonly InputAction m_Ninja_Jump;
     private readonly InputAction m_Ninja_Sprint;
-    private readonly InputAction m_Ninja_Fire;
-    private readonly InputAction m_Ninja_Scope;
-    private readonly InputAction m_Ninja_Reload;
     private readonly InputAction m_Ninja_GraplingHook;
     private readonly InputAction m_Ninja_Crouch;
     private readonly InputAction m_Ninja_PauseMenu;
@@ -824,9 +822,6 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         public InputAction @Movement => m_Wrapper.m_Ninja_Movement;
         public InputAction @Jump => m_Wrapper.m_Ninja_Jump;
         public InputAction @Sprint => m_Wrapper.m_Ninja_Sprint;
-        public InputAction @Fire => m_Wrapper.m_Ninja_Fire;
-        public InputAction @Scope => m_Wrapper.m_Ninja_Scope;
-        public InputAction @Reload => m_Wrapper.m_Ninja_Reload;
         public InputAction @GraplingHook => m_Wrapper.m_Ninja_GraplingHook;
         public InputAction @Crouch => m_Wrapper.m_Ninja_Crouch;
         public InputAction @PauseMenu => m_Wrapper.m_Ninja_PauseMenu;
@@ -855,15 +850,6 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                 @Sprint.started -= m_Wrapper.m_NinjaActionsCallbackInterface.OnSprint;
                 @Sprint.performed -= m_Wrapper.m_NinjaActionsCallbackInterface.OnSprint;
                 @Sprint.canceled -= m_Wrapper.m_NinjaActionsCallbackInterface.OnSprint;
-                @Fire.started -= m_Wrapper.m_NinjaActionsCallbackInterface.OnFire;
-                @Fire.performed -= m_Wrapper.m_NinjaActionsCallbackInterface.OnFire;
-                @Fire.canceled -= m_Wrapper.m_NinjaActionsCallbackInterface.OnFire;
-                @Scope.started -= m_Wrapper.m_NinjaActionsCallbackInterface.OnScope;
-                @Scope.performed -= m_Wrapper.m_NinjaActionsCallbackInterface.OnScope;
-                @Scope.canceled -= m_Wrapper.m_NinjaActionsCallbackInterface.OnScope;
-                @Reload.started -= m_Wrapper.m_NinjaActionsCallbackInterface.OnReload;
-                @Reload.performed -= m_Wrapper.m_NinjaActionsCallbackInterface.OnReload;
-                @Reload.canceled -= m_Wrapper.m_NinjaActionsCallbackInterface.OnReload;
                 @GraplingHook.started -= m_Wrapper.m_NinjaActionsCallbackInterface.OnGraplingHook;
                 @GraplingHook.performed -= m_Wrapper.m_NinjaActionsCallbackInterface.OnGraplingHook;
                 @GraplingHook.canceled -= m_Wrapper.m_NinjaActionsCallbackInterface.OnGraplingHook;
@@ -901,15 +887,6 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                 @Sprint.started += instance.OnSprint;
                 @Sprint.performed += instance.OnSprint;
                 @Sprint.canceled += instance.OnSprint;
-                @Fire.started += instance.OnFire;
-                @Fire.performed += instance.OnFire;
-                @Fire.canceled += instance.OnFire;
-                @Scope.started += instance.OnScope;
-                @Scope.performed += instance.OnScope;
-                @Scope.canceled += instance.OnScope;
-                @Reload.started += instance.OnReload;
-                @Reload.performed += instance.OnReload;
-                @Reload.canceled += instance.OnReload;
                 @GraplingHook.started += instance.OnGraplingHook;
                 @GraplingHook.performed += instance.OnGraplingHook;
                 @GraplingHook.canceled += instance.OnGraplingHook;
@@ -944,17 +921,12 @@ public class @PlayerInput : IInputActionCollection, IDisposable
     private readonly InputAction m_Knight_Sprint;
     private readonly InputAction m_Knight_JetpackDash;
     private readonly InputAction m_Knight_Jump;
-    private readonly InputAction m_Knight_Shoot;
     private readonly InputAction m_Knight_PauseMenu;
     private readonly InputAction m_Knight_SwitchWeapon;
     private readonly InputAction m_Knight_Crouch;
-    private readonly InputAction m_Knight_Scope;
-    private readonly InputAction m_Knight_ScopeZoom;
     private readonly InputAction m_Knight_JatpackCharge;
     private readonly InputAction m_Knight_AOEAttack;
-    private readonly InputAction m_Knight_Reload;
     private readonly InputAction m_Knight_Stimpack;
-    private readonly InputAction m_Knight_Grenade;
     public struct KnightActions
     {
         private @PlayerInput m_Wrapper;
@@ -964,17 +936,12 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         public InputAction @Sprint => m_Wrapper.m_Knight_Sprint;
         public InputAction @JetpackDash => m_Wrapper.m_Knight_JetpackDash;
         public InputAction @Jump => m_Wrapper.m_Knight_Jump;
-        public InputAction @Shoot => m_Wrapper.m_Knight_Shoot;
         public InputAction @PauseMenu => m_Wrapper.m_Knight_PauseMenu;
         public InputAction @SwitchWeapon => m_Wrapper.m_Knight_SwitchWeapon;
         public InputAction @Crouch => m_Wrapper.m_Knight_Crouch;
-        public InputAction @Scope => m_Wrapper.m_Knight_Scope;
-        public InputAction @ScopeZoom => m_Wrapper.m_Knight_ScopeZoom;
         public InputAction @JatpackCharge => m_Wrapper.m_Knight_JatpackCharge;
         public InputAction @AOEAttack => m_Wrapper.m_Knight_AOEAttack;
-        public InputAction @Reload => m_Wrapper.m_Knight_Reload;
         public InputAction @Stimpack => m_Wrapper.m_Knight_Stimpack;
-        public InputAction @Grenade => m_Wrapper.m_Knight_Grenade;
         public InputActionMap Get() { return m_Wrapper.m_Knight; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -999,9 +966,6 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                 @Jump.started -= m_Wrapper.m_KnightActionsCallbackInterface.OnJump;
                 @Jump.performed -= m_Wrapper.m_KnightActionsCallbackInterface.OnJump;
                 @Jump.canceled -= m_Wrapper.m_KnightActionsCallbackInterface.OnJump;
-                @Shoot.started -= m_Wrapper.m_KnightActionsCallbackInterface.OnShoot;
-                @Shoot.performed -= m_Wrapper.m_KnightActionsCallbackInterface.OnShoot;
-                @Shoot.canceled -= m_Wrapper.m_KnightActionsCallbackInterface.OnShoot;
                 @PauseMenu.started -= m_Wrapper.m_KnightActionsCallbackInterface.OnPauseMenu;
                 @PauseMenu.performed -= m_Wrapper.m_KnightActionsCallbackInterface.OnPauseMenu;
                 @PauseMenu.canceled -= m_Wrapper.m_KnightActionsCallbackInterface.OnPauseMenu;
@@ -1011,27 +975,15 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                 @Crouch.started -= m_Wrapper.m_KnightActionsCallbackInterface.OnCrouch;
                 @Crouch.performed -= m_Wrapper.m_KnightActionsCallbackInterface.OnCrouch;
                 @Crouch.canceled -= m_Wrapper.m_KnightActionsCallbackInterface.OnCrouch;
-                @Scope.started -= m_Wrapper.m_KnightActionsCallbackInterface.OnScope;
-                @Scope.performed -= m_Wrapper.m_KnightActionsCallbackInterface.OnScope;
-                @Scope.canceled -= m_Wrapper.m_KnightActionsCallbackInterface.OnScope;
-                @ScopeZoom.started -= m_Wrapper.m_KnightActionsCallbackInterface.OnScopeZoom;
-                @ScopeZoom.performed -= m_Wrapper.m_KnightActionsCallbackInterface.OnScopeZoom;
-                @ScopeZoom.canceled -= m_Wrapper.m_KnightActionsCallbackInterface.OnScopeZoom;
                 @JatpackCharge.started -= m_Wrapper.m_KnightActionsCallbackInterface.OnJatpackCharge;
                 @JatpackCharge.performed -= m_Wrapper.m_KnightActionsCallbackInterface.OnJatpackCharge;
                 @JatpackCharge.canceled -= m_Wrapper.m_KnightActionsCallbackInterface.OnJatpackCharge;
                 @AOEAttack.started -= m_Wrapper.m_KnightActionsCallbackInterface.OnAOEAttack;
                 @AOEAttack.performed -= m_Wrapper.m_KnightActionsCallbackInterface.OnAOEAttack;
                 @AOEAttack.canceled -= m_Wrapper.m_KnightActionsCallbackInterface.OnAOEAttack;
-                @Reload.started -= m_Wrapper.m_KnightActionsCallbackInterface.OnReload;
-                @Reload.performed -= m_Wrapper.m_KnightActionsCallbackInterface.OnReload;
-                @Reload.canceled -= m_Wrapper.m_KnightActionsCallbackInterface.OnReload;
                 @Stimpack.started -= m_Wrapper.m_KnightActionsCallbackInterface.OnStimpack;
                 @Stimpack.performed -= m_Wrapper.m_KnightActionsCallbackInterface.OnStimpack;
                 @Stimpack.canceled -= m_Wrapper.m_KnightActionsCallbackInterface.OnStimpack;
-                @Grenade.started -= m_Wrapper.m_KnightActionsCallbackInterface.OnGrenade;
-                @Grenade.performed -= m_Wrapper.m_KnightActionsCallbackInterface.OnGrenade;
-                @Grenade.canceled -= m_Wrapper.m_KnightActionsCallbackInterface.OnGrenade;
             }
             m_Wrapper.m_KnightActionsCallbackInterface = instance;
             if (instance != null)
@@ -1051,9 +1003,6 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                 @Jump.started += instance.OnJump;
                 @Jump.performed += instance.OnJump;
                 @Jump.canceled += instance.OnJump;
-                @Shoot.started += instance.OnShoot;
-                @Shoot.performed += instance.OnShoot;
-                @Shoot.canceled += instance.OnShoot;
                 @PauseMenu.started += instance.OnPauseMenu;
                 @PauseMenu.performed += instance.OnPauseMenu;
                 @PauseMenu.canceled += instance.OnPauseMenu;
@@ -1063,31 +1012,100 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                 @Crouch.started += instance.OnCrouch;
                 @Crouch.performed += instance.OnCrouch;
                 @Crouch.canceled += instance.OnCrouch;
-                @Scope.started += instance.OnScope;
-                @Scope.performed += instance.OnScope;
-                @Scope.canceled += instance.OnScope;
-                @ScopeZoom.started += instance.OnScopeZoom;
-                @ScopeZoom.performed += instance.OnScopeZoom;
-                @ScopeZoom.canceled += instance.OnScopeZoom;
                 @JatpackCharge.started += instance.OnJatpackCharge;
                 @JatpackCharge.performed += instance.OnJatpackCharge;
                 @JatpackCharge.canceled += instance.OnJatpackCharge;
                 @AOEAttack.started += instance.OnAOEAttack;
                 @AOEAttack.performed += instance.OnAOEAttack;
                 @AOEAttack.canceled += instance.OnAOEAttack;
-                @Reload.started += instance.OnReload;
-                @Reload.performed += instance.OnReload;
-                @Reload.canceled += instance.OnReload;
                 @Stimpack.started += instance.OnStimpack;
                 @Stimpack.performed += instance.OnStimpack;
                 @Stimpack.canceled += instance.OnStimpack;
+            }
+        }
+    }
+    public KnightActions @Knight => new KnightActions(this);
+
+    // Weapon
+    private readonly InputActionMap m_Weapon;
+    private IWeaponActions m_WeaponActionsCallbackInterface;
+    private readonly InputAction m_Weapon_Reload;
+    private readonly InputAction m_Weapon_ScopeZoom;
+    private readonly InputAction m_Weapon_Scope;
+    private readonly InputAction m_Weapon_Fire;
+    private readonly InputAction m_Weapon_FireCharge;
+    private readonly InputAction m_Weapon_Charge;
+    private readonly InputAction m_Weapon_Grenade;
+    public struct WeaponActions
+    {
+        private @PlayerInput m_Wrapper;
+        public WeaponActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Reload => m_Wrapper.m_Weapon_Reload;
+        public InputAction @ScopeZoom => m_Wrapper.m_Weapon_ScopeZoom;
+        public InputAction @Scope => m_Wrapper.m_Weapon_Scope;
+        public InputAction @Fire => m_Wrapper.m_Weapon_Fire;
+        public InputAction @FireCharge => m_Wrapper.m_Weapon_FireCharge;
+        public InputAction @Charge => m_Wrapper.m_Weapon_Charge;
+        public InputAction @Grenade => m_Wrapper.m_Weapon_Grenade;
+        public InputActionMap Get() { return m_Wrapper.m_Weapon; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(WeaponActions set) { return set.Get(); }
+        public void SetCallbacks(IWeaponActions instance)
+        {
+            if (m_Wrapper.m_WeaponActionsCallbackInterface != null)
+            {
+                @Reload.started -= m_Wrapper.m_WeaponActionsCallbackInterface.OnReload;
+                @Reload.performed -= m_Wrapper.m_WeaponActionsCallbackInterface.OnReload;
+                @Reload.canceled -= m_Wrapper.m_WeaponActionsCallbackInterface.OnReload;
+                @ScopeZoom.started -= m_Wrapper.m_WeaponActionsCallbackInterface.OnScopeZoom;
+                @ScopeZoom.performed -= m_Wrapper.m_WeaponActionsCallbackInterface.OnScopeZoom;
+                @ScopeZoom.canceled -= m_Wrapper.m_WeaponActionsCallbackInterface.OnScopeZoom;
+                @Scope.started -= m_Wrapper.m_WeaponActionsCallbackInterface.OnScope;
+                @Scope.performed -= m_Wrapper.m_WeaponActionsCallbackInterface.OnScope;
+                @Scope.canceled -= m_Wrapper.m_WeaponActionsCallbackInterface.OnScope;
+                @Fire.started -= m_Wrapper.m_WeaponActionsCallbackInterface.OnFire;
+                @Fire.performed -= m_Wrapper.m_WeaponActionsCallbackInterface.OnFire;
+                @Fire.canceled -= m_Wrapper.m_WeaponActionsCallbackInterface.OnFire;
+                @FireCharge.started -= m_Wrapper.m_WeaponActionsCallbackInterface.OnFireCharge;
+                @FireCharge.performed -= m_Wrapper.m_WeaponActionsCallbackInterface.OnFireCharge;
+                @FireCharge.canceled -= m_Wrapper.m_WeaponActionsCallbackInterface.OnFireCharge;
+                @Charge.started -= m_Wrapper.m_WeaponActionsCallbackInterface.OnCharge;
+                @Charge.performed -= m_Wrapper.m_WeaponActionsCallbackInterface.OnCharge;
+                @Charge.canceled -= m_Wrapper.m_WeaponActionsCallbackInterface.OnCharge;
+                @Grenade.started -= m_Wrapper.m_WeaponActionsCallbackInterface.OnGrenade;
+                @Grenade.performed -= m_Wrapper.m_WeaponActionsCallbackInterface.OnGrenade;
+                @Grenade.canceled -= m_Wrapper.m_WeaponActionsCallbackInterface.OnGrenade;
+            }
+            m_Wrapper.m_WeaponActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Reload.started += instance.OnReload;
+                @Reload.performed += instance.OnReload;
+                @Reload.canceled += instance.OnReload;
+                @ScopeZoom.started += instance.OnScopeZoom;
+                @ScopeZoom.performed += instance.OnScopeZoom;
+                @ScopeZoom.canceled += instance.OnScopeZoom;
+                @Scope.started += instance.OnScope;
+                @Scope.performed += instance.OnScope;
+                @Scope.canceled += instance.OnScope;
+                @Fire.started += instance.OnFire;
+                @Fire.performed += instance.OnFire;
+                @Fire.canceled += instance.OnFire;
+                @FireCharge.started += instance.OnFireCharge;
+                @FireCharge.performed += instance.OnFireCharge;
+                @FireCharge.canceled += instance.OnFireCharge;
+                @Charge.started += instance.OnCharge;
+                @Charge.performed += instance.OnCharge;
+                @Charge.canceled += instance.OnCharge;
                 @Grenade.started += instance.OnGrenade;
                 @Grenade.performed += instance.OnGrenade;
                 @Grenade.canceled += instance.OnGrenade;
             }
         }
     }
-    public KnightActions @Knight => new KnightActions(this);
+    public WeaponActions @Weapon => new WeaponActions(this);
     private int m_KeyboardandMouseSchemeIndex = -1;
     public InputControlScheme KeyboardandMouseScheme
     {
@@ -1112,9 +1130,6 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         void OnMovement(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnSprint(InputAction.CallbackContext context);
-        void OnFire(InputAction.CallbackContext context);
-        void OnScope(InputAction.CallbackContext context);
-        void OnReload(InputAction.CallbackContext context);
         void OnGraplingHook(InputAction.CallbackContext context);
         void OnCrouch(InputAction.CallbackContext context);
         void OnPauseMenu(InputAction.CallbackContext context);
@@ -1130,16 +1145,21 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         void OnSprint(InputAction.CallbackContext context);
         void OnJetpackDash(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
-        void OnShoot(InputAction.CallbackContext context);
         void OnPauseMenu(InputAction.CallbackContext context);
         void OnSwitchWeapon(InputAction.CallbackContext context);
         void OnCrouch(InputAction.CallbackContext context);
-        void OnScope(InputAction.CallbackContext context);
-        void OnScopeZoom(InputAction.CallbackContext context);
         void OnJatpackCharge(InputAction.CallbackContext context);
         void OnAOEAttack(InputAction.CallbackContext context);
-        void OnReload(InputAction.CallbackContext context);
         void OnStimpack(InputAction.CallbackContext context);
+    }
+    public interface IWeaponActions
+    {
+        void OnReload(InputAction.CallbackContext context);
+        void OnScopeZoom(InputAction.CallbackContext context);
+        void OnScope(InputAction.CallbackContext context);
+        void OnFire(InputAction.CallbackContext context);
+        void OnFireCharge(InputAction.CallbackContext context);
+        void OnCharge(InputAction.CallbackContext context);
         void OnGrenade(InputAction.CallbackContext context);
     }
 }
