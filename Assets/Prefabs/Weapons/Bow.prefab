@@ -84,8 +84,8 @@ MonoBehaviour:
   explosiveArrowObj: {fileID: 1726790842903062065, guid: 3abeb7afd86afcb46a67e344e0ffd2e3,
     type: 3}
   emmiter: {fileID: 334919620916436757}
-  chargeMax: 100
-  chargeRate: 80
+  chargeMax: 130
+  chargeRate: 100
   maxArrows: 10
 --- !u!1001 &1019087158555503512
 PrefabInstance:
