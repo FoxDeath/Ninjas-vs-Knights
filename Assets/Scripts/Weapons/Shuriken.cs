@@ -41,6 +41,7 @@ public class Shuriken : MonoBehaviour
         {
             FindObjectOfType<AudioManager>().Play("ShurikenHit", GetComponent<AudioSource>());
             rigidBody.velocity = Vector3.zero;
+            rigidBody.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
             rigidBody.isKinematic = true;
 
             GameObject anchor = new GameObject("Shuriken Anchor");
