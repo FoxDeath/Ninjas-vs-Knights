@@ -85,7 +85,7 @@ MonoBehaviour:
     type: 3}
   emmiter: {fileID: 334919620916436757}
   chargeMax: 130
-  chargeRate: 100
+  chargeRate: 80
   maxArrows: 10
 --- !u!1001 &1019087158555503512
 PrefabInstance:

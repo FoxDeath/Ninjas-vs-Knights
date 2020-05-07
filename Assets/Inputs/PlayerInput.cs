@@ -562,7 +562,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""id"": ""0a2aa2c1-ecb7-4c0a-9785-246cf1f17896"",
                     ""expectedControlType"": """",
                     ""processors"": """",
-                    ""interactions"": ""Press""
+                    ""interactions"": ""Press(pressPoint=0.001)""
                 },
                 {
                     ""name"": ""Fire"",
@@ -570,7 +570,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""id"": ""51d6c75b-66c3-48cb-afbc-0ffe21d26190"",
                     ""expectedControlType"": """",
                     ""processors"": """",
-                    ""interactions"": ""Press""
+                    ""interactions"": ""Press(pressPoint=0.001),Hold(duration=0.001,pressPoint=0.001)""
                 },
                 {
                     ""name"": ""FireCharge"",

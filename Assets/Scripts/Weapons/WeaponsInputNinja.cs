@@ -86,7 +86,21 @@ public class WeaponsInputNinja : MonoBehaviour
         }
         if(playerInput.Weapon.Scope.triggered)
         {
-            shurikenGun.Scope();
+            playerInput.Weapon.Scope.started += ctx =>
+            {
+                if (ctx.interaction is PressInteraction)
+                {
+                    shurikenGun.Scope(true);
+                }
+            };
+
+            playerInput.Weapon.Scope.canceled += ctx =>
+            {
+                if(ctx.interaction is PressInteraction)
+                {
+                    shurikenGun.Scope(false);
+                }
+            };
         }
         if(playerInput.Weapon.Reload.triggered)
         {
@@ -100,23 +114,32 @@ public class WeaponsInputNinja : MonoBehaviour
         
         if(bow.CanShoot())
         {
-            playerInput.Weapon.FireCharge.performed += _ => 
+            playerInput.Weapon.Fire.started += _ => 
             {
                 bow.SetCharging(true);
             };
-            playerInput.Weapon.FireCharge.canceled += _ =>
+
+            playerInput.Weapon.Fire.canceled += _ =>
             {
+                bow.SetCharging(false);
                 bow.Fire();
             };
         }
 
-        playerInput.Weapon.Scope.performed += _ => 
+        playerInput.Weapon.Scope.started += ctx => 
         {
-            bow.SetArrowMenuState(true);
+            if(ctx.interaction is PressInteraction)
+            {
+                bow.SetArrowMenuState(true);
+            }
         };
-        playerInput.Weapon.Scope.canceled += _ =>
+
+        playerInput.Weapon.Scope.canceled += ctx =>
         {
-            bow.SetArrowMenuState(false);
+            if (ctx.interaction is PressInteraction)
+            {
+                bow.SetArrowMenuState(false);
+            }
         };
     }
 

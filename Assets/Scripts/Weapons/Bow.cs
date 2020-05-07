@@ -54,7 +54,6 @@ public class Bow : MonoBehaviour
         currentExplosiveArrows = maxArrows;
         UIManager.GetInstance().SetMaxAmmo(maxArrows);
         UIManager.GetInstance().SetCurrentAmmo(currentRegularArrows);
-
         startingRotation = transform.localRotation;
     }
 
@@ -121,44 +120,59 @@ public class Bow : MonoBehaviour
     {
         if(canShoot)
         {
-            Rigidbody arrow = null;
-
             switch (currentType)
             {
                 case arrowTypes.Regular:
                     currentRegularArrows--;
                     UIManager.GetInstance().SetCurrentAmmo(currentRegularArrows);
-                    arrow = Instantiate(regularArrowObj, emmiter.transform.position, emmiter.transform.rotation).GetComponent<Rigidbody>();
-                    arrow.AddForce(emmiter.transform.forward * charge, ForceMode.Impulse);
+                    InstantiateArow(regularArrowObj);
                     break;
 
                 case arrowTypes.Fire:
                     currentFireArrows--;
                     UIManager.GetInstance().SetCurrentAmmo(currentFireArrows);
-                    arrow = Instantiate(fireArrowObj, emmiter.transform.position, emmiter.transform.rotation).GetComponent<Rigidbody>();
-                    arrow.AddForce(emmiter.transform.forward * charge, ForceMode.Impulse);
+                    InstantiateArow(fireArrowObj);
                     break;
 
                 case arrowTypes.Explosion:
                     currentExplosiveArrows--;
                     UIManager.GetInstance().SetCurrentAmmo(currentExplosiveArrows);
-                    arrow = Instantiate(explosiveArrowObj, emmiter.transform.position, emmiter.transform.rotation).GetComponent<Rigidbody>();
-                    arrow.AddForce(emmiter.transform.forward * charge, ForceMode.Impulse);
+                    InstantiateArow(explosiveArrowObj);
                     break;
 
                 case arrowTypes.Slow:
                     currentSlowArrows--;
                     UIManager.GetInstance().SetCurrentAmmo(currentSlowArrows);
-                    arrow = Instantiate(slowArrowObj, emmiter.transform.position, emmiter.transform.rotation).GetComponent<Rigidbody>();
-                    arrow.AddForce(emmiter.transform.forward * charge, ForceMode.Impulse);
+                    InstantiateArow(slowArrowObj);
                     break;
             }
             charging = false;
             charge = 0f;
             canShoot = false;
+
             yield return new WaitForSeconds(1f);
+
             canShoot = true;
         }
+    }
+
+    private void InstantiateArow(GameObject arrowType)
+    {
+        Ray ray = GameObject.Find("Main Camera").GetComponent<Camera>().ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
+        RaycastHit hit;
+
+        Vector3 targetPoint;
+        if (Physics.Raycast(ray, out hit))
+        {
+            targetPoint = hit.point;
+        }
+        else
+        {
+            targetPoint = ray.GetPoint(1000f);
+        }
+
+        Rigidbody arrow = Instantiate(arrowType, emmiter.transform.position, emmiter.transform.rotation).GetComponent<Rigidbody>();
+        arrow.AddForce((targetPoint - emmiter.transform.position).normalized * charge, ForceMode.Impulse);
     }
 
     public void SetArrowMenuState(bool state)

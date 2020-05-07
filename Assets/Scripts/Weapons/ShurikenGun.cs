@@ -90,11 +90,11 @@ public class ShurikenGun :  MonoBehaviour
         }
     }
 
-    public void Scope()
+    public void Scope(bool state)
     {
-        scoping = !scoping;
-        animator.SetBool("Scoped", scoping);
-        playerMovement.SetScoping(scoping);
+        scoping = state;
+        animator.SetBool("Scoped", state);
+        playerMovement.SetScoping(state);
         playerMovement.Sprint(false);
     }
 
@@ -107,6 +107,7 @@ public class ShurikenGun :  MonoBehaviour
 
         if(currentAmmo < maxAmmo)
         {
+            Scope(false);
             StartCoroutine(ReloadingBehaviour());
         }
     }
@@ -118,7 +119,7 @@ public class ShurikenGun :  MonoBehaviour
         audioManager.Stop("ShurikenShoot");
         if(scoping)
         {
-            Scope();
+            Scope(false);
         }
         gameObject.SetActive(false);
     }

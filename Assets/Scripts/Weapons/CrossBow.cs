@@ -4,6 +4,9 @@ using UnityEngine.InputSystem;
 public class CrossBow : MonoBehaviour
 {
     [SerializeField] GameObject arrowPrefab;
+    private GameObject anchor;
+    private GameObject player;
+
     [SerializeField] LayerMask layerMask;
     private AudioManager audioManager;
     private Animator crossbowAnimator;
@@ -12,7 +15,6 @@ public class CrossBow : MonoBehaviour
     private Camera weaponCam;
     private UIManager uiManager;
     private ParticleSystem muzzleFlash;
-    private GameObject player;
 
     [SerializeField] float damage = 10f;
     [SerializeField] float range = 100f;
@@ -29,6 +31,7 @@ public class CrossBow : MonoBehaviour
     private Quaternion startingRotation;
 
     private bool scoping;
+    private bool ourBoiIsInTheProcessOfScoping;
 
     void Start()
     {
@@ -110,8 +113,7 @@ public class CrossBow : MonoBehaviour
             if(hit.transform && hit.transform != player.transform)
             {
                 GameObject arrow = Instantiate(arrowPrefab, hit.point, fpsCam.transform.rotation);
-                arrow.transform.parent = hit.transform;
-                Destroy(arrow, 2.5f);
+                Destroy(arrow, 10f);
             }
         } 
     }
@@ -131,12 +133,16 @@ public class CrossBow : MonoBehaviour
 
     public void Scope()
     {
-        scoping = !scoping;
-        player.GetComponent<KnightPlayerMovement>().SetScoping(scoping);
-        player.GetComponent<KnightPlayerMovement>().Sprint(false);
-        crossbowAnimator.SetBool("Scoped", scoping);
-        shieldAnimator.SetBool("Scoped", scoping);
-        Invoke("ScopeBehaviour", 0.15f);
+        if (!ourBoiIsInTheProcessOfScoping)
+        {
+            ourBoiIsInTheProcessOfScoping = true;
+            scoping = !scoping;
+            player.GetComponent<KnightPlayerMovement>().SetScoping(scoping);
+            player.GetComponent<KnightPlayerMovement>().Sprint(false);
+            crossbowAnimator.SetBool("Scoped", scoping);
+            shieldAnimator.SetBool("Scoped", scoping);
+            Invoke("ScopeBehaviour", 0.15f);
+        }
     }
 
     public void ScopeZoom()
@@ -180,5 +186,6 @@ public class CrossBow : MonoBehaviour
             fpsCam.fieldOfView = weaponCam.fieldOfView;
             fpsCam.GetComponent<MouseLook>().mouseSensitivity = maxMouseSensitivity;
         }
+        ourBoiIsInTheProcessOfScoping = false;
     }
 }
