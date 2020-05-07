@@ -560,22 +560,6 @@
                     "interactions": "Press(pressPoint=0.001),Hold(duration=0.001,pressPoint=0.001)"
                 },
                 {
-                    "name": "FireCharge",
-                    "type": "Button",
-                    "id": "9c1c94d4-b000-4f33-adb1-a68149a3cf69",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "Hold"
-                },
-                {
-                    "name": "Charge",
-                    "type": "Button",
-                    "id": "6ce10f68-eb44-4e14-a5a1-8b20806a2ce4",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "Hold"
-                },
-                {
                     "name": "Grenade",
                     "type": "Button",
                     "id": "d079cde1-3934-4c5a-88f9-a1ed4c4aae73",
@@ -637,28 +621,6 @@
                     "processors": "",
                     "groups": "",
                     "action": "Stimpack",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "917851e7-84f2-448b-b8c0-cfa6a919d067",
-                    "path": "<Mouse>/rightButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard and Mouse",
-                    "action": "Charge",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "3c94b8a8-d564-42b3-805b-6e283b6c145f",
-                    "path": "<Mouse>/leftButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard and Mouse",
-                    "action": "FireCharge",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

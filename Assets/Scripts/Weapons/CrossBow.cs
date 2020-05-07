@@ -161,10 +161,12 @@ public class CrossBow : MonoBehaviour
     public void SetInactive()
     {            
         audioManager.Stop("Laser");
+
         if(scoping)
         {
             Scope();
         }
+
         transform.localRotation = startingRotation;
         gameObject.SetActive(false);
     }
@@ -186,6 +188,7 @@ public class CrossBow : MonoBehaviour
             fpsCam.fieldOfView = weaponCam.fieldOfView;
             fpsCam.GetComponent<MouseLook>().mouseSensitivity = maxMouseSensitivity;
         }
+
         ourBoiIsInTheProcessOfScoping = false;
     }
 }

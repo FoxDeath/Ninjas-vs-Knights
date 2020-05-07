@@ -573,22 +573,6 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""interactions"": ""Press(pressPoint=0.001),Hold(duration=0.001,pressPoint=0.001)""
                 },
                 {
-                    ""name"": ""FireCharge"",
-                    ""type"": ""Button"",
-                    ""id"": ""9c1c94d4-b000-4f33-adb1-a68149a3cf69"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": ""Hold""
-                },
-                {
-                    ""name"": ""Charge"",
-                    ""type"": ""Button"",
-                    ""id"": ""6ce10f68-eb44-4e14-a5a1-8b20806a2ce4"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": ""Hold""
-                },
-                {
                     ""name"": ""Grenade"",
                     ""type"": ""Button"",
                     ""id"": ""d079cde1-3934-4c5a-88f9-a1ed4c4aae73"",
@@ -650,28 +634,6 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Stimpack"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""917851e7-84f2-448b-b8c0-cfa6a919d067"",
-                    ""path"": ""<Mouse>/rightButton"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard and Mouse"",
-                    ""action"": ""Charge"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""3c94b8a8-d564-42b3-805b-6e283b6c145f"",
-                    ""path"": ""<Mouse>/leftButton"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard and Mouse"",
-                    ""action"": ""FireCharge"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -751,8 +713,6 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         m_Weapon_ScopeZoom = m_Weapon.FindAction("ScopeZoom", throwIfNotFound: true);
         m_Weapon_Scope = m_Weapon.FindAction("Scope", throwIfNotFound: true);
         m_Weapon_Fire = m_Weapon.FindAction("Fire", throwIfNotFound: true);
-        m_Weapon_FireCharge = m_Weapon.FindAction("FireCharge", throwIfNotFound: true);
-        m_Weapon_Charge = m_Weapon.FindAction("Charge", throwIfNotFound: true);
         m_Weapon_Grenade = m_Weapon.FindAction("Grenade", throwIfNotFound: true);
     }
 
@@ -1033,8 +993,6 @@ public class @PlayerInput : IInputActionCollection, IDisposable
     private readonly InputAction m_Weapon_ScopeZoom;
     private readonly InputAction m_Weapon_Scope;
     private readonly InputAction m_Weapon_Fire;
-    private readonly InputAction m_Weapon_FireCharge;
-    private readonly InputAction m_Weapon_Charge;
     private readonly InputAction m_Weapon_Grenade;
     public struct WeaponActions
     {
@@ -1044,8 +1002,6 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         public InputAction @ScopeZoom => m_Wrapper.m_Weapon_ScopeZoom;
         public InputAction @Scope => m_Wrapper.m_Weapon_Scope;
         public InputAction @Fire => m_Wrapper.m_Weapon_Fire;
-        public InputAction @FireCharge => m_Wrapper.m_Weapon_FireCharge;
-        public InputAction @Charge => m_Wrapper.m_Weapon_Charge;
         public InputAction @Grenade => m_Wrapper.m_Weapon_Grenade;
         public InputActionMap Get() { return m_Wrapper.m_Weapon; }
         public void Enable() { Get().Enable(); }
@@ -1068,12 +1024,6 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                 @Fire.started -= m_Wrapper.m_WeaponActionsCallbackInterface.OnFire;
                 @Fire.performed -= m_Wrapper.m_WeaponActionsCallbackInterface.OnFire;
                 @Fire.canceled -= m_Wrapper.m_WeaponActionsCallbackInterface.OnFire;
-                @FireCharge.started -= m_Wrapper.m_WeaponActionsCallbackInterface.OnFireCharge;
-                @FireCharge.performed -= m_Wrapper.m_WeaponActionsCallbackInterface.OnFireCharge;
-                @FireCharge.canceled -= m_Wrapper.m_WeaponActionsCallbackInterface.OnFireCharge;
-                @Charge.started -= m_Wrapper.m_WeaponActionsCallbackInterface.OnCharge;
-                @Charge.performed -= m_Wrapper.m_WeaponActionsCallbackInterface.OnCharge;
-                @Charge.canceled -= m_Wrapper.m_WeaponActionsCallbackInterface.OnCharge;
                 @Grenade.started -= m_Wrapper.m_WeaponActionsCallbackInterface.OnGrenade;
                 @Grenade.performed -= m_Wrapper.m_WeaponActionsCallbackInterface.OnGrenade;
                 @Grenade.canceled -= m_Wrapper.m_WeaponActionsCallbackInterface.OnGrenade;
@@ -1093,12 +1043,6 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                 @Fire.started += instance.OnFire;
                 @Fire.performed += instance.OnFire;
                 @Fire.canceled += instance.OnFire;
-                @FireCharge.started += instance.OnFireCharge;
-                @FireCharge.performed += instance.OnFireCharge;
-                @FireCharge.canceled += instance.OnFireCharge;
-                @Charge.started += instance.OnCharge;
-                @Charge.performed += instance.OnCharge;
-                @Charge.canceled += instance.OnCharge;
                 @Grenade.started += instance.OnGrenade;
                 @Grenade.performed += instance.OnGrenade;
                 @Grenade.canceled += instance.OnGrenade;
@@ -1158,8 +1102,6 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         void OnScopeZoom(InputAction.CallbackContext context);
         void OnScope(InputAction.CallbackContext context);
         void OnFire(InputAction.CallbackContext context);
-        void OnFireCharge(InputAction.CallbackContext context);
-        void OnCharge(InputAction.CallbackContext context);
         void OnGrenade(InputAction.CallbackContext context);
     }
 }
