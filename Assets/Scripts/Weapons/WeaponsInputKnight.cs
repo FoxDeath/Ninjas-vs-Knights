@@ -77,20 +77,23 @@ public class WeaponsInputKnight : MonoBehaviour
     private void CrossbowInput()
     {
         CrossBow crossBow = weaponSwitch.GetCurrentWeaponIndex().GetComponent<CrossBow>();
+
         if(playerInput.Weapon.Fire.triggered)
         {
             crossBow.Fire();
         }
+
         if(playerInput.Weapon.Scope.triggered)
         {
             playerInput.Weapon.Scope.started += ctx =>
             {
-                if (ctx.interaction is PressInteraction)
+                if (ctx.interaction is PressInteraction && (int)currentWeapon == 0)
                 {
                     crossBow.Scope();
                 }
             };
         }
+
         if(playerInput.Weapon.ScopeZoom.triggered)
         {
             crossBow.ScopeZoom();

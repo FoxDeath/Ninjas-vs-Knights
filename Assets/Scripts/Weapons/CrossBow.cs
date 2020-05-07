@@ -16,6 +16,8 @@ public class CrossBow : MonoBehaviour
     private UIManager uiManager;
     private ParticleSystem muzzleFlash;
 
+    private Quaternion startingRotation;
+
     [SerializeField] float damage = 10f;
     [SerializeField] float range = 100f;
     [SerializeField] float fireRate = 1f;
@@ -27,8 +29,6 @@ public class CrossBow : MonoBehaviour
     private float maxMouseSensitivity;
 
     private int currentScopedFOV;
-
-    private Quaternion startingRotation;
 
     private bool scoping;
     private bool ourBoiIsInTheProcessOfScoping;

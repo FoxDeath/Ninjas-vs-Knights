@@ -115,6 +115,7 @@ public class SpearGun : MonoBehaviour
             RaycastHit hit;
 
             Vector3 targetPoint;
+
             if(Physics.Raycast(ray, out hit))
             {
                 targetPoint = hit.point;
@@ -133,9 +134,7 @@ public class SpearGun : MonoBehaviour
             
             GameObject instantiateBullet = Instantiate(chargeBullet, bulletEmiter.transform.position, bulletEmiter.transform.rotation);
             Rigidbody temporaryRigidbody = instantiateBullet.GetComponentInChildren<Rigidbody>();
-
             temporaryRigidbody.velocity = (targetPoint - bulletEmiter.transform.position).normalized * altSpeed;
-
             Destroy(instantiateBullet, 2f);
         }
         else
@@ -144,6 +143,7 @@ public class SpearGun : MonoBehaviour
 
             return;
         }
+
         animator.SetTrigger("Firing");
     }
 
