@@ -2,6 +2,8 @@
 
 public class Shuriken : MonoBehaviour
 {
+    private GameObject anchor;
+
     private Rigidbody rigidBody;
 
     [SerializeField] float damage = 10f;
@@ -9,6 +11,19 @@ public class Shuriken : MonoBehaviour
     void Awake()
     {
         rigidBody = GetComponent<Rigidbody>();
+    }
+
+    void Update()
+    {
+        if (!anchor)
+        {
+            transform.rotation = Quaternion.LookRotation(rigidBody.velocity);
+        }
+        else
+        {
+            transform.position = anchor.transform.position;
+            transform.rotation = anchor.transform.rotation;
+        }
     }
 
     //The shuriken will do damage when it collides with the target.
@@ -22,13 +37,20 @@ public class Shuriken : MonoBehaviour
             target.TakeDamage(damage);
         }
 
-        if(collision.gameObject.layer != LayerMask.NameToLayer("Player"))
+        if (collision.gameObject.layer != LayerMask.NameToLayer("Player"))
         {
             FindObjectOfType<AudioManager>().Play("ShurikenHit", GetComponent<AudioSource>());
+            rigidBody.velocity = Vector3.zero;
             rigidBody.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
             rigidBody.isKinematic = true;
-            gameObject.transform.parent = collision.gameObject.transform;
-            Destroy(gameObject, 2f);
+
+            GameObject anchor = new GameObject("Shuriken Anchor");
+            anchor.transform.position = this.transform.position;
+            anchor.transform.rotation = this.transform.rotation;
+            anchor.transform.parent = collision.transform;
+            this.anchor = anchor;
+
+            Destroy(gameObject, 10f);
         }
     }
 }

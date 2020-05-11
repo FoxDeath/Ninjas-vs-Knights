@@ -8,15 +8,26 @@ using UnityEngine.SceneManagement;
 public class PauseMenu : MonoBehaviour
 {
     public static bool GameIsPaused = false;
-    [SerializeField] GameObject pauseMenuUI;
-    [SerializeField] GameObject gameUI;
-    [SerializeField] GameObject optionsUI;
+    private GameObject pauseMenuUI;
+    private GameObject gameUI;
+    private GameObject optionsUI;
 
     private AudioManager audioManager;
 
     void Awake()
     {
         audioManager = FindObjectOfType<AudioManager>();
+        pauseMenuUI = GameObject.Find("UI").transform.Find("PauseMenu").gameObject;
+        optionsUI = GameObject.Find("UI").transform.Find("OptionsMenu").gameObject;
+
+        if (GameObject.Find("UI").transform.Find("NinjaUI") != null)
+        {
+            gameUI = GameObject.Find("UI").transform.Find("NinjaUI").gameObject;
+        }
+        else
+        {
+            gameUI = GameObject.Find("UI").transform.Find("KnightUI").gameObject;
+        }
     }
 
     public void MenuInput()

@@ -208,8 +208,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a5cf0428905df34aa22c017b7437c94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slider: {fileID: 5791644573542616553}
-  healthBar: {fileID: 1952149915797102835}
+  healthBarUI: {fileID: 0}
+  healthBar: {fileID: 0}
   maxHealth: 50
 --- !u!54 &8604122642981211678
 Rigidbody:
@@ -226,7 +226,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!82 &-5046242398431224958
 AudioSource:
   m_ObjectHideFlags: 0
@@ -458,15 +458,3 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 5061746632681703495}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &5791644573542616553 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1611973877160101294, guid: 45bcb727bc9db224ea21cb9e6a57bfbf,
-    type: 3}
-  m_PrefabInstance: {fileID: 5061746632681703495}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

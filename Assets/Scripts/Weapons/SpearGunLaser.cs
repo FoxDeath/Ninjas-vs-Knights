@@ -25,7 +25,8 @@ public class SpearGunLaser : MonoBehaviour
             rigidBody.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
             rigidBody.isKinematic = true;
             gameObject.transform.parent = collision.gameObject.transform;
-            Destroy(gameObject);
+            rigidBody.velocity = Vector3.zero;
+            Destroy(gameObject, 0.1f);
         }
     }
 }

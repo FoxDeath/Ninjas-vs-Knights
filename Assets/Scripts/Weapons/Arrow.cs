@@ -63,6 +63,7 @@ public class Arrow : MonoBehaviour
         {
             //FindObjectOfType<AudioManager>().Play("ShurikenHit", GetComponent<AudioSource>());
             myRigidbody.velocity = Vector3.zero;
+            myRigidbody.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
             myRigidbody.isKinematic = true;
 
             GameObject anchor = new GameObject("Arrow Anchor");

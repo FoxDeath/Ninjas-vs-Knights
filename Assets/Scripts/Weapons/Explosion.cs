@@ -4,26 +4,25 @@ using UnityEngine;
 
 public class Explosion : MonoBehaviour
 {
-    private Collider collider;
+    private SphereCollider collider;
 
-    [SerializeField] float damage;
+    [SerializeField] float damage = 15;
+    [SerializeField] float explosionForce = 1000;
+    [SerializeField] float upwardsModifier = 150;
 
     void Start()
     {
-        collider = GetComponent<Collider>();
+        collider = GetComponent<SphereCollider>();
         Destroy(gameObject, 0.3f);
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if(collision.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+        if(other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {
-            collision.gameObject.GetComponent<Target>().TakeDamage(damage);
-        }
+            other.gameObject.GetComponent<Target>().TakeDamage(damage);
+            other.GetComponent<Rigidbody>().AddExplosionForce(explosionForce, transform.position, collider.radius, upwardsModifier);
 
-        if(collision.gameObject.layer == LayerMask.NameToLayer("Ground") && collision.gameObject.CompareTag("Player") && collision.gameObject.CompareTag("Wall"))
-        {
-            Physics.IgnoreCollision(collider, collision.collider, true);
         }
     }
 }

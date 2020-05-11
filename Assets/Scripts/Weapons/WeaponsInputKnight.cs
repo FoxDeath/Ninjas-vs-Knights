@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem.Interactions;
 
 public class WeaponsInputKnight : MonoBehaviour
 {
@@ -76,14 +77,23 @@ public class WeaponsInputKnight : MonoBehaviour
     private void CrossbowInput()
     {
         CrossBow crossBow = weaponSwitch.GetCurrentWeaponIndex().GetComponent<CrossBow>();
+
         if(playerInput.Weapon.Fire.triggered)
         {
             crossBow.Fire();
         }
+
         if(playerInput.Weapon.Scope.triggered)
         {
-            crossBow.Scope();
+            playerInput.Weapon.Scope.started += ctx =>
+            {
+                if (ctx.interaction is PressInteraction && (int)currentWeapon == 0)
+                {
+                    crossBow.Scope();
+                }
+            };
         }
+
         if(playerInput.Weapon.ScopeZoom.triggered)
         {
             crossBow.ScopeZoom();
@@ -93,6 +103,7 @@ public class WeaponsInputKnight : MonoBehaviour
     private void SpearGunInput()
     {
         SpearGun spearGun = weaponSwitch.GetCurrentWeaponIndex().GetComponent<SpearGun>();
+
         if(playerInput.Weapon.Fire.triggered)
         {
             spearGun.Fire();
@@ -101,7 +112,7 @@ public class WeaponsInputKnight : MonoBehaviour
         {
             spearGun.Reload();
         }
-        if(playerInput.Weapon.Charge.triggered)
+        if(playerInput.Weapon.Scope.triggered)
         {
             spearGun.Charge();
         }
