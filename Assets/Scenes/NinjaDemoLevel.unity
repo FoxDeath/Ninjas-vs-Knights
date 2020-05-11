@@ -4413,31 +4413,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: NinjaPlayer
       objectReference: {fileID: 0}
-    - target: {fileID: 2056603105903442927, guid: 24c8b9a3d3d787a4c9e172c43a8d6063,
-        type: 3}
-      propertyPath: m_OcclusionCulling
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2056603105903442927, guid: 24c8b9a3d3d787a4c9e172c43a8d6063,
-        type: 3}
-      propertyPath: m_RenderingPath
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2537338150754857947, guid: 24c8b9a3d3d787a4c9e172c43a8d6063,
-        type: 3}
-      propertyPath: stopNaNPropagation
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2537338150754857947, guid: 24c8b9a3d3d787a4c9e172c43a8d6063,
-        type: 3}
-      propertyPath: antialiasingMode
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2537338150754857947, guid: 24c8b9a3d3d787a4c9e172c43a8d6063,
-        type: 3}
-      propertyPath: finalBlitToCameraTarget
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 24c8b9a3d3d787a4c9e172c43a8d6063, type: 3}
 --- !u!1001 &1898823411
