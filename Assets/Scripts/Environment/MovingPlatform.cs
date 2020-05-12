@@ -68,7 +68,14 @@ public class MovingPlatform : MonoBehaviour
                 }
             }
 
-            transform.position = Vector3.MoveTowards(transform.position, target.position, Time.fixedDeltaTime * speed);
+            if (Mathf.Abs(Vector3.Distance(transform.position, target.position)) > 8f)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, target.position, Time.fixedDeltaTime * speed);
+            }
+            else
+            {
+                transform.position = Vector3.MoveTowards(transform.position, target.position, Time.fixedDeltaTime * 8f);
+            }
         }
     }
 
@@ -132,6 +139,10 @@ public class MovingPlatform : MonoBehaviour
         {
             other.gameObject.transform.parent.SetParent(transform.parent);
         }
+        else if(other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+        {
+            other.gameObject.transform.parent.SetParent(transform.parent);
+        }
     }
 
     void OnTriggerStay(Collider other)
@@ -149,6 +160,10 @@ public class MovingPlatform : MonoBehaviour
                 playerCC.Move(objVelocity * Time.deltaTime);
             }
         }
+        else if(other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+        {
+            other.transform.Translate(objVelocity * Time.deltaTime);
+        }
     }
 
     void OnTriggerExit(Collider other)
@@ -156,6 +171,10 @@ public class MovingPlatform : MonoBehaviour
         if(other.gameObject.layer == LayerMask.NameToLayer("Player") && other.GetType() == typeof(MeshCollider))
         {
             other.gameObject.transform.parent.SetParent(null);
+        }
+        else if(other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+        {
+            other.gameObject.transform.parent.SetParent(transform.parent);
         }
     }
 }
