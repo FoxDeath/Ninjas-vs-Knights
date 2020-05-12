@@ -49,11 +49,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9c175b78af639d48b74e31bd8a7081b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  points:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  speed: 4
+  points: []
+  speed: 5
   currentType: 0
 --- !u!33 &5819253249560873921
 MeshFilter:
@@ -126,7 +123,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 1.15, y: 1, z: 1.15}
   m_Center: {x: 0, y: 0.4, z: 0}
 --- !u!54 &5819253249560873924
 Rigidbody:

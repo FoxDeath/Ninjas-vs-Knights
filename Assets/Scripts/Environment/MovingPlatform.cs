@@ -6,7 +6,8 @@ public class MovingPlatform : MonoBehaviour
 {
     [SerializeField] Transform[] points;
     private Transform target;
-    private CharacterController player;
+    private CharacterController playerCC;
+    private PlayerMovement playerPM;
     private Rigidbody myRigidbody;
 
     private Vector3 prevPos;
@@ -137,12 +138,16 @@ public class MovingPlatform : MonoBehaviour
     {
         if(other.gameObject.layer == LayerMask.NameToLayer("Player") && other.GetType() == typeof(MeshCollider))
         {
-            if(player != other.transform.parent.GetComponent<CharacterController>())
+            if(playerCC != other.transform.parent.GetComponent<CharacterController>())
             {
-                player = other.transform.parent.GetComponent<CharacterController>();
+                playerCC = other.transform.parent.GetComponent<CharacterController>();
+                playerPM = other.transform.parent.GetComponent<PlayerMovement>();
             }
 
-            player.Move(objVelocity * Time.deltaTime);
+            if(playerPM.GetGrounded() || playerPM.GetEdgeClimbing() || playerPM.GetEdgeHanging())
+            {
+                playerCC.Move(objVelocity * Time.deltaTime);
+            }
         }
     }
 
