@@ -170,7 +170,7 @@ Camera:
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 567
-  m_RenderingPath: -1
+  m_RenderingPath: 3
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
   m_TargetEye: 3
@@ -668,14 +668,6 @@ MonoBehaviour:
     m_ActionName: Ninja/Kunai[/Keyboard/e]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: 9c1c94d4-b000-4f33-adb1-a68149a3cf69
-    m_ActionName: Weapon/FireCharge[/Mouse/leftButton]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 6ce10f68-eb44-4e14-a5a1-8b20806a2ce4
-    m_ActionName: Weapon/Charge[/Mouse/rightButton]
-  - m_PersistentCalls:
-      m_Calls: []
     m_ActionId: d079cde1-3934-4c5a-88f9-a1ed4c4aae73
     m_ActionName: Weapon/Grenade[/Keyboard/g]
   m_NeverAutoSwitchControlSchemes: 0
@@ -974,7 +966,7 @@ Camera:
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 5687
-  m_RenderingPath: -1
+  m_RenderingPath: 3
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
   m_TargetEye: 3
@@ -1025,7 +1017,7 @@ MonoBehaviour:
     m_Bits: 2
   stopNaNPropagation: 1
   finalBlitToCameraTarget: 0
-  antialiasingMode: 0
+  antialiasingMode: 2
   temporalAntialiasing:
     jitterSpread: 0.75
     sharpness: 0.25
