@@ -20,7 +20,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] protected float fallDecrease = 2f;
     protected float fallVelocity = 0f;
     protected float gravity = -9.8f;
-    protected float groungDistance = 0.4f;
+    protected float groungDistance = 0.1f;
     protected float defaultSpeed;
     protected float horizontal;
     protected float vertical;
