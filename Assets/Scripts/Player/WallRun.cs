@@ -7,7 +7,6 @@ public class WallRun : MonoBehaviour
     private NinjaPlayerMovement playerMovement;
     private MouseLook mouseLook;
 
-
     private RaycastHit frontCast;
     private RaycastHit frontLeftCast;
     private RaycastHit frontRightCast;

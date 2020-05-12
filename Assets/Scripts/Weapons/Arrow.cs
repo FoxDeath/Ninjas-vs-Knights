@@ -24,7 +24,10 @@ public class Arrow : MonoBehaviour
     {
         if(!anchor)
         {
-            transform.rotation = Quaternion.LookRotation(myRigidbody.velocity);
+            if(myRigidbody.velocity != Vector3.zero)
+            {
+                transform.rotation = Quaternion.LookRotation(myRigidbody.velocity);
+            }
         }
         else
         {

@@ -4,7 +4,6 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using UnityEngine.InputSystem;
-using System.Collections;
 
 public class UIManager : MonoBehaviour
 {
@@ -49,9 +48,16 @@ public class UIManager : MonoBehaviour
 
     private void Awake()
     {
-        instance = this;
+        if(instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
     }
-
 
     void Update()
     {
@@ -92,7 +98,7 @@ public class UIManager : MonoBehaviour
                 radialOptions[i] = arrowSelect.transform.GetChild(i).GetComponent<Image>();
             }
         }
-        else
+        else if(ui.transform.Find("KnightUI") != null)
         {
             //if current player is a knight, it gets the knight assets
             fills = new List<Image>();
@@ -113,15 +119,18 @@ public class UIManager : MonoBehaviour
         }
 
         //gets and sets the number of current and max ammo
-        foreach(TextMeshProUGUI text in texts)
+        if (texts != null)
         {
-            if(text.name.Equals("CurrentAmmo"))
+            foreach (TextMeshProUGUI text in texts)
             {
-                currentAmmo = text;
-            }
-            else if(text.name.Equals("MaxAmmo"))
-            {
-                maxAmmo = text;
+                if (text.name.Equals("CurrentAmmo"))
+                {
+                    currentAmmo = text;
+                }
+                else if (text.name.Equals("MaxAmmo"))
+                {
+                    maxAmmo = text;
+                }
             }
         }
     }

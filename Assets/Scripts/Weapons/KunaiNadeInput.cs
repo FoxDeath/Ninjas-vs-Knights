@@ -5,11 +5,13 @@ using UnityEngine.InputSystem;
 public class KunaiNadeInput : MonoBehaviour
 {
     [SerializeField] GameObject kunaiPrefab;
-    [SerializeField] float throwForce = 50f;
-    [SerializeField] int maxKunai = 4;
-
-    private int currentKunai;
     private GameObject bulletEmitter;
+
+    [SerializeField] float throwForce = 50f;
+
+    [SerializeField] int maxKunai = 4;
+    private int currentKunai;
+
     private bool threw;
 
     void Start()

@@ -1,21 +1,26 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 
 //TO DO: Add to Menu Manager
 public class PauseMenu : MonoBehaviour
 {
-    public static bool GameIsPaused = false;
     private GameObject pauseMenuUI;
     private GameObject gameUI;
     private GameObject optionsUI;
 
+    [SerializeField] InputActionAsset controls;
+    private PlayerInput playerInput;
     private AudioManager audioManager;
+    
+    public static bool GameIsPaused = false;
 
     void Awake()
     {
+        playerInput = new PlayerInput();
         audioManager = FindObjectOfType<AudioManager>();
         pauseMenuUI = GameObject.Find("UI").transform.Find("PauseMenu").gameObject;
         optionsUI = GameObject.Find("UI").transform.Find("OptionsMenu").gameObject;
@@ -27,6 +32,18 @@ public class PauseMenu : MonoBehaviour
         else
         {
             gameUI = GameObject.Find("UI").transform.Find("KnightUI").gameObject;
+        }
+    }
+
+    void Update()
+    {
+        if (GameIsPaused && controls.enabled)
+        {
+            controls.Disable();
+        }
+        else if(!GameIsPaused && !controls.enabled)
+        {
+            controls.Enable();
         }
     }
 

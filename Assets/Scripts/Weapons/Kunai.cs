@@ -3,18 +3,19 @@ using UnityEngine;
 
 public class Kunai : MonoBehaviour
 {
-    [SerializeField] float radius = 20f;
-    [SerializeField] float delay = 3f;
-    [SerializeField] float damage = 7f;
-
     public GameObject flashEffect;
     private GameObject anchor;
+
+    public EnemyAttack enemyFlash;
     private Rigidbody rigidBody;
     private Animator anim;
 
+    [SerializeField] float radius = 20f;
+    [SerializeField] float delay = 3f;
+    [SerializeField] float damage = 7f;
     private float countdown;
+
     private bool exploaded = false;
-    public EnemyAttack enemyFlash;
 
     void Start()
     {
@@ -35,7 +36,10 @@ public class Kunai : MonoBehaviour
 
         if (!anchor)
         {
-            transform.rotation = Quaternion.LookRotation(rigidBody.velocity);
+            if(rigidBody.velocity != Vector3.zero)
+            {
+                transform.rotation = Quaternion.LookRotation(rigidBody.velocity);
+            }
         }
         else
         {

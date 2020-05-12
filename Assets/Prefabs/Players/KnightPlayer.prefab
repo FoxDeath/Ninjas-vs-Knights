@@ -543,19 +543,85 @@ MonoBehaviour:
     m_ActionId: bb120c0b-518c-4c39-93da-54769bc7e018
     m_ActionName: Knight/Stimpack[/Keyboard/v]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1269108695}
+        m_MethodName: SpearGunReloadInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: d0177fad-de37-4d4c-ae08-b6e1b0f69e12
     m_ActionName: Weapon/Reload[/Keyboard/r,/Keyboard/r]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1269108695}
+        m_MethodName: CrossbowScopeZoomInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 9aab2f80-be9d-4b02-955a-6f6400162694
     m_ActionName: Weapon/ScopeZoom[/Keyboard/q]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1269108695}
+        m_MethodName: SpearGunChargeInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1269108695}
+        m_MethodName: CrossbowScopeInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 0a2aa2c1-ecb7-4c0a-9785-246cf1f17896
     m_ActionName: Weapon/Scope[/Mouse/rightButton]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1269108695}
+        m_MethodName: CrossbowFireInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1269108695}
+        m_MethodName: SpearGunFireInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 51d6c75b-66c3-48cb-afbc-0ffe21d26190
     m_ActionName: Weapon/Fire[/Mouse/leftButton]
   - m_PersistentCalls:
@@ -1022,6 +1088,37 @@ MonoBehaviour:
   waveform: 0
   vectorscope: 0
   debugOverlay: 0
+--- !u!95 &520035142
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6278420607588560626}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 5c4c5011a6427bf49bc4d2885a7923b8, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &520035143
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6278420607588560626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f2f31acf391fde4e8f8d76e5c291bd1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7942622401249026651
 GameObject:
   m_ObjectHideFlags: 0
@@ -1885,15 +1982,15 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 6598780412832233320, guid: 76869c458a6c999489100e18cc36e3ca, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 76869c458a6c999489100e18cc36e3ca, type: 3}
---- !u!1 &4234017721249111840 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8678044670209680599, guid: 76869c458a6c999489100e18cc36e3ca,
-    type: 3}
-  m_PrefabInstance: {fileID: 4804455736330615799}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4234017721249111838 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8678044670209680617, guid: 76869c458a6c999489100e18cc36e3ca,
+    type: 3}
+  m_PrefabInstance: {fileID: 4804455736330615799}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &4234017721249111840 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8678044670209680599, guid: 76869c458a6c999489100e18cc36e3ca,
     type: 3}
   m_PrefabInstance: {fileID: 4804455736330615799}
   m_PrefabAsset: {fileID: 0}

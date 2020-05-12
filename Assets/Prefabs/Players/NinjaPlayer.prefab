@@ -631,7 +631,18 @@ MonoBehaviour:
     m_ActionId: bb120c0b-518c-4c39-93da-54769bc7e018
     m_ActionName: Knight/Stimpack[/Keyboard/v]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5954251335044053656}
+        m_MethodName: ShurikenGunReloadInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: d0177fad-de37-4d4c-ae08-b6e1b0f69e12
     m_ActionName: Weapon/Reload[/Keyboard/r]
   - m_PersistentCalls:
@@ -639,11 +650,55 @@ MonoBehaviour:
     m_ActionId: 9aab2f80-be9d-4b02-955a-6f6400162694
     m_ActionName: Weapon/ScopeZoom[/Keyboard/q]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5954251335044053656}
+        m_MethodName: ShurikenGunScopeInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 5954251335044053656}
+        m_MethodName: BowMenuInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 0a2aa2c1-ecb7-4c0a-9785-246cf1f17896
     m_ActionName: Weapon/Scope[/Mouse/rightButton]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5954251335044053656}
+        m_MethodName: ShurikenGunFireInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 5954251335044053656}
+        m_MethodName: BowFireInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 51d6c75b-66c3-48cb-afbc-0ffe21d26190
     m_ActionName: Weapon/Fire[/Mouse/leftButton]
   - m_PersistentCalls:
@@ -663,11 +718,18 @@ MonoBehaviour:
     m_ActionId: 81145bce-9fd2-4242-b677-dde3d491f35f
     m_ActionName: Ninja/LookPosition[/Mouse/position]
   - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: e12a980b-a075-4bb0-abbc-c1705ece4a02
-    m_ActionName: Ninja/Kunai[/Keyboard/e]
-  - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5954251335044053656}
+        m_MethodName: GrenadeInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: d079cde1-3934-4c5a-88f9-a1ed4c4aae73
     m_ActionName: Weapon/Grenade[/Keyboard/g]
   m_NeverAutoSwitchControlSchemes: 0
@@ -850,6 +912,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d41271a37982e4441935e8114b25059a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inputActions: {fileID: -944628639613478452, guid: 8b0f9ee1f001840fd9b63063de21d7f6,
+    type: 3}
 --- !u!114 &1784049705
 MonoBehaviour:
   m_ObjectHideFlags: 0

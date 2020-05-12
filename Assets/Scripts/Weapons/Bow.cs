@@ -5,13 +5,13 @@ using UnityEngine.InputSystem.Interactions;
 
 public class Bow : MonoBehaviour
 {
-    private UIManager uiManager;
-
     [SerializeField] GameObject regularArrowObj;
     [SerializeField] GameObject fireArrowObj;
     [SerializeField] GameObject slowArrowObj;
     [SerializeField] GameObject explosiveArrowObj;
     [SerializeField] GameObject emmiter;
+
+    private Quaternion startingRotation;
 
     public enum arrowTypes
     {
@@ -32,8 +32,6 @@ public class Bow : MonoBehaviour
     private int currentFireArrows;
     private int currentSlowArrows;
     private int currentExplosiveArrows;
-
-    private Quaternion startingRotation;
 
     private bool charging;
     private bool canShoot = true;

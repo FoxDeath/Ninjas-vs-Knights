@@ -84,14 +84,6 @@
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": ""
-                },
-                {
-                    "name": "Kunai",
-                    "type": "Button",
-                    "id": "e12a980b-a075-4bb0-abbc-c1705ece4a02",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "Press"
                 }
             ],
             "bindings": [
@@ -246,17 +238,6 @@
                     "processors": "",
                     "groups": "",
                     "action": "Stimpack",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "96c7538a-bbbc-4286-b80c-6fda0f83b888",
-                    "path": "<Keyboard>/f",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard and Mouse",
-                    "action": "Kunai",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -483,7 +464,7 @@
                     "path": "<Keyboard>/leftCtrl",
                     "interactions": "Hold(duration=0.01)",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Keyboard and Mouse",
                     "action": "Crouch",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -505,7 +486,7 @@
                     "path": "<Keyboard>/e",
                     "interactions": "Press",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Keyboard and Mouse",
                     "action": "AOEAttack",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -630,7 +611,7 @@
                     "path": "<Keyboard>/g",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Keyboard and Mouse",
                     "action": "Grenade",
                     "isComposite": false,
                     "isPartOfComposite": false

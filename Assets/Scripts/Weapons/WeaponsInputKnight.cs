@@ -1,125 +1,138 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Interactions;
 
 public class WeaponsInputKnight : MonoBehaviour
 {
+    [SerializeField] InputActionAsset inputActions;
     private WeaponSwitch.KnightWeapon currentWeapon;
     private WeaponSwitch weaponSwitch;
-    private PlayerInput playerInput;
-    // Start is called before the first frame update
+    private CrossBow crossBow;
+    private SpearGun spearGun;
+    private Slingshot slingshot;
+
+    private bool openInput = true;
+
     void Start()
     {
         weaponSwitch = GetComponent<WeaponSwitch>();
         currentWeapon = weaponSwitch.GetCurrentKnightWeapon();
-        playerInput = new PlayerInput();
-        playerInput.Enable();
+        crossBow = transform.Find("Main Camera").Find("Crossbow").GetComponent<CrossBow>();
+        spearGun = transform.Find("Main Camera").Find("SpearGun").GetComponent<SpearGun>();
+        slingshot = GetComponent<Slingshot>();
+        SaveManager.GetInstance().LoadConfig();
     }
 
-    // Update is called once per frame
+    void OnEnable()
+    {
+        inputActions.Enable();
+    }
+
+    void OnDisable()
+    {
+        inputActions.Disable();
+    }
+
     void Update()
     {
         SetCurrentWeapon();
 
         CanShoot();
-
-        WeaponsInput();
-
-        GrenadeInput();
     }
 
     private void SetCurrentWeapon()
     {
-        if (currentWeapon != weaponSwitch.GetCurrentKnightWeapon())
+        if(currentWeapon != weaponSwitch.GetCurrentKnightWeapon())
         {
             currentWeapon = weaponSwitch.GetCurrentKnightWeapon();
         }
     }
 
-    private void WeaponsInput()
-    {
-        switch ((int)currentWeapon)
-        {
-            case 0:
-                CrossbowInput();
-                break;
-
-            case 1:
-                SpearGunInput();
-                break;
-
-            default:
-                return;
-        }
-    }
-
-    private void GrenadeInput()
-    {
-        if (playerInput.Weapon.Grenade.triggered)
-        {
-            FindObjectOfType<Slingshot>().Grenade();
-        }
-    }
-
     private void CanShoot()
     {
-        if (!GetComponent<WeaponSwitch>().canSwitch)
+        if(!GetComponent<WeaponSwitch>().canSwitch)
         {
-            playerInput.Disable();
+            openInput = false;
         }
         else
         {
-            playerInput.Enable();
+            openInput = true;
         }
     }
 
-    private void CrossbowInput()
+    public void GrenadeInput(InputAction.CallbackContext context)
     {
-        CrossBow crossBow = weaponSwitch.GetCurrentWeaponIndex().GetComponent<CrossBow>();
-
-        if(playerInput.Weapon.Fire.triggered)
+        if (context.action.phase == InputActionPhase.Performed)
         {
-            crossBow.Fire();
+            slingshot.Grenade();
         }
+    }
 
-        if(playerInput.Weapon.Scope.triggered)
+    public void CrossbowFireInput(InputAction.CallbackContext context)
+    {
+        if((int)currentWeapon == 0 && openInput)
         {
-            playerInput.Weapon.Scope.started += ctx =>
+            if(context.action.phase == InputActionPhase.Performed)
             {
-                if (ctx.interaction is PressInteraction && (int)currentWeapon == 0)
-                {
-                    crossBow.Scope();
-                }
-            };
-        }
-
-        if(playerInput.Weapon.ScopeZoom.triggered)
-        {
-            crossBow.ScopeZoom();
+                crossBow.Fire();
+            }
         }
     }
 
-    private void SpearGunInput()
+    public void CrossbowScopeInput(InputAction.CallbackContext context)
     {
-        SpearGun spearGun = weaponSwitch.GetCurrentWeaponIndex().GetComponent<SpearGun>();
-
-        if(playerInput.Weapon.Fire.triggered)
+        if ((int)currentWeapon == 0 && openInput)
         {
-            spearGun.Fire();
-        }
-        if(playerInput.Weapon.Reload.triggered)
-        {
-            spearGun.Reload();
-        }
-        if(playerInput.Weapon.Scope.triggered)
-        {
-            spearGun.Charge();
+            if (context.interaction is PressInteraction && context.action.phase == InputActionPhase.Performed)
+            {
+                crossBow.Scope();
+            }
         }
     }
 
-    private void OnDisable() 
+    public void CrossbowScopeZoomInput(InputAction.CallbackContext context)
     {
-        playerInput.Disable();
+        if ((int)currentWeapon == 0 && openInput)
+        {
+            if (context.action.phase == InputActionPhase.Performed)
+            {
+                crossBow.ScopeZoom();
+            }
+        }
+    }
+
+    public void SpearGunFireInput(InputAction.CallbackContext context)
+    {
+        if ((int)currentWeapon == 1 && openInput)
+        {
+            if (context.action.phase == InputActionPhase.Performed)
+            {
+                spearGun.Fire();
+            }
+        }
+    }
+
+    public void SpearGunReloadInput(InputAction.CallbackContext context)
+    {
+        if ((int)currentWeapon == 1 && openInput)
+        {
+            if (context.action.phase == InputActionPhase.Performed)
+            {
+                spearGun.Reload();
+            }
+        }
+    }
+
+    public void SpearGunChargeInput(InputAction.CallbackContext context)
+    {
+        if ((int)currentWeapon == 1 && openInput)
+        {
+            if (context.action.phase == InputActionPhase.Performed)
+            {
+                spearGun.Charge();
+            }
+        }
     }
 }

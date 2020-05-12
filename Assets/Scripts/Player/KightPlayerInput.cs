@@ -22,7 +22,6 @@ public class KightPlayerInput : MonoBehaviour
 
     public void JumpInput(InputAction.CallbackContext context)
     {
-        
         if (context.action.phase == InputActionPhase.Started)
         {
             if (playerMovement.GetEdgeHanging())
