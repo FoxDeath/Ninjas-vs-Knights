@@ -21,7 +21,9 @@ public class SpearGun : MonoBehaviour
     private float altSpeed;
 
     [SerializeField] int maxAmmo = 10;
+    [SerializeField] int maxMag;
     private int currentAmmo;
+    private int currentMag;
 
     private Quaternion startingRotation;
 
@@ -34,11 +36,12 @@ public class SpearGun : MonoBehaviour
         animator = GetComponent<Animator>();
         muzzleFlash = GetComponentInChildren<ParticleSystem>();
         bulletEmiter = GameObject.Find("SpearGunEmitter");
+        maxMag = maxAmmo * 4;
         currentAmmo = maxAmmo;
-        uiManager.SetMaxAmmo(maxAmmo);
+        currentMag = maxMag;
+        uiManager.SetMaxAmmo(currentMag);
         uiManager.SetCurrentAmmo(currentAmmo);
         altSpeed = speed / 2;
-
         startingRotation = transform.localRotation;
     }
 
@@ -55,6 +58,26 @@ public class SpearGun : MonoBehaviour
         {
             animator.SetBool("Moving", false);
         }
+
+        if(currentAmmo > maxAmmo)
+        {
+            currentAmmo = maxAmmo;
+        }
+
+        if(currentMag > maxMag)
+        {
+            currentMag = maxMag;
+        }
+
+        if(currentAmmo < 0)
+        {
+            currentAmmo = 0;
+        }
+        
+        if(currentMag < 0)
+        {
+            currentMag = 0;
+        }
     }
 
     //Reloads the gun.
@@ -65,7 +88,7 @@ public class SpearGun : MonoBehaviour
             return;
         }
 
-        if(currentAmmo < maxAmmo)
+        if((currentAmmo < maxAmmo) && (currentMag > 0))
         {
             StartCoroutine(ReloadingBehaviour());
         }
@@ -74,7 +97,7 @@ public class SpearGun : MonoBehaviour
     //Makes the Gun fire a temporary bullet and destroyes that temporary bullet after a few seconds.
     public void Fire()
     {
-        if(Time.time >= nextTimeToFire && !reloading)
+        if(Time.time >= nextTimeToFire && !reloading && currentAmmo > 0)
         {
             if(currentAmmo > 0)
             {
@@ -177,7 +200,18 @@ public class SpearGun : MonoBehaviour
 
         yield return new WaitForSeconds(.25f);
 
-        currentAmmo = maxAmmo;
+        if(currentMag >= maxAmmo - currentAmmo)
+        {
+            currentMag -= maxAmmo - currentAmmo;
+            currentAmmo = maxAmmo;
+        }
+
+        if(currentMag < maxAmmo - currentAmmo)
+        {
+            currentAmmo += currentMag;
+            currentMag = 0;
+        }
+
         reloading = false;
     }
 }
