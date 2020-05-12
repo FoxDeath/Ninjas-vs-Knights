@@ -30,37 +30,6 @@ Transform:
   m_Father: {fileID: 1322891199989674578}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 90.00001}
---- !u!95 &520035142
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6278420607588560626}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 5c4c5011a6427bf49bc4d2885a7923b8, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &520035143
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6278420607588560626}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f2f31acf391fde4e8f8d76e5c291bd1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2098008023
 GameObject:
   m_ObjectHideFlags: 0
@@ -630,10 +599,6 @@ MonoBehaviour:
     m_ActionName: Ninja/LookPosition[/Mouse/position]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: e12a980b-a075-4bb0-abbc-c1705ece4a02
-    m_ActionName: Ninja/Kunai[/Keyboard/f]
-  - m_PersistentCalls:
-      m_Calls: []
     m_ActionId: d079cde1-3934-4c5a-88f9-a1ed4c4aae73
     m_ActionName: Weapon/Grenade[/Keyboard/g]
   m_NeverAutoSwitchControlSchemes: 0
@@ -886,6 +851,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f2ef31e2dda2f146a1f956d84938c09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inputActions: {fileID: -944628639613478452, guid: 8b0f9ee1f001840fd9b63063de21d7f6,
+    type: 3}
 --- !u!114 &1269108692
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1825,15 +1792,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 37b9c0c3d750039439b00b4ddcc4c3cc, type: 3}
---- !u!1 &652350132491010107 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1769943039031548885, guid: 37b9c0c3d750039439b00b4ddcc4c3cc,
-    type: 3}
-  m_PrefabInstance: {fileID: 1269317095060462574}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &9100730877389893048 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8057449562512045654, guid: 37b9c0c3d750039439b00b4ddcc4c3cc,
+    type: 3}
+  m_PrefabInstance: {fileID: 1269317095060462574}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &652350132491010107 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1769943039031548885, guid: 37b9c0c3d750039439b00b4ddcc4c3cc,
     type: 3}
   m_PrefabInstance: {fileID: 1269317095060462574}
   m_PrefabAsset: {fileID: 0}
