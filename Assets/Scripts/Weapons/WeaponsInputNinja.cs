@@ -1,150 +1,146 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Interactions;
 
 public class WeaponsInputNinja : MonoBehaviour
 {
+    [SerializeField] InputActionAsset inputActions;
     private WeaponSwitch.NinjaWeapon currentWeapon;
     private WeaponSwitch weaponSwitch;
-    private PlayerInput playerInput;
-    // Start is called before the first frame update
+    private Bow bow;
+    private ShurikenGun shurikenGun;
+    private KunaiNadeInput kunai;
+
+    private bool openInput = true;
+
     void Start()
     {
         weaponSwitch = GetComponent<WeaponSwitch>();
         currentWeapon = weaponSwitch.GetCurrentNinjaWeapon();
-        playerInput = new PlayerInput();
-        playerInput.Enable();
+        bow = transform.Find("Main Camera").Find("Bow").GetComponent<Bow>();
+        shurikenGun = transform.Find("Main Camera").Find("ShurikenGun").GetComponent<ShurikenGun>();
+        kunai = GetComponent<KunaiNadeInput>();
+        SaveManager.GetInstance().LoadConfig();
     }
 
-    // Update is called once per frame
+    void OnEnable()
+    {
+        inputActions.Enable();
+    }
+
+    void OnDisable()
+    {
+        inputActions.Disable();
+    }
+
     void Update()
     {
         SetCurrentWeapon();
 
         CanShoot();
-
-        WeaponsInput();
-
-        GrenadeInput();
     }
 
     private void SetCurrentWeapon()
     {
-        if (currentWeapon != weaponSwitch.GetCurrentNinjaWeapon())
+        if(currentWeapon != weaponSwitch.GetCurrentNinjaWeapon())
         {
-            playerInput.Dispose();
-            playerInput = new PlayerInput();
-            playerInput.Enable();
             currentWeapon = weaponSwitch.GetCurrentNinjaWeapon();
         }
     }
 
     private void CanShoot()
     {
-        if (!GetComponent<WeaponSwitch>().canSwitch)
+        if(!GetComponent<WeaponSwitch>().canSwitch)
         {
-            playerInput.Disable();
+            openInput = false;
         }
         else
         {
-            playerInput.Enable();
+            openInput = true;
         }
     }
 
-    private void WeaponsInput()
+    public void GrenadeInput(InputAction.CallbackContext context)
     {
-        switch ((int)currentWeapon)
+        if(context.action.phase == InputActionPhase.Performed)
         {
-            case 0:
-                ShurikenGunInput();
-                break;
-
-            case 1:
-                BowInput();
-                break;
-
-            default:
-                return;
+            kunai.ThrowKunai();
         }
     }
 
-    private void GrenadeInput()
+    public void ShurikenGunFireInput(InputAction.CallbackContext context)
     {
-        if (playerInput.Weapon.Grenade.triggered)
+        if((int)currentWeapon == 0 && openInput)
         {
-            FindObjectOfType<KunaiNadeInput>().ThrowKunai();
-        }
-    }
-
-    private void ShurikenGunInput()
-    {
-        ShurikenGun shurikenGun = weaponSwitch.GetCurrentWeaponIndex().GetComponent<ShurikenGun>();
-        if(playerInput.Weapon.Fire.triggered)
-        {
-            shurikenGun.Fire();
-        }
-        if(playerInput.Weapon.Scope.triggered)
-        {
-            playerInput.Weapon.Scope.started += ctx =>
+            if (context.action.phase == InputActionPhase.Performed)
             {
-                if (ctx.interaction is PressInteraction)
+                shurikenGun.Fire();
+            }
+        }
+    }
+
+    public void ShurikenGunScopeInput(InputAction.CallbackContext context)
+    {
+        if ((int)currentWeapon == 0 && openInput)
+        {
+            if (context.interaction is PressInteraction && context.action.phase == InputActionPhase.Started)
+            {
+                shurikenGun.Scope(true);
+            }
+
+            if (context.interaction is PressInteraction && context.action.phase == InputActionPhase.Canceled)
+            {
+                shurikenGun.Scope(false);
+            }
+        }
+    }
+
+    public void ShurikenGunReloadInput(InputAction.CallbackContext context)
+    {
+        if ((int)currentWeapon == 0 && openInput)
+        {
+            if (context.action.phase == InputActionPhase.Performed)
+            {
+                shurikenGun.Reload();
+            }
+        }
+    }
+
+    public void BowFireInput(InputAction.CallbackContext context)
+    {
+        if((int)currentWeapon == 1 && openInput)
+        {
+            if (bow.CanShoot())
+            {
+                if (context.action.phase == InputActionPhase.Started)
                 {
-                    shurikenGun.Scope(true);
+                    bow.SetCharging(true);
                 }
-            };
 
-            playerInput.Weapon.Scope.canceled += ctx =>
-            {
-                if(ctx.interaction is PressInteraction)
+                if (context.action.phase == InputActionPhase.Canceled)
                 {
-                    shurikenGun.Scope(false);
-                }
-            };
-        }
-        if(playerInput.Weapon.Reload.triggered)
-        {
-            shurikenGun.Reload();
+                    bow.SetCharging(false);
+                    bow.Fire();
+                };
+            }
         }
     }
 
-    private void BowInput()
+    public void BowMenuInput(InputAction.CallbackContext context)
     {
-        Bow bow = weaponSwitch.GetCurrentWeaponIndex().GetComponent<Bow>();
-        
-        if(bow.CanShoot())
+        if ((int)currentWeapon == 1 && openInput)
         {
-            playerInput.Weapon.Fire.started += _ => 
-            {
-                bow.SetCharging(true);
-            };
-
-            playerInput.Weapon.Fire.canceled += _ =>
-            {
-                bow.SetCharging(false);
-                bow.Fire();
-            };
-        }
-
-        playerInput.Weapon.Scope.started += ctx => 
-        {
-            if(ctx.interaction is PressInteraction)
+            if (context.interaction is PressInteraction && context.action.phase == InputActionPhase.Started)
             {
                 bow.SetArrowMenuState(true);
             }
-        };
 
-        playerInput.Weapon.Scope.canceled += ctx =>
-        {
-            if (ctx.interaction is PressInteraction)
+            if (context.interaction is PressInteraction && context.action.phase == InputActionPhase.Canceled)
             {
                 bow.SetArrowMenuState(false);
             }
-        };
-    }
-
-    private void OnDisable() 
-    {
-        playerInput.Disable();
+        }
     }
 }

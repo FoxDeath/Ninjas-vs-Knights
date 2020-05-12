@@ -69,6 +69,7 @@ public class WeaponSwitch : MonoBehaviour
         {
             return;
         }
+
         SetWeapon(currentWeaponIndex);
     }
 

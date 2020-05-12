@@ -3,19 +3,32 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Samples.RebindUI;
 
 public class RebindMenu : MonoBehaviour
 {
-    public InputActionAsset playerInput;
+    [SerializeField] InputActionAsset controls;
 
-    // Start is called before the first frame update
     void OnEnable()
     {
-        playerInput.Disable();
+        SaveManager.GetInstance().LoadConfig();
+
+        foreach (RebindActionUI x in GetComponentsInChildren<RebindActionUI>())
+        {
+            x.UpdateBindingDisplay();
+        }
     }
 
     void OnDisable()
     {
-        playerInput.Enable();
+        controls.Enable();
+    }
+
+    void Update()
+    {
+        if(controls.enabled)
+        {
+            controls.Disable();
+        }
     }
 }

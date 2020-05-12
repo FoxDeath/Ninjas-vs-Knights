@@ -7,6 +7,7 @@ public class SpearGun : MonoBehaviour
     [SerializeField] GameObject bullet;
     [SerializeField] GameObject chargeBullet;
     private GameObject bulletEmiter;
+
     private UIManager uiManager;
     private AudioManager audioManager;
     private ParticleSystem muzzleFlash;

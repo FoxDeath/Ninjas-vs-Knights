@@ -6,7 +6,7 @@ public class Stimpack : MonoBehaviour
 {
     private Health health;
 
-    private bool stimpacking;
+    private bool stimpacking = false;
 
     void Awake()
     {

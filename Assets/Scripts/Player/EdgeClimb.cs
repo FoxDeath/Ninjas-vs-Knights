@@ -11,15 +11,27 @@ public class EdgeClimb : MonoBehaviour
     private Camera parkourCamera;
     private Camera mainCamera;
 
-    void Start()
+    void Awake()
     {
         playerMovement = GetComponent<PlayerMovement>();
         anim = GetComponent<Animator>();
         playerInput = new PlayerInput();
-        playerInput.Enable();
+    }
 
+    void Start()
+    {
         parkourCamera = gameObject.transform.Find("Parkour Camera").GetComponent<Camera>();
         mainCamera = gameObject.transform.Find("Main Camera").GetComponent<Camera>();
+    }
+
+    void OnEnable()
+    {
+        playerInput.Enable();
+    }
+
+    void OnDisable()
+    {
+        playerInput.Disable();
     }
 
     public void EdgeClimbStart()

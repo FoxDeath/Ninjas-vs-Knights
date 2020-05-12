@@ -97,14 +97,6 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
-                },
-                {
-                    ""name"": ""Kunai"",
-                    ""type"": ""Button"",
-                    ""id"": ""e12a980b-a075-4bb0-abbc-c1705ece4a02"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": ""Press""
                 }
             ],
             ""bindings"": [
@@ -259,17 +251,6 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Stimpack"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""96c7538a-bbbc-4286-b80c-6fda0f83b888"",
-                    ""path"": ""<Keyboard>/f"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard and Mouse"",
-                    ""action"": ""Kunai"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -496,7 +477,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""path"": ""<Keyboard>/leftCtrl"",
                     ""interactions"": ""Hold(duration=0.01)"",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Keyboard and Mouse"",
                     ""action"": ""Crouch"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -518,7 +499,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""path"": ""<Keyboard>/e"",
                     ""interactions"": ""Press"",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Keyboard and Mouse"",
                     ""action"": ""AOEAttack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -643,7 +624,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""path"": ""<Keyboard>/g"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Keyboard and Mouse"",
                     ""action"": ""Grenade"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -693,7 +674,6 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         m_Ninja_SwitchWeapon = m_Ninja.FindAction("SwitchWeapon", throwIfNotFound: true);
         m_Ninja_LookPosition = m_Ninja.FindAction("LookPosition", throwIfNotFound: true);
         m_Ninja_Stimpack = m_Ninja.FindAction("Stimpack", throwIfNotFound: true);
-        m_Ninja_Kunai = m_Ninja.FindAction("Kunai", throwIfNotFound: true);
         // Knight
         m_Knight = asset.FindActionMap("Knight", throwIfNotFound: true);
         m_Knight_Look = m_Knight.FindAction("Look", throwIfNotFound: true);
@@ -773,7 +753,6 @@ public class @PlayerInput : IInputActionCollection, IDisposable
     private readonly InputAction m_Ninja_SwitchWeapon;
     private readonly InputAction m_Ninja_LookPosition;
     private readonly InputAction m_Ninja_Stimpack;
-    private readonly InputAction m_Ninja_Kunai;
     public struct NinjaActions
     {
         private @PlayerInput m_Wrapper;
@@ -788,7 +767,6 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         public InputAction @SwitchWeapon => m_Wrapper.m_Ninja_SwitchWeapon;
         public InputAction @LookPosition => m_Wrapper.m_Ninja_LookPosition;
         public InputAction @Stimpack => m_Wrapper.m_Ninja_Stimpack;
-        public InputAction @Kunai => m_Wrapper.m_Ninja_Kunai;
         public InputActionMap Get() { return m_Wrapper.m_Ninja; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -828,9 +806,6 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                 @Stimpack.started -= m_Wrapper.m_NinjaActionsCallbackInterface.OnStimpack;
                 @Stimpack.performed -= m_Wrapper.m_NinjaActionsCallbackInterface.OnStimpack;
                 @Stimpack.canceled -= m_Wrapper.m_NinjaActionsCallbackInterface.OnStimpack;
-                @Kunai.started -= m_Wrapper.m_NinjaActionsCallbackInterface.OnKunai;
-                @Kunai.performed -= m_Wrapper.m_NinjaActionsCallbackInterface.OnKunai;
-                @Kunai.canceled -= m_Wrapper.m_NinjaActionsCallbackInterface.OnKunai;
             }
             m_Wrapper.m_NinjaActionsCallbackInterface = instance;
             if (instance != null)
@@ -865,9 +840,6 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                 @Stimpack.started += instance.OnStimpack;
                 @Stimpack.performed += instance.OnStimpack;
                 @Stimpack.canceled += instance.OnStimpack;
-                @Kunai.started += instance.OnKunai;
-                @Kunai.performed += instance.OnKunai;
-                @Kunai.canceled += instance.OnKunai;
             }
         }
     }
@@ -1080,7 +1052,6 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         void OnSwitchWeapon(InputAction.CallbackContext context);
         void OnLookPosition(InputAction.CallbackContext context);
         void OnStimpack(InputAction.CallbackContext context);
-        void OnKunai(InputAction.CallbackContext context);
     }
     public interface IKnightActions
     {
