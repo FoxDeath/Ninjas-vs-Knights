@@ -152,17 +152,17 @@ public class MovingPlatform : MonoBehaviour
             {
                 playerCC = other.transform.parent.GetComponent<CharacterController>();
                 playerPM = other.transform.parent.GetComponent<PlayerMovement>();
+            }
 
-                if(playerPM.GetGrounded() || playerPM.GetEdgeClimbing() || playerPM.GetEdgeHanging())
-                {
-                    print("yo");
-                    playerCC.Move(myRigidbody.velocity * Time.fixedDeltaTime);
-                }
+            if(playerPM.GetGrounded() || playerPM.GetEdgeClimbing() || playerPM.GetEdgeHanging())
+            {
+                playerCC.Move(myRigidbody.velocity * Time.fixedDeltaTime);
             }
         }
-        else if(other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+        
+        if(other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {
-            other.transform.Translate(myRigidbody.velocity * Time.fixedDeltaTime);
+            other.GetComponent<Rigidbody>().velocity = myRigidbody.velocity;
         }
     }
 
