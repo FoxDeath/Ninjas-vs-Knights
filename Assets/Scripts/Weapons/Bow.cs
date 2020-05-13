@@ -1,7 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.Interactions;
 
 public class Bow : MonoBehaviour
 {
@@ -61,7 +59,7 @@ public class Bow : MonoBehaviour
 
     void Update()
     {
-        if (charging && charge < chargeMax)
+        if(charging && charge < chargeMax)
         {
             charge += Time.deltaTime * chargeRate;
         }
@@ -70,18 +68,22 @@ public class Bow : MonoBehaviour
         {
             case arrowTypes.Fire:
                 UIManager.GetInstance().SetCurrentAmmo(currentFireArrows);
+                UIManager.GetInstance().SetMaxAmmo(0);
                 break;
 
             case arrowTypes.Regular:
                 UIManager.GetInstance().SetCurrentAmmo(currentRegularArrows);
+                UIManager.GetInstance().SetMaxAmmo(0);
                 break;
 
             case arrowTypes.Slow:
                 UIManager.GetInstance().SetCurrentAmmo(currentSlowArrows);
+                UIManager.GetInstance().SetMaxAmmo(0);
                 break;
                 
             case arrowTypes.Explosion:
                 UIManager.GetInstance().SetCurrentAmmo(currentExplosiveArrows);
+                UIManager.GetInstance().SetMaxAmmo(0);
                 break;
         }
 
@@ -97,10 +99,10 @@ public class Bow : MonoBehaviour
 
     public bool CanShoot()
     {
-        if ((currentType == arrowTypes.Explosion && currentExplosiveArrows > 0) || (currentType == arrowTypes.Fire && currentFireArrows > 0) ||
+        if((currentType == arrowTypes.Explosion && currentExplosiveArrows > 0) || (currentType == arrowTypes.Fire && currentFireArrows > 0) ||
                     (currentType == arrowTypes.Regular && currentRegularArrows > 0) || (currentType == arrowTypes.Slow && currentSlowArrows > 0))
         {
-            if (!UIManager.GetInstance().GetArrowMenuState())
+            if(!UIManager.GetInstance().GetArrowMenuState())
             {
                 return true;
             }
@@ -133,7 +135,7 @@ public class Bow : MonoBehaviour
     {
         if(canShoot)
         {
-            switch (currentType)
+            switch(currentType)
             {
                 case arrowTypes.Regular:
                     currentRegularArrows--;
@@ -159,6 +161,7 @@ public class Bow : MonoBehaviour
                     InstantiateArow(slowArrowObj);
                     break;
             }
+            
             charging = false;
             charge = 0f;
             canShoot = false;
@@ -175,7 +178,7 @@ public class Bow : MonoBehaviour
         RaycastHit hit;
 
         Vector3 targetPoint;
-        if (Physics.Raycast(ray, out hit))
+        if(Physics.Raycast(ray, out hit))
         {
             targetPoint = hit.point;
         }
@@ -217,6 +220,14 @@ public class Bow : MonoBehaviour
                 UIManager.GetInstance().SetCurrentAmmo(currentExplosiveArrows);
                 break;
         }
+    }
+
+    public void RestockAmmo()
+    {
+        currentRegularArrows = maxArrows;
+        currentFireArrows = maxArrows;
+        currentSlowArrows = maxArrows;
+        currentExplosiveArrows = maxArrows;
     }
 
     public void SetInactive()
