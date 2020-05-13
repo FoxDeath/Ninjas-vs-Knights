@@ -12,6 +12,7 @@ public class MovingPlatform : MonoBehaviour
     private Rigidbody myRigidbody;
 
     [SerializeField] float travelTime = 8f;
+    private float time = 0f;
 
     private int currentPoint;
 
@@ -44,7 +45,7 @@ public class MovingPlatform : MonoBehaviour
     {
         if(points.Length != 0)
         {
-            if(transform.position == target.position)
+            if(Mathf.Abs(Vector3.Distance(transform.position, target.position)) < 0.1f)
             {
                 switch(currentType)
                 {
@@ -65,11 +66,9 @@ public class MovingPlatform : MonoBehaviour
                 }
             }
             
-            if(Mathf.Cos(Time.time / travelTime * Mathf.PI * 2) * -0.5f + 0.5f != 1f)
-            {
-                Vector3 currentPos = Vector3.Lerp(previousTarget.position, target.position, Mathf.Cos(Time.time / travelTime * Mathf.PI * 2) * -0.5f + 0.5f);
-                myRigidbody.MovePosition(currentPos);
-            }
+            Vector3 currentPos = Vector3.Lerp(previousTarget.position, target.position, Mathf.Cos(time / travelTime * Mathf.PI * 2) * -0.5f + 0.5f);
+            time += Time.fixedDeltaTime;
+            myRigidbody.MovePosition(currentPos);
         }
     }
 
@@ -86,6 +85,7 @@ public class MovingPlatform : MonoBehaviour
 
         previousTarget = target;
         target = points[currentPoint];
+        time = 0;
     }
 
     private void LinearForwardBehaviour()
@@ -107,6 +107,7 @@ public class MovingPlatform : MonoBehaviour
 
         previousTarget = target;
         target = points[currentPoint];
+        time = 0;
     }
 
     private void LinearBackwardsBehaviour()
@@ -128,6 +129,7 @@ public class MovingPlatform : MonoBehaviour
 
         previousTarget = target;
         target = points[currentPoint];
+        time = 0;
     }
 
     void OnTriggerEnter(Collider other)
