@@ -6,17 +6,15 @@ public class MovingPlatform : MonoBehaviour
 {
     [SerializeField] Transform[] points;
     private Transform target;
+    private Transform previousTarget;
     private CharacterController playerCC;
     private PlayerMovement playerPM;
     private Rigidbody myRigidbody;
 
-    private Vector3 prevPos;
-    private Vector3 newPos;
-    private Vector3 objVelocity;
-
-    [SerializeField] float speed = 5f;
+    [SerializeField] float travelTime = 8f;
 
     private int currentPoint;
+
     private bool forward;
 
     private enum types
@@ -31,9 +29,11 @@ public class MovingPlatform : MonoBehaviour
     {
         myRigidbody = GetComponent<Rigidbody>();
 
-        target = points[1];
-        prevPos = transform.position;
-        newPos = transform.position;
+        if (points.Length != 0)
+        {
+            target = points[1];
+            previousTarget = points[0];
+        }
 
         forward = true;
         currentPoint = 0;
@@ -41,10 +41,6 @@ public class MovingPlatform : MonoBehaviour
 
     void FixedUpdate()
     {
-        newPos = transform.position;
-        objVelocity = (newPos - prevPos) / Time.fixedDeltaTime;
-        prevPos = newPos;
-
         if (points.Length != 0)
         {
             if (Mathf.Abs(Vector3.Distance(transform.position, target.position)) < 0.5f)
@@ -68,19 +64,14 @@ public class MovingPlatform : MonoBehaviour
                 }
             }
 
-            if (Mathf.Abs(Vector3.Distance(transform.position, target.position)) > 8f)
-            {
-                transform.position = Vector3.MoveTowards(transform.position, target.position, Time.fixedDeltaTime * speed);
-            }
-            else
-            {
-                transform.position = Vector3.MoveTowards(transform.position, target.position, Time.fixedDeltaTime * 8f);
-            }
+            Vector3 currentPos = Vector3.Lerp(previousTarget.position, target.position, Mathf.Cos(Time.time / travelTime * Mathf.PI * 2) * -0.5f + 0.5f);
+            myRigidbody.MovePosition(currentPos);
         }
     }
 
     private void CircleBehaviour()
     {
+        print("Circle");
         if (currentPoint + 1 < points.Length)
         {
             currentPoint += 1;
@@ -90,11 +81,13 @@ public class MovingPlatform : MonoBehaviour
             currentPoint = 0;
         }
 
+        previousTarget = target;
         target = points[currentPoint];
     }
 
     private void LinearForwardBehaviour()
     {
+        print("LinearForward");
         if (!forward)
         {
             forward = !forward;
@@ -110,11 +103,13 @@ public class MovingPlatform : MonoBehaviour
             return;
         }
 
+        previousTarget = target;
         target = points[currentPoint];
     }
 
     private void LinearBackwardsBehaviour()
     {
+        print("LinearBackWards");
         if (forward)
         {
             forward = !forward;
@@ -130,6 +125,7 @@ public class MovingPlatform : MonoBehaviour
             return;
         }
 
+        previousTarget = target;
         target = points[currentPoint];
     }
 
@@ -137,11 +133,11 @@ public class MovingPlatform : MonoBehaviour
     {
         if(other.gameObject.layer == LayerMask.NameToLayer("Player") && other.GetType() == typeof(MeshCollider))
         {
-            other.gameObject.transform.parent.SetParent(transform.parent);
+            other.transform.parent.SetParent(transform.parent);
         }
         else if(other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {
-            other.gameObject.transform.parent.SetParent(transform.parent);
+            other.transform.SetParent(transform.parent);
         }
     }
 
@@ -153,16 +149,17 @@ public class MovingPlatform : MonoBehaviour
             {
                 playerCC = other.transform.parent.GetComponent<CharacterController>();
                 playerPM = other.transform.parent.GetComponent<PlayerMovement>();
-            }
 
-            if(playerPM.GetGrounded() || playerPM.GetEdgeClimbing() || playerPM.GetEdgeHanging())
-            {
-                playerCC.Move(objVelocity * Time.deltaTime);
+                if (playerPM.GetGrounded() || playerPM.GetEdgeClimbing() || playerPM.GetEdgeHanging())
+                {
+                    print("yo");
+                    playerCC.Move(myRigidbody.velocity * Time.fixedDeltaTime);
+                }
             }
         }
         else if(other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {
-            other.transform.Translate(objVelocity * Time.deltaTime);
+            other.transform.Translate(myRigidbody.velocity * Time.fixedDeltaTime);
         }
     }
 
