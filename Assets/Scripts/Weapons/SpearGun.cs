@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class SpearGun : MonoBehaviour
 {
@@ -48,7 +47,11 @@ public class SpearGun : MonoBehaviour
     {
         uiManager.SetCurrentAmmo(currentAmmo);
         uiManager.SetMaxAmmo(currentMag);
+        ManageAmmo();
+    }
 
+    private void ManageAmmo()
+    {
         if(currentAmmo > maxAmmo)
         {
             currentAmmo = maxAmmo;
@@ -132,42 +135,46 @@ public class SpearGun : MonoBehaviour
 
     public void Charge()
     {
-        if(currentAmmo >= 3)
+        if(Time.time >= nextTimeToFire && !reloading && currentAmmo >= 3)
         {
-            Ray ray = GameObject.Find("Main Camera").GetComponent<Camera>().ViewportPointToRay(new Vector3(0.5F, 0.5F, 0));
-            RaycastHit hit;
-
-            Vector3 targetPoint;
-
-            if(Physics.Raycast(ray, out hit))
+            if(currentAmmo >= 3)
             {
-                targetPoint = hit.point;
+                Ray ray = GameObject.Find("Main Camera").GetComponent<Camera>().ViewportPointToRay(new Vector3(0.5F, 0.5F, 0));
+                RaycastHit hit;
+
+                Vector3 targetPoint;
+
+                if(Physics.Raycast(ray, out hit))
+                {
+                    targetPoint = hit.point;
+                }
+                else
+                {
+                    targetPoint = ray.GetPoint(1000f);
+                }
+
+                currentAmmo -= 3;
+                nextTimeToFire = Time.time + 1f / fireRate;
+                muzzleFlash.Play();
+                audioManager.Play("Laser");
+
+                targetPoint.x += Random.Range(-spread, spread);
+                targetPoint.y += Random.Range(-spread, spread);
+            
+                GameObject instantiateBullet = Instantiate(chargeBullet, bulletEmiter.transform.position, bulletEmiter.transform.rotation);
+                Rigidbody temporaryRigidbody = instantiateBullet.GetComponentInChildren<Rigidbody>();
+                temporaryRigidbody.velocity = (targetPoint - bulletEmiter.transform.position).normalized * altSpeed;
+                Destroy(instantiateBullet, 2f);
             }
             else
             {
-                targetPoint = ray.GetPoint(1000f);
+                StartCoroutine(ReloadingBehaviour());
+
+                return;
             }
 
-            currentAmmo -= 3;
-            muzzleFlash.Play();
-            audioManager.Play("Laser");
-
-            targetPoint.x += Random.Range(-spread, spread);
-            targetPoint.y += Random.Range(-spread, spread);
-            
-            GameObject instantiateBullet = Instantiate(chargeBullet, bulletEmiter.transform.position, bulletEmiter.transform.rotation);
-            Rigidbody temporaryRigidbody = instantiateBullet.GetComponentInChildren<Rigidbody>();
-            temporaryRigidbody.velocity = (targetPoint - bulletEmiter.transform.position).normalized * altSpeed;
-            Destroy(instantiateBullet, 2f);
+            animator.SetTrigger("Firing");
         }
-        else
-        {
-            StartCoroutine(ReloadingBehaviour());
-
-            return;
-        }
-
-        animator.SetTrigger("Firing");
     }
 
     public void SetInactive()
@@ -176,6 +183,11 @@ public class SpearGun : MonoBehaviour
         audioManager.Stop("Laser");
         transform.localRotation = startingRotation;
         gameObject.SetActive(false);
+    }
+
+    public void RestockAmmo()
+    {
+        currentMag = maxMag;
     }
 
     IEnumerator ReloadingBehaviour()
