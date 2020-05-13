@@ -36,23 +36,24 @@ public class MovingPlatform : MonoBehaviour
         }
 
         forward = true;
+
         currentPoint = 0;
     }
 
     void FixedUpdate()
     {
-        if (points.Length != 0)
+        if(points.Length != 0)
         {
-            if (Mathf.Abs(Vector3.Distance(transform.position, target.position)) < 0.5f)
+            if(transform.position == target.position)
             {
-                switch (currentType)
+                switch(currentType)
                 {
                     case types.Circle:
                         CircleBehaviour();
                         break;
 
                     case types.Linear:
-                        if (forward)
+                        if(forward)
                         {
                             LinearForwardBehaviour();
                         }
@@ -63,16 +64,18 @@ public class MovingPlatform : MonoBehaviour
                         break;
                 }
             }
-
-            Vector3 currentPos = Vector3.Lerp(previousTarget.position, target.position, Mathf.Cos(Time.time / travelTime * Mathf.PI * 2) * -0.5f + 0.5f);
-            myRigidbody.MovePosition(currentPos);
+            
+            if(Mathf.Cos(Time.time / travelTime * Mathf.PI * 2) * -0.5f + 0.5f != 1f)
+            {
+                Vector3 currentPos = Vector3.Lerp(previousTarget.position, target.position, Mathf.Cos(Time.time / travelTime * Mathf.PI * 2) * -0.5f + 0.5f);
+                myRigidbody.MovePosition(currentPos);
+            }
         }
     }
 
     private void CircleBehaviour()
     {
-        print("Circle");
-        if (currentPoint + 1 < points.Length)
+        if(currentPoint + 1 < points.Length)
         {
             currentPoint += 1;
         }
@@ -87,13 +90,12 @@ public class MovingPlatform : MonoBehaviour
 
     private void LinearForwardBehaviour()
     {
-        print("LinearForward");
-        if (!forward)
+        if(!forward)
         {
             forward = !forward;
         }
 
-        if (currentPoint + 1 < points.Length)
+        if(currentPoint + 1 < points.Length)
         {
             currentPoint += 1;
         }
@@ -109,13 +111,12 @@ public class MovingPlatform : MonoBehaviour
 
     private void LinearBackwardsBehaviour()
     {
-        print("LinearBackWards");
-        if (forward)
+        if(forward)
         {
             forward = !forward;
         }
 
-        if (currentPoint - 1 >= 0)
+        if(currentPoint - 1 >= 0)
         {
             currentPoint -= 1;
         }
@@ -150,7 +151,7 @@ public class MovingPlatform : MonoBehaviour
                 playerCC = other.transform.parent.GetComponent<CharacterController>();
                 playerPM = other.transform.parent.GetComponent<PlayerMovement>();
 
-                if (playerPM.GetGrounded() || playerPM.GetEdgeClimbing() || playerPM.GetEdgeHanging())
+                if(playerPM.GetGrounded() || playerPM.GetEdgeClimbing() || playerPM.GetEdgeHanging())
                 {
                     print("yo");
                     playerCC.Move(myRigidbody.velocity * Time.fixedDeltaTime);
