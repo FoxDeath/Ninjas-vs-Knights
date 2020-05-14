@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Explosion : MonoBehaviour
 {
-    private SphereCollider collider;
+    private SphereCollider myCollider;
 
     [SerializeField] float damage = 15;
     [SerializeField] float explosionForce = 1000;
@@ -12,7 +12,7 @@ public class Explosion : MonoBehaviour
 
     void Start()
     {
-        collider = GetComponent<SphereCollider>();
+        myCollider = GetComponent<SphereCollider>();
         Destroy(gameObject, 0.3f);
     }
 
@@ -21,7 +21,7 @@ public class Explosion : MonoBehaviour
         if(other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {
             other.gameObject.GetComponent<Target>().TakeDamage(damage);
-            other.GetComponent<Rigidbody>().AddExplosionForce(explosionForce, transform.position, collider.radius, upwardsModifier);
+            other.GetComponent<Rigidbody>().AddExplosionForce(explosionForce, transform.position, myCollider.radius, upwardsModifier);
 
         }
     }
