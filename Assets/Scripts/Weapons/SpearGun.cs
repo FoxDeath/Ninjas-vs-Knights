@@ -95,7 +95,7 @@ public class SpearGun : MonoBehaviour
 
                 temporaryRigidbody.velocity = (targetPoint - bulletEmiter.transform.position).normalized * speed;
 
-                Destroy(instantiateBullet, 2f);
+                Destroy(instantiateBullet, 10f);
             }
             else
             {

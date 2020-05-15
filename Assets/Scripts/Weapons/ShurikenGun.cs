@@ -84,8 +84,10 @@ public class ShurikenGun :  MonoBehaviour
             else
             {
                 StartCoroutine(ReloadingBehaviour());
+
                 return;
             }
+            
             animator.SetTrigger("Firing");
         }
     }

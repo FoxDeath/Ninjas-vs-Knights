@@ -7,7 +7,7 @@ public class KunaiNadeInput : MonoBehaviour
     [SerializeField] GameObject kunaiPrefab;
     private GameObject bulletEmiter;
 
-    [SerializeField] float throwForce = 50f;
+    [SerializeField] float throwForce = 100f;
 
     [SerializeField] int maxKunai = 4;
     private int currentKunai;

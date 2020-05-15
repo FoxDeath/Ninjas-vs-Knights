@@ -82,9 +82,7 @@ MonoBehaviour:
   speed: 100
   reloadTime: 2
   fireRate: 2
-  spread: 1
-  chargeRate: 0.5
-  chargeMax: 20
+  spread: 0.3
   maxAmmo: 15
 --- !u!95 &9015703692391007850
 Animator:
