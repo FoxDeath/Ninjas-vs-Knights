@@ -54,7 +54,6 @@ public class KnightPlayerMovement : PlayerMovement
             return;
         }
 
-
         if(edgeHanging)
         {
             //turns off gravity while hanging on edge
@@ -73,15 +72,25 @@ public class KnightPlayerMovement : PlayerMovement
         Crouch();
         Fall();
 
+        if(jetpacking)
+        {
+            fallDecrease = 2f;
+        }
+        else if(isGrounded)
+        {
+            fallDecrease = 0.4f;
+        }
+
+        //restricts the max vertical speed
         if(!isGrounded && !dashing)
         {
-            velocity.y = Mathf.Clamp(velocity.y, -40f, 10f);
+            velocity.y = Mathf.Clamp(velocity.y, -30f, 10f);
         }
         else if(!dashing)
         {
-            velocity.y = Mathf.Clamp(velocity.y, 0f, 10f);
+            velocity.y = Mathf.Clamp(velocity.y, 0f, 15f);
         }
-
+        
         controller.Move(velocity * Time.deltaTime);
     }
 
