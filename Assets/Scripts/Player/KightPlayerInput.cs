@@ -17,7 +17,11 @@ public class KightPlayerInput : MonoBehaviour
 
     public void MoveInput(InputAction.CallbackContext context)
     {
-        playerMovement.SetMoveInput(context.ReadValue<Vector2>());
+        if(!playerMovement.GetEdgeClimbing())
+        {
+            //passes on the move vector to the movement script
+            playerMovement.SetMoveInput(context.ReadValue<Vector2>());
+        }
     }
 
     public void JumpInput(InputAction.CallbackContext context)

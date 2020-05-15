@@ -780,6 +780,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33fa3db851bd84c478cdf29645ce022d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  controls: {fileID: -944628639613478452, guid: 8b0f9ee1f001840fd9b63063de21d7f6,
+    type: 3}
 --- !u!95 &1588346156
 Animator:
   serializedVersion: 3

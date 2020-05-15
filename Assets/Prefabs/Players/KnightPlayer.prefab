@@ -776,6 +776,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33fa3db851bd84c478cdf29645ce022d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  controls: {fileID: -944628639613478452, guid: 8b0f9ee1f001840fd9b63063de21d7f6,
+    type: 3}
 --- !u!95 &9005027085412411315
 Animator:
   serializedVersion: 3
@@ -1971,7 +1973,7 @@ PrefabInstance:
     - target: {fileID: 116019000963775216, guid: 560333b2c3360ff4ab708a7757b3c9ed,
         type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 645303787585421418, guid: 560333b2c3360ff4ab708a7757b3c9ed,
         type: 3}
@@ -2071,12 +2073,12 @@ PrefabInstance:
     - target: {fileID: 3026251667423714143, guid: 560333b2c3360ff4ab708a7757b3c9ed,
         type: 3}
       propertyPath: m_RootOrder
-      value: 13
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 3972447432974004231, guid: 560333b2c3360ff4ab708a7757b3c9ed,
         type: 3}
       propertyPath: m_RootOrder
-      value: 9
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4373599596356436896, guid: 560333b2c3360ff4ab708a7757b3c9ed,
         type: 3}
@@ -2126,7 +2128,7 @@ PrefabInstance:
     - target: {fileID: 7503410254112202036, guid: 560333b2c3360ff4ab708a7757b3c9ed,
         type: 3}
       propertyPath: m_RootOrder
-      value: 12
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 7789447227596114678, guid: 560333b2c3360ff4ab708a7757b3c9ed,
         type: 3}
@@ -2146,7 +2148,7 @@ PrefabInstance:
     - target: {fileID: 8768793603629694877, guid: 560333b2c3360ff4ab708a7757b3c9ed,
         type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 560333b2c3360ff4ab708a7757b3c9ed, type: 3}

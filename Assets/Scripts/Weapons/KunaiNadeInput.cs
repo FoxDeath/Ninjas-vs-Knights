@@ -52,7 +52,6 @@ public class KunaiNadeInput : MonoBehaviour
 
         GameObject kunai = Instantiate(kunaiPrefab, bulletEmiter.transform.position, bulletEmiter.transform.rotation);
         Rigidbody rb = kunai.GetComponent<Rigidbody>();
-        // rb.AddForce(mainCamera.forward * throwForce, ForceMode.VelocityChange);
         rb.velocity = (targetPoint - bulletEmiter.transform.position).normalized * throwForce;
 
         yield return new WaitForSeconds(2f);
