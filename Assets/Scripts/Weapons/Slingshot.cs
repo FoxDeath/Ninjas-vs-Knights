@@ -15,7 +15,7 @@ public class Slingshot : MonoBehaviour
     [SerializeField] int maxGrenades = 5;
     private int currentGrenades = 0;
 
-    private bool grenading;
+    private bool grenading = false;
 
     private void Start()
     {
