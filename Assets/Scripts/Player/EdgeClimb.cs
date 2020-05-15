@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
-
+using UnityEngine.InputSystem;
 
 public class EdgeClimb : MonoBehaviour
 {
@@ -62,15 +62,6 @@ public class EdgeClimb : MonoBehaviour
         //switches cameras back to default
         mainCamera.gameObject.SetActive(true);
         parkourCamera.gameObject.SetActive(false);
-
-        if (gameObject.GetComponent<KnightPlayerMovement>() != null)
-        {
-            playerMovement.SetMoveInput(playerInput.Knight.Movement.ReadValue<Vector2>());
-        }
-        else
-        {
-            playerMovement.SetMoveInput(playerInput.Ninja.Movement.ReadValue<Vector2>());
-        }
     }
 
     IEnumerator MovePlayer()

@@ -28,7 +28,7 @@ public class Shuriken : MonoBehaviour
 
     //The shuriken will do damage when it collides with the target.
     //The shuriken does not collide with itself, and it gets destroyed after a few seconds.
-    private void OnCollisionEnter(Collision collision)
+    void OnCollisionEnter(Collision collision)
     {
         Target target = collision.gameObject.transform.GetComponent<Target>();
 

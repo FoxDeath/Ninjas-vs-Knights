@@ -64,7 +64,7 @@ public class WeaponsInputKnight : MonoBehaviour
 
     public void GrenadeInput(InputAction.CallbackContext context)
     {
-        if (context.action.phase == InputActionPhase.Performed)
+        if(context.action.phase == InputActionPhase.Performed)
         {
             slingshot.Grenade();
         }

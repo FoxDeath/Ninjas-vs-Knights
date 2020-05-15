@@ -5,9 +5,9 @@ using UnityEngine.InputSystem;
 public class KunaiNadeInput : MonoBehaviour
 {
     [SerializeField] GameObject kunaiPrefab;
-    private GameObject bulletEmitter;
+    private GameObject bulletEmiter;
 
-    [SerializeField] float throwForce = 50f;
+    [SerializeField] float throwForce = 100f;
 
     [SerializeField] int maxKunai = 4;
     private int currentKunai;
@@ -17,7 +17,7 @@ public class KunaiNadeInput : MonoBehaviour
     void Start()
     {
         currentKunai = maxKunai;
-        bulletEmitter = GameObject.Find("KunaiEmitter");
+        bulletEmiter = GameObject.Find("KunaiEmitter");
     }
 
     private void Update() 
@@ -37,10 +37,23 @@ public class KunaiNadeInput : MonoBehaviour
 
     private IEnumerator ThrowKunaiBehaviour()
     {
-        Transform mainCamera = gameObject.transform.Find("Main Camera").transform;
-        GameObject kunai = Instantiate(kunaiPrefab, bulletEmitter.transform.position, bulletEmitter.transform.rotation);
+        Ray ray = GameObject.Find("Main Camera").GetComponent<Camera>().ViewportPointToRay(new Vector3(0.5F, 0.5F, 0));
+        RaycastHit hit ;
+
+        Vector3 targetPoint ;
+        if (Physics.Raycast(ray, out hit))
+        {
+            targetPoint = hit.point;
+        }
+        else
+        {
+            targetPoint = ray.GetPoint(1000f);
+        }
+
+        GameObject kunai = Instantiate(kunaiPrefab, bulletEmiter.transform.position, bulletEmiter.transform.rotation);
         Rigidbody rb = kunai.GetComponent<Rigidbody>();
-        rb.AddForce(mainCamera.forward * throwForce, ForceMode.VelocityChange);        
+        rb.velocity = (targetPoint - bulletEmiter.transform.position).normalized * throwForce;
+
         yield return new WaitForSeconds(2f);
     }
 

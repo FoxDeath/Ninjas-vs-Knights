@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class NinjaPlayerMovement : PlayerMovement
 {
-    public Vector3 normal;
-    public Vector3 runningVector;
+    [HideInInspector] public Vector3 normal;
+    [HideInInspector] public Vector3 runningVector;
 
     [SerializeField] float wallJumpForce = 20f;
 
@@ -16,12 +16,12 @@ public class NinjaPlayerMovement : PlayerMovement
 
     protected override void FixedUpdate()
     {
-        if (PauseMenu.GameIsPaused)
-            {
-                return;
-            }
+        if(PauseMenu.GameIsPaused)
+        {
+            return;
+        }
 
-        if (edgeHanging)
+        if(edgeHanging)
         {
             //turns off gravity while hanging on edge
             velocity.y = 0f;
@@ -38,15 +38,15 @@ public class NinjaPlayerMovement : PlayerMovement
         Fall();
         Crouch();
 
-        if (!edgeClimbing)
+        if(!edgeClimbing)
         {
             //applies gravity
             controller.Move(velocity * Time.deltaTime);
         }
 
-        if (wallRunning)
+        if(wallRunning)
         {
-            if (!canWallJump)
+            if(!canWallJump)
             {
                 //sets vertical pull when starting wall running
                 velocity.y = 10f;

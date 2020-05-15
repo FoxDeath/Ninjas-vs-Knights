@@ -62,7 +62,7 @@ public class Bow : MonoBehaviour
             charge += Time.deltaTime * chargeRate;
         }
 
-         switch(currentType)
+        switch(currentType)
         {
             case arrowTypes.Fire:
                 UIManager.GetInstance().SetCurrentAmmo(currentFireArrows);

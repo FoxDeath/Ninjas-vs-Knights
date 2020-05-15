@@ -17,7 +17,7 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] protected float jumpHeight = 5f;
     [SerializeField] protected float speed = 10f;
-    [SerializeField] protected float fallDecrease = 2f;
+    protected float fallDecrease = 0.4f;
     protected float fallVelocity = 0f;
     protected float gravity = -9.8f;
     protected float groungDistance = 0.1f;
@@ -335,7 +335,7 @@ public class PlayerMovement : MonoBehaviour
             //if grounded play jump sound and move upwards
             audioManager.Play("Jump");
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
-            fallVelocity = 3f;
+            fallVelocity = 10f;
         }
     }
 

@@ -12,7 +12,7 @@ public class Kunai : MonoBehaviour
 
     [SerializeField] float radius = 20f;
     [SerializeField] float delay = 3f;
-    [SerializeField] float damage = 7f;
+    [SerializeField] float damage = 5f;
     private float countdown;
 
     private bool exploaded = false;
@@ -53,6 +53,7 @@ public class Kunai : MonoBehaviour
         if (collision.gameObject.layer != LayerMask.NameToLayer("Player"))
         {
             rigidBody.velocity = Vector3.zero;
+            rigidBody.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
             rigidBody.isKinematic = true;
 
             GameObject anchor = new GameObject("Kunai Anchor");
