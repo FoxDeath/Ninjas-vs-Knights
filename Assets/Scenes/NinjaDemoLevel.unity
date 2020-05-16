@@ -862,7 +862,7 @@ Transform:
   - {fileID: 619959999}
   - {fileID: 673932847}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &531512909
 PrefabInstance:
@@ -4793,6 +4793,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1591953461}
     m_Modifications:
+    - target: {fileID: 4708993519587126209, guid: f37134e6862d6504cbe67dcfa53a4fe2,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4708993519587126210, guid: f37134e6862d6504cbe67dcfa53a4fe2,
         type: 3}
       propertyPath: m_RaycastTarget
@@ -6150,7 +6155,7 @@ PrefabInstance:
     - target: {fileID: 8703391680953702965, guid: d732760fe321b724f8458e1f82d36a81,
         type: 3}
       propertyPath: m_RootOrder
-      value: 10
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 8703391680953702965, guid: d732760fe321b724f8458e1f82d36a81,
         type: 3}
