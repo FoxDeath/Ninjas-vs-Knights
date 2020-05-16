@@ -986,7 +986,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   zRotation: 0
-  mouseSensitivity: 5
+  mouseSensitivity: 1
 --- !u!114 &1139407074
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1991,7 +1991,7 @@ PrefabInstance:
     - target: {fileID: 1106121025858485738, guid: 560333b2c3360ff4ab708a7757b3c9ed,
         type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 1628761758069884918, guid: 560333b2c3360ff4ab708a7757b3c9ed,
         type: 3}
@@ -2081,7 +2081,7 @@ PrefabInstance:
     - target: {fileID: 3026251667423714143, guid: 560333b2c3360ff4ab708a7757b3c9ed,
         type: 3}
       propertyPath: m_RootOrder
-      value: 11
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 3972447432974004231, guid: 560333b2c3360ff4ab708a7757b3c9ed,
         type: 3}
@@ -2106,12 +2106,12 @@ PrefabInstance:
     - target: {fileID: 5757465926646422823, guid: 560333b2c3360ff4ab708a7757b3c9ed,
         type: 3}
       propertyPath: m_RootOrder
-      value: 13
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 5792931061676064037, guid: 560333b2c3360ff4ab708a7757b3c9ed,
         type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 5867785691774432558, guid: 560333b2c3360ff4ab708a7757b3c9ed,
         type: 3}
@@ -2146,7 +2146,7 @@ PrefabInstance:
     - target: {fileID: 8175802822122269296, guid: 560333b2c3360ff4ab708a7757b3c9ed,
         type: 3}
       propertyPath: m_RootOrder
-      value: 10
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 8764928858527471248, guid: 560333b2c3360ff4ab708a7757b3c9ed,
         type: 3}

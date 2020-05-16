@@ -40,9 +40,10 @@ public class MouseLook : MonoBehaviour
         playerBody = transform.parent;
         Cursor.lockState = CursorLockMode.Locked;
         canLook = true;
+        InvokeRepeating("CalculateLook", 0f, 0.005f);
     }
 
-    void Update()
+    private void CalculateLook()
     {
         //if game is not paused
         if(!PauseMenu.GameIsPaused)

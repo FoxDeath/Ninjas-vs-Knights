@@ -101,6 +101,11 @@ public class SaveManager : MonoBehaviour
             stream.Close();
 
             GameObject.Find("UI").transform.Find("OptionsMenu").GetComponent<OptionsMenu>().SetVolume(options.volume);
+            // print(options.volume);
+            GameObject.Find("UI").transform.Find("OptionsMenu").GetComponent<OptionsMenu>().SetLookSensitivity(options.lookSens);
+            // print(options.lookSens);
+            GameObject.Find("UI").transform.Find("OptionsMenu").GetComponent<OptionsMenu>().SetScopedSensitivity(options.scopedSens);
+            // print(options.scopedSens);
         }
     }
 
@@ -108,10 +113,14 @@ public class SaveManager : MonoBehaviour
     private class OptionsData
     {
         public float volume;
+        public float lookSens;
+        public float scopedSens;
         
         public OptionsData(OptionsMenu optionsMenu)
         {
             volume = optionsMenu.GetVolume();
+            lookSens = optionsMenu.GetLookSensitivity();
+            scopedSens = optionsMenu.GetScopedSensitivity();
         }
     }
 }
