@@ -33,6 +33,15 @@ public class GrapplingHook : MonoBehaviour
     {
         Hook();
         ReturnHook();
+
+        if(GetComponentInParent<PlayerMovement>().GetMoving())
+        {
+            animator.SetBool("Moving", true);
+        }
+        else
+        {
+            animator.SetBool("Moving", false);
+        }
     }
 
     //Fire and move the hook,

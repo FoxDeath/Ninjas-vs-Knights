@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class ShurikenGun :  MonoBehaviour
 {
@@ -27,7 +26,7 @@ public class ShurikenGun :  MonoBehaviour
     //The Gun starts with maximum ammo.
     void Start()
     {
-        playerMovement = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
+        playerMovement = GetComponentInParent<PlayerMovement>();
         audioManager = FindObjectOfType<AudioManager>();
         animator = GetComponent<Animator>();
         currentAmmo = maxAmmo;
@@ -43,6 +42,15 @@ public class ShurikenGun :  MonoBehaviour
     {
         uiManager.SetCurrentAmmo(currentAmmo);
         uiManager.SetMaxAmmo(maxAmmo);
+
+        if(playerMovement.GetMoving())
+        {
+            animator.SetBool("Moving", true);
+        }
+        else
+        {
+            animator.SetBool("Moving", false);
+        }
     }
 
     //Makes the Gun fire a temporary shuriken, and destroyes that temporary shuriken after a few seconds.
@@ -96,8 +104,8 @@ public class ShurikenGun :  MonoBehaviour
     {
         scoping = state;
         animator.SetBool("Scoped", state);
-        playerMovement.SetScoping(state);
-        playerMovement.Sprint(false);
+        //playerMovement.SetScoping(state);
+        //playerMovement.Sprint(false);
     }
 
     public void Reload()

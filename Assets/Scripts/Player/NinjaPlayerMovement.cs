@@ -168,11 +168,15 @@ public class NinjaPlayerMovement : PlayerMovement
             if (!audioManager.IsPlaying("Walking"))
             {
                 audioManager.Play("Walking");
+
+                moving = true;
             }
         }
         else
         {
             audioManager.Stop("Walking");
+
+            moving = false;
         }
 
         if (wallRunning)

@@ -58,6 +58,17 @@ public class CrossBow : MonoBehaviour
     {
         SetAmmo();
         uiManager.SetMaxAmmo(1);
+        
+        if(GetComponentInParent<PlayerMovement>().GetMoving())
+        {
+            crossbowAnimator.SetBool("Moving", true);
+            shieldAnimator.SetBool("Moving", true);
+        }
+        else
+        {
+            crossbowAnimator.SetBool("Moving", false);
+            shieldAnimator.SetBool("Moving", false);
+        }
     }
 
     private void SetAmmo()
