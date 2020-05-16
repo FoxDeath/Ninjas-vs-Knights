@@ -46,6 +46,15 @@ public class SpearGun : MonoBehaviour
     {
         uiManager.SetCurrentAmmo(currentAmmo);
         uiManager.SetMaxAmmo(maxAmmo);
+
+        if(GetComponentInParent<PlayerMovement>().GetMoving())
+        {
+            animator.SetBool("Moving", true);
+        }
+        else
+        {
+            animator.SetBool("Moving", false);
+        }
     }
 
     //Reloads the gun.

@@ -10,6 +10,8 @@ public class Bow : MonoBehaviour
     [SerializeField] GameObject slowArrowObj;
     [SerializeField] GameObject explosiveArrowObj;
     [SerializeField] GameObject emmiter;
+    private Animator animator;
+    private AudioManager audioManager;
 
     private Quaternion startingRotation;
 
@@ -53,6 +55,8 @@ public class Bow : MonoBehaviour
         UIManager.GetInstance().SetMaxAmmo(maxArrows);
         UIManager.GetInstance().SetCurrentAmmo(currentRegularArrows);
         startingRotation = transform.localRotation;
+        animator = GetComponent<Animator>();
+        audioManager = FindObjectOfType<AudioManager>();
     }
 
     void Update()
@@ -79,6 +83,15 @@ public class Bow : MonoBehaviour
             case arrowTypes.Explosion:
                 UIManager.GetInstance().SetCurrentAmmo(currentExplosiveArrows);
                 break;
+        }
+
+        if(GetComponentInParent<PlayerMovement>().GetMoving())
+        {
+            animator.SetBool("Moving", true);
+        }
+        else
+        {
+            animator.SetBool("Moving", false);
         }
     }
 
@@ -107,6 +120,8 @@ public class Bow : MonoBehaviour
         if(CanShoot())
         {
             StartCoroutine(FireBehaviour());
+            animator.SetTrigger("Firing");
+            audioManager.Play("ShurikenShoot");
         }
         else
         {

@@ -33,6 +33,7 @@ public class PlayerMovement : MonoBehaviour
     protected bool sliding;
     protected bool scoping;
     protected bool sprinting;
+    protected bool moving;
     protected bool resetFall;
     protected bool canSlide = true;
     protected bool charging;
@@ -83,6 +84,11 @@ public class PlayerMovement : MonoBehaviour
         return sprinting;
     }
 
+    public bool GetMoving()
+    {
+        return moving;
+    }
+
     public bool GetCanSlide()
     {
         return canSlide;
@@ -92,10 +98,12 @@ public class PlayerMovement : MonoBehaviour
     {
         return crouching;
     }
+
     public bool GetScoping()
     {
         return scoping;
     }
+
     public void SetCrouching(bool crouching)
     {
         this.crouching = crouching;
@@ -293,16 +301,19 @@ public class PlayerMovement : MonoBehaviour
 
     protected virtual void MoveAudio()
     {
-        if (moveInput != Vector2.zero && isGrounded)
+        if(moveInput != Vector2.zero && isGrounded)
         {
-            if (!audioManager.IsPlaying("Walking"))
+            if(!audioManager.IsPlaying("Walking"))
             {
                 audioManager.Play("Walking");
             }
+
+            moving = true;
         }
         else
         {
             audioManager.Stop("Walking");
+            moving = false;
         }
     }
 
