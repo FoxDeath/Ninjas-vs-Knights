@@ -6,13 +6,13 @@ public class Kunai : MonoBehaviour
     public GameObject flashEffect;
     private GameObject anchor;
 
-    public EnemyAttack enemyFlash;
     private Rigidbody rigidBody;
     private Animator anim;
 
     [SerializeField] float radius = 20f;
     [SerializeField] float delay = 3f;
     [SerializeField] float damage = 5f;
+    [SerializeField] float effectAngle = 100f;
     private float countdown;
 
     private bool exploaded = false;
@@ -20,7 +20,6 @@ public class Kunai : MonoBehaviour
     void Start()
     {
         countdown = delay;
-        anim = GameObject.Find("Flash").GetComponent<Animator>();
         rigidBody = GetComponent<Rigidbody>();
     }
 
@@ -30,8 +29,8 @@ public class Kunai : MonoBehaviour
 
         if (countdown <= 0f && !exploaded)
         {
+            exploaded = true;
             Flash();
-            exploaded = true;            
         }
 
         if (!anchor)
@@ -69,25 +68,33 @@ public class Kunai : MonoBehaviour
         }
     }
     
-public void Flash()
+    public void Flash()
     {
         Instantiate(flashEffect, transform.position, transform.rotation);
 
         //creates a bubble, which detects everything inside of its radius
         Collider[] effected = Physics.OverlapSphere(transform.position, radius);
-        foreach (Collider nearObjects in effected)
+
+        foreach (Collider nearObject in effected)
         {
-            if (nearObjects.gameObject.layer == LayerMask.NameToLayer("Player") || nearObjects.gameObject.layer == LayerMask.NameToLayer("Enemy") && !exploaded)
+            if(Vector3.Angle(nearObject.transform.forward, transform.position - nearObject.transform.position) < effectAngle)
             {
-                anim.SetTrigger("Flash");                
+                RaycastHit hit;
+                
+                if(Physics.Raycast(transform.position, nearObject.transform.position - transform.position, out hit) && hit.transform.gameObject.layer == LayerMask.NameToLayer("Player"))
+                {
+                    //change this if mirror fucks it up
+                    GameObject.Find("UI").transform.Find("Flash").GetComponent<Animator>().SetTrigger("Flash");
+                }
+
+                if(Physics.Raycast(transform.position, nearObject.transform.position - transform.position, out hit) && hit.transform.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+                {
+                    nearObject.GetComponent<EnemyAttack>().SetFlashed(true);   
+                }
             }
-            Destroy(gameObject);           
         }
-        EnemyAttack[] enemies = (EnemyAttack[])GameObject.FindObjectsOfType(typeof(EnemyAttack));
-        foreach (EnemyAttack enemy in enemies)
-        {
-            enemy.SetFlashed(true);           
-        }
+
+        Destroy(gameObject);
     }      
 }
 

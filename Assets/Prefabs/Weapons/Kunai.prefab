@@ -78,10 +78,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   flashEffect: {fileID: 1000011128802252, guid: 96730f8640590934eacb6f860058e7f9,
     type: 3}
-  enemyFlash: {fileID: 0}
-  radius: 20
-  delay: 3
-  damage: 7
+  radius: 60
+  delay: 1.5
+  damage: 0
+  effectAngle: 90
 --- !u!95 &2062681663133029972
 Animator:
   serializedVersion: 3
