@@ -20,7 +20,6 @@ public class Kunai : MonoBehaviour
     void Start()
     {
         countdown = delay;
-        anim = GameObject.Find("Flash").GetComponent<Animator>();
         rigidBody = GetComponent<Rigidbody>();
     }
 
@@ -30,8 +29,8 @@ public class Kunai : MonoBehaviour
 
         if (countdown <= 0f && !exploaded)
         {
+            exploaded = true;
             Flash();
-            exploaded = true;            
         }
 
         if (!anchor)
@@ -78,13 +77,14 @@ public class Kunai : MonoBehaviour
 
         foreach (Collider nearObject in effected)
         {
-            if(!exploaded && Vector3.Angle(nearObject.transform.forward, transform.position - nearObject.transform.position) < effectAngle)
+            if(Vector3.Angle(nearObject.transform.forward, transform.position - nearObject.transform.position) < effectAngle)
             {
                 RaycastHit hit;
                 
                 if(Physics.Raycast(transform.position, nearObject.transform.position - transform.position, out hit) && hit.transform.gameObject.layer == LayerMask.NameToLayer("Player"))
                 {
-                    anim.SetTrigger("Flash");                
+                    //change this if mirror fucks it up
+                    GameObject.Find("UI").transform.Find("Flash").GetComponent<Animator>().SetTrigger("Flash");
                 }
 
                 if(Physics.Raycast(transform.position, nearObject.transform.position - transform.position, out hit) && hit.transform.gameObject.layer == LayerMask.NameToLayer("Enemy"))
