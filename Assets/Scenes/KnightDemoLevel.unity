@@ -2703,6 +2703,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 402492547}
     m_Modifications:
+    - target: {fileID: 8576582264871525662, guid: 5a3e62813df1f224f9e4255871c5e141,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 402492548}
+    - target: {fileID: 8576582264871525662, guid: 5a3e62813df1f224f9e4255871c5e141,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Resume
+      objectReference: {fileID: 0}
+    - target: {fileID: 8576582264871525662, guid: 5a3e62813df1f224f9e4255871c5e141,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8576582265055270173, guid: 5a3e62813df1f224f9e4255871c5e141,
         type: 3}
       propertyPath: m_Name

@@ -99,13 +99,10 @@ public class SaveManager : MonoBehaviour
 
             var options = formatter.Deserialize(stream) as OptionsData;
             stream.Close();
-
+            
             GameObject.Find("UI").transform.Find("OptionsMenu").GetComponent<OptionsMenu>().SetVolume(options.volume);
-            // print(options.volume);
             GameObject.Find("UI").transform.Find("OptionsMenu").GetComponent<OptionsMenu>().SetLookSensitivity(options.lookSens);
-            // print(options.lookSens);
             GameObject.Find("UI").transform.Find("OptionsMenu").GetComponent<OptionsMenu>().SetScopedSensitivity(options.scopedSens);
-            // print(options.scopedSens);
         }
     }
 

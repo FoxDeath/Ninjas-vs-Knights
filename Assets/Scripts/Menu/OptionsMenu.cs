@@ -32,7 +32,11 @@ public class OptionsMenu : MonoBehaviour
     public void SetLookSensitivity(float sens)
     {
         lookSensSlider.value = sens;
-        mouseLook.SetSensitivity(sens);
+
+        if(mouseLook != null)
+        {
+            mouseLook.SetSensitivity(sens);
+        }
     }
 
     public float GetLookSensitivity()
@@ -72,15 +76,19 @@ public class OptionsMenu : MonoBehaviour
         scopedSensSlider = transform.Find("Scoped Slider").GetComponent<Slider>();
 
         lookSensSlider.minValue = 0.1f;
-        lookSensSlider.maxValue = 10f;
+        lookSensSlider.maxValue = 5f;
         scopedSensSlider.minValue = 0.1f;
-        scopedSensSlider.maxValue = 10f;
+        scopedSensSlider.maxValue = 1f;
     }
 
     void Start()
     {
         volumeSlider.value = AudioListener.volume;
-        lookSensSlider.value = mouseLook.GetSensitivity();
+
+        if(mouseLook != null)
+        {
+            lookSensSlider.value = mouseLook.GetSensitivity();
+        }
 
         if(crossBow != null)
         {
@@ -95,6 +103,7 @@ public class OptionsMenu : MonoBehaviour
 
     void OnDisable()
     {
+        SaveManager.GetInstance().SaveOptions();
         controls.Enable();
     }
 
@@ -106,7 +115,11 @@ public class OptionsMenu : MonoBehaviour
         }
 
         audioManager.SetMasterVolume(volumeSlider.value);
-        mouseLook.SetSensitivity(lookSensSlider.value);
+
+        if(mouseLook != null)
+        {
+            mouseLook.SetSensitivity(lookSensSlider.value);
+        }
         
         if(crossBow != null)
         {
