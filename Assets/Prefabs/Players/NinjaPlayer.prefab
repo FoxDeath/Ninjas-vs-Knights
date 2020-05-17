@@ -751,7 +751,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   jumpHeight: 5
   speed: 10
-  fallDecrease: 2
   normal: {x: 0, y: 0, z: 0}
   runningVector: {x: 0, y: 0, z: 0}
   wallJumpForce: 25
@@ -1062,7 +1061,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   zRotation: 0
-  mouseSensitivity: 2
+  mouseSensitivity: 1
 --- !u!114 &2537338150754857947
 MonoBehaviour:
   m_ObjectHideFlags: 0

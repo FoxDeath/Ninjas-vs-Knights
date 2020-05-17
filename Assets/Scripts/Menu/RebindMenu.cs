@@ -21,6 +21,7 @@ public class RebindMenu : MonoBehaviour
 
     void OnDisable()
     {
+        SaveManager.GetInstance().SaveConfig();
         controls.Enable();
     }
 

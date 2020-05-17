@@ -26,12 +26,27 @@ public class CrossBow : MonoBehaviour
     private float nextTimeToFire = 0f;
     private float scopedFOV;
     private float[] scopedFOVs = { 5f, 10f, 15f, 20f };
-    private float maxMouseSensitivity;
+    private float scopedSensitivity = 1f;
+    private float lookSensitivity = 0.75f;
 
     private int currentScopedFOV;
 
     private bool scoping;
     private bool ourBoiIsInTheProcessOfScoping;
+
+    #region Getters and Setters
+
+    public float GetScopeSensitivity()
+    {
+        return scopedSensitivity;
+    }
+
+    public void SetScopedSensitivity(float sens)
+    {
+        scopedSensitivity = sens;
+    }
+
+    #endregion
 
     void Start()
     {
@@ -49,7 +64,7 @@ public class CrossBow : MonoBehaviour
 
         currentScopedFOV = scopedFOVs.Length - 1;
         scopedFOV = scopedFOVs[currentScopedFOV];
-        maxMouseSensitivity = fpsCam.GetComponent<MouseLook>().mouseSensitivity;
+        lookSensitivity = fpsCam.GetComponent<MouseLook>().GetSensitivity();
 
         startingRotation = transform.localRotation;
     }
@@ -192,12 +207,13 @@ public class CrossBow : MonoBehaviour
         if(scoping)
         {
             fpsCam.fieldOfView = scopedFOV; 
-            fpsCam.GetComponent<MouseLook>().mouseSensitivity = maxMouseSensitivity / (1.3f * scopedFOVs.Length - currentScopedFOV);
+            fpsCam.GetComponent<MouseLook>().SetSensitivity(scopedSensitivity);
+            // fpsCam.GetComponent<MouseLook>().mouseSensitivity = lookSensitivity / (1.3f * scopedFOVs.Length - currentScopedFOV);
         }
         else
         {
             fpsCam.fieldOfView = weaponCam.fieldOfView;
-            fpsCam.GetComponent<MouseLook>().mouseSensitivity = maxMouseSensitivity;
+            fpsCam.GetComponent<MouseLook>().SetSensitivity(lookSensitivity);
         }
 
         ourBoiIsInTheProcessOfScoping = false;
