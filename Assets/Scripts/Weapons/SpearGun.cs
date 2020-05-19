@@ -188,7 +188,6 @@ public class SpearGun : MonoBehaviour
     public void RestockAmmo()
     {
         currentMag = maxMag;
-        print("omg");
     }
 
     IEnumerator ReloadingBehaviour()
@@ -216,15 +215,5 @@ public class SpearGun : MonoBehaviour
         }
 
         reloading = false;
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if(other.tag.Equals("Ammo"))
-        {
-            //audioManager.Play("Pickup", GetComponent<AudioSource>());
-            RestockAmmo();
-            //Destroy(other.gameObject);
-        }
     }
 }

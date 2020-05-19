@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem.Interactions;
 
 public class WeaponsInputNinja : MonoBehaviour
@@ -8,16 +6,17 @@ public class WeaponsInputNinja : MonoBehaviour
     private WeaponSwitch.NinjaWeapon currentWeapon;
     private WeaponSwitch weaponSwitch;
     private PlayerInput playerInput;
-    // Start is called before the first frame update
+    private AudioManager audioManager;
+
     void Start()
     {
         weaponSwitch = GetComponent<WeaponSwitch>();
+        audioManager = FindObjectOfType<AudioManager>();
         currentWeapon = weaponSwitch.GetCurrentNinjaWeapon();
         playerInput = new PlayerInput();
         playerInput.Enable();
     }
 
-    // Update is called once per frame
     void Update()
     {
         SetCurrentWeapon();
@@ -80,6 +79,7 @@ public class WeaponsInputNinja : MonoBehaviour
     private void ShurikenGunInput()
     {
         ShurikenGun shurikenGun = weaponSwitch.GetCurrentWeaponIndex().GetComponent<ShurikenGun>();
+
         if(playerInput.Weapon.Fire.triggered)
         {
             shurikenGun.Fire();
@@ -141,6 +141,18 @@ public class WeaponsInputNinja : MonoBehaviour
                 bow.SetArrowMenuState(false);
             }
         };
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        ShurikenGun shurikenGun = weaponSwitch.GetCurrentWeaponIndex().GetComponent<ShurikenGun>();
+
+        if(other.tag.Equals("Ammo"))
+        {
+            audioManager.Play("Pickup", GetComponent<AudioSource>());
+            shurikenGun.RestockAmmo();
+            Destroy(other.gameObject);
+        }
     }
 
     private void OnDisable() 

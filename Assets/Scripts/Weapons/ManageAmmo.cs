@@ -4,26 +4,21 @@ using UnityEngine;
 
 public class ManageAmmo : MonoBehaviour
 {
-    // Start is called before the first frame update
+    private AudioManager audioManager;
+
     void Start()
     {
-        
+        audioManager = FindObjectOfType<AudioManager>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if(other.tag.Equals("Ammo"))
-        {
-            //audioManager.Play("Pickup", GetComponent<AudioSource>());
-            //RestockAmmo();
-            //Destroy(other.gameObject);
-            print("pls");
-        }
-    }
+    // private void OnTriggerEnter(Collider other)
+    // {
+    //     SpearGun spearGun = GetComponent<SpearGun>();
+    //     if(other.tag.Equals("Ammo"))
+    //     {
+    //         audioManager.Play("Pickup", GetComponent<AudioSource>());
+    //         spearGun.RestockAmmo();
+    //         Destroy(other.gameObject);
+    //     }
+    // }
 }
