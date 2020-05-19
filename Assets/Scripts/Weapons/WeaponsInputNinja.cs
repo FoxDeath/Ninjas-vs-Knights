@@ -15,9 +15,12 @@ public class WeaponsInputNinja : MonoBehaviour
 
     private bool openInput = true;
 
+    private AudioManager audioManager;
+
     void Start()
     {
         weaponSwitch = GetComponent<WeaponSwitch>();
+        audioManager = FindObjectOfType<AudioManager>();
         currentWeapon = weaponSwitch.GetCurrentNinjaWeapon();
         bow = transform.Find("Main Camera").Find("Bow").GetComponent<Bow>();
         shurikenGun = transform.Find("Main Camera").Find("ShurikenGun").GetComponent<ShurikenGun>();
@@ -141,6 +144,18 @@ public class WeaponsInputNinja : MonoBehaviour
             {
                 bow.SetArrowMenuState(false);
             }
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        ShurikenGun shurikenGun = weaponSwitch.GetCurrentWeaponIndex().GetComponent<ShurikenGun>();
+
+        if(other.tag.Equals("Ammo"))
+        {
+            audioManager.Play("Pickup", GetComponent<AudioSource>());
+            shurikenGun.RestockAmmo();
+            Destroy(other.gameObject);
         }
     }
 }

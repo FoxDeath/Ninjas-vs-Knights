@@ -202,32 +202,40 @@ public class Bow : MonoBehaviour
         {
             case "Fire":
                 currentType = arrowTypes.Fire;
+                if(currentFireArrows < maxArrows)
+                {
+                    currentFireArrows = maxArrows;
+                }
                 UIManager.GetInstance().SetCurrentAmmo(currentFireArrows);
                 break;
 
             case "Regular":
                 currentType = arrowTypes.Regular;
+                if(currentRegularArrows < maxArrows)
+                {
+                    currentRegularArrows = maxArrows;
+                }
                 UIManager.GetInstance().SetCurrentAmmo(currentRegularArrows);
                 break;
 
             case "Slow":
                 currentType = arrowTypes.Slow;
+                if(currentSlowArrows < maxArrows)
+                {
+                    currentSlowArrows = maxArrows;
+                }
                 UIManager.GetInstance().SetCurrentAmmo(currentSlowArrows);
                 break;
                 
             case "Explosive":
                 currentType = arrowTypes.Explosion;
+                if(currentExplosiveArrows < maxArrows)
+                {
+                    currentExplosiveArrows = maxArrows;
+                }
                 UIManager.GetInstance().SetCurrentAmmo(currentExplosiveArrows);
                 break;
         }
-    }
-
-    public void RestockAmmo()
-    {
-        currentRegularArrows = maxArrows;
-        currentFireArrows = maxArrows;
-        currentSlowArrows = maxArrows;
-        currentExplosiveArrows = maxArrows;
     }
 
     public void SetInactive()
