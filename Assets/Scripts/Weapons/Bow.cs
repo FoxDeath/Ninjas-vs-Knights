@@ -207,6 +207,11 @@ public class Bow : MonoBehaviour
     public void SetArrowMenuState(bool state)
     {
         UIManager.GetInstance().SetArrowMenuState(state);
+
+        if(state == false)
+        {
+            charging = false;
+        }
     }
 
     public void SetCurrentArrow(string name)
