@@ -100,7 +100,7 @@ public class SpearGun : MonoBehaviour
     //Makes the Gun fire a temporary bullet and destroyes that temporary bullet after a few seconds.
     public void Fire()
     {
-        if(Time.time >= nextTimeToFire && !reloading && currentAmmo > 0)
+        if(Time.time >= nextTimeToFire && !reloading)
         {
             if(currentAmmo > 0)
             {
@@ -128,18 +128,16 @@ public class SpearGun : MonoBehaviour
                 GameObject instantiateBullet = Instantiate(bullet, bulletEmiter.transform.position, bulletEmiter.transform.rotation);
                 Rigidbody temporaryRigidbody = instantiateBullet.GetComponentInChildren<Rigidbody>();
 
+                animator.SetTrigger("Firing");
+
                 temporaryRigidbody.velocity = (targetPoint - bulletEmiter.transform.position).normalized * speed;
 
                 Destroy(instantiateBullet, 10f);
             }
             else
             {
-                StartCoroutine(ReloadingBehaviour());
-
-                return;
+                Reload();
             }
-
-            animator.SetTrigger("Firing");
         }
     }
 

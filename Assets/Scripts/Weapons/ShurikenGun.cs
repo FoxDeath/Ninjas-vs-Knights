@@ -84,7 +84,7 @@ public class ShurikenGun :  MonoBehaviour
     //The shuriken has spread, but only when the Gun isn't scoped.
     public void Fire()
     {
-        if(Time.time >= nextTimeToFire && !reloading && currentAmmo > 0)
+        if(Time.time >= nextTimeToFire && !reloading)
         {
             if(currentAmmo > 0)
             {
@@ -111,6 +111,7 @@ public class ShurikenGun :  MonoBehaviour
 
                 GameObject instantiateBullet = Instantiate(bullet, bulletEmiter.transform.position, bulletEmiter.transform.rotation);
                 Rigidbody temporaryRigidbody = instantiateBullet.GetComponentInChildren<Rigidbody>();
+                animator.SetTrigger("Firing");
 
                 temporaryRigidbody.velocity = (targetPoint - bulletEmiter.transform.position).normalized * speed;
 
@@ -118,12 +119,8 @@ public class ShurikenGun :  MonoBehaviour
             }
             else
             {
-                StartCoroutine(ReloadingBehaviour());
-
-                return;
+                Reload();
             }
-
-            animator.SetTrigger("Firing");
         }
     }
 
@@ -131,8 +128,8 @@ public class ShurikenGun :  MonoBehaviour
     {
         scoping = state;
         animator.SetBool("Scoped", state);
-        //playerMovement.SetScoping(state);
-        //playerMovement.Sprint(false);
+        playerMovement.SetScoping(state);
+        playerMovement.Sprint(false);
     }
 
     public void Reload()

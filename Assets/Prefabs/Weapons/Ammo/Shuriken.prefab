@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 4349958456309026257}
   m_Layer: 10
   m_Name: Shuriken
-  m_TagString: Untagged
+  m_TagString: Ammo
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36ff3026b8974ae44844c9a393998dba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 100
+  damage: 10
 --- !u!54 &3418023256639219035
 Rigidbody:
   m_ObjectHideFlags: 0

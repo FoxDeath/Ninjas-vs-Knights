@@ -34,9 +34,10 @@ public class Target : MonoBehaviour
     void Die()
     {
         dead = true;
+        myRigidbody.constraints = RigidbodyConstraints.None;
         EndLevel.killedEnemies++;
         audioManager.Play("EnemyDying", GetComponent<AudioSource>());
-        Destroy(gameObject, 1f);
+        Destroy(gameObject, 5f);
     }
 
     //Calculates the health for the health bar slider.
@@ -114,10 +115,10 @@ public class Target : MonoBehaviour
 
     void OnCollisionEnter(Collision other)
     {
-        if(other.gameObject.name.Equals("ShurikenModel") || other.gameObject.name.Equals("SpearGunLaserModel"))
-        {
-            Vector3 force = transform.localPosition - other.transform.localPosition;
-            myRigidbody.velocity = new Vector3(other.transform.right.x * force.x, other.transform.up.y * force.y, other.transform.forward.z * force.z);
-        }
+        // if(other.gameObject.tag.Equals("Ammo") && dead)
+        // {
+        //     Vector3 force = transform.localPosition - other.transform.localPosition;
+        //     myRigidbody.AddForce(force, ForceMode.Impulse);
+        // }
     }
 }

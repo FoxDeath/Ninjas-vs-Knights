@@ -137,7 +137,7 @@ GameObject:
   - component: {fileID: 2138349450465460937}
   m_Layer: 10
   m_Name: SpearGunLaser
-  m_TagString: Untagged
+  m_TagString: Ammo
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
