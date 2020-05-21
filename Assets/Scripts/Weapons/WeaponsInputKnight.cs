@@ -15,9 +15,11 @@ public class WeaponsInputKnight : MonoBehaviour
 
     private bool openInput = true;
 
+    private AudioManager audioManager;
     void Start()
     {
         weaponSwitch = GetComponent<WeaponSwitch>();
+        audioManager = FindObjectOfType<AudioManager>();
         currentWeapon = weaponSwitch.GetCurrentKnightWeapon();
         crossBow = transform.Find("Main Camera").Find("Crossbow").GetComponent<CrossBow>();
         spearGun = transform.Find("Main Camera").Find("SpearGun").GetComponent<SpearGun>();
@@ -125,14 +127,15 @@ public class WeaponsInputKnight : MonoBehaviour
         }
     }
 
-    public void SpearGunChargeInput(InputAction.CallbackContext context)
+    private void OnTriggerEnter(Collider other)
     {
-        if ((int)currentWeapon == 1 && openInput)
+        SpearGun spearGun = weaponSwitch.GetCurrentWeaponIndex().GetComponent<SpearGun>();
+        
+        if(other.tag.Equals("Ammo"))
         {
-            if (context.action.phase == InputActionPhase.Performed)
-            {
-                spearGun.Charge();
-            }
+            audioManager.Play("Pickup", GetComponent<AudioSource>());
+            spearGun.RestockAmmo();
+            Destroy(other.gameObject);
         }
     }
 }
