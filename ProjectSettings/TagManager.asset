@@ -10,7 +10,6 @@ TagManager:
   - Wall
   - EdgeHang
   - Grenade
-  - Ammo
   layers:
   - Default
   - TransparentFX

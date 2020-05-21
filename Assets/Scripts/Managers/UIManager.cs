@@ -18,7 +18,7 @@ public class UIManager : MonoBehaviour
 
     private TextMeshProUGUI grenadeCount;
     private TextMeshProUGUI currentAmmo;
-    private TextMeshProUGUI currentClips;
+    private TextMeshProUGUI maxAmmo;
     private TextMeshProUGUI[] texts;
     private Slider knightSlider;
     private Slider healthSlider;
@@ -121,7 +121,7 @@ public class UIManager : MonoBehaviour
             }
             else if(text.name.Equals("MaxAmmo"))
             {
-                currentClips = text;
+                maxAmmo = text;
             }
         }
     }
@@ -198,9 +198,9 @@ public class UIManager : MonoBehaviour
         return inArrowMenu;
     }
 
-    public void SetMaxAmmo(int clips)
+    public void SetMaxAmmo(int ammo)
     {
-        currentClips.text = clips.ToString();
+        maxAmmo.text = ammo.ToString();
     }
 
     public void SetCurrentAmmo(int ammo)

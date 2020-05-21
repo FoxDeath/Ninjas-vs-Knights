@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.InputSystem.Interactions;
 
 public class WeaponsInputKnight : MonoBehaviour
@@ -6,17 +8,16 @@ public class WeaponsInputKnight : MonoBehaviour
     private WeaponSwitch.KnightWeapon currentWeapon;
     private WeaponSwitch weaponSwitch;
     private PlayerInput playerInput;
-    private AudioManager audioManager;
-
+    // Start is called before the first frame update
     void Start()
     {
         weaponSwitch = GetComponent<WeaponSwitch>();
-        audioManager = FindObjectOfType<AudioManager>();
         currentWeapon = weaponSwitch.GetCurrentKnightWeapon();
         playerInput = new PlayerInput();
         playerInput.Enable();
     }
 
+    // Update is called once per frame
     void Update()
     {
         SetCurrentWeapon();
@@ -114,18 +115,6 @@ public class WeaponsInputKnight : MonoBehaviour
         if(playerInput.Weapon.Scope.triggered)
         {
             spearGun.Charge();
-        }
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        SpearGun spearGun = weaponSwitch.GetCurrentWeaponIndex().GetComponent<SpearGun>();
-        
-        if(other.tag.Equals("Ammo"))
-        {
-            audioManager.Play("Pickup", GetComponent<AudioSource>());
-            spearGun.RestockAmmo();
-            Destroy(other.gameObject);
         }
     }
 

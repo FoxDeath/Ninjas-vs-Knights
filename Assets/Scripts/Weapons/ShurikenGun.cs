@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class ShurikenGun :  MonoBehaviour
 {
@@ -18,9 +19,7 @@ public class ShurikenGun :  MonoBehaviour
     private float nextTimeToFire = 0f;
 
     [SerializeField] int maxAmmo = 10;
-    [SerializeField] int maxMag;
     private int currentAmmo;
-    private int currentMag;
 
     private bool reloading;
     private bool scoping;
@@ -31,51 +30,26 @@ public class ShurikenGun :  MonoBehaviour
         playerMovement = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
         audioManager = FindObjectOfType<AudioManager>();
         animator = GetComponent<Animator>();
-        maxMag = maxAmmo * 4;
         currentAmmo = maxAmmo;
-        currentMag = maxMag;
         uiManager = (UIManager)FindObjectOfType(typeof(UIManager));
-        uiManager.SetMaxAmmo(currentMag);
+        uiManager.SetMaxAmmo(maxAmmo);
         uiManager.SetCurrentAmmo(currentAmmo);
         muzzleFlash = GetComponentInChildren<ParticleSystem>();
+
         bulletEmiter = GameObject.Find("ShurikenEmitter");
     }
 
     void Update()
     {
         uiManager.SetCurrentAmmo(currentAmmo);
-        uiManager.SetMaxAmmo(currentMag);
-        ManageAmmo();
-    }
-
-    private void ManageAmmo()
-    {
-        if(currentAmmo > maxAmmo)
-        {
-            currentAmmo = maxAmmo;
-        }
-
-        if(currentMag > maxMag)
-        {
-            currentMag = maxMag;
-        }
-
-        if(currentAmmo < 0)
-        {
-            currentAmmo = 0;
-        }
-        
-        if(currentMag < 0)
-        {
-            currentMag = 0;
-        }
+        uiManager.SetMaxAmmo(maxAmmo);
     }
 
     //Makes the Gun fire a temporary shuriken, and destroyes that temporary shuriken after a few seconds.
     //The shuriken has spread, but only when the Gun isn't scoped.
     public void Fire()
     {
-        if(Time.time >= nextTimeToFire && !reloading && currentAmmo > 0)
+        if(Time.time >= nextTimeToFire && !reloading)
         {
             if(currentAmmo > 0)
             {
@@ -83,7 +57,7 @@ public class ShurikenGun :  MonoBehaviour
                 RaycastHit hit ;
 
                 Vector3 targetPoint ;
-                if(Physics.Raycast(ray, out hit))
+                if (Physics.Raycast(ray, out hit))
                 {
                     targetPoint = hit.point;
                 }
@@ -112,7 +86,6 @@ public class ShurikenGun :  MonoBehaviour
                 StartCoroutine(ReloadingBehaviour());
                 return;
             }
-
             animator.SetTrigger("Firing");
         }
     }
@@ -132,7 +105,7 @@ public class ShurikenGun :  MonoBehaviour
             return;
         }
 
-        if((currentAmmo < maxAmmo) && (currentMag > 0))
+        if(currentAmmo < maxAmmo)
         {
             Scope(false);
             StartCoroutine(ReloadingBehaviour());
@@ -144,18 +117,11 @@ public class ShurikenGun :  MonoBehaviour
         reloading = false;
         audioManager.Stop("Reload");
         audioManager.Stop("ShurikenShoot");
-
         if(scoping)
         {
             Scope(false);
         }
-
         gameObject.SetActive(false);
-    }
-
-    public void RestockAmmo()
-    {
-        currentMag = maxMag;
     }
 
     IEnumerator ReloadingBehaviour()
@@ -172,18 +138,7 @@ public class ShurikenGun :  MonoBehaviour
 
         yield return new WaitForSeconds(.25f);
 
-        if(currentMag >= maxAmmo - currentAmmo)
-        {
-            currentMag -= maxAmmo - currentAmmo;
-            currentAmmo = maxAmmo;
-        }
-
-        if(currentMag < maxAmmo - currentAmmo)
-        {
-            currentAmmo += currentMag;
-            currentMag = 0;
-        }
-
+        currentAmmo = maxAmmo;
         reloading = false;
     }
 }

@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class CrossBow : MonoBehaviour
 {
     [SerializeField] GameObject arrowPrefab;
     private GameObject anchor;
     private GameObject player;
+
     [SerializeField] LayerMask layerMask;
     private AudioManager audioManager;
     private Animator crossbowAnimator;
@@ -13,6 +15,7 @@ public class CrossBow : MonoBehaviour
     private Camera weaponCam;
     private UIManager uiManager;
     private ParticleSystem muzzleFlash;
+
     private Quaternion startingRotation;
 
     [SerializeField] float damage = 10f;
@@ -40,6 +43,7 @@ public class CrossBow : MonoBehaviour
         fpsCam = GameObject.Find("Main Camera").GetComponent<Camera>();
         weaponCam = GameObject.Find("WeaponCamera").GetComponent<Camera>();
         player = GameObject.Find("KnightPlayer");
+
         uiManager.SetMaxAmmo(1);
         uiManager.SetCurrentAmmo(1);
 
