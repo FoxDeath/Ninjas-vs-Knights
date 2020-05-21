@@ -138,15 +138,4 @@ public class WeaponsInputKnight : MonoBehaviour
             Destroy(other.gameObject);
         }
     }
-
-    private void OnDisable() 
-    {
-        if ((int)currentWeapon == 1 && openInput)
-        {
-            if (context.action.phase == InputActionPhase.Performed)
-            {
-                spearGun.Charge();
-            }
-        }
-    }
 }

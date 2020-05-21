@@ -49,10 +49,7 @@ public class SpearGun : MonoBehaviour
         uiManager.SetCurrentAmmo(currentAmmo);
         uiManager.SetMaxAmmo(currentMag);
         ManageAmmo();
-    }
 
-    private void ManageAmmo()
-    {
         if(GetComponentInParent<PlayerMovement>().GetMoving())
         {
             animator.SetBool("Moving", true);
@@ -61,7 +58,10 @@ public class SpearGun : MonoBehaviour
         {
             animator.SetBool("Moving", false);
         }
+    }
 
+    private void ManageAmmo()
+    {
         if(currentAmmo > maxAmmo)
         {
             currentAmmo = maxAmmo;

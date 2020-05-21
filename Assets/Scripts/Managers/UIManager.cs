@@ -127,14 +127,10 @@ public class UIManager : MonoBehaviour
                 {
                     currentAmmo = text;
                 }
-                else if (text.name.Equals("MaxAmmo"))
+                else if(text.name.Equals("MaxAmmo"))
                 {
-                    maxAmmo = text;
+                    currentClips = text;
                 }
-            }
-            else if(text.name.Equals("MaxAmmo"))
-            {
-                currentClips = text;
             }
         }
     }
