@@ -2,13 +2,13 @@
 
 public class EnemyMovement : MonoBehaviour
 {
+    private Transform player;
+    
     [SerializeField] float speed = 4f;
     [SerializeField] float lookRadius = 20f;
     [SerializeField] float stoppingDistance = 10f;
     [SerializeField] float retreatDistance = 7f;
     private float retreatSpeed;
-
-    private Transform player;
 
     #region Getters and Setters
     public float GetSpeed()

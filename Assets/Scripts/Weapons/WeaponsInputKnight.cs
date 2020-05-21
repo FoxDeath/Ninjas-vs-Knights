@@ -25,6 +25,7 @@ public class WeaponsInputKnight : MonoBehaviour
         spearGun = transform.Find("Main Camera").Find("SpearGun").GetComponent<SpearGun>();
         slingshot = GetComponent<Slingshot>();
         SaveManager.GetInstance().LoadConfig();
+        SaveManager.GetInstance().LoadOptions();
     }
 
     void OnEnable()

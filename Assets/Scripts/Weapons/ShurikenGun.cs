@@ -89,10 +89,10 @@ public class ShurikenGun :  MonoBehaviour
             if(currentAmmo > 0)
             {
                 Ray ray = GameObject.Find("Main Camera").GetComponent<Camera>().ViewportPointToRay(new Vector3(0.5F, 0.5F, 0));
-                RaycastHit hit ;
+                RaycastHit hit;
+                Vector3 targetPoint;
 
-                Vector3 targetPoint ;
-                if(Physics.Raycast(ray, out hit))
+                if (Physics.Raycast(ray, out hit))
                 {
                     targetPoint = hit.point;
                 }

@@ -21,7 +21,6 @@ public class OptionsMenu : MonoBehaviour
     public void SetVolume(float value)
     {
         volumeSlider.value = value;
-        AudioListener.volume = value;
     }
 
     public float GetVolume()
@@ -32,11 +31,6 @@ public class OptionsMenu : MonoBehaviour
     public void SetLookSensitivity(float sens)
     {
         lookSensSlider.value = sens;
-
-        if(mouseLook != null)
-        {
-            mouseLook.SetSensitivity(sens);
-        }
     }
 
     public float GetLookSensitivity()
@@ -47,11 +41,6 @@ public class OptionsMenu : MonoBehaviour
     public void SetScopedSensitivity(float sens)
     {
         scopedSensSlider.value = sens;
-
-        if(crossBow != null)
-        {
-            crossBow.SetScopedSensitivity(sens);
-        }
     }
 
     public float GetScopedSensitivity()

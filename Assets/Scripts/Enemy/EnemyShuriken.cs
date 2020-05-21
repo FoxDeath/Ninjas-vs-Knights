@@ -2,25 +2,39 @@
 
 public class EnemyShuriken : MonoBehaviour
 {
-    [SerializeField] float speed = 200f;
-    [SerializeField] float damage = 10f;
+    private GameObject anchor;
 
     private Transform player;
+    private Rigidbody myRigidbody;
+
     private Vector3 target;
     private Vector3 direction;
+
+    [SerializeField] float damage = 10f;
+
+    private bool hit = false;
 
     //The Target is the players position, when an EnemyShuriken is spawned.
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
+        myRigidbody = GetComponent<Rigidbody>();
         target = player.position;
         direction = (target - transform.position).normalized;
     }
 
     //The EnemyShuriken will move towards the targets last known position.
-    void Update()
+    void FixedUpdate()
     {
-        transform.position += direction * speed * Time.deltaTime;
+        if(!anchor)
+        {
+            transform.rotation = Quaternion.LookRotation(myRigidbody.velocity);
+        }
+        else
+        {
+            transform.position = anchor.transform.position;
+            transform.rotation = anchor.transform.rotation;
+        }
     }
 
     //When the EnemyShuriken hits the Player, the Player will take damage.
@@ -28,9 +42,27 @@ public class EnemyShuriken : MonoBehaviour
     {
         if(other.gameObject.tag.Equals("Player"))
         {
+            hit = true;
+            FindObjectOfType<AudioManager>().Play("ShurikenHit", GetComponent<AudioSource>());
             other.gameObject.GetComponentInParent<Health>().TakeDamage(damage);
+            Destroy(gameObject, 0.1f);
         }
         
-        Destroy(gameObject);
+        
+        if (other.gameObject.layer != LayerMask.NameToLayer("Player"))
+        {
+            FindObjectOfType<AudioManager>().Play("ShurikenHit", GetComponent<AudioSource>());
+            myRigidbody.velocity = Vector3.zero;
+            myRigidbody.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
+            myRigidbody.isKinematic = true;
+
+            GameObject anchor = new GameObject("Shuriken Anchor");
+            anchor.transform.position = this.transform.position;
+            anchor.transform.rotation = this.transform.rotation;
+            anchor.transform.parent = myRigidbody.transform;
+            this.anchor = anchor;
+
+            Destroy(gameObject, 10f);
+        }
     }
 }

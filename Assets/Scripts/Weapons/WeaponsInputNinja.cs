@@ -26,6 +26,7 @@ public class WeaponsInputNinja : MonoBehaviour
         shurikenGun = transform.Find("Main Camera").Find("ShurikenGun").GetComponent<ShurikenGun>();
         kunai = GetComponent<KunaiNadeInput>();
         SaveManager.GetInstance().LoadConfig();
+        SaveManager.GetInstance().LoadOptions();
     }
 
     void OnEnable()
