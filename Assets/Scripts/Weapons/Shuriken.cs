@@ -43,13 +43,14 @@ public class Shuriken : MonoBehaviour
             rigidBody.velocity = Vector3.zero;
             rigidBody.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
             rigidBody.isKinematic = true;
-
+            
             GameObject anchor = new GameObject("Shuriken Anchor");
             anchor.transform.position = this.transform.position;
             anchor.transform.rotation = this.transform.rotation;
             anchor.transform.parent = collision.transform;
             this.anchor = anchor;
 
+            Destroy(anchor, 10f);
             Destroy(gameObject, 10f);
         }
     }

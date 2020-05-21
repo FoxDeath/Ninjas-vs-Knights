@@ -75,6 +75,7 @@ public class Arrow : MonoBehaviour
             anchor.transform.parent = collision.transform;
             this.anchor = anchor;
 
+            Destroy(anchor, 10f);
             Destroy(gameObject, 10f);
         }
     }

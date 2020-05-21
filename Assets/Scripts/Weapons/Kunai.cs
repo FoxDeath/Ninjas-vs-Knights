@@ -61,6 +61,8 @@ public class Kunai : MonoBehaviour
             anchor.transform.parent = collision.transform;
             this.anchor = anchor;
 
+            Destroy(anchor, 5f);
+
         }
         if (collision.gameObject.layer == LayerMask.NameToLayer("Enemy") && !exploaded)
         {

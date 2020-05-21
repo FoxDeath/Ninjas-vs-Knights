@@ -62,6 +62,7 @@ public class EnemyShuriken : MonoBehaviour
             anchor.transform.parent = myRigidbody.transform;
             this.anchor = anchor;
 
+            Destroy(anchor, 10f);
             Destroy(gameObject, 10f);
         }
     }
