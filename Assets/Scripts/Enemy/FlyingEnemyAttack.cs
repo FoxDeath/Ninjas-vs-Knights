@@ -6,15 +6,27 @@ public class FlyingEnemyAttack : MonoBehaviour
 {
     private Transform target;
 
+    [SerializeField] GameObject projectile;
+
     private bool coolingDown;
+    private bool flashed;
 
     [SerializeField] float range = 20f;
-    [SerializeField] float damage = 20f;
+
+    public void SetFlashed(bool flashed)
+    {
+        this.flashed = flashed;
+        Invoke("SetFlashedBack", 5f);
+    }
+    void SetFlashedBack()
+    {
+        flashed = false;
+    }
 
     void Update()
     {
         target = GetComponent<FlyingEnemyMovement>().GetTarget();
-        if (LineOfSight() && InRange() && !coolingDown)
+        if (LineOfSight() && InRange() && !coolingDown && !flashed)
         {
             StartCoroutine(AttackBehaviour());   
         }
@@ -23,13 +35,17 @@ public class FlyingEnemyAttack : MonoBehaviour
     IEnumerator AttackBehaviour()
     {
         coolingDown = true;
-        target.GetComponent<Health>().TakeDamage(damage);
+        Instantiate(projectile, transform.position, Quaternion.LookRotation(target.position - transform.position));
         yield return new WaitForSeconds(2f);
         coolingDown = false;
     }
 
     bool LineOfSight()
     {
+        if (!target)
+        {
+            return false;
+        }
         RaycastHit hit;
 
         Vector3 dir = target.position - transform.position; 
@@ -49,6 +65,10 @@ public class FlyingEnemyAttack : MonoBehaviour
 
     bool InRange()
     {
+        if (!target)
+        {
+            return false;
+        }
         return Vector3.Distance(transform.position, target.position) <= range;
     }
 }

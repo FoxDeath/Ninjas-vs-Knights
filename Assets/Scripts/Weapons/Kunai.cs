@@ -96,6 +96,22 @@ public class Kunai : MonoBehaviour
                 }
             }
         }
+        //EnemyAttack[] enemies = (EnemyAttack[])GameObject.FindObjectsOfType(typeof(EnemyAttack));
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        foreach (GameObject enemy in enemies)
+        {
+            EnemyAttack enemyAttack = enemy.GetComponent<EnemyAttack>();
+            FlyingEnemyAttack flyingEnemyAttack = enemy.GetComponent<FlyingEnemyAttack>();
+            if (enemyAttack)
+            {
+                enemyAttack.SetFlashed(true);
+            }
+            else if (flyingEnemyAttack)
+            {
+                flyingEnemyAttack.SetFlashed(true);
+            }
+        }
+    }
 
         Destroy(gameObject);
     }      

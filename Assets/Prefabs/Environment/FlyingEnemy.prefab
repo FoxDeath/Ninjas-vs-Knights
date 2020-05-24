@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 5426682381557393382}
   - component: {fileID: 7124570782523020204}
   - component: {fileID: 7181062224559561872}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: FlyingEnemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -80,8 +80,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56fdb23fdb99276409145b0793a0fa8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  projectile: {fileID: 7853919440509985638, guid: f087191fa89a148409f3d5f1895ad376,
+    type: 3}
   range: 20
-  damage: 20
 --- !u!114 &7181062224559561872
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -108,7 +109,7 @@ GameObject:
   - component: {fileID: 5426682381929735092}
   - component: {fileID: 5426682381929735091}
   - component: {fileID: 5426682381929735090}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -192,6 +193,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2349554274822649597, guid: 673fbad04112c1f47b465cb0da65d7f2,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 2349554275034616479, guid: 673fbad04112c1f47b465cb0da65d7f2,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 2349554276210340648, guid: 673fbad04112c1f47b465cb0da65d7f2,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 5152426292745855783, guid: 673fbad04112c1f47b465cb0da65d7f2,
         type: 3}

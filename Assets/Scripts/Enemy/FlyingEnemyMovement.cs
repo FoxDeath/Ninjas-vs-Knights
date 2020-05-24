@@ -48,6 +48,12 @@ public class FlyingEnemyMovement : MonoBehaviour
         {
             transform.position += transform.forward * movementSpeed * Time.deltaTime;
         }
+        if (Vector3.Distance(transform.position, target.position) < minDistanceFromPlayer)
+        {
+            Vector3 retreat = transform.forward;
+            retreat.y *= -1;
+            transform.position -= retreat * movementSpeed * Time.deltaTime;
+        }
     }
 
     void Turn()
