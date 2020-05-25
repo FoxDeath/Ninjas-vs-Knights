@@ -18,6 +18,8 @@ public class Target : MonoBehaviour
 
     private Quaternion ogRotation;
 
+    private Vector3 lastHit;
+
     [SerializeField] float maxHealth = 50f;
     private float health;
     
@@ -60,7 +62,8 @@ public class Target : MonoBehaviour
         {
             GetComponent<NavMeshAgent>().enabled = false;
         }
-
+        
+        myRigidbody.AddForce(lastHit * 50f, ForceMode.Impulse);
         Destroy(gameObject, 5f);
     }
 
@@ -137,15 +140,6 @@ public class Target : MonoBehaviour
         movement.SetAgentSpeed(ogSpeed);
     }
 
-    void OnCollisionEnter(Collision other)
-    {
-        if(other.gameObject.tag.Equals("Ammo") && dead)
-        {
-            Vector3 force = transform.localPosition - other.transform.localPosition;
-            myRigidbody.AddForce(force, ForceMode.Impulse);
-        }
-    }
-
     public void StartExploding(float damage, float explosionForce, Vector3 position, float radius)
     {
         if(explodingBehaviour == null)
@@ -182,6 +176,14 @@ public class Target : MonoBehaviour
         {
             GetComponent<NavMeshAgent>().enabled = true;
             GetComponent<NavMeshAgent>().SetDestination(movement.GetObjective().position);
+        }
+    }
+
+    void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.tag.Equals("Ammo"))
+        {
+            lastHit = transform.localPosition - other.transform.localPosition;
         }
     }
 }
