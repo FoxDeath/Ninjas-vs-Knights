@@ -20,6 +20,15 @@ public class Target : MonoBehaviour
     private bool dead;
     private bool onFire;
 
+    #region Getters and Setters
+
+    public bool GetDead()
+    {
+        return dead;
+    }
+
+    #endregion
+
     void Start()
     {
         audioManager = FindObjectOfType<AudioManager>();
@@ -49,7 +58,7 @@ public class Target : MonoBehaviour
     //Makes the Enemy take damage and updates its health bar.
     public void TakeDamage(float damage)
     {
-        if (!dead)
+        if(!dead)
         {
             audioManager.Play("Hit", GetComponent<AudioSource>());
             health -= damage;
@@ -105,20 +114,20 @@ public class Target : MonoBehaviour
 
     IEnumerator SlowDownEffectTimer(float duration)
     {
-        float ogSpeed = movement.GetSpeed();
-        movement.SetSpeed(ogSpeed * 0.5f);
+        float ogSpeed = movement.GetAgentSpeed();
+        movement.SetAgentSpeed(ogSpeed * 0.5f);
 
         yield return new WaitForSeconds(duration);
 
-        movement.SetSpeed(ogSpeed);
+        movement.SetAgentSpeed(ogSpeed);
     }
 
     void OnCollisionEnter(Collision other)
     {
-        // if(other.gameObject.tag.Equals("Ammo") && dead)
-        // {
-        //     Vector3 force = transform.localPosition - other.transform.localPosition;
-        //     myRigidbody.AddForce(force, ForceMode.Impulse);
-        // }
+        if(other.gameObject.tag.Equals("Ammo") && dead)
+        {
+            Vector3 force = transform.localPosition - other.transform.localPosition;
+            myRigidbody.AddForce(force, ForceMode.Impulse);
+        }
     }
 }

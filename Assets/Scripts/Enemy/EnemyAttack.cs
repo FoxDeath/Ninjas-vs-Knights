@@ -7,37 +7,48 @@ public class EnemyAttack : MonoBehaviour
     [SerializeField] GameObject bullet;
     public GameObject bulletEmitter;
 
+    private Transform objective;
     private Transform player;
     private AudioManager audioManager;
+    private Target target;
 
-    private float nextTimeToFire;
     [SerializeField] float shootSpeed = 100f;
     [SerializeField] float fireRate = 0.5f;
-    [SerializeField] float shootRadius = 20f;
     [SerializeField] float spread = 0.65f;
     [SerializeField] float flashedSpread = 4f;
+    private float shootRadius;
+    private float nextTimeToFire;
 
-    public bool flashed;
+    private bool flashed;
 
+    void Awake()
+    {
+        objective = GameObject.FindGameObjectWithTag("EnemyObjective").transform;
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+        audioManager = FindObjectOfType<AudioManager>();
+        target = GetComponent<Target>();
+    }
 
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player").transform;
-        audioManager = FindObjectOfType<AudioManager>();
+        shootRadius = GetComponent<EnemyMovement>().GetLookRadius();
     }
     
-    void Update()
+    void FixedUpdate()
     {
-        if (Vector3.Distance(transform.position, player.position) <= shootRadius)
+        if(!target.GetDead() && nextTimeToFire <= 0)
         {
-            if (nextTimeToFire <= 0)
+            if(Vector3.Distance(transform.position, objective.position) <= shootRadius)
             {
                 Shoot();
-                nextTimeToFire = fireRate + Random.Range(-fireRate / 2, fireRate / 2);
             }
-
-            nextTimeToFire -= Time.deltaTime;
+            if(Vector3.Distance(transform.position, player.position) <= shootRadius)
+            {
+                Shoot();
+            }
         }
+
+        nextTimeToFire -= Time.fixedDeltaTime;
     }
 
     //Makes the Shooting happen. It creates a clone of the bullet, and it is destroyed after a few seconds.
@@ -90,6 +101,8 @@ public class EnemyAttack : MonoBehaviour
         audioManager.Play("ShurikenShoot", GetComponent<AudioSource>());
 
         temporaryRigidbody.velocity = (targetPoint - bulletEmitter.transform.position).normalized * shootSpeed;
+
+        nextTimeToFire = fireRate + Random.Range(-fireRate / 2, fireRate / 2);
 
         Destroy(instantiateBullet, 10f);
     }

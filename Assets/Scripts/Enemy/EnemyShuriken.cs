@@ -12,13 +12,15 @@ public class EnemyShuriken : MonoBehaviour
 
     [SerializeField] float damage = 10f;
 
-    private bool hit = false;
+    void Awake()
+    {
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+        myRigidbody = GetComponent<Rigidbody>();
+    }
 
     //The Target is the players position, when an EnemyShuriken is spawned.
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player").transform;
-        myRigidbody = GetComponent<Rigidbody>();
         target = player.position;
         direction = (target - transform.position).normalized;
     }
@@ -42,15 +44,14 @@ public class EnemyShuriken : MonoBehaviour
     {
         if(other.gameObject.tag.Equals("Player"))
         {
-            hit = true;
             FindObjectOfType<AudioManager>().Play("ShurikenHit", GetComponent<AudioSource>());
             other.gameObject.GetComponentInParent<Health>().TakeDamage(damage);
             Destroy(gameObject, 0.1f);
         }
         
-        
-        if (other.gameObject.layer != LayerMask.NameToLayer("Player"))
+        if(other.gameObject.layer != LayerMask.NameToLayer("Player") && other.gameObject.layer != LayerMask.NameToLayer("Enemy") && !other.gameObject.tag.Equals("Ammo"))
         {
+            GetComponent<Collider>().enabled = false;
             FindObjectOfType<AudioManager>().Play("ShurikenHit", GetComponent<AudioSource>());
             myRigidbody.velocity = Vector3.zero;
             myRigidbody.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;

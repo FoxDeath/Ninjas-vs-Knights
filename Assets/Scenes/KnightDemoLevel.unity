@@ -3055,6 +3055,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Plane
       objectReference: {fileID: 0}
+    - target: {fileID: 8986970557882362605, guid: 7326269702a7f6044af0e961477cd112,
+        type: 3}
+      propertyPath: m_TagString
+      value: Hookable
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7326269702a7f6044af0e961477cd112, type: 3}
 --- !u!4 &1369011333 stripped

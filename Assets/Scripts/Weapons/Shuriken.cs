@@ -37,8 +37,9 @@ public class Shuriken : MonoBehaviour
             target.TakeDamage(damage);
         }
 
-        if (collision.gameObject.layer != LayerMask.NameToLayer("Player"))
+        if (collision.gameObject.layer != LayerMask.NameToLayer("Player") && !collision.gameObject.tag.Equals("Ammo"))
         {
+            GetComponent<Collider>().enabled = false;
             FindObjectOfType<AudioManager>().Play("ShurikenHit", GetComponent<AudioSource>());
             rigidBody.velocity = Vector3.zero;
             rigidBody.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;

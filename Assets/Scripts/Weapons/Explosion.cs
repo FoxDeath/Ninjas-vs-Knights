@@ -22,7 +22,6 @@ public class Explosion : MonoBehaviour
         {
             other.gameObject.GetComponent<Target>().TakeDamage(damage);
             other.GetComponent<Rigidbody>().AddExplosionForce(explosionForce, transform.position, myCollider.radius, upwardsModifier);
-
         }
     }
 }
