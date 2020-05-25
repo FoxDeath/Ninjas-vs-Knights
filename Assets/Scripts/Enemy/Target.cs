@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.UI;
 
 public class Target : MonoBehaviour
@@ -13,6 +14,9 @@ public class Target : MonoBehaviour
     private Coroutine fireEffectTimer;
     private Coroutine fireEffectBehaviour;
     private Coroutine slowDownEffectTimer;
+    private Coroutine explodingBehaviour;
+
+    private Quaternion ogRotation;
 
     [SerializeField] float maxHealth = 50f;
     private float health;
@@ -29,11 +33,16 @@ public class Target : MonoBehaviour
 
     #endregion
 
-    void Start()
+    void Awake()
     {
         audioManager = FindObjectOfType<AudioManager>();
         myRigidbody = GetComponent<Rigidbody>();
         movement = GetComponent<EnemyMovement>();
+    }
+
+    void Start()
+    {
+        ogRotation = myRigidbody.rotation;
         health = maxHealth;
         healthBar.value = health;
         dead = false;
@@ -42,10 +51,16 @@ public class Target : MonoBehaviour
 
     void Die()
     {
-        dead = true;
-        myRigidbody.constraints = RigidbodyConstraints.None;
-        EndLevel.killedEnemies++;
         audioManager.Play("EnemyDying", GetComponent<AudioSource>());
+        dead = true;
+        myRigidbody.isKinematic = false;
+        myRigidbody.constraints = RigidbodyConstraints.None;
+
+        if(GetComponent<NavMeshAgent>() != null)
+        {
+            GetComponent<NavMeshAgent>().enabled = false;
+        }
+
         Destroy(gameObject, 5f);
     }
 
@@ -128,6 +143,45 @@ public class Target : MonoBehaviour
         {
             Vector3 force = transform.localPosition - other.transform.localPosition;
             myRigidbody.AddForce(force, ForceMode.Impulse);
+        }
+    }
+
+    public void StartExploding(float damage, float explosionForce, Vector3 position, float radius)
+    {
+        if(explodingBehaviour == null)
+        {
+            explodingBehaviour = StartCoroutine(ExplodingBehaviour(damage, explosionForce, position, radius));
+        }
+        else
+        {
+            StopCoroutine(explodingBehaviour);
+            explodingBehaviour = StartCoroutine(ExplodingBehaviour(damage, explosionForce, position, radius));
+        }
+    }
+
+    IEnumerator ExplodingBehaviour(float damage, float explosionForce, Vector3 position, float radius)
+    {
+        myRigidbody.isKinematic = false;
+        myRigidbody.constraints = RigidbodyConstraints.None;
+
+        if (GetComponent<NavMeshAgent>() != null)
+        {
+            GetComponent<NavMeshAgent>().enabled = false;
+        }
+
+        TakeDamage(damage);
+        myRigidbody.AddExplosionForce(explosionForce, position, radius, 1f);
+
+        yield return new WaitForSeconds(3f);
+
+        myRigidbody.rotation = ogRotation;
+        myRigidbody.isKinematic = true;
+        myRigidbody.constraints = RigidbodyConstraints.FreezeRotation;
+
+        if (GetComponent<NavMeshAgent>() != null && !dead)
+        {
+            GetComponent<NavMeshAgent>().enabled = true;
+            GetComponent<NavMeshAgent>().SetDestination(movement.GetObjective().position);
         }
     }
 }

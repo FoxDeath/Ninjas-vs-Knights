@@ -54,6 +54,8 @@ public class EnemyAttack : MonoBehaviour
     //Makes the Shooting happen. It creates a clone of the bullet, and it is destroyed after a few seconds.
     void Shoot()
     {
+        nextTimeToFire = fireRate + Random.Range(-fireRate / 2, fireRate / 2);
+        
         Ray ray = new Ray(bulletEmitter.transform.position, bulletEmitter.transform.forward);
         RaycastHit hit;
         Vector3 targetPoint;
@@ -97,12 +99,10 @@ public class EnemyAttack : MonoBehaviour
         }
 
         GameObject instantiateBullet = Instantiate(bullet, bulletEmitter.transform.position, bulletEmitter.transform.rotation);
-        Rigidbody temporaryRigidbody = instantiateBullet.GetComponentInChildren<Rigidbody>();
         audioManager.Play("ShurikenShoot", GetComponent<AudioSource>());
+        Rigidbody temporaryRigidbody = instantiateBullet.GetComponentInChildren<Rigidbody>();
 
         temporaryRigidbody.velocity = (targetPoint - bulletEmitter.transform.position).normalized * shootSpeed;
-
-        nextTimeToFire = fireRate + Random.Range(-fireRate / 2, fireRate / 2);
 
         Destroy(instantiateBullet, 10f);
     }

@@ -28,6 +28,11 @@ public class EnemyMovement : MonoBehaviour
         return lookRadius;
     }
 
+    public Transform GetObjective()
+    {
+        return objective;
+    }
+
     #endregion
 
     void Awake()
