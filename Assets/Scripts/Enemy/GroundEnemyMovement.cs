@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyMovement : MonoBehaviour
+public class GroundEnemyMovement : MonoBehaviour
 {
     private Transform objective;
     private Transform player;

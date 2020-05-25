@@ -2,7 +2,7 @@
 using UnityEngine;
 
 
-public class EnemyAttack : MonoBehaviour
+public class GroundEnemyAttack : MonoBehaviour
 {
     [SerializeField] GameObject bullet;
     public GameObject bulletEmitter;
@@ -31,7 +31,7 @@ public class EnemyAttack : MonoBehaviour
 
     void Start()
     {
-        shootRadius = GetComponent<EnemyMovement>().GetLookRadius();
+        shootRadius = GetComponent<GroundEnemyMovement>().GetLookRadius();
     }
     
     void FixedUpdate()

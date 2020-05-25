@@ -9,7 +9,7 @@ public class Target : MonoBehaviour
     private AudioManager audioManager;
     public GameObject healthBarUI;
     public Slider healthBar;
-    private EnemyMovement movement;
+    private GroundEnemyMovement movement;
 
     private Coroutine fireEffectTimer;
     private Coroutine fireEffectBehaviour;
@@ -37,7 +37,7 @@ public class Target : MonoBehaviour
     {
         audioManager = FindObjectOfType<AudioManager>();
         myRigidbody = GetComponent<Rigidbody>();
-        movement = GetComponent<EnemyMovement>();
+        movement = GetComponent<GroundEnemyMovement>();
     }
 
     void Start()

@@ -15,8 +15,8 @@ GameObject:
   - component: {fileID: 2639069613400589899}
   - component: {fileID: 2639069613400589892}
   - component: {fileID: 7490035165870627215}
-  - component: {fileID: 7004701616612103492}
-  - component: {fileID: 9167435945329251910}
+  - component: {fileID: 5718871572764671761}
+  - component: {fileID: 484119535631841668}
   - component: {fileID: -6386464326448226340}
   m_Layer: 12
   m_Name: Enemy
@@ -228,7 +228,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &7004701616612103492
+--- !u!114 &5718871572764671761
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -237,11 +237,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 2639069613400589893}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 740257a2027e2f241961a0d1910b4896, type: 3}
+  m_Script: {fileID: 11500000, guid: d40057d9a2868d94798b9bfa9e9b7d95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   lookRadius: 20
---- !u!114 &9167435945329251910
+--- !u!114 &484119535631841668
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -250,7 +250,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2639069613400589893}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bb4fb8264be81f14d97f2a05b40c76d5, type: 3}
+  m_Script: {fileID: 11500000, guid: 57686ae8672dbde439953632f0dafc5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   bullet: {fileID: 2693863253237791218, guid: f68966351d2fb1d489435173033111f0, type: 3}
