@@ -12,6 +12,8 @@ public class EnemyShuriken : MonoBehaviour
 
     [SerializeField] float damage = 10f;
 
+    private bool hit = false;
+
     void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
@@ -30,7 +32,14 @@ public class EnemyShuriken : MonoBehaviour
     {
         if(!anchor)
         {
-            transform.rotation = Quaternion.LookRotation(myRigidbody.velocity);
+            if(!hit)
+            {
+                transform.rotation = Quaternion.LookRotation(myRigidbody.velocity);
+            }
+            else
+            {
+                Destroy(transform.parent.gameObject);
+            }
         }
         else
         {
@@ -46,11 +55,12 @@ public class EnemyShuriken : MonoBehaviour
         {
             FindObjectOfType<AudioManager>().Play("ShurikenHit", GetComponent<AudioSource>());
             other.gameObject.GetComponentInParent<Health>().TakeDamage(damage);
-            Destroy(gameObject, 0.1f);
+            Destroy(transform.parent.gameObject, 0.1f);
         }
         
         if(other.gameObject.layer != LayerMask.NameToLayer("Player") && other.gameObject.layer != LayerMask.NameToLayer("Enemy") && !other.gameObject.tag.Equals("Ammo"))
         {
+            hit = true;
             GetComponent<Collider>().enabled = false;
             FindObjectOfType<AudioManager>().Play("ShurikenHit", GetComponent<AudioSource>());
             myRigidbody.velocity = Vector3.zero;
@@ -64,7 +74,7 @@ public class EnemyShuriken : MonoBehaviour
             this.anchor = anchor;
 
             Destroy(anchor, 10f);
-            Destroy(gameObject, 10f);
+            Destroy(transform.parent.gameObject, 10f);
         }
     }
 }

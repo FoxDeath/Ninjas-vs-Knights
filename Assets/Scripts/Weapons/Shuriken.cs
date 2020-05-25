@@ -8,6 +8,8 @@ public class Shuriken : MonoBehaviour
 
     [SerializeField] float damage = 10f;
 
+    private bool hit = false;
+
     void Awake()
     {
         rigidBody = GetComponent<Rigidbody>();
@@ -17,7 +19,14 @@ public class Shuriken : MonoBehaviour
     {
         if (!anchor)
         {
-            transform.rotation = Quaternion.LookRotation(rigidBody.velocity);
+            if(!hit)
+            {
+                transform.rotation = Quaternion.LookRotation(rigidBody.velocity);
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
         }
         else
         {
@@ -39,6 +48,7 @@ public class Shuriken : MonoBehaviour
 
         if (collision.gameObject.layer != LayerMask.NameToLayer("Player") && !collision.gameObject.tag.Equals("Ammo"))
         {
+            hit = true;
             GetComponent<Collider>().enabled = false;
             FindObjectOfType<AudioManager>().Play("ShurikenHit", GetComponent<AudioSource>());
             rigidBody.velocity = Vector3.zero;
