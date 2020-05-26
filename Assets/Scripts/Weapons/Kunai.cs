@@ -92,12 +92,19 @@ public class Kunai : MonoBehaviour
 
                 if(Physics.Raycast(transform.position, nearObject.transform.position - transform.position, out hit) && hit.transform.gameObject.layer == LayerMask.NameToLayer("Enemy"))
                 {
-                    nearObject.GetComponent<GroundEnemyAttack>().SetFlashed(true);   
+                    if(nearObject.GetComponent<GroundEnemyAttack>())
+                    {
+                        nearObject.GetComponent<GroundEnemyAttack>().SetFlashed(true);
+                    }
+                    else if(nearObject.GetComponent<FlyingEnemyAttack>())
+                    {
+                        nearObject.GetComponent<FlyingEnemyAttack>().SetFlashed(true);
+                    }
                 }
             }
         }
 
         Destroy(gameObject);
-    }      
+    }
 }
 
