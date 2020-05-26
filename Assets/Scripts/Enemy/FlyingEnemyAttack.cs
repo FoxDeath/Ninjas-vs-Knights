@@ -26,6 +26,7 @@ public class FlyingEnemyAttack : MonoBehaviour
     void Update()
     {
         target = GetComponent<FlyingEnemyMovement>().GetTarget();
+
         if (LineOfSight() && InRange() && !coolingDown && !flashed)
         {
             StartCoroutine(AttackBehaviour());   
@@ -36,7 +37,9 @@ public class FlyingEnemyAttack : MonoBehaviour
     {
         coolingDown = true;
         Instantiate(projectile, transform.position, Quaternion.LookRotation(target.position - transform.position));
+
         yield return new WaitForSeconds(2f);
+
         coolingDown = false;
     }
 
