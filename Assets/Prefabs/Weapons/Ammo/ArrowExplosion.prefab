@@ -80,8 +80,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 15
-  explosionForce: 1000
-  upwardsModifier: 150
+  explosionForce: 450
+  upwardsModifier: 1
 --- !u!199 &1769138469470592658
 ParticleSystemRenderer:
   serializedVersion: 6

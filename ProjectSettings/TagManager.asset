@@ -11,6 +11,7 @@ TagManager:
   - EdgeHang
   - Grenade
   - Ammo
+  - EnemyObjective
   layers:
   - Default
   - TransparentFX
@@ -25,7 +26,7 @@ TagManager:
   - Player
   - Weapon
   - Enemy
-  - 
+  - Consumable
   - 
   - 
   - 

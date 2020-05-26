@@ -20,8 +20,9 @@ public class SpearGunLaser : MonoBehaviour
             target.TakeDamage(damage);
         }
 
-        if(collision.gameObject.layer != LayerMask.NameToLayer("Player"))
+        if(collision.gameObject.layer != LayerMask.NameToLayer("Player") && !collision.gameObject.tag.Equals("Ammo"))
         {
+            GetComponent<Collider>().enabled = false;
             rigidBody.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
             rigidBody.isKinematic = true;
             gameObject.transform.parent = collision.gameObject.transform;

@@ -49,8 +49,9 @@ public class Kunai : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.layer != LayerMask.NameToLayer("Player"))
+        if (collision.gameObject.layer != LayerMask.NameToLayer("Player") && !collision.gameObject.tag.Equals("Ammo"))
         {
+            GetComponent<Collider>().enabled = false;
             rigidBody.velocity = Vector3.zero;
             rigidBody.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
             rigidBody.isKinematic = true;
@@ -60,6 +61,8 @@ public class Kunai : MonoBehaviour
             anchor.transform.rotation = this.transform.rotation;
             anchor.transform.parent = collision.transform;
             this.anchor = anchor;
+
+            Destroy(anchor, 5f);
 
         }
         if (collision.gameObject.layer == LayerMask.NameToLayer("Enemy") && !exploaded)
@@ -89,7 +92,7 @@ public class Kunai : MonoBehaviour
 
                 if(Physics.Raycast(transform.position, nearObject.transform.position - transform.position, out hit) && hit.transform.gameObject.layer == LayerMask.NameToLayer("Enemy"))
                 {
-                    nearObject.GetComponent<EnemyAttack>().SetFlashed(true);   
+                    nearObject.GetComponent<GroundEnemyAttack>().SetFlashed(true);   
                 }
             }
         }

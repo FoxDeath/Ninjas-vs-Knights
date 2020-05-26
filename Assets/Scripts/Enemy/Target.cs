@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.UI;
 
 public class Target : MonoBehaviour
@@ -8,11 +9,16 @@ public class Target : MonoBehaviour
     private AudioManager audioManager;
     public GameObject healthBarUI;
     public Slider healthBar;
-    private EnemyMovement movement;
+    private GroundEnemyMovement movement;
 
     private Coroutine fireEffectTimer;
     private Coroutine fireEffectBehaviour;
     private Coroutine slowDownEffectTimer;
+    private Coroutine explodingBehaviour;
+
+    private Quaternion ogRotation;
+
+    private Vector3 lastHit;
 
     [SerializeField] float maxHealth = 50f;
     private float health;
@@ -20,11 +26,25 @@ public class Target : MonoBehaviour
     private bool dead;
     private bool onFire;
 
-    void Start()
+    #region Getters and Setters
+
+    public bool GetDead()
+    {
+        return dead;
+    }
+
+    #endregion
+
+    void Awake()
     {
         audioManager = FindObjectOfType<AudioManager>();
         myRigidbody = GetComponent<Rigidbody>();
-        movement = GetComponent<EnemyMovement>();
+        movement = GetComponent<GroundEnemyMovement>();
+    }
+
+    void Start()
+    {
+        ogRotation = myRigidbody.rotation;
         health = maxHealth;
         healthBar.value = health;
         dead = false;
@@ -33,10 +53,18 @@ public class Target : MonoBehaviour
 
     void Die()
     {
-        dead = true;
-        EndLevel.killedEnemies++;
         audioManager.Play("EnemyDying", GetComponent<AudioSource>());
-        Destroy(gameObject, 1f);
+        dead = true;
+        myRigidbody.isKinematic = false;
+        myRigidbody.constraints = RigidbodyConstraints.None;
+
+        if(GetComponent<NavMeshAgent>() != null)
+        {
+            GetComponent<NavMeshAgent>().enabled = false;
+        }
+        
+        myRigidbody.AddForce(lastHit * 50f, ForceMode.Impulse);
+        Destroy(gameObject, 5f);
     }
 
     //Calculates the health for the health bar slider.
@@ -48,7 +76,7 @@ public class Target : MonoBehaviour
     //Makes the Enemy take damage and updates its health bar.
     public void TakeDamage(float damage)
     {
-        if (!dead)
+        if(!dead)
         {
             audioManager.Play("Hit", GetComponent<AudioSource>());
             health -= damage;
@@ -104,20 +132,58 @@ public class Target : MonoBehaviour
 
     IEnumerator SlowDownEffectTimer(float duration)
     {
-        float ogSpeed = movement.GetSpeed();
-        movement.SetSpeed(ogSpeed * 0.5f);
+        float ogSpeed = movement.GetAgentSpeed();
+        movement.SetAgentSpeed(ogSpeed * 0.5f);
 
         yield return new WaitForSeconds(duration);
 
-        movement.SetSpeed(ogSpeed);
+        movement.SetAgentSpeed(ogSpeed);
+    }
+
+    public void StartExploding(float damage, float explosionForce, Vector3 position, float radius)
+    {
+        if(explodingBehaviour == null)
+        {
+            explodingBehaviour = StartCoroutine(ExplodingBehaviour(damage, explosionForce, position, radius));
+        }
+        else
+        {
+            StopCoroutine(explodingBehaviour);
+            explodingBehaviour = StartCoroutine(ExplodingBehaviour(damage, explosionForce, position, radius));
+        }
+    }
+
+    IEnumerator ExplodingBehaviour(float damage, float explosionForce, Vector3 position, float radius)
+    {
+        myRigidbody.isKinematic = false;
+        myRigidbody.constraints = RigidbodyConstraints.None;
+
+        if (GetComponent<NavMeshAgent>() != null)
+        {
+            GetComponent<NavMeshAgent>().enabled = false;
+        }
+
+        TakeDamage(damage);
+        myRigidbody.AddExplosionForce(explosionForce, position, radius, 1f);
+
+        yield return new WaitForSeconds(3f);
+
+        myRigidbody.rotation = ogRotation;
+        myRigidbody.isKinematic = true;
+        myRigidbody.constraints = RigidbodyConstraints.FreezeRotation;
+
+        if (GetComponent<NavMeshAgent>() != null && !dead)
+        {
+            GetComponent<NavMeshAgent>().enabled = true;
+            GetComponent<NavMeshAgent>().SetDestination(movement.GetObjective().position);
+        }
     }
 
     void OnCollisionEnter(Collision other)
     {
-        if(other.gameObject.name.Equals("ShurikenModel") || other.gameObject.name.Equals("SpearGunLaserModel"))
+        if (other.gameObject.tag.Equals("Ammo"))
         {
-            Vector3 force = transform.localPosition - other.transform.localPosition;
-            myRigidbody.velocity = new Vector3(other.transform.right.x * force.x, other.transform.up.y * force.y, other.transform.forward.z * force.z);
+            lastHit = transform.localPosition - other.transform.localPosition;
         }
     }
 }

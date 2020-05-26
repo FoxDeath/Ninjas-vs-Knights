@@ -15,18 +15,24 @@ public class Arrow : MonoBehaviour
 
     [SerializeField] arrowTypes type = arrowTypes.Regular;
 
+    private bool hit = false;
+
     void Start()
     {
         myRigidbody = GetComponent<Rigidbody>();
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if(!anchor)
         {
-            if(myRigidbody.velocity != Vector3.zero)
+            if(myRigidbody.velocity != Vector3.zero && !hit)
             {
                 transform.rotation = Quaternion.LookRotation(myRigidbody.velocity);
+            }
+            else if(hit)
+            {
+                Destroy(gameObject);
             }
         }
         else
@@ -62,8 +68,10 @@ public class Arrow : MonoBehaviour
             Destroy(gameObject);
         }
 
-        if (collision.gameObject.layer != LayerMask.NameToLayer("Player"))
+        if (collision.gameObject.layer != LayerMask.NameToLayer("Player") && !collision.gameObject.tag.Equals("Ammo"))
         {
+            hit = true;
+            GetComponentInChildren<Collider>().enabled = false;
             //FindObjectOfType<AudioManager>().Play("ShurikenHit", GetComponent<AudioSource>());
             myRigidbody.velocity = Vector3.zero;
             myRigidbody.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
@@ -75,6 +83,7 @@ public class Arrow : MonoBehaviour
             anchor.transform.parent = collision.transform;
             this.anchor = anchor;
 
+            Destroy(anchor, 10f);
             Destroy(gameObject, 10f);
         }
     }

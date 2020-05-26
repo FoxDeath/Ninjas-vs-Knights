@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2472478869509376376}
   - component: {fileID: 1444348944696146792}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: PickupableGrenade
   m_TagString: Grenade
   m_Icon: {fileID: 0}
@@ -57,7 +57,7 @@ GameObject:
   - component: {fileID: 5288994170426777518}
   - component: {fileID: 9024277346936352825}
   - component: {fileID: 7146537979314422182}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: GrenadeHandle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: 5960958098635917452}
   - component: {fileID: 2838316749361004585}
   - component: {fileID: 7406755047754398974}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: GrenadeBody
   m_TagString: Untagged
   m_Icon: {fileID: 0}

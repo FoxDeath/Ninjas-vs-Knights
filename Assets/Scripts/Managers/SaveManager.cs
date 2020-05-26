@@ -7,8 +7,11 @@ using UnityEngine.InputSystem;
 
 public class SaveManager : MonoBehaviour
 {
-    private static SaveManager instance;
     [SerializeField] InputActionAsset controls;
+    private static SaveManager instance;
+    private AudioManager audioManager;
+    private MouseLook mouseLook;
+    private CrossBow crossBow;
 
     public static SaveManager GetInstance()
     {
@@ -100,9 +103,29 @@ public class SaveManager : MonoBehaviour
             var options = formatter.Deserialize(stream) as OptionsData;
             stream.Close();
             
-            GameObject.Find("UI").transform.Find("OptionsMenu").GetComponent<OptionsMenu>().SetVolume(options.volume);
-            GameObject.Find("UI").transform.Find("OptionsMenu").GetComponent<OptionsMenu>().SetLookSensitivity(options.lookSens);
-            GameObject.Find("UI").transform.Find("OptionsMenu").GetComponent<OptionsMenu>().SetScopedSensitivity(options.scopedSens);
+            if(GameObject.Find("UI").transform.Find("OptionsMenu").gameObject.activeSelf)
+            {
+                GameObject.Find("UI").transform.Find("OptionsMenu").GetComponent<OptionsMenu>().SetVolume(options.volume);
+                GameObject.Find("UI").transform.Find("OptionsMenu").GetComponent<OptionsMenu>().SetLookSensitivity(options.lookSens);
+                GameObject.Find("UI").transform.Find("OptionsMenu").GetComponent<OptionsMenu>().SetScopedSensitivity(options.scopedSens);
+            }
+        
+        if(FindObjectOfType<AudioManager>() != null)
+        {
+            FindObjectOfType<AudioManager>().SetMasterVolume(options.volume);
+        }
+        
+        AudioListener.volume = options.volume;
+        
+        if(FindObjectOfType<MouseLook>() != null)
+        {
+            FindObjectOfType<MouseLook>().SetSensitivity(options.lookSens);
+        }
+
+        if(FindObjectOfType<CrossBow>() != null)
+        {
+            FindObjectOfType<CrossBow>().SetScopedSensitivity(options.scopedSens);
+        }
         }
     }
 

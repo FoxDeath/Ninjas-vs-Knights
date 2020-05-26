@@ -1,14 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Explosion : MonoBehaviour
 {
     private SphereCollider myCollider;
 
     [SerializeField] float damage = 15;
-    [SerializeField] float explosionForce = 1000;
-    [SerializeField] float upwardsModifier = 150;
+    [SerializeField] float explosionForce = 450;
 
     void Start()
     {
@@ -20,9 +20,7 @@ public class Explosion : MonoBehaviour
     {
         if(other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {
-            other.gameObject.GetComponent<Target>().TakeDamage(damage);
-            other.GetComponent<Rigidbody>().AddExplosionForce(explosionForce, transform.position, myCollider.radius, upwardsModifier);
-
+            other.GetComponent<Target>().StartExploding(damage, explosionForce, transform.position, myCollider.radius);
         }
     }
 }

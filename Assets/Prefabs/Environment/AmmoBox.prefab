@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7868399164631770167}
   - component: {fileID: 1239263978}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: AmmoBox
   m_TagString: Ammo
   m_Icon: {fileID: 0}
@@ -52,6 +52,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7868399164631770167}
     m_Modifications:
+    - target: {fileID: -9120149022609467736, guid: 5712dfa985c7f2941831159b354b9f71,
+        type: 3}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
     - target: {fileID: -5335111153789156569, guid: 5712dfa985c7f2941831159b354b9f71,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -132,6 +137,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: AmmoBoxModel
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 5712dfa985c7f2941831159b354b9f71,
+        type: 3}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
     - target: {fileID: -113181020801827196, guid: 5712dfa985c7f2941831159b354b9f71,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -142,6 +152,21 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 0d3f8946184353640a43fea7e7f8d16f, type: 2}
+    - target: {fileID: 2502203975881118265, guid: 5712dfa985c7f2941831159b354b9f71,
+        type: 3}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 4695666576454475813, guid: 5712dfa985c7f2941831159b354b9f71,
+        type: 3}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 4806415651265044675, guid: 5712dfa985c7f2941831159b354b9f71,
+        type: 3}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5712dfa985c7f2941831159b354b9f71, type: 3}
 --- !u!4 &2902745421992588725 stripped

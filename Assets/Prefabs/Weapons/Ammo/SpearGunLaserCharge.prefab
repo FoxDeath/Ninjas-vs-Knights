@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5544664576063439117}
   m_Layer: 0
   m_Name: SpearGunLaserCharge
-  m_TagString: Untagged
+  m_TagString: Ammo
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

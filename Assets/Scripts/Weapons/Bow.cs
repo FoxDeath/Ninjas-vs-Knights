@@ -8,7 +8,9 @@ public class Bow : MonoBehaviour
     [SerializeField] GameObject slowArrowObj;
     [SerializeField] GameObject explosiveArrowObj;
     [SerializeField] GameObject emmiter;
+    
     private Animator animator;
+    private PlayerMovement playerMovement;
     private AudioManager audioManager;
 
     private Quaternion startingRotation;
@@ -55,13 +57,24 @@ public class Bow : MonoBehaviour
         startingRotation = transform.localRotation;
         animator = GetComponent<Animator>();
         audioManager = FindObjectOfType<AudioManager>();
+        playerMovement = GetComponentInParent<PlayerMovement>();
     }
 
     void Update()
     {
-        if(charging && charge < chargeMax)
+        if(charging)
         {
-            charge += Time.deltaTime * chargeRate;
+            playerMovement.SetScoping(true);
+            playerMovement.Sprint(false);
+
+            if(charge < chargeMax)
+            {
+                charge += Time.deltaTime * chargeRate;
+            }
+        }
+        else
+        {
+            playerMovement.SetScoping(false);
         }
 
         switch(currentType)
@@ -194,6 +207,11 @@ public class Bow : MonoBehaviour
     public void SetArrowMenuState(bool state)
     {
         UIManager.GetInstance().SetArrowMenuState(state);
+
+        if(state == false)
+        {
+            charging = false;
+        }
     }
 
     public void SetCurrentArrow(string name)
