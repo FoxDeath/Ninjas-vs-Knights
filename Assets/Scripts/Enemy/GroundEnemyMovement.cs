@@ -29,9 +29,9 @@ public class GroundEnemyMovement : MonoBehaviour
         return lookRadius;
     }
 
-    public Transform GetObjective()
+    public Vector3 GetObjective()
     {
-        return objective;
+        return objective.position + (Vector3)Random.insideUnitCircle * 15f;
     }
 
     #endregion
@@ -48,7 +48,7 @@ public class GroundEnemyMovement : MonoBehaviour
 
     void Start()
     {
-        agent.SetDestination(objective.position + (Vector3)Random.insideUnitCircle * 15f);
+        agent.SetDestination(GetObjective());
         agent.updateRotation = false;
     }
 

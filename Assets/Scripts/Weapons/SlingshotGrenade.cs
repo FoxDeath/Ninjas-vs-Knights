@@ -33,16 +33,11 @@ public class SlingshotGrenade : MonoBehaviour
     private void Explode()
     {
         exploded = true;
-
         Instantiate(expEffect, transform.position, transform.rotation);
-
         GameObject emptyWithAudioSource = new GameObject();
         emptyWithAudioSource.AddComponent<AudioSource>();
-
         GameObject expSound = Instantiate(emptyWithAudioSource, transform.position, transform.rotation);
-
         audioManager.Play("GrenadeExplode", expSound.GetComponent<AudioSource>());
-
         Collider[] colliders = Physics.OverlapSphere(transform.position, radius);
 
         foreach(Collider collider in colliders)
@@ -51,26 +46,12 @@ public class SlingshotGrenade : MonoBehaviour
 
             if(target != null)
             {
-                target.TakeDamage(damage);
-            }
-
-            Rigidbody rb = collider.GetComponent<Rigidbody>();
-
-            if(rb != null)
-            {
-                rb.AddExplosionForce(force, transform.position, radius);
+                target.StartExploding(damage, force, transform.position, radius);
             }
         }
 
         Destroy(gameObject);
-        StartCoroutine(DestroyAfterSeconds(2f, expSound));
-    }
-
-    IEnumerator DestroyAfterSeconds(float seconds, GameObject gameObjectToDestroy) 
-    {
-        yield return new WaitForSeconds(seconds);
-
-        Destroy(gameObject);
+        Destroy(expSound, 2f);
     }
 
     private void OnCollisionEnter(Collision collision)

@@ -175,7 +175,7 @@ public class Target : MonoBehaviour
         if (GetComponent<NavMeshAgent>() != null && !dead)
         {
             GetComponent<NavMeshAgent>().enabled = true;
-            GetComponent<NavMeshAgent>().SetDestination(movement.GetObjective().position);
+            GetComponent<NavMeshAgent>().SetDestination(movement.GetObjective());
         }
     }
 
