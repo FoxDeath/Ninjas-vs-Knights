@@ -14,6 +14,7 @@ public class NinjaPlayerMovement : PlayerMovement
     private bool canWallJump;
     private bool wallJumping;
 
+
     protected override void FixedUpdate()
     {
         if(PauseMenu.GameIsPaused)
@@ -183,7 +184,7 @@ public class NinjaPlayerMovement : PlayerMovement
         {
             if (!audioManager.IsPlaying("Wallrun"))
             {
-                audioManager.Play("Wallrun");
+                audioManager.Play("Wallrun");              
             }
         }
         else
@@ -205,7 +206,9 @@ public class NinjaPlayerMovement : PlayerMovement
         velocity.y = Mathf.Sqrt(jumpHeight * 50f);
         fallVelocity = 0f;
         audioManager.Play("Jump");
+        //animator.SetTrigger("WJump");
 
+      
         yield return new WaitForSeconds(0.5f);
 
         wallJumping = false;

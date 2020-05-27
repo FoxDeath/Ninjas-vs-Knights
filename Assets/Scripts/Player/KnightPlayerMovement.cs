@@ -23,6 +23,11 @@ public class KnightPlayerMovement : PlayerMovement
     private bool dashing;
     private bool jetpacking;
 
+    public ParticleSystem dashParticles;
+    public ParticleSystem chargeParticles;
+    public ParticleSystem jetpackFlame;
+    public ParticleSystem jetpackFlameTwo;
+
     public bool GetDashing()
     {
         return dashing;
@@ -35,7 +40,7 @@ public class KnightPlayerMovement : PlayerMovement
     protected override void Start()
     {
         controller = GetComponent<CharacterController>();
-        groundCheck = transform.Find("Cylinder").Find("GroundCheck");
+        groundCheck = transform.Find("player").Find("body").Find("GroundCheck");
         groundMask = LayerMask.GetMask("Ground");
         fpsCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
         uiManager = FindObjectOfType<UIManager>();
@@ -125,9 +130,9 @@ public class KnightPlayerMovement : PlayerMovement
     public void Jetpack()
     {
         uiManager.SetKnightSliderValue(jetpackFuel / maxJetpackFuel);
-
+        
         //If the jetpack is off stops the sound and recharges the jetpack
-        if(!jetpackOn)
+        if (!jetpackOn)
         {
             audioManager.Stop("Jetpack");
             if(jetpackFuel < maxJetpackFuel)
@@ -151,17 +156,20 @@ public class KnightPlayerMovement : PlayerMovement
             }
 
             jetpacking = false;
-
+            
             return;
         }
         else
         {   
             //If the jetpack is on and it has fuel the player flies
             if(jetpackFuel > 0f)
-            {
+            {                
                 jetpacking = true;
 
-                if(!audioManager.IsPlaying("Jetpack"))
+                jetpackFlame.Play();
+                jetpackFlameTwo.Play();
+
+                if (!audioManager.IsPlaying("Jetpack"))
                 {
                     audioManager.Play("Jetpack");
                 }
@@ -208,6 +216,7 @@ public class KnightPlayerMovement : PlayerMovement
             dashing = true;
 
             audioManager.Play("Jetpack Dash");
+            dashParticles.Play();
 
             vertical = dashForce * moveInput.y;
             horizontal = dashForce * moveInput.x;
@@ -275,7 +284,9 @@ public class KnightPlayerMovement : PlayerMovement
         {
             canCharge = false;
             charging = true;
-            
+
+            chargeParticles.Play();
+
             GetComponentInChildren<MouseLook>().mouseSensitivity /= 10;
 
             vertical = chargeForce * moveInput.y;

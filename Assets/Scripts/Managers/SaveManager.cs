@@ -57,7 +57,7 @@ public class SaveManager : MonoBehaviour
     {
         string path = Application.persistentDataPath + "/config.ismathrelatedtoscience";
 
-        if (File.Exists(path))
+        if (File.Exists(path) && File.ReadAllBytes(path).Length != 0)
         {
             BinaryFormatter formatter = new BinaryFormatter();
             FileStream stream = new FileStream(path, FileMode.Open);

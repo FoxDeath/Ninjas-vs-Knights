@@ -11,6 +11,7 @@ public class EdgeClimb : MonoBehaviour
     private Camera parkourCamera;
     private Camera mainCamera;
 
+    private Animator animator;
     void Awake()
     {
         playerMovement = GetComponent<PlayerMovement>();
@@ -22,6 +23,7 @@ public class EdgeClimb : MonoBehaviour
     {
         parkourCamera = gameObject.transform.Find("Parkour Camera").GetComponent<Camera>();
         mainCamera = gameObject.transform.Find("Main Camera").GetComponent<Camera>();
+        animator = transform.Find("player").GetComponent<Animator>();
     }
 
     void OnEnable()
@@ -48,6 +50,8 @@ public class EdgeClimb : MonoBehaviour
 
         //start anim
         anim.SetTrigger("EdgeClimb");
+        animator.SetTrigger("climb");
+
 
         //plays sound
         FindObjectOfType<AudioManager>().Play("Climb");
@@ -70,10 +74,9 @@ public class EdgeClimb : MonoBehaviour
         Vector3 targetPos = new Vector3(transform.localPosition.x, transform.localPosition.y + 3.033f, transform.localPosition.z + 1.495f);
         Vector3 moveVector = targetPos - transform.localPosition;
 
-
         //moves the player
-        playerMovement.GetController().Move(transform.up * moveVector.y);
-        playerMovement.GetController().Move(transform.forward * moveVector.z);
+         playerMovement.GetController().Move(transform.up * moveVector.y);
+         playerMovement.GetController().Move(transform.forward * moveVector.z);
 
         yield break;
     }
