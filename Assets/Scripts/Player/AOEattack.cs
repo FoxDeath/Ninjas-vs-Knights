@@ -16,6 +16,10 @@ public class AOEattack : MonoBehaviour
     {
         if(context.action.phase == InputActionPhase.Performed && !attacking)
         {
+            if(!GetComponent<KnightPlayerMovement>().isLocalPlayer)
+            {
+                return;
+            }
             StartCoroutine(AOEAttackBehaviour());
         }
     }
@@ -41,7 +45,7 @@ public class AOEattack : MonoBehaviour
         }
 
         //15 second cooldown
-        FindObjectOfType<UIManager>().ResetFill("AOEFill");
+        FindObjectOfType<UIManager>().ResetFill("AOEFill", null, GetComponentInChildren<KnightUI>());
         yield return new WaitForSeconds(15f);
 
         //End cooldown

@@ -10,7 +10,7 @@ public class NinjaPlayerInput : MonoBehaviour
     void Start()
     {
         playerMovement = GetComponent<NinjaPlayerMovement>();
-        pauseMenu = FindObjectOfType<PauseMenu>();
+        pauseMenu = GetComponentInChildren<PauseMenu>();
         edgeClimb = GetComponent<EdgeClimb>();
     }
 

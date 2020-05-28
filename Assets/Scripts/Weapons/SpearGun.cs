@@ -5,11 +5,12 @@ public class SpearGun : MonoBehaviour
 {
     [SerializeField] GameObject bullet;
     [SerializeField] GameObject chargeBullet;
-    private GameObject bulletEmiter;
-
+    [SerializeField] Transform bulletEmiter;
+    private GameObject model;
     private UIManager uiManager;
+    private KnightUI knightUI;
     private AudioManager audioManager;
-    private ParticleSystem muzzleFlash;
+    [SerializeField] GameObject muzzleFlash;
     private Animator animator;
 
     [SerializeField] float speed = 100f;
@@ -27,28 +28,60 @@ public class SpearGun : MonoBehaviour
     private Quaternion startingRotation;
 
     private bool reloading;
+    private bool equiped;
+
+    public Quaternion GetStartingRotation()
+    {
+        return startingRotation;
+    }
+
+    public void SetReloading(bool reloading)
+    {
+        this.reloading = reloading;
+    }
+
+    public void SetEquiped(bool equiped)
+    {
+        this.equiped = equiped;
+    }
+
+    void Awake()
+    {
+        uiManager = UIManager.GetInstance();
+        knightUI = transform.parent.parent.GetComponentInChildren<KnightUI>();
+        audioManager = GetComponentInParent<AudioManager>();
+        animator = GetComponent<Animator>();
+        model = transform.GetChild(0).gameObject;
+    }
 
     void Start()
     {
-        uiManager = (UIManager)FindObjectOfType(typeof(UIManager));
-        audioManager = FindObjectOfType<AudioManager>();
-        animator = GetComponent<Animator>();
-        muzzleFlash = GetComponentInChildren<ParticleSystem>();
-        bulletEmiter = GameObject.Find("SpearGunEmitter");
+        equiped = transform.GetChild(0).gameObject.activeSelf;
+
         maxMag = maxAmmo * 4;
         currentAmmo = maxAmmo;
         currentMag = maxMag;
-        uiManager.SetMaxAmmo(currentMag);
-        uiManager.SetCurrentAmmo(currentAmmo);
+
+        if(equiped)
+        {
+            uiManager.SetMaxAmmo(currentMag, null, knightUI);
+            uiManager.SetCurrentAmmo(currentAmmo, null, knightUI);
+        }
+
         altSpeed = speed / 2;
         startingRotation = transform.localRotation;
     }
 
     void Update()
     {
-        uiManager.SetCurrentAmmo(currentAmmo);
-        uiManager.SetMaxAmmo(currentMag);
+        if(!equiped)
+        {
+            return;
+        }
         ManageAmmo();
+
+        uiManager.SetMaxAmmo(currentMag, null, knightUI);
+        uiManager.SetCurrentAmmo(currentAmmo, null, knightUI);
 
         if(GetComponentInParent<PlayerMovement>().GetMoving())
         {
@@ -86,7 +119,7 @@ public class SpearGun : MonoBehaviour
     //Reloads the gun.
     public void Reload()
     {
-        if(reloading)
+        if(reloading || !GetComponentInParent<KnightPlayerMovement>().isLocalPlayer || !equiped)
         {
             return;
         }
@@ -100,11 +133,16 @@ public class SpearGun : MonoBehaviour
     //Makes the Gun fire a temporary bullet and destroyes that temporary bullet after a few seconds.
     public void Fire()
     {
+        if(!GetComponentInParent<KnightPlayerMovement>().isLocalPlayer)
+        {
+            return;
+        }
+
         if(Time.time >= nextTimeToFire && !reloading)
         {
             if(currentAmmo > 0)
             {
-                Ray ray = GameObject.Find("Main Camera").GetComponent<Camera>().ViewportPointToRay(new Vector3(0.5F, 0.5F, 0));
+                Ray ray = transform.parent.GetComponent<Camera>().ViewportPointToRay(new Vector3(0.5F, 0.5F, 0));
                 RaycastHit hit;
 
                 Vector3 targetPoint;
@@ -119,20 +157,15 @@ public class SpearGun : MonoBehaviour
 
                 currentAmmo--;
                 nextTimeToFire = Time.time + 1f / fireRate;
-                muzzleFlash.Play();
-                audioManager.Play("Laser");
+                GetComponentInParent<NetworkController>().NetworkSpawn(muzzleFlash.name, bulletEmiter.transform.position, bulletEmiter.transform.rotation, Vector3.zero);
+                audioManager.NetworkPlay("Laser");
 
                 targetPoint.x += Random.Range(-spread, spread);
                 targetPoint.y += Random.Range(-spread, spread);
-        
-                GameObject instantiateBullet = Instantiate(bullet, bulletEmiter.transform.position, bulletEmiter.transform.rotation);
-                Rigidbody temporaryRigidbody = instantiateBullet.GetComponentInChildren<Rigidbody>();
 
+                GetComponentInParent<NetworkController>().NetworkSpawn(bullet.name, bulletEmiter.transform.position, bulletEmiter.transform.rotation,
+                (targetPoint - bulletEmiter.position).normalized * speed);
                 animator.SetTrigger("Firing");
-
-                temporaryRigidbody.velocity = (targetPoint - bulletEmiter.transform.position).normalized * speed;
-
-                Destroy(instantiateBullet, 10f);
             }
             else
             {
@@ -143,6 +176,11 @@ public class SpearGun : MonoBehaviour
 
     public void Charge()
     {
+        if(!GetComponentInParent<KnightPlayerMovement>().isLocalPlayer)
+        {
+            return;
+        }
+
         if(Time.time >= nextTimeToFire && !reloading && currentAmmo >= 3)
         {
             if(currentAmmo >= 3)
@@ -163,16 +201,15 @@ public class SpearGun : MonoBehaviour
 
                 currentAmmo -= 3;
                 nextTimeToFire = Time.time + 1f / fireRate;
-                muzzleFlash.Play();
-                audioManager.Play("Laser");
+                GetComponentInParent<NetworkController>().NetworkSpawn(muzzleFlash.name, bulletEmiter.transform.position, bulletEmiter.transform.rotation, Vector3.zero);
+                audioManager.NetworkPlay("Laser");
 
                 targetPoint.x += Random.Range(-spread, spread);
                 targetPoint.y += Random.Range(-spread, spread);
-            
-                GameObject instantiateBullet = Instantiate(chargeBullet, bulletEmiter.transform.position, bulletEmiter.transform.rotation);
-                Rigidbody temporaryRigidbody = instantiateBullet.GetComponentInChildren<Rigidbody>();
-                temporaryRigidbody.velocity = (targetPoint - bulletEmiter.transform.position).normalized * altSpeed;
-                Destroy(instantiateBullet, 2f);
+
+                GetComponentInParent<NetworkController>().NetworkSpawn(chargeBullet.name, bulletEmiter.transform.position, bulletEmiter.transform.rotation,
+                (targetPoint - bulletEmiter.transform.position).normalized * altSpeed);
+                animator.SetTrigger("Firing");
             }
             else
             {
@@ -180,17 +217,7 @@ public class SpearGun : MonoBehaviour
 
                 return;
             }
-
-            animator.SetTrigger("Firing");
         }
-    }
-
-    public void SetInactive()
-    {
-        reloading = false;
-        audioManager.Stop("Laser");
-        transform.localRotation = startingRotation;
-        gameObject.SetActive(false);
     }
 
     public void RestockAmmo()

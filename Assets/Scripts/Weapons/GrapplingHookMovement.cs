@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
+using Mirror;
 
-public class GrapplingHookMovement : MonoBehaviour
+public class GrapplingHookMovement : NetworkBehaviour
 {
     private GameObject hook;
     private AudioManager audioManager;
@@ -12,11 +13,16 @@ public class GrapplingHookMovement : MonoBehaviour
     void Start()
     {
         hook = GetComponentInChildren<HookDetector>().gameObject;
-        audioManager = FindObjectOfType<AudioManager>();
+        audioManager = GetComponent<AudioManager>();
     }
 
     void FixedUpdate()
     {
+        if(!this.isLocalPlayer)
+        {
+            return;
+        }
+        
         HookMovement();
     }
 
@@ -29,7 +35,7 @@ public class GrapplingHookMovement : MonoBehaviour
         {
             if(!audioManager.IsPlaying("GrapplingHooking"))
             {
-                audioManager.Play("GrapplingHooking");
+                audioManager.NetworkPlay("GrapplingHooking");
             }
             
             //Tried to make the speed not dependent on the distance of the hook, not sure if i should use it or not
@@ -43,7 +49,7 @@ public class GrapplingHookMovement : MonoBehaviour
         }
         else
         {
-            audioManager.Stop("GrapplingHooking");
+            audioManager.NetworkStop("GrapplingHooking");
         }
     }
 }

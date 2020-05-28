@@ -16,7 +16,13 @@ public class SlingshotGrenade : MonoBehaviour
 
     private void Start()
     {
-        audioManager = FindObjectOfType<AudioManager>();
+        foreach(AudioManager audioManager in FindObjectsOfType<AudioManager>())
+        {
+            if(audioManager.isLocalPlayer)
+            {
+                this.audioManager = audioManager;
+            }
+        }
         countdown = delay;
     }
 
@@ -33,11 +39,11 @@ public class SlingshotGrenade : MonoBehaviour
     private void Explode()
     {
         exploded = true;
-        Instantiate(expEffect, transform.position, transform.rotation);
+        FindObjectOfType<NetworkController>().NetworkSpawn(expEffect.name, transform.position, transform.rotation, Vector3.zero);
         GameObject emptyWithAudioSource = new GameObject();
         emptyWithAudioSource.AddComponent<AudioSource>();
         GameObject expSound = Instantiate(emptyWithAudioSource, transform.position, transform.rotation);
-        audioManager.Play("GrenadeExplode", expSound.GetComponent<AudioSource>());
+        audioManager.NetworkPlay("GrenadeExplode", expSound.GetComponent<AudioSource>());
         Collider[] colliders = Physics.OverlapSphere(transform.position, radius);
 
         foreach(Collider collider in colliders)
@@ -50,15 +56,15 @@ public class SlingshotGrenade : MonoBehaviour
             }
         }
 
-        Destroy(gameObject);
         Destroy(expSound, 2f);
+        Destroy(gameObject);
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         if(!exploded)
         {
-            audioManager.Play("GrenadeBounce", GetComponent<AudioSource>());
+            audioManager.NetworkPlay("GrenadeBounce", GetComponent<AudioSource>());
         }
     }
 }

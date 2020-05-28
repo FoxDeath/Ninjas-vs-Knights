@@ -1,32 +1,15 @@
 ﻿using System;
 using UnityEngine;
+using Mirror;
 
 
 //Audio Manager who controlls all the sounds and their behaviours
-public class AudioManager : MonoBehaviour
+public class AudioManager : NetworkBehaviour
 {
     public Sound[] sounds;
 
-    private static AudioManager instance;
-
-    public static AudioManager GetInstance()
-    {
-        return instance;
-    }
-
     void Awake()
     {
-        //Using the singleton pattern
-        if(instance == null)
-        {
-            instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-            return;
-        }
-
         //Adding a sourse to all sounds
         foreach(Sound s in sounds)
         {
@@ -35,18 +18,28 @@ public class AudioManager : MonoBehaviour
             s.source.volume = s.volume;
             s.source.pitch = s.pitch;
             s.source.loop = s.loop;
+            s.source.spatialBlend = 1f;
         }
     }
 
     /*Playing the sound whose name is the string "name" 
     and also giving the posibility to change the audio source with the optional paramarer "source" */
-    public void Play(string name, AudioSource source = null)
+    private void Play(string name)
     {
-        if(PauseMenu.GameIsPaused)
+        Sound s = Array.Find(sounds, sound => sound.name.Equals(name));
+
+        if(s == null)
         {
             return;
         }
 
+        s.source.Play();
+        s.isPlaying = true;
+    }
+
+    //Calling the play method for multiplayer, both in server and on all clients
+    public void NetworkPlay(string name, AudioSource source = null)
+    {
         Sound s = Array.Find(sounds, sound => sound.name.Equals(name));
 
         if(s == null)
@@ -63,12 +56,38 @@ public class AudioManager : MonoBehaviour
             s.source.loop = s.loop;
         }
 
-        s.source.Play();
-        s.isPlaying = true;
+        Play(name);
+
+        if (isServer)
+        {
+            RpcPlay(name);
+        }
+        else
+        {
+            CmdPlay(name);
+        }
+    }
+
+    [Command]
+    private void CmdPlay(string name)
+    {
+        Play(name);
+        RpcPlay(name);
+    }
+
+    [ClientRpc]
+     void RpcPlay(string name)
+     {
+         if(this.isLocalPlayer)
+         {
+            return;
+         }
+
+         Play(name);
     }
 
     //Stopping the sound whose name is the string "name"
-    public void Stop(string name)
+    private void Stop(string name)
     {
         if(!IsPlaying(name))
         {
@@ -86,6 +105,39 @@ public class AudioManager : MonoBehaviour
             s.source.Stop();
             s.isPlaying = false;
         }
+    }
+
+    //Calling the stop method for multiplayer, both in server and on all clients
+    public void NetworkStop(string name)
+    {
+        Stop(name);
+
+        if (isServer)
+        {
+            RpcStop(name);
+        }
+        else
+        {
+            CmdStop(name);
+        }
+    }
+
+    [Command]
+    private void CmdStop(string name)
+    {
+        Stop(name);
+        RpcStop(name);
+    }
+
+    [ClientRpc]
+     void RpcStop(string name)
+     {
+         if(this.isLocalPlayer)
+         {
+            return;
+         }
+
+         Stop(name);
     }
 
     //Stopping all sounds who are currently playing
@@ -114,7 +166,7 @@ public class AudioManager : MonoBehaviour
     }
 
     //Setting the pitch of the sound whose name is the string "name" withing the rance 0.1 and 3
-    public void SetPitch(string name, float pitch)
+    private void SetPitch(string name, float pitch)
     {
         Sound s = Array.Find(sounds, sound => sound.name == name);
         
@@ -124,6 +176,39 @@ public class AudioManager : MonoBehaviour
         }
 
         s.source.pitch = pitch; 
+    }
+
+    //Calling the SetPitch method for multiplayer, both in server and on all clients
+    public void NetworkSetPitch(string name, float pitch)
+    {
+        SetPitch(name, pitch);
+
+        if (isServer)
+        {
+            RpcSetPitch(name, pitch);
+        }
+        else
+        {
+            CmdSetPitch(name, pitch);
+        }
+    }
+
+    [Command]
+    private void CmdSetPitch(string name, float pitch)
+    {
+        SetPitch(name, pitch);
+        RpcSetPitch(name, pitch);
+    }
+
+    [ClientRpc]
+     void RpcSetPitch(string name, float pitch)
+     {
+         if(this.isLocalPlayer)
+         {
+            return;
+         }
+
+         SetPitch(name, pitch);
     }
 
     //Gets the pitch of the sound whose name is the string "name"

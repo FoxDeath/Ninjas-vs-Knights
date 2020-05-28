@@ -5,6 +5,7 @@ public class GroundEnemyMovement : MonoBehaviour
 {
     private Transform objective;
     private Transform player;
+    private Mirror.NetworkTransformChild networkTransformChild;
     private Target target;
     private Rigidbody myRigidbody;
     private NavMeshAgent agent;
@@ -39,6 +40,15 @@ public class GroundEnemyMovement : MonoBehaviour
         myRigidbody = GetComponent<Rigidbody>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
         target = GetComponent<Target>();
+
+        transform.SetParent(GameObject.Find("EnemyContainer").transform);
+        networkTransformChild = transform.parent.gameObject.AddComponent<Mirror.NetworkTransformChild>();
+        networkTransformChild.target = transform;
+    }
+
+    void OnDestroy() 
+    {
+        Destroy(networkTransformChild);
     }
 
     void Start()

@@ -5,28 +5,32 @@ using UnityEngine.InputSystem;
 public class KunaiNadeInput : MonoBehaviour
 {
     [SerializeField] GameObject kunaiPrefab;
-    private GameObject bulletEmiter;
+    private Transform bulletEmitter;
 
     [SerializeField] float throwForce = 100f;
 
     [SerializeField] int maxKunai = 4;
     private int currentKunai;
-
     private bool threw;
 
     void Start()
     {
         currentKunai = maxKunai;
-        bulletEmiter = GameObject.Find("KunaiEmitter");
+        bulletEmitter = transform.Find("KunaiEmitter");
     }
 
     private void Update() 
     {
-        UIManager.GetInstance().SetGrenadeCount(currentKunai);    
+        UIManager.GetInstance().SetGrenadeCount(currentKunai, GetComponentInChildren<NinjaUI>());    
     }
 
     public void ThrowKunai()
     {
+        if(!GetComponent<PlayerMovement>().isLocalPlayer)
+        {
+            return;
+        }
+
         if (currentKunai > 0f)
         {
             currentKunai--;
@@ -37,7 +41,7 @@ public class KunaiNadeInput : MonoBehaviour
 
     private IEnumerator ThrowKunaiBehaviour()
     {
-        Ray ray = GameObject.Find("Main Camera").GetComponent<Camera>().ViewportPointToRay(new Vector3(0.5F, 0.5F, 0));
+        Ray ray = transform.Find("Main Camera").GetComponent<Camera>().ViewportPointToRay(new Vector3(0.5F, 0.5F, 0));
         RaycastHit hit ;
 
         Vector3 targetPoint ;
@@ -50,10 +54,7 @@ public class KunaiNadeInput : MonoBehaviour
             targetPoint = ray.GetPoint(1000f);
         }
 
-        GameObject kunai = Instantiate(kunaiPrefab, bulletEmiter.transform.position, bulletEmiter.transform.rotation);
-        Rigidbody rb = kunai.GetComponent<Rigidbody>();
-        rb.velocity = (targetPoint - bulletEmiter.transform.position).normalized * throwForce;
-
+        GetComponent<NetworkController>().NetworkSpawn(kunaiPrefab.name, bulletEmitter.position, bulletEmitter.rotation, (targetPoint - bulletEmitter.transform.position).normalized * throwForce);       
         yield return new WaitForSeconds(2f);
     }
 

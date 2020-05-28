@@ -10,7 +10,7 @@ public class HookDetector : MonoBehaviour
     {
         grapplingHook = GetComponentInParent<GrapplingHook>().gameObject;
         player = GetComponentInParent<GrapplingHookMovement>().gameObject;
-        audioManager = FindObjectOfType<AudioManager>();
+        audioManager = GetComponentInParent<AudioManager>();
     }
 
     //When colliding, check if the collider is a hookable object, if it is attach to it
@@ -20,7 +20,7 @@ public class HookDetector : MonoBehaviour
         {
             player.GetComponent<GrapplingHookMovement>().hooking = true;
             grapplingHook.GetComponent<GrapplingHook>().hookedObject = other.gameObject;
-            audioManager.Play("GrapplingConnecting", GetComponent<AudioSource>());
+            audioManager.NetworkPlay("GrapplingConnecting", GetComponentInParent<AudioSource>());
         }
     }
 }

@@ -64,8 +64,7 @@ public class Arrow : MonoBehaviour
 
         if(type == arrowTypes.Explosion)
         {
-            Instantiate(explosion, collision.GetContact(0).point, Quaternion.identity);
-            Destroy(gameObject);
+            FindObjectOfType<NetworkController>().NetworkSpawn(explosion.name, collision.GetContact(0).point, Quaternion.identity, Vector3.zero);
         }
 
         if (collision.gameObject.layer != LayerMask.NameToLayer("Player") && !collision.gameObject.tag.Equals("Ammo"))

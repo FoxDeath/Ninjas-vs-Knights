@@ -23,12 +23,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 334919620916436757}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 4.44}
+  m_LocalRotation: {x: -0, y: -0.70710677, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: -4.44, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 919657838554875544}
-  m_RootOrder: 0
+  m_Father: {fileID: 5430833801444278402}
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7399329516028481222
 GameObject:
@@ -40,6 +40,7 @@ GameObject:
   m_Component:
   - component: {fileID: 919657838554875544}
   - component: {fileID: 7066538409652582612}
+  - component: {fileID: 456986426840178942}
   m_Layer: 10
   m_Name: Bow
   m_TagString: Untagged
@@ -56,9 +57,8 @@ Transform:
   m_GameObject: {fileID: 7399329516028481222}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_Children:
-  - {fileID: 8706073729074161068}
   - {fileID: 5430833801444278402}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -87,6 +87,25 @@ MonoBehaviour:
   chargeMax: 130
   chargeRate: 80
   maxArrows: 10
+--- !u!95 &456986426840178942
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7399329516028481222}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: c27b81d622c6cf048965192ee2c5d79e, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &1019087158555503512
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -137,7 +156,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: 72b069f0f8fb8844db9123f6af567206,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 72b069f0f8fb8844db9123f6af567206,
         type: 3}

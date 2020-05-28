@@ -6,6 +6,8 @@ public class FlyingEnemyMovement : MonoBehaviour
 {
     private Transform target;
 
+    private Mirror.NetworkTransformChild networkTransformChild;
+
     private Vector3 avoidDir;
 
     private bool hitSomething;
@@ -16,6 +18,18 @@ public class FlyingEnemyMovement : MonoBehaviour
     [SerializeField] float rayCastOffset = 1f;
     [SerializeField] float detectionRange = 1f;
     [SerializeField] float avoidSpeedMultiplyer = 5f;
+
+    void Awake()
+    {
+        transform.SetParent(GameObject.Find("EnemyContainer").transform);
+        networkTransformChild = transform.parent.gameObject.AddComponent<Mirror.NetworkTransformChild>();
+        networkTransformChild.target = transform;
+    }
+
+    void OnDestroy() 
+    {
+        Destroy(networkTransformChild);
+    }
 
     public Transform GetTarget()
     {

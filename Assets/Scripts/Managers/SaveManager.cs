@@ -7,8 +7,8 @@ using UnityEngine.InputSystem;
 
 public class SaveManager : MonoBehaviour
 {
-    [SerializeField] InputActionAsset controls;
     private static SaveManager instance;
+    [SerializeField] InputActionAsset inputActions;
     private AudioManager audioManager;
     private MouseLook mouseLook;
     private CrossBow crossBow;
@@ -38,7 +38,7 @@ public class SaveManager : MonoBehaviour
         FileStream stream = new FileStream(path, FileMode.Create);
         var config = new Dictionary<Guid, string>();
 
-        foreach (var map in controls.actionMaps)
+        foreach (var map in inputActions.actionMaps)
         {
             foreach (var binding in map.bindings)
             {
@@ -57,7 +57,7 @@ public class SaveManager : MonoBehaviour
     {
         string path = Application.persistentDataPath + "/config.ismathrelatedtoscience";
 
-        if (File.Exists(path))
+        if (File.Exists(path) && File.ReadAllBytes(path).Length != 0)
         {
             BinaryFormatter formatter = new BinaryFormatter();
             FileStream stream = new FileStream(path, FileMode.Open);
@@ -65,7 +65,7 @@ public class SaveManager : MonoBehaviour
             var config = formatter.Deserialize(stream) as Dictionary<Guid, string>;
             stream.Close();
 
-            foreach (var map in controls.actionMaps)
+            foreach (var map in inputActions.actionMaps)
             {
                 var bindings = map.bindings;
 
@@ -95,7 +95,7 @@ public class SaveManager : MonoBehaviour
     {
         string path = Application.persistentDataPath + "/options.ismathrelatedtoscience";
 
-        if (File.Exists(path))
+        if (File.Exists(path) && File.ReadAllBytes(path).Length != 0)
         {
             BinaryFormatter formatter = new BinaryFormatter();
             FileStream stream = new FileStream(path, FileMode.Open);

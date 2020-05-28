@@ -23,16 +23,31 @@ public class Health : MonoBehaviour
 
     void Start()
     {
-        uiManager = FindObjectOfType<UIManager>();
+        uiManager = UIManager.GetInstance();
 
         health = maxHealth;
-        uiManager.SetMaxHealth(maxHealth);
+
+        if(GetComponentInChildren<NinjaUI>() != null)
+        {
+            uiManager.SetMaxHealth(maxHealth, GetComponentInChildren<NinjaUI>());
+        }
+        else if(GetComponentInChildren<KnightUI>() != null)
+        {
+            uiManager.SetMaxHealth(maxHealth, null, GetComponentInChildren<KnightUI>());
+        }
     }
 
     //Updates the Health Bar.
     void Update()
     {
-        uiManager.SetHealth(health);
+        if(GetComponentInChildren<NinjaUI>() != null)
+        {
+            uiManager.SetHealth(health, GetComponentInChildren<NinjaUI>());
+        }
+        else if(GetComponentInChildren<KnightUI>() != null)
+        {
+            uiManager.SetHealth(health, null, GetComponentInChildren<KnightUI>());
+        }
     }
 
     private void FixedUpdate()

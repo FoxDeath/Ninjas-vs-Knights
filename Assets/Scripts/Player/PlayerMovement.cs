@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Mirror;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : NetworkBehaviour
 {
     protected CharacterController controller;
     protected AudioManager audioManager;
@@ -120,7 +121,7 @@ public class PlayerMovement : MonoBehaviour
         controller = gameObject.GetComponent<CharacterController>();
         groundCheck = transform.Find("Cylinder").Find("GroundCheck");
         groundMask = LayerMask.GetMask("Ground");
-        audioManager = FindObjectOfType<AudioManager>();
+        audioManager = GetComponent<AudioManager>();
 
         defaultSpeed = speed;
         move = new Vector3();
@@ -129,6 +130,11 @@ public class PlayerMovement : MonoBehaviour
 
     protected virtual void Update()
     {
+        if(!this.isLocalPlayer)
+        {
+            return;
+        }
+
         //isGrounded is true if the groundCheck object is touching the Ground layer
         if (!isGrounded)
         {
@@ -137,7 +143,7 @@ public class PlayerMovement : MonoBehaviour
             if (isGrounded)
             {
                 fallVelocity = 1f;
-                audioManager.Play("Falling");
+                audioManager.NetworkPlay("Falling");
             }
         }
         isGrounded = Physics.CheckSphere(groundCheck.position, groungDistance, groundMask);
@@ -154,7 +160,7 @@ public class PlayerMovement : MonoBehaviour
     protected virtual void FixedUpdate()
     {
         //if game is paused
-        if(PauseMenu.GameIsPaused)
+        if(!this.isLocalPlayer)
         {
             return;
         }
@@ -305,14 +311,14 @@ public class PlayerMovement : MonoBehaviour
         {
             if(!audioManager.IsPlaying("Walking"))
             {
-                audioManager.Play("Walking");
+                audioManager.NetworkPlay("Walking");
             }
 
             moving = true;
         }
         else
         {
-            audioManager.Stop("Walking");
+            audioManager.NetworkStop("Walking");
             moving = false;
         }
     }
@@ -322,13 +328,13 @@ public class PlayerMovement : MonoBehaviour
         //turn on sprint
         if(state && !isCrouched && !scoping && !sprinting)
         {
-            audioManager.SetPitch("Walking", 2);
+            audioManager.NetworkSetPitch("Walking", 2);
             sprinting = true;
         }
         //turn off sprint
         else if(!state && sprinting)
         {
-            audioManager.SetPitch("Walking", 1);
+            audioManager.NetworkSetPitch("Walking", 1);
             sprinting = false;
         }
     }
@@ -344,7 +350,7 @@ public class PlayerMovement : MonoBehaviour
         else if(isGrounded)
         {
             //if grounded play jump sound and move upwards
-            audioManager.Play("Jump");
+            audioManager.NetworkPlay("Jump");
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
             fallVelocity = 10f;
         }

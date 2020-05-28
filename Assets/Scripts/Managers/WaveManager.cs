@@ -74,7 +74,7 @@ public class WaveManager : MonoBehaviour
 
     void Start()
     {
-        enemyContainer = GameObject.Find("EnemyContainer").transform;
+        enemyContainer = transform.Find("EnemyContainer").transform;
         waveCountdown = timeBetweenWaves;
     }
 
@@ -158,6 +158,8 @@ public class WaveManager : MonoBehaviour
 
     IEnumerator SpawnUnit(WaveUnit unit, int rate)
     {
+        NetworkController networkController = FindObjectOfType<NetworkController>();
+
         List<SpawnPoint> availableSpawnPoint = new List<SpawnPoint>();
 
         if (unit.type == WaveUnit.enemyTypes.ANYTHING)
@@ -179,8 +181,9 @@ public class WaveManager : MonoBehaviour
         {
             SpawnPoint spawnPoint = availableSpawnPoint[Random.Range(0, availableSpawnPoint.Count)];
             Vector3 spawnPos = new Vector3(spawnPoint.position.position.x + Random.Range(4f, 6f), spawnPoint.position.position.y, spawnPoint.position.position.z + Random.Range(4f, 6f));
-            Instantiate(unit.enemyPrefab, spawnPos, Quaternion.identity, enemyContainer);
             
+            networkController.NetworkSpawn(unit.enemyPrefab.name, spawnPos, Quaternion.identity, Vector3.zero);
+
             yield return new WaitForSeconds(1f / rate);
         }
 

@@ -53,7 +53,7 @@ public class EnemyShuriken : MonoBehaviour
     {
         if(other.gameObject.tag.Equals("Player"))
         {
-            FindObjectOfType<AudioManager>().Play("ShurikenHit", GetComponent<AudioSource>());
+            FindObjectOfType<AudioManager>().NetworkPlay("ShurikenHit", GetComponent<AudioSource>());
             other.gameObject.GetComponentInParent<Health>().TakeDamage(damage);
             Destroy(transform.parent.gameObject, 0.1f);
         }
@@ -68,7 +68,7 @@ public class EnemyShuriken : MonoBehaviour
         {
             hit = true;
             GetComponent<Collider>().enabled = false;
-            FindObjectOfType<AudioManager>().Play("ShurikenHit", GetComponent<AudioSource>());
+            FindObjectOfType<AudioManager>().NetworkPlay("ShurikenHit", GetComponent<AudioSource>());
             myRigidbody.velocity = Vector3.zero;
             myRigidbody.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
             myRigidbody.isKinematic = true;

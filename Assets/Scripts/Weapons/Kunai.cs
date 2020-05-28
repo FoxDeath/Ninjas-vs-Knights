@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Kunai : MonoBehaviour
 {
-    public GameObject flashEffect;
+    [SerializeField] GameObject flashEffect;
     private GameObject anchor;
 
     private Rigidbody rigidBody;
@@ -73,7 +73,7 @@ public class Kunai : MonoBehaviour
     
     public void Flash()
     {
-        Instantiate(flashEffect, transform.position, transform.rotation);
+        FindObjectOfType<NetworkController>().NetworkSpawn(flashEffect.name, transform.position, transform.rotation, Vector3.zero);
 
         //creates a bubble, which detects everything inside of its radius
         Collider[] effected = Physics.OverlapSphere(transform.position, radius);
@@ -86,8 +86,10 @@ public class Kunai : MonoBehaviour
                 
                 if(Physics.Raycast(transform.position, nearObject.transform.position - transform.position, out hit) && hit.transform.gameObject.layer == LayerMask.NameToLayer("Player"))
                 {
-                    //change this if mirror fucks it up
-                    GameObject.Find("UI").transform.Find("Flash").GetComponent<Animator>().SetTrigger("Flash");
+                    try
+                    {
+                        nearObject.transform.parent.Find("UI").Find("Flash").GetComponent<Animator>().SetTrigger("Flash");
+                    }catch{}
                 }
 
                 if(Physics.Raycast(transform.position, nearObject.transform.position - transform.position, out hit) && hit.transform.gameObject.layer == LayerMask.NameToLayer("Enemy"))

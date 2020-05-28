@@ -34,7 +34,14 @@ public class Stimpack : MonoBehaviour
             stimpacking = true;
 
             health.Heal(GetComponent<Health>().GetMaxHealt() * (healPercentage / 100));
-            FindObjectOfType<UIManager>().ResetFill("StimpackFill");
+            if(GetComponentInChildren<NinjaUI>() != null)
+            {
+                UIManager.GetInstance().ResetFill("StimpackFill", GetComponentInChildren<NinjaUI>());
+            }
+            else if(GetComponentInChildren<KnightUI>() != null)
+            {
+                UIManager.GetInstance().ResetFill("StimpackFill", null, GetComponentInChildren<KnightUI>());
+            }
             yield return new WaitForSeconds(10f);
 
             stimpacking = false;

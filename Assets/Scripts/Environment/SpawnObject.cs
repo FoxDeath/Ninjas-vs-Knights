@@ -2,7 +2,7 @@
 
 public class SpawnObject : MonoBehaviour
 {
-    public GameObject objectPrefab;
+    [SerializeField] GameObject objectPrefab;
     private GameObject objectInstance;
 
     private float timer = 0f;

@@ -7,7 +7,15 @@ using UnityEngine.InputSystem.Samples.RebindUI;
 
 public class RebindMenu : MonoBehaviour
 {
-    [SerializeField] InputActionAsset controls;
+    [SerializeField] InputActionAsset inputActions;
+
+    void Awake()
+    {
+        if(inputActions == null)
+        {
+            inputActions = GetComponentInParent<UnityEngine.InputSystem.PlayerInput>().actions;
+        }
+    }
 
     void OnEnable()
     {
@@ -22,14 +30,14 @@ public class RebindMenu : MonoBehaviour
     void OnDisable()
     {
         SaveManager.GetInstance().SaveConfig();
-        controls.Enable();
+        inputActions.Enable();
     }
 
     void Update()
     {
-        if(controls.enabled)
+        if(inputActions.enabled)
         {
-            controls.Disable();
+            inputActions.Disable();
         }
     }
 }
