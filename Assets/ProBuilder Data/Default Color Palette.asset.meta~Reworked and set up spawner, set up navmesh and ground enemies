@@ -1,0 +1,12 @@
+fileFormatVersion: 2
+<<<<<<< development:Assets/Scenes/NinjaDemoLevel/NavMesh-NavMesh.asset.meta
+guid: a0d526a02baa3a54ab59375c3c86c369
+=======
+guid: 1d8b6d9c523d2164ab5d2b1e8354d645
+>>>>>>> Reworked and set up spawner, set up navmesh and ground enemies:Assets/ProBuilder Data/Default Color Palette.asset.meta
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
