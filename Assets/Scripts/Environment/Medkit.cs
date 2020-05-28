@@ -28,7 +28,7 @@ public class Medkit : MonoBehaviour
     //Rotates and moves the medpack so it looks nice
     private void Oscilate()
     {
-        transform.rotation *= Quaternion.Euler(0f, 1f, 0f);
+        transform.localRotation *= Quaternion.Euler(0f, 1f, 0f);
 
         float cycles = Time.time / 3f;
 
@@ -37,6 +37,6 @@ public class Medkit : MonoBehaviour
 
         movementFactor = rawSinWave / 2f + 0.5f;
         Vector3 offset = movementVector * movementFactor;
-        transform.position = startingPos + offset;
+        transform.localPosition = startingPos + offset;
     }
 }

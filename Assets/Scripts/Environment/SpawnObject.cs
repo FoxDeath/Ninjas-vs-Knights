@@ -5,15 +5,8 @@ public class SpawnObject : MonoBehaviour
     public GameObject objectPrefab;
     private GameObject objectInstance;
 
-    [SerializeField] float timer = 0f;
-
-    void Start()
-    {
-        if(objectInstance == null)
-        {
-            objectInstance = Instantiate(objectPrefab, transform.position, Quaternion.identity);
-        }
-    }
+    private float timer = 0f;
+    [SerializeField] float timeUntilSpawn = 5f;
 
     //After the Instantiated object is destroyed, it calls Spawn() to create a new object.
     void Update()
@@ -29,9 +22,9 @@ public class SpawnObject : MonoBehaviour
     {
         timer +=Time.deltaTime;
 
-        if(timer >= 5f)
+        if(timer >= timeUntilSpawn)
         {
-            objectInstance = Instantiate(objectPrefab, transform.position, Quaternion.identity);
+            objectInstance = Instantiate(objectPrefab, transform.position, Quaternion.identity, transform);
             timer = 0f;
         }
     }
