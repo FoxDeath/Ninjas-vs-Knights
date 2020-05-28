@@ -49,29 +49,36 @@ public class GroundEnemyMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        if(agent.destination == agent.transform.position)
+        CheckProgress();
+        Facing();
+    }
+
+    private void CheckProgress()
+    {
+        if (agent.destination == agent.transform.position)
         {
-            print(1);
             agent.enabled = false;
             obstacle.enabled = true;
         }
         else
         {
-            print(2);
             agent.enabled = true;
             obstacle.enabled = false;
         }
+    }
 
-        if(!target.GetDead())
+    private void Facing()
+    {
+        if (!target.GetDead())
         {
             float playerDistance = Vector3.Distance(transform.position, player.position);
             float objectiveDistance = Vector3.Distance(transform.position, objective.position);
 
-            if(objectiveDistance <= lookRadius)
+            if (objectiveDistance <= lookRadius)
             {
                 FaceTarget(objective.position);
             }
-            else if(playerDistance <= lookRadius)
+            else if (playerDistance <= lookRadius)
             {
                 FaceTarget(player.position);
             }
