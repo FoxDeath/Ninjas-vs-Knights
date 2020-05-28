@@ -46,9 +46,11 @@ public class EnemyAttack : MonoBehaviour
     protected void AquireTarget()
     {
         float closestdistance = -1f;
+
         foreach (var gO in GameObject.FindGameObjectsWithTag("Player"))
         {
             float distance = Vector3.Distance(this.transform.position, gO.transform.position);
+            
             if (distance < closestdistance || closestdistance == -1)
             {
                 player = gO.transform;
@@ -63,8 +65,6 @@ public class EnemyAttack : MonoBehaviour
         nextTimeToFire = fireRate + UnityEngine.Random.Range(-fireRate / 2, fireRate / 2);
 
         Ray ray = new Ray(bulletEmitter.transform.position, bulletEmitter.transform.forward);
-
-        //Debug.DrawRay(bulletEmitter.transform.position, bulletEmitter.transform.forward, Color.green);
 
         RaycastHit hit;
         Vector3 targetPoint;

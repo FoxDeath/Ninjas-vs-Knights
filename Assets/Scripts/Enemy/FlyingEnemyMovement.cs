@@ -22,18 +22,24 @@ public class FlyingEnemyMovement : MonoBehaviour
         return target;
     }
 
-    void Update()
+    void Start()
     {
-        SearchForNearestPlayer();
+        InvokeRepeating("SearchForNearestPlayer", 0f, 1f);
+    }
+
+    void FixedUpdate()
+    {
         Pathfind();
     }
 
     void SearchForNearestPlayer()
     {
         float closestdistance = -1f;
+
         foreach(var item in GameObject.FindGameObjectsWithTag("Player"))
         {
             float distance = Vector3.Distance(this.transform.position, item.transform.position);
+            
             if(distance < closestdistance || closestdistance == -1)
             {
                 target = item.transform;
@@ -48,6 +54,7 @@ public class FlyingEnemyMovement : MonoBehaviour
         {
             transform.position += transform.forward * movementSpeed * Time.deltaTime;
         }
+
         if (Vector3.Distance(transform.position, target.position) < minDistanceFromPlayer)
         {
             Vector3 retreat = transform.forward;
@@ -91,6 +98,7 @@ public class FlyingEnemyMovement : MonoBehaviour
             avoidDir -= Vector3.right;
             hitSomething = true;
         }
+
         if (Physics.Raycast(up, transform.forward, out hit, detectionRange, 12))
         {
             avoidDir -= Vector3.up;
@@ -101,6 +109,7 @@ public class FlyingEnemyMovement : MonoBehaviour
             avoidDir += Vector3.up;
             hitSomething = true;
         }
+
         if (hitSomething)
         {
             Quaternion rotation = Quaternion.LookRotation(avoidDir);
@@ -110,6 +119,7 @@ public class FlyingEnemyMovement : MonoBehaviour
         {
             Turn();
         }
+
         Move();
     }
 }

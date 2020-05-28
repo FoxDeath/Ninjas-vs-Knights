@@ -12,7 +12,7 @@ public class Medkit : MonoBehaviour
 
     void Start()
     {
-        startingPos = transform.position;
+        startingPos = transform.localPosition;
     }
 
     public float GetHealAmmount() 

@@ -29,11 +29,6 @@ public class GroundEnemyMovement : MonoBehaviour
         return lookRadius;
     }
 
-    public Vector3 GetObjective()
-    {
-        return objective.position + (Vector3)Random.insideUnitCircle * 15f;
-    }
-
     #endregion
 
     void Awake()
@@ -54,32 +49,36 @@ public class GroundEnemyMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        // if(agent.pathStatus == NavMeshPathStatus.PathComplete)
-        // {
-        //     print(1);
-        //     obstacle.carving = true;
-        // }
-        // else
-        // {
-        //     print(2);
-        //     obstacle.carving = false;
-        // }
+        CheckProgress();
+        Facing();
+    }
 
-        if(!target.GetDead())
+    private void CheckProgress()
+    {
+        if (agent.destination == agent.transform.position)
+        {
+            agent.enabled = false;
+            obstacle.enabled = true;
+        }
+        else
+        {
+            agent.enabled = true;
+            obstacle.enabled = false;
+        }
+    }
+
+    private void Facing()
+    {
+        if (!target.GetDead())
         {
             float playerDistance = Vector3.Distance(transform.position, player.position);
             float objectiveDistance = Vector3.Distance(transform.position, objective.position);
 
-            if(objectiveDistance <= lookRadius)
+            if (objectiveDistance <= lookRadius)
             {
                 FaceTarget(objective.position);
-
-                // if (agent.desiredVelocity != agent.velocity)
-                // {
-                //     agent.SetDestination(objective.position + (Vector3)Random.insideUnitCircle * 15);
-                // }
             }
-            else if(playerDistance <= lookRadius)
+            else if (playerDistance <= lookRadius)
             {
                 FaceTarget(player.position);
             }
@@ -88,6 +87,19 @@ public class GroundEnemyMovement : MonoBehaviour
                 FaceTarget(agent.steeringTarget);
             }
         }
+    }
+
+    public Vector3 GetObjective()
+    {
+        float angle = Random.Range(0f, 360f);
+        float dist = Random.Range(8f, 15f);
+        var x = dist * Mathf.Cos(angle * Mathf.Deg2Rad);
+        var z = dist * Mathf.Sin(angle * Mathf.Deg2Rad);
+        Vector3 objPos = objective.position;
+        objPos.x += x;
+        objPos.z += z;
+
+        return objPos;
     }
 
     //Makes the Enemy face the target position.
