@@ -7,7 +7,6 @@ public class Target : MonoBehaviour
 {
     private Rigidbody myRigidbody;
     private AudioManager audioManager;
-    public GameObject healthBarUI;
     public Slider healthBar;
     private GroundEnemyMovement movement;
 
