@@ -81,22 +81,22 @@ public class FlyingEnemyMovement : MonoBehaviour
         Debug.DrawRay(up, transform.forward * detectionRange, Color.cyan);
         Debug.DrawRay(down, transform.forward * detectionRange, Color.cyan);
 
-        if (Physics.Raycast(left, transform.forward, out hit, detectionRange))
+        if (Physics.Raycast(left, transform.forward, out hit, detectionRange, 12))
         {
             avoidDir += Vector3.right;
             hitSomething = true;
         }
-        else if (Physics.Raycast(right, transform.forward, out hit, detectionRange))
+        else if (Physics.Raycast(right, transform.forward, out hit, detectionRange, 12))
         {
             avoidDir -= Vector3.right;
             hitSomething = true;
         }
-        if (Physics.Raycast(up, transform.forward, out hit, detectionRange))
+        if (Physics.Raycast(up, transform.forward, out hit, detectionRange, 12))
         {
             avoidDir -= Vector3.up;
             hitSomething = true;
         }
-        else if (Physics.Raycast(down, transform.forward, out hit, detectionRange))
+        else if (Physics.Raycast(down, transform.forward, out hit, detectionRange, 12))
         {
             avoidDir += Vector3.up;
             hitSomething = true;

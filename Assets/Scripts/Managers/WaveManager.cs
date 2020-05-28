@@ -5,14 +5,33 @@ using UnityEngine;
 public class WaveManager : MonoBehaviour
 {
     [System.Serializable]
+    private class SpawnPoint
+    {
+        public WaveUnit.enemyTypes type = WaveUnit.enemyTypes.ANYTHING;
+
+        public Transform position;
+
+        public SpawnPoint(WaveUnit.enemyTypes type, Transform position)
+        {
+            this.type = type;
+            this.position = position;
+        }
+    }
+
+    [System.Serializable]
     private class WaveUnit
     {
+        public enum enemyTypes { AIR, GROUND, ANYTHING };
+
+        public enemyTypes type = enemyTypes.ANYTHING;
+
         public GameObject enemyPrefab;
 
         public int noEnemies;
 
-        public WaveUnit(GameObject enemyPrefab, int noEnemies)
+        public WaveUnit(enemyTypes type, GameObject enemyPrefab, int noEnemies)
         {
+            this.type = type;
             this.enemyPrefab = enemyPrefab;
             this.noEnemies = noEnemies;
         }
@@ -41,7 +60,7 @@ public class WaveManager : MonoBehaviour
 
     private Transform enemyContainer;
 
-    [SerializeField] List<Transform> spawnPoints;
+    [SerializeField] List<SpawnPoint> spawnPoints;
     [SerializeField] List<Wave> waves;
 
     private int nextWave = 0;
@@ -139,10 +158,27 @@ public class WaveManager : MonoBehaviour
 
     IEnumerator SpawnUnit(WaveUnit unit, int rate)
     {
+        List<SpawnPoint> availableSpawnPoint = new List<SpawnPoint>();
+
+        if (unit.type == WaveUnit.enemyTypes.ANYTHING)
+        {
+            availableSpawnPoint = spawnPoints;
+        }
+        else
+        {
+            foreach (SpawnPoint point in spawnPoints)
+            {
+                if (point.type == unit.type || point.type == WaveUnit.enemyTypes.ANYTHING)
+                {
+                    availableSpawnPoint.Add(point);
+                }
+            }
+        }
+
         for(int i = 0; i < unit.noEnemies; i++)
         {
-            Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Count)];
-            Vector3 spawnPos = new Vector3(spawnPoint.position.x + Random.Range(3f, 6f), spawnPoint.position.y, spawnPoint.position.z + Random.Range(3f, 6f));
+            SpawnPoint spawnPoint = availableSpawnPoint[Random.Range(0, availableSpawnPoint.Count)];
+            Vector3 spawnPos = new Vector3(spawnPoint.position.position.x + Random.Range(4f, 6f), spawnPoint.position.position.y, spawnPoint.position.position.z + Random.Range(4f, 6f));
             Instantiate(unit.enemyPrefab, spawnPos, Quaternion.identity, enemyContainer);
             
             yield return new WaitForSeconds(1f / rate);
