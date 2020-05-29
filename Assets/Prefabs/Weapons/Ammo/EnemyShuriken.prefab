@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 2693863253237791231}
   - component: {fileID: 1397264088464825063}
   - component: {fileID: 4583031090264833006}
+  - component: {fileID: 6998324244147686790}
+  - component: {fileID: 8222712035226790873}
   m_Layer: 0
   m_Name: EnemyShuriken
   m_TagString: Ammo
@@ -67,6 +69,35 @@ MonoBehaviour:
   localPositionSensitivity: 0.01
   localRotationSensitivity: 0.01
   localScaleSensitivity: 0.01
+--- !u!114 &6998324244147686790
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2693863253237791218}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8e17050837fe5446951ed6d41d1a56c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 10
+--- !u!54 &8222712035226790873
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2693863253237791218}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 2
 --- !u!64 &8540881453056955349
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -177,19 +208,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &3101440043204816864
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7605844062800328649}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f8e17050837fe5446951ed6d41d1a56c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 10
 --- !u!1001 &2693863253980827844
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -282,7 +300,8 @@ PrefabInstance:
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: -1974530057578539475, guid: 8062d1ed2f6b72a479d6b7670e00af30, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 8062d1ed2f6b72a479d6b7670e00af30, type: 3}
 --- !u!1 &7605844062800328649 stripped
 GameObject:

@@ -3,12 +3,7 @@
 public class EnemyShuriken : MonoBehaviour
 {
     private GameObject anchor;
-
-    private Transform player;
     private Rigidbody myRigidbody;
-
-    private Vector3 target;
-    private Vector3 direction;
 
     [SerializeField] float damage = 10f;
 
@@ -16,15 +11,7 @@ public class EnemyShuriken : MonoBehaviour
 
     void Awake()
     {
-        player = GameObject.FindGameObjectWithTag("Player").transform;
         myRigidbody = GetComponent<Rigidbody>();
-    }
-
-    //The Target is the players position, when an EnemyShuriken is spawned.
-    void Start()
-    {
-        target = player.position;
-        direction = (target - transform.position).normalized;
     }
 
     //The EnemyShuriken will move towards the targets last known position.

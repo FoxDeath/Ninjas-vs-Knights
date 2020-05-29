@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4286818602018296629}
   - component: {fileID: 4286818602018296630}
   - component: {fileID: 4286818602018296631}
+  - component: {fileID: 4272921786009642729}
   m_Layer: 13
   m_Name: LargeMedkit
   m_TagString: Untagged
@@ -59,6 +60,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healAmmount: 100
+--- !u!114 &4272921786009642729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4286818602018296624}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneId: 0
+  serverOnly: 0
+  m_AssetId: 
+  hasSpawned: 0
 --- !u!1001 &7384179780845784791
 PrefabInstance:
   m_ObjectHideFlags: 0

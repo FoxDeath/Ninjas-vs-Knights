@@ -3,7 +3,7 @@
 public class SpawnObject : MonoBehaviour
 {
     [SerializeField] GameObject objectPrefab;
-    private GameObject objectInstance;
+    private bool hasObject = false;
 
     private float timer = 0f;
     [SerializeField] float timeUntilSpawn = 5f;
@@ -11,10 +11,12 @@ public class SpawnObject : MonoBehaviour
     //After the Instantiated object is destroyed, it calls Spawn() to create a new object.
     void Update()
     {
-        if(objectInstance == null)
+        if(!hasObject)
         {
             Spawn();
         }
+
+        hasObject = Physics.Raycast(transform.position, Vector3.up, 5f);
     }
 
     //Instantiates the object after some time.
@@ -24,7 +26,7 @@ public class SpawnObject : MonoBehaviour
 
         if(timer >= timeUntilSpawn)
         {
-            objectInstance = Instantiate(objectPrefab, transform.position, Quaternion.identity, transform);
+            FindObjectOfType<NetworkController>().NetworkSpawn(objectPrefab.name, transform.position + Vector3.up * 2, Quaternion.identity, Vector3.zero);
             timer = 0f;
         }
     }

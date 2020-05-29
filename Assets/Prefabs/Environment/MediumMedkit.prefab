@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6150923883148746159}
   - component: {fileID: 6150923883148746156}
   - component: {fileID: 6150923883148746157}
+  - component: {fileID: -8001694574558803129}
   m_Layer: 13
   m_Name: MediumMedkit
   m_TagString: Untagged
@@ -59,6 +60,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healAmmount: 50
+--- !u!114 &-8001694574558803129
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6150923883148746154}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneId: 0
+  serverOnly: 0
+  m_AssetId: 
+  hasSpawned: 0
 --- !u!1001 &7379291235279461756
 PrefabInstance:
   m_ObjectHideFlags: 0

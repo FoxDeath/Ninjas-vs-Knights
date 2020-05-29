@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 420066035962339567}
   - component: {fileID: -3305155690560328164}
   - component: {fileID: -2410089682983076657}
+  - component: {fileID: 807586770945672286}
   m_Layer: 12
   m_Name: GroundEnemy
   m_TagString: Untagged
@@ -130,7 +131,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a5cf0428905df34aa22c017b7437c94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthBarUI: {fileID: 183900229385738121}
   healthBar: {fileID: 7320331852582610495}
   maxHealth: 50
 --- !u!82 &7490035165870627215
@@ -299,6 +299,22 @@ MonoBehaviour:
   spread: 0.7
   flashedSpread: 5
   shootRadius: 20
+--- !u!114 &807586770945672286
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2639069613400589893}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneId: 0
+  serverOnly: 0
+  m_AssetId: 
+  hasSpawned: 0
 --- !u!1 &2944856173956134775
 GameObject:
   m_ObjectHideFlags: 0
@@ -478,12 +494,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 673fbad04112c1f47b465cb0da65d7f2, type: 3}
---- !u!1 &183900229385738121 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5152426292745855783, guid: 673fbad04112c1f47b465cb0da65d7f2,
-    type: 3}
-  m_PrefabInstance: {fileID: 4975422206748767406}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &4333395626605580985 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8732216336582125079, guid: 673fbad04112c1f47b465cb0da65d7f2,
