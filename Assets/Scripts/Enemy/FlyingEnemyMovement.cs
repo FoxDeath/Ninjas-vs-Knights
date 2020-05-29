@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class FlyingEnemyMovement : MonoBehaviour
 {
@@ -46,6 +44,7 @@ public class FlyingEnemyMovement : MonoBehaviour
         Pathfind();
     }
 
+    //Searches for the nearest player to target
     void SearchForNearestPlayer()
     {
         float closestdistance = -1f;
@@ -62,14 +61,15 @@ public class FlyingEnemyMovement : MonoBehaviour
         } 
     }
 
+    //Moves forwards or moves awy from the player depending on its distance
     void Move()
     {
-        if (Vector3.Distance(transform.position, target.position) > minDistanceFromPlayer)
+        if(Vector3.Distance(transform.position, target.position) > minDistanceFromPlayer)
         {
             transform.position += transform.forward * movementSpeed * Time.deltaTime;
         }
 
-        if (Vector3.Distance(transform.position, target.position) < minDistanceFromPlayer)
+        if(Vector3.Distance(transform.position, target.position) < minDistanceFromPlayer)
         {
             Vector3 retreat = transform.forward;
             retreat.y *= -1;
@@ -77,6 +77,7 @@ public class FlyingEnemyMovement : MonoBehaviour
         }
     }
 
+    //Slowly turns towards the player
     void Turn()
     {
         Vector3 pos = target.position + new Vector3(0f,10f,0f) - transform.position;
@@ -84,6 +85,7 @@ public class FlyingEnemyMovement : MonoBehaviour
         transform.rotation = Quaternion.Slerp(transform.rotation, rotation, rotationSpeed * Time.deltaTime);
     }
 
+    //Avoids stuff that are in its path
     void Pathfind()
     {
         RaycastHit hit;

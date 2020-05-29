@@ -136,7 +136,7 @@ public class PlayerMovement : NetworkBehaviour
         }
 
         //isGrounded is true if the groundCheck object is touching the Ground layer
-        if (!isGrounded)
+        if(!isGrounded)
         {
             isGrounded = Physics.CheckSphere(groundCheck.position, groungDistance, groundMask);
 
@@ -149,7 +149,7 @@ public class PlayerMovement : NetworkBehaviour
         isGrounded = Physics.CheckSphere(groundCheck.position, groungDistance, groundMask);
 
         //if sprinting and moving backwards
-        if (sprinting && vertical <= 0 && isGrounded && !edgeClimbing)
+        if(sprinting && vertical <= 0 && isGrounded && !edgeClimbing)
         {
             Sprint(false);
         }
@@ -175,7 +175,7 @@ public class PlayerMovement : NetworkBehaviour
             velocity.y = Mathf.Clamp(velocity.y, 0f, 15f); 
         }
 
-        if (edgeHanging)
+        if(edgeHanging)
         {
             //turns off gravity while hanging on edge
             velocity.y = 0f;
@@ -195,7 +195,7 @@ public class PlayerMovement : NetworkBehaviour
         //restricts the max vertical speed
         velocity.y = Mathf.Clamp(velocity.y, -40f, 15f);
 
-        if (!edgeClimbing)
+        if(!edgeClimbing)
         {
             //applies gravity
             controller.Move(velocity * Time.deltaTime);
@@ -263,7 +263,7 @@ public class PlayerMovement : NetworkBehaviour
     public void Crouch()
     {
         //You can't crouch if you are not on the ground or if there is something above you
-        if (!isGrounded || Physics.Raycast(transform.position, Vector3.up, 5f) || charging)
+        if(!isGrounded || Physics.Raycast(transform.position, Vector3.up, 5f) || charging)
         {
             return;
         }

@@ -45,7 +45,7 @@ public class EnemyShuriken : MonoBehaviour
             Destroy(transform.parent.gameObject, 0.1f);
         }
 
-        if (other.gameObject.tag.Equals("EnemyObjective"))
+        if(other.gameObject.tag.Equals("EnemyObjective"))
         {
             // FindObjectOfType<AudioManager>().Play("ShurikenHit", GetComponent<AudioSource>());
             other.gameObject.GetComponentInParent<Objective>().TakeDamage(damage);

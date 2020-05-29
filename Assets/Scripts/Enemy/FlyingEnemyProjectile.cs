@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class FlyingEnemyProjectile : MonoBehaviour
 {
@@ -19,7 +17,7 @@ public class FlyingEnemyProjectile : MonoBehaviour
 
     void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.CompareTag("Player"))
+        if(other.gameObject.CompareTag("Player"))
         {
             other.gameObject.GetComponentInParent<Health>().TakeDamage(damage);
         }

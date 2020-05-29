@@ -108,11 +108,11 @@ public class KnightPlayerMovement : PlayerMovement
         }
         else
         {
-            if (isCrouched && !scoping)
+            if(isCrouched && !scoping)
             {
                 speed = defaultSpeed * 0.6f;
             }
-            else if (scoping)
+            else if(scoping)
             {
                 speed = defaultSpeed * 0.4f;
             }
@@ -303,15 +303,15 @@ public class KnightPlayerMovement : PlayerMovement
 
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
-        if (charging)
+        if(charging)
         {
             Target target = hit.transform.GetComponent<Target>();
-            if (target)
+            if(target)
             {
                 target.TakeDamage(chargeDamage);
             }
 
-            if (hit.rigidbody)
+            if(hit.rigidbody)
             {
                 Vector3 force = -hit.normal * chargePushForce;
                 force.y = upwardsForce;

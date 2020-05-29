@@ -46,7 +46,7 @@ public class WallRun : MonoBehaviour
             Physics.Raycast(transform.position, transform.forward + transform.right, out frontRightCast, 0.8f);
 
             //Detecting if you colide with a wall on the right side of the player, either directily right or front right
-            if (rightCast.normal != Vector3.zero && rightCast.transform.tag == "Wall" && rightCast.transform.gameObject.GetInstanceID() != currentWallID)
+            if(rightCast.normal != Vector3.zero && rightCast.transform.tag == "Wall" && rightCast.transform.gameObject.GetInstanceID() != currentWallID)
             {
                 playerMovement.wallRunning = true;
                 playerMovement.runningVector = Vector3.Cross(-rightCast.normal, Vector3.up);
@@ -55,7 +55,7 @@ public class WallRun : MonoBehaviour
                 side = 1;
                 currentWallID = rightCast.transform.gameObject.GetInstanceID();
             }
-            else if (frontRightCast.normal != Vector3.zero && frontRightCast.transform.tag == "Wall" && frontRightCast.transform.gameObject.GetInstanceID() != currentWallID)
+            else if(frontRightCast.normal != Vector3.zero && frontRightCast.transform.tag == "Wall" && frontRightCast.transform.gameObject.GetInstanceID() != currentWallID)
             {
                 playerMovement.wallRunning = true;
                 playerMovement.runningVector = Vector3.Cross(-frontRightCast.normal, Vector3.up);
@@ -65,7 +65,7 @@ public class WallRun : MonoBehaviour
                 currentWallID = frontRightCast.transform.gameObject.GetInstanceID();
             }
             //Detecting if you colide with a wall on the left side of the player, either directily left or front left
-            else if (leftCast.normal != Vector3.zero && leftCast.transform.tag == "Wall" && leftCast.transform.gameObject.GetInstanceID() != currentWallID)
+            else if(leftCast.normal != Vector3.zero && leftCast.transform.tag == "Wall" && leftCast.transform.gameObject.GetInstanceID() != currentWallID)
             {
                 playerMovement.wallRunning = true;
                 playerMovement.runningVector = Vector3.Cross(leftCast.normal, Vector3.up);
@@ -74,7 +74,7 @@ public class WallRun : MonoBehaviour
                 side = -1;
                 currentWallID = leftCast.transform.gameObject.GetInstanceID();
             }
-            else if (frontLeftCast.normal != Vector3.zero && frontLeftCast.transform.tag == "Wall" && frontLeftCast.transform.gameObject.GetInstanceID() != currentWallID)
+            else if(frontLeftCast.normal != Vector3.zero && frontLeftCast.transform.tag == "Wall" && frontLeftCast.transform.gameObject.GetInstanceID() != currentWallID)
             {
                 playerMovement.wallRunning = true;
                 playerMovement.runningVector = Vector3.Cross(frontLeftCast.normal, Vector3.up);
@@ -94,11 +94,11 @@ public class WallRun : MonoBehaviour
             Physics.Raycast(transform.position, -transform.forward + -transform.right, out backLeftCast, 1.2f);
             Physics.Raycast(transform.position, -transform.forward + transform.right, out backRightCast, 1.2f);
 
-            if (backCast.normal != Vector3.zero && backCast.transform.tag == "Wall")
+            if(backCast.normal != Vector3.zero && backCast.transform.tag == "Wall")
             {
                 StartCoroutine(EndWallrun());
             }
-            else if (frontCast.normal != Vector3.zero && frontCast.transform.tag == "Wall") 
+            else if(frontCast.normal != Vector3.zero && frontCast.transform.tag == "Wall") 
             {
                 StartCoroutine(EndWallrun()); 
             }

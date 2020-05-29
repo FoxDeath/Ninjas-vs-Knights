@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEditorInternal;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class EnemyAttack : MonoBehaviour
 {
@@ -31,9 +28,9 @@ public class EnemyAttack : MonoBehaviour
     {
         AquireTarget();
 
-        if (!target.GetDead() && nextTimeToFire <= 0)
+        if(!target.GetDead() && nextTimeToFire <= 0)
         {
-            if (Vector3.Distance(transform.position, player.position) <= shootRadius)
+            if(Vector3.Distance(transform.position, player.position) <= shootRadius)
             {
                 bulletEmitter.transform.rotation = Quaternion.LookRotation(player.position - bulletEmitter.transform.position);
                 Shoot();
@@ -43,15 +40,16 @@ public class EnemyAttack : MonoBehaviour
         nextTimeToFire -= Time.fixedDeltaTime;
     }
 
+    //Searches for the nearest player to target
     protected void AquireTarget()
     {
         float closestdistance = -1f;
 
-        foreach (var gO in GameObject.FindGameObjectsWithTag("Player"))
+        foreach(var gO in GameObject.FindGameObjectsWithTag("Player"))
         {
             float distance = Vector3.Distance(this.transform.position, gO.transform.position);
             
-            if (distance < closestdistance || closestdistance == -1)
+            if(distance < closestdistance || closestdistance == -1)
             {
                 player = gO.transform;
                 closestdistance = distance;
@@ -69,7 +67,7 @@ public class EnemyAttack : MonoBehaviour
         RaycastHit hit;
         Vector3 targetPoint;
 
-        if (Physics.Raycast(ray, out hit))
+        if(Physics.Raycast(ray, out hit))
         {
             targetPoint = hit.point;
         }
@@ -81,12 +79,12 @@ public class EnemyAttack : MonoBehaviour
         targetPoint.x += UnityEngine.Random.Range(-spread, spread);
         targetPoint.y += UnityEngine.Random.Range(-spread, spread);
 
-        if (flashed)
+        if(flashed)
         {
             int chanceX = UnityEngine.Random.Range(0, 2);
             int chanceY = UnityEngine.Random.Range(0, 2);
 
-            if (chanceX == 0)
+            if(chanceX == 0)
             {
                 targetPoint.x += flashedSpread;
             }
@@ -95,7 +93,7 @@ public class EnemyAttack : MonoBehaviour
                 targetPoint.x -= flashedSpread;
             }
 
-            if (chanceY == 0)
+            if(chanceY == 0)
             {
                 targetPoint.y += flashedSpread;
             }

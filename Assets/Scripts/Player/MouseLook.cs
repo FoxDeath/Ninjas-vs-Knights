@@ -47,7 +47,7 @@ public class MouseLook : NetworkBehaviour
     private void CalculateLook()
     {
         //if game is paused
-        if (GetComponentInChildren<PauseMenu>().GameIsPaused || !this.isLocalPlayer)
+        if(GetComponentInChildren<PauseMenu>().GameIsPaused || !this.isLocalPlayer)
         {
             return;
         }

@@ -26,9 +26,9 @@ public class KightPlayerInput : MonoBehaviour
 
     public void JumpInput(InputAction.CallbackContext context)
     {
-        if (context.action.phase == InputActionPhase.Started)
+        if(context.action.phase == InputActionPhase.Started)
         {
-            if (playerMovement.GetEdgeHanging())
+            if(playerMovement.GetEdgeHanging())
             {
                 //if edge hanging start edge climb
                 edgeClimb.EdgeClimbStart();
@@ -40,9 +40,9 @@ public class KightPlayerInput : MonoBehaviour
             }
         }
 
-        if (context.interaction is HoldInteraction)
+        if(context.interaction is HoldInteraction)
         {
-            if (context.action.phase == InputActionPhase.Performed)
+            if(context.action.phase == InputActionPhase.Performed)
             {
                 playerMovement.SetJetpackOn(true);
             }
@@ -72,17 +72,17 @@ public class KightPlayerInput : MonoBehaviour
     public void CrouchInput(InputAction.CallbackContext context)
     {
         //if button is pressed and not crouching
-        if (context.action.phase == InputActionPhase.Started && !playerMovement.GetSprinting() && !playerMovement.GetDashing())
+        if(context.action.phase == InputActionPhase.Started && !playerMovement.GetSprinting() && !playerMovement.GetDashing())
         {
             playerMovement.SetCrouching(true);
         }
         //if button is released and crouching
-        else if (context.action.phase == InputActionPhase.Canceled && playerMovement.GetCrouching())
+        else if(context.action.phase == InputActionPhase.Canceled && playerMovement.GetCrouching())
         {
             playerMovement.SetCrouching(false);
         }
         //if button is pressed, sprinting and not sliding
-        else if (context.action.phase == InputActionPhase.Started && playerMovement.GetSprinting() && playerMovement.GetCanSlide())
+        else if(context.action.phase == InputActionPhase.Started && playerMovement.GetSprinting() && playerMovement.GetCanSlide())
         {
             StartCoroutine(playerMovement.Sliding());
         }
@@ -90,11 +90,11 @@ public class KightPlayerInput : MonoBehaviour
 
     public void SprintInput(InputAction.CallbackContext context)
     {
-        if (context.action.phase == InputActionPhase.Performed && !playerMovement.GetSprinting() && playerMovement.GetVertical() > 0)
+        if(context.action.phase == InputActionPhase.Performed && !playerMovement.GetSprinting() && playerMovement.GetVertical() > 0)
         {
             playerMovement.Sprint(true);
         }
-        else if (context.action.phase == InputActionPhase.Canceled && playerMovement.GetSprinting())
+        else if(context.action.phase == InputActionPhase.Canceled && playerMovement.GetSprinting())
         {
             playerMovement.Sprint(false);
         }

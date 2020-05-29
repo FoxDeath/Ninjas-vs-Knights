@@ -23,7 +23,7 @@ public class GroundEnemyAttack : EnemyAttack
     {
         AquireTarget();
 
-        if (!target.GetDead() && nextTimeToFire <= 0)
+        if(!target.GetDead() && nextTimeToFire <= 0)
         {
             if(Vector3.Distance(transform.position, objective.position) <= shootRadius)
             {

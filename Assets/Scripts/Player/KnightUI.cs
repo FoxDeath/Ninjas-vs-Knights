@@ -33,16 +33,16 @@ public class KnightUI : MonoBehaviour
             grenadeCount = knightUI.transform.Find("Grenade").Find("GrenadeCount").GetComponent<TextMeshProUGUI>();
             texts = knightUI.transform.Find("AmmoCounter").GetComponentsInChildren<TextMeshProUGUI>();
             foreach(TextMeshProUGUI text in texts)
-        {
-            if(text.name.Equals("CurrentAmmo"))
             {
-                currentAmmo = text;
+                if(text.name.Equals("CurrentAmmo"))
+                {
+                    currentAmmo = text;
+                }
+                else if(text.name.Equals("MaxAmmo"))
+                {
+                    maxAmmo = text;
+                }
             }
-            else if(text.name.Equals("MaxAmmo"))
-            {
-                maxAmmo = text;
-            }
-        }
             knightSlider = knightUI.transform.Find("FuelSlider").GetComponent<Slider>();
             healthSlider = knightUI.transform.Find("HealthBar").GetComponent<Slider>();
             knightScopeOverlay = transform.Find("ScopeOverlay").gameObject;

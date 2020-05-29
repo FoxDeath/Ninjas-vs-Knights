@@ -58,18 +58,18 @@ public class AOEattack : MonoBehaviour
         var colliders = Physics.OverlapSphere(transform.position, range, Physics.AllLayers);
 
         //Foreach object check is they have a Target Component, if they do they take damage and knockback/up
-        foreach (var item in colliders)
+        foreach(var item in colliders)
         {
             Target target = item.transform.GetComponent<Target>();
 
             //Adding damage if the object has a Target Component
-            if (target)
+            if(target)
             {
                 target.TakeDamage(damage * damageMutliplyer);
             }
 
             //Adding force for knockback/up if the object has a RigidBody Component
-            if (item.attachedRigidbody)
+            if(item.attachedRigidbody)
             {
                 Vector3 force = (transform.position - item.transform.position) * -1;
                 force.Normalize();
