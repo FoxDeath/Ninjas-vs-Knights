@@ -1,13 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Medkit : MonoBehaviour
 {
-    [SerializeField] float healAmmount = 25f;
-
     private Vector3 movementVector = new Vector3(0f, 1f, 0f);
     private Vector3 startingPos;
+    [SerializeField] float healAmmount = 25f;
     private float movementFactor;
 
     void Start()

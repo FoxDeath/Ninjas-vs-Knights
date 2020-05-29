@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 
-
 //TO DO: Add to UI Manager
 public class EndLevel : MonoBehaviour
 {
@@ -9,6 +8,7 @@ public class EndLevel : MonoBehaviour
 
     public GameObject victoryScreenUI;
 
+    //TO DO: Game ends after the Objective is destroyed or when all players are dead.
     void Update()
     {
         if(killedEnemies >= numberOfEnemies)

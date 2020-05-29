@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
-using UnityEngine.InputSystem.UI;
 using UnityEngine.InputSystem;
 using Mirror;
-
 
 //TO DO: Add to Menu Manager
 public class PauseMenu : NetworkBehaviour
@@ -12,7 +10,6 @@ public class PauseMenu : NetworkBehaviour
     private GameObject gameUI;
     private GameObject optionsUI;
     private GameObject keyBindUI;
-
     private InputActionAsset inputActions;
     private PlayerInput playerInput;
     private AudioManager audioManager;
@@ -26,8 +23,7 @@ public class PauseMenu : NetworkBehaviour
         keyBindUI = transform.Find("RebindMenu").gameObject;
         inputActions = GetComponentInParent<UnityEngine.InputSystem.PlayerInput>().actions;
 
-
-        if (transform.Find("NinjaUI") != null)
+        if(transform.Find("NinjaUI") != null)
         {
             gameUI = transform.Find("NinjaUI").gameObject;
         }
@@ -39,7 +35,7 @@ public class PauseMenu : NetworkBehaviour
 
     void Update()
     {
-        if (GameIsPaused && inputActions.enabled)
+        if(GameIsPaused && inputActions.enabled)
         {
             inputActions.Disable();
         }
@@ -61,6 +57,7 @@ public class PauseMenu : NetworkBehaviour
         }
     }
 
+    //Pauses the game.
     private void Pause()
     {
         gameUI.SetActive(false);
@@ -69,6 +66,7 @@ public class PauseMenu : NetworkBehaviour
         GameIsPaused = true;
     }
 
+    //Resumes the game.
     public void Resume()
     {
         pauseMenuUI.SetActive(false);
@@ -79,6 +77,7 @@ public class PauseMenu : NetworkBehaviour
         GameIsPaused = false;
     }
 
+    //Stops the host.
     public void MainMenu()
     {
         GameIsPaused = false;

@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Samples.RebindUI;
 
@@ -21,7 +18,7 @@ public class RebindMenu : MonoBehaviour
     {
         SaveManager.GetInstance().LoadConfig();
 
-        foreach (RebindActionUI x in GetComponentsInChildren<RebindActionUI>())
+        foreach(RebindActionUI x in GetComponentsInChildren<RebindActionUI>())
         {
             x.UpdateBindingDisplay();
         }
