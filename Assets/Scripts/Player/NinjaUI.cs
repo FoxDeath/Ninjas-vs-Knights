@@ -46,16 +46,16 @@ public class NinjaUI : MonoBehaviour
             texts = transform.Find("NinjaUI").Find("AmmoCounter").GetComponentsInChildren<TextMeshProUGUI>();
 
             foreach(TextMeshProUGUI text in texts)
-        {
-            if(text.name.Equals("CurrentAmmo"))
             {
-                currentAmmo = text;
+                if(text.name.Equals("CurrentAmmo"))
+                {
+                    currentAmmo = text;
+                }
+                else if(text.name.Equals("MaxAmmo"))
+                {
+                    maxAmmo = text;
+                }
             }
-            else if(text.name.Equals("MaxAmmo"))
-            {
-                maxAmmo = text;
-            }
-        }
             ninjaUI = transform.Find("NinjaUI").gameObject;
             grenadeCount = ninjaUI.transform.Find("Grenade").Find("GrenadeCount").GetComponent<TextMeshProUGUI>();
             healthSlider = ninjaUI.transform.Find("HealthBar").GetComponent<Slider>();
@@ -81,13 +81,13 @@ public class NinjaUI : MonoBehaviour
             moveInput.y = context.ReadValue<Vector2>().y - (Screen.height / 2f);
             moveInput.Normalize();
 
-            if (moveInput != Vector2.zero)
+            if(moveInput != Vector2.zero)
             {
                 float angle = Mathf.Atan2(moveInput.y, -moveInput.x) / Mathf.PI;
                 angle *= 180f;
                 angle += 90f;
 
-                if (angle < 0f)
+                if(angle < 0f)
                 {
                     angle += 360f;
                 }

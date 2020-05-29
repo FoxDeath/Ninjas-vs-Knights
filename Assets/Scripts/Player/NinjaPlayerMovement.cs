@@ -76,20 +76,20 @@ public class NinjaPlayerMovement : PlayerMovement
             velocity.y = Mathf.Clamp(velocity.y, 0f, 15f); 
         }
 
-        if (velocity.x > 0f)
+        if(velocity.x > 0f)
         {
             velocity.x -= wallJumpForce * Time.deltaTime;
         }
-        else if (velocity.x < 0f)
+        else if(velocity.x < 0f)
         {
             velocity.x += wallJumpForce * Time.deltaTime;
         }
 
-        if (velocity.z > 0f)
+        if(velocity.z > 0f)
         {
             velocity.z -= wallJumpForce * Time.deltaTime;
         }
-        else if (velocity.z < 0f)
+        else if(velocity.z < 0f)
         {
             velocity.z += wallJumpForce * Time.deltaTime;
         }
@@ -98,27 +98,27 @@ public class NinjaPlayerMovement : PlayerMovement
     //moves the player according to its state and attributes
     protected override void Move()
     {
-        if (isGrounded && !wallJumping && !wallRunning)
+        if(isGrounded && !wallJumping && !wallRunning)
         {
             doubleJumped = false;
             move = (transform.right * horizontal + transform.forward * vertical) * speed;
             lastMove = move;
         }
-        else if (!wallJumping && !wallRunning)
+        else if(!wallJumping && !wallRunning)
         {
-            if (!edgeClimbing && !edgeHanging)
+            if(!edgeClimbing && !edgeHanging)
             {
                 controller.Move(lastMove * 0.3f * Time.deltaTime);
                 move = (transform.right * horizontal + transform.forward * vertical) * speed * 0.8f;
             }
 
-            if (edgeHanging && !edgeClimbing)
+            if(edgeHanging && !edgeClimbing)
             {
                 vertical = Mathf.Clamp(vertical, -1f, 0f);
                 move = (transform.right * horizontal + transform.forward * vertical) * speed * 0.8f;
             }
 
-            if (!edgeClimbing)
+            if(!edgeClimbing)
             {
                 move = (transform.right * horizontal + transform.forward * vertical) * speed * 0.8f;
             }
@@ -133,24 +133,24 @@ public class NinjaPlayerMovement : PlayerMovement
     public override void Jump()
     {
         //Cant jump while crouching
-        if (isCrouched)
+        if(isCrouched)
         {
             return;
         }
 
-        if (canWallJump && !Physics.Raycast(transform.position, transform.forward, 1.5f))
+        if(canWallJump && !Physics.Raycast(transform.position, transform.forward, 1.5f))
         {
             //if able to wall jump and parallel t the wall, start wall jump
             StartCoroutine(WallJump());
         }
-        else if (isGrounded)
+        else if(isGrounded)
         {
             //if grounded play jump sound and move upwards
             audioManager.NetworkPlay("Jump");
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
             fallVelocity = 10f;
         }
-        else if (!isGrounded && !doubleJumped && !edgeClimbing && !wallRunning)
+        else if(!isGrounded && !doubleJumped && !edgeClimbing && !wallRunning)
         {
             //if in air and didn't double jump yet, jump again
             audioManager.NetworkPlay("Jump");
@@ -163,9 +163,9 @@ public class NinjaPlayerMovement : PlayerMovement
 
     protected override void MoveAudio()
     {
-        if (moveInput != Vector2.zero && isGrounded)
+        if(moveInput != Vector2.zero && isGrounded)
         {
-            if (!audioManager.IsPlaying("Walking"))
+            if(!audioManager.IsPlaying("Walking"))
             {
                 audioManager.NetworkPlay("Walking");
 
@@ -179,9 +179,9 @@ public class NinjaPlayerMovement : PlayerMovement
             moving = false;
         }
 
-        if (wallRunning)
+        if(wallRunning)
         {
-            if (!audioManager.IsPlaying("Wallrun"))
+            if(!audioManager.IsPlaying("Wallrun"))
             {
                 audioManager.NetworkPlay("Wallrun");
             }

@@ -22,17 +22,17 @@ public class NinjaPlayerInput : MonoBehaviour
     public void CrouchInput(InputAction.CallbackContext context)
     {
         //if button is pressed and not crouching
-        if (context.action.phase == InputActionPhase.Started && !playerMovement.GetSprinting())
+        if(context.action.phase == InputActionPhase.Started && !playerMovement.GetSprinting())
         {
             playerMovement.SetCrouching(true);
         }
         //if button is released and crouching
-        else if (context.action.phase == InputActionPhase.Canceled && playerMovement.GetCrouching())
+        else if(context.action.phase == InputActionPhase.Canceled && playerMovement.GetCrouching())
         {
             playerMovement.SetCrouching(false);
         }
         //if button is pressed, sprinting and not sliding
-        else if (context.action.phase == InputActionPhase.Started && playerMovement.GetSprinting() && playerMovement.GetCanSlide())
+        else if(context.action.phase == InputActionPhase.Started && playerMovement.GetSprinting() && playerMovement.GetCanSlide())
         {
             StartCoroutine(playerMovement.Sliding());
         }
@@ -46,7 +46,7 @@ public class NinjaPlayerInput : MonoBehaviour
             playerMovement.Sprint(true);
         }
         //if button is released and sprinting
-        else if (context.action.phase == InputActionPhase.Canceled && playerMovement.GetSprinting())
+        else if(context.action.phase == InputActionPhase.Canceled && playerMovement.GetSprinting())
         {
             playerMovement.Sprint(false);
         }
