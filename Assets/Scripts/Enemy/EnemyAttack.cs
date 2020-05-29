@@ -107,13 +107,10 @@ public class EnemyAttack : MonoBehaviour
             Invoke("SetFlashedBack", 5);
         }
 
-        GameObject instantiateBullet = Instantiate(bullet, bulletEmitter.transform.position, bulletEmitter.transform.rotation);
-        audioManager.Play("ShurikenShoot", GetComponent<AudioSource>());
-        Rigidbody temporaryRigidbody = instantiateBullet.GetComponentInChildren<Rigidbody>();
+        audioManager.NetworkPlay("ShurikenShoot", GetComponent<AudioSource>());
 
-        temporaryRigidbody.velocity = (targetPoint - bulletEmitter.transform.position).normalized * shootSpeed;
-
-        Destroy(instantiateBullet, 10f);
+        FindObjectOfType<NetworkController>().NetworkSpawn(bullet.name, bulletEmitter.transform.position, bulletEmitter.transform.rotation,
+        (targetPoint - bulletEmitter.transform.position).normalized * shootSpeed, 10f);
     }
 
     public void SetFlashed(bool flashed)

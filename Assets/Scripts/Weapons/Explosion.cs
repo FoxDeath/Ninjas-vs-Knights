@@ -12,6 +12,8 @@ public class Explosion : MonoBehaviour
 
     void Start()
     {
+        FindObjectOfType<AudioManager>().NetworkPlay("GrenadeExplode", GetComponent<AudioSource>());
+
         myCollider = GetComponent<SphereCollider>();
         Destroy(gameObject, 0.3f);
     }

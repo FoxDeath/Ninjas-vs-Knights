@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
+using Mirror;
 
 
-public class MouseLook : MonoBehaviour
+public class MouseLook : NetworkBehaviour
 {
-    private Transform playerBody;
+    private Transform cameraTransform;
 
     [HideInInspector] public float zRotation;
     public float mouseSensitivity = 2f;
@@ -37,7 +38,7 @@ public class MouseLook : MonoBehaviour
 
     void Start()
     {
-        playerBody = transform.parent;
+        cameraTransform = transform.GetChild(0);
         Cursor.lockState = CursorLockMode.Locked;
         canLook = true;
         InvokeRepeating("CalculateLook", 0f, 0.005f);
@@ -45,17 +46,19 @@ public class MouseLook : MonoBehaviour
 
     private void CalculateLook()
     {
-        //if game is not paused
-        if(!PauseMenu.GameIsPaused)
+        //if game is paused
+        if (GetComponentInChildren<PauseMenu>().GameIsPaused || !this.isLocalPlayer)
         {
-            //sets and restricts rotation value
-            xRotation -= lookY;
-            xRotation = Mathf.Clamp(xRotation, -90f, 90f);
-            transform.localRotation = Quaternion.Euler(xRotation, 0f, zRotation);
-
-            //applies rotation to player
-            playerBody.Rotate(Vector2.up, lookX);
+            return;
         }
+
+        //sets and restricts rotation value
+        xRotation -= lookY;
+        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
+        cameraTransform.localRotation = Quaternion.Euler(xRotation, 0f, zRotation);
+
+        //applies rotation to player
+        transform.Rotate(Vector2.up, lookX);
     }
 
     //gets input from player

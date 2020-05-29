@@ -50,7 +50,7 @@ public class Shuriken : MonoBehaviour
         {
             hit = true;
             GetComponent<Collider>().enabled = false;
-            FindObjectOfType<AudioManager>().Play("ShurikenHit", GetComponent<AudioSource>());
+            FindObjectOfType<AudioManager>().NetworkPlay("ShurikenHit" ,GetComponent<AudioSource>());
             rigidBody.velocity = Vector3.zero;
             rigidBody.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
             rigidBody.isKinematic = true;

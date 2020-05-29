@@ -1,20 +1,30 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using Mirror;
+using Mirror.Discovery;
 
 
 //TO DO: Add to Menu Manager
-public class MainMenu : MonoBehaviour
+public class MainMenu : NetworkBehaviour
 {
-    public void PlayKnightGame()
+    private NetworkManagerLobby networkManager;
+
+    [SerializeField] GameObject landingPagePanel;
+
+    [SerializeField] GameObject knightPrefab;
+    [SerializeField] GameObject ninjaPrefab;
+
+    void Awake() 
     {
-        Loader.Load(Loader.Scene.KnightDemoLevel);
+        networkManager = FindObjectOfType<NetworkManagerLobby>();
     }
 
-    public void PlayNinjaGame()
+    public void HostLobby()
     {
-        Loader.Load(Loader.Scene.NinjaDemoLevel);
+        networkManager.StartHost();
+        FindObjectOfType<NetworkDiscovery>().AdvertiseServer();
+        landingPagePanel.SetActive(false);
     }
 
     public void Quit()

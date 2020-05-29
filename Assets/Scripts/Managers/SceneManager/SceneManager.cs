@@ -15,7 +15,8 @@ public static class Loader
         MainMenu,
         Loading,
         KnightDemoLevel,
-        NinjaDemoLevel
+        NinjaDemoLevel,
+        Map
     }
 
     private static Action onLoaderCallback;
@@ -31,7 +32,10 @@ public static class Loader
         };
 
         //Load loading scene
-        SceneManager.LoadScene(Scene.Loading.ToString());
+        if(scene != Scene.Loading)
+        {
+            SceneManager.LoadScene(Scene.Loading.ToString());
+        }
     }
 
     //Loads the scene asynchronously inside a coroutine 

@@ -8,28 +8,32 @@ public class Slingshot : MonoBehaviour
     [SerializeField] GameObject grenadeLauncher;
     private AudioManager audioManager;
     [SerializeField] GameObject bulletEmitter;
-    private ParticleSystem muzzleFlash;
+    [SerializeField] GameObject muzzleFlash;
 
     [SerializeField] float cooldown = 0.5f;
     [SerializeField] float force = 20f;
     [SerializeField] int maxGrenades = 5;
-    private int currentGrenades = 0;
+    private int currentGrenades = 2;
 
     private bool grenading = false;
 
     private void Start()
     {
-        audioManager = FindObjectOfType<AudioManager>();
-        muzzleFlash = GetComponentInChildren<ParticleSystem>();
+        audioManager = GetComponent<AudioManager>();
     }
 
     private void Update() 
     {
-        UIManager.GetInstance().SetGrenadeCount(currentGrenades);    
+        UIManager.GetInstance().SetGrenadeCount(currentGrenades, null, GetComponentInChildren<KnightUI>());    
     }
 
     public void Grenade()
     {
+        if(!GetComponent<KnightPlayerMovement>().isLocalPlayer)
+        {
+            return;
+        }
+
         if(!grenading && currentGrenades > 0)
         {
             StartCoroutine(GrenadeBehaviour());
@@ -51,14 +55,12 @@ public class Slingshot : MonoBehaviour
 
         yield return new WaitForSeconds(0.5f);
 
-        muzzleFlash.Play();
-        audioManager.Play("GrenadeShoot", GetComponent<AudioSource>());
+        GetComponent<NetworkController>().NetworkSpawn(muzzleFlash.name, bulletEmitter.transform.position, bulletEmitter.transform.rotation, Vector3.zero);
+        audioManager.NetworkPlay("GrenadeShoot");
 
         Camera mainCamera = gameObject.transform.Find("Main Camera").GetComponent<Camera>();
-        GameObject grenade = Instantiate(grenadePrefab, bulletEmitter.transform.position, bulletEmitter.transform.rotation);
-        Rigidbody rb = grenade.GetComponent<Rigidbody>();
 
-        rb.AddForce(mainCamera.transform.forward * force, ForceMode.VelocityChange);
+        GetComponent<NetworkController>().NetworkSpawn(grenadePrefab.name, bulletEmitter.transform.position, bulletEmitter.transform.rotation, mainCamera.transform.forward * force);
 
         SlingshotAnim.DoAnimation(false);
 
@@ -77,7 +79,7 @@ public class Slingshot : MonoBehaviour
     {
         if(other.tag.Equals("Grenade") && currentGrenades < maxGrenades)
         {
-            audioManager.Play("Pickup", GetComponent<AudioSource>());
+            audioManager.NetworkPlay("Pickup", GetComponent<AudioSource>());
             currentGrenades++;
             Destroy(other.gameObject);
         }

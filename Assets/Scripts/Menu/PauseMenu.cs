@@ -1,49 +1,51 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.InputSystem.UI;
 using UnityEngine.InputSystem;
-using UnityEngine.SceneManagement;
+using Mirror;
 
 
 //TO DO: Add to Menu Manager
-public class PauseMenu : MonoBehaviour
+public class PauseMenu : NetworkBehaviour
 {
+    public bool GameIsPaused = false;
     private GameObject pauseMenuUI;
     private GameObject gameUI;
     private GameObject optionsUI;
+    private GameObject keyBindUI;
 
-    [SerializeField] InputActionAsset controls;
+    private InputActionAsset inputActions;
     private PlayerInput playerInput;
     private AudioManager audioManager;
-    
-    public static bool GameIsPaused = false;
 
     void Awake()
     {
         playerInput = new PlayerInput();
         audioManager = FindObjectOfType<AudioManager>();
-        pauseMenuUI = GameObject.Find("UI").transform.Find("PauseMenu").gameObject;
-        optionsUI = GameObject.Find("UI").transform.Find("OptionsMenu").gameObject;
+        pauseMenuUI = transform.Find("PauseMenu").gameObject;
+        optionsUI = transform.Find("OptionsMenu").gameObject;
+        keyBindUI = transform.Find("RebindMenu").gameObject;
+        inputActions = GetComponentInParent<UnityEngine.InputSystem.PlayerInput>().actions;
 
-        if (GameObject.Find("UI").transform.Find("NinjaUI") != null)
+
+        if (transform.Find("NinjaUI") != null)
         {
-            gameUI = GameObject.Find("UI").transform.Find("NinjaUI").gameObject;
+            gameUI = transform.Find("NinjaUI").gameObject;
         }
         else
         {
-            gameUI = GameObject.Find("UI").transform.Find("KnightUI").gameObject;
+            gameUI = transform.Find("KnightUI").gameObject;
         }
     }
 
     void Update()
     {
-        if (GameIsPaused && controls.enabled)
+        if (GameIsPaused && inputActions.enabled)
         {
-            controls.Disable();
+            inputActions.Disable();
         }
-        else if(!GameIsPaused && !controls.enabled)
+        else if(!GameIsPaused && !inputActions.enabled)
         {
-            controls.Enable();
+            inputActions.Enable();
         }
     }
 
@@ -63,8 +65,6 @@ public class PauseMenu : MonoBehaviour
     {
         gameUI.SetActive(false);
         pauseMenuUI.SetActive(true);
-        audioManager.StopAll();
-        Time.timeScale = 0f;
         Cursor.lockState = CursorLockMode.None;
         GameIsPaused = true;
     }
@@ -73,16 +73,25 @@ public class PauseMenu : MonoBehaviour
     {
         pauseMenuUI.SetActive(false);
         optionsUI.SetActive(false);
+        keyBindUI.SetActive(false);
         gameUI.SetActive(true);
-        Time.timeScale = 1f;
         Cursor.lockState = CursorLockMode.Locked;
         GameIsPaused = false;
     }
 
     public void MainMenu()
     {
-        Loader.Load(Loader.Scene.MainMenu);
-        Time.timeScale = 1f;
         GameIsPaused = false;
+
+        NetworkManagerLobby networkManager = FindObjectOfType<NetworkManagerLobby>();
+
+        if(GetComponentInParent<PlayerMovement>().isServer)
+        {
+            networkManager.StopHost();
+        }
+        else if(GetComponentInParent<PlayerMovement>().isClientOnly)
+        {
+            networkManager.StopClient();
+        }
     }
 }

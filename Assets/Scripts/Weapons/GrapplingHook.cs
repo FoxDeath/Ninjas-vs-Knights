@@ -9,7 +9,7 @@ public class GrapplingHook : MonoBehaviour
     private AudioManager audioManager;
     private LineRenderer rope;
     private Animator animator;
-    private ParticleSystem muzzleFlash;
+    [SerializeField] GameObject muzzleFlash;
     [HideInInspector] public GameObject hookedObject;
 
     [SerializeField] float hookTravelSpeed = 80f;
@@ -22,15 +22,19 @@ public class GrapplingHook : MonoBehaviour
     void Start()
     {
         hook = GetComponentInChildren<HookDetector>().gameObject;
-        hookHolder = GameObject.Find("HookHolder");
+        hookHolder = transform.Find("HookHolder").gameObject;
         player = GetComponentInParent<GrapplingHookMovement>().gameObject;
-        audioManager = FindObjectOfType<AudioManager>();
-        muzzleFlash = GetComponentInChildren<ParticleSystem>();
+        audioManager = GetComponentInParent<AudioManager>();
         animator = GetComponent<Animator>();
     }
     
     void FixedUpdate()
     {
+        if(!player.GetComponent<PlayerMovement>().isLocalPlayer)
+        {
+            return;
+        }
+
         Hook();
         ReturnHook();
 
@@ -75,8 +79,8 @@ public class GrapplingHook : MonoBehaviour
         if(!firing && context.action.phase == InputActionPhase.Started)
         {
             animator.SetTrigger("Firing");
-            audioManager.Play("GrapplingShooting");
-            muzzleFlash.Play();
+            audioManager.NetworkPlay("GrapplingShooting");
+            GetComponentInParent<NetworkController>().NetworkSpawn(muzzleFlash.name, hookHolder.transform.position, hookHolder.transform.rotation, Vector3.zero);
         }
         
         firing = true;
@@ -107,6 +111,11 @@ public class GrapplingHook : MonoBehaviour
     //Return the hook to the hook holder
     private void EndHook()
     {
+        if(!player.GetComponent<PlayerMovement>().isLocalPlayer)
+        {
+            return;
+        }
+
         rope.positionCount = 0;
         currentDistance = 0f;
         hook.transform.parent = hookHolder.transform;
@@ -117,7 +126,7 @@ public class GrapplingHook : MonoBehaviour
 
         if(player.GetComponent<GrapplingHookMovement>().hooking)
         {
-            audioManager.Play("GrapplingDisconnecting", hook.GetComponent<AudioSource>());
+            audioManager.NetworkPlay("GrapplingDisconnecting", hook.GetComponent<AudioSource>());
         }
 
         player.GetComponent<GrapplingHookMovement>().hooking = false;

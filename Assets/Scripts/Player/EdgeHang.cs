@@ -24,7 +24,7 @@ public class EdgeHang : MonoBehaviour
 
     void Start()
     {
-        audioManager = FindObjectOfType<AudioManager>();
+        audioManager = GetComponent<AudioManager>();
         playerMovement = GetComponent<PlayerMovement>();
 
         canHang = true;
@@ -68,7 +68,7 @@ public class EdgeHang : MonoBehaviour
             {
                 if(!playerMovement.GetEdgeHanging())
                 {       
-                    audioManager.Play("EdgeHang");
+                    audioManager.NetworkPlay("EdgeHang");
                     playerMovement.ZeroVelocity();
                     StartCoroutine(HangTimer());
                 }

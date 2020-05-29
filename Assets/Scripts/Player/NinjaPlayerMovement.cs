@@ -16,7 +16,7 @@ public class NinjaPlayerMovement : PlayerMovement
 
     protected override void FixedUpdate()
     {
-        if(PauseMenu.GameIsPaused)
+        if(!this.isLocalPlayer)
         {
             return;
         }
@@ -146,14 +146,14 @@ public class NinjaPlayerMovement : PlayerMovement
         else if (isGrounded)
         {
             //if grounded play jump sound and move upwards
-            audioManager.Play("Jump");
+            audioManager.NetworkPlay("Jump");
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
             fallVelocity = 10f;
         }
         else if (!isGrounded && !doubleJumped && !edgeClimbing && !wallRunning)
         {
             //if in air and didn't double jump yet, jump again
-            audioManager.Play("Jump");
+            audioManager.NetworkPlay("Jump");
             doubleJumped = true;
             resetFall = true;
             velocity.y = Mathf.Sqrt(jumpHeight * -2.4f * gravity);
@@ -167,14 +167,14 @@ public class NinjaPlayerMovement : PlayerMovement
         {
             if (!audioManager.IsPlaying("Walking"))
             {
-                audioManager.Play("Walking");
+                audioManager.NetworkPlay("Walking");
 
                 moving = true;
             }
         }
         else
         {
-            audioManager.Stop("Walking");
+            audioManager.NetworkStop("Walking");
 
             moving = false;
         }
@@ -183,12 +183,12 @@ public class NinjaPlayerMovement : PlayerMovement
         {
             if (!audioManager.IsPlaying("Wallrun"))
             {
-                audioManager.Play("Wallrun");
+                audioManager.NetworkPlay("Wallrun");
             }
         }
         else
         {
-            audioManager.Stop("Wallrun");
+            audioManager.NetworkStop("Wallrun");
         }
     }
 
@@ -204,7 +204,7 @@ public class NinjaPlayerMovement : PlayerMovement
         velocity.z = wallJumpForce * normal.z;
         velocity.y = Mathf.Sqrt(jumpHeight * 50f);
         fallVelocity = 0f;
-        audioManager.Play("Jump");
+        audioManager.NetworkPlay("Jump");
 
         yield return new WaitForSeconds(0.5f);
 

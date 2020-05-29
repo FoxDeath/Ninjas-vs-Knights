@@ -9,7 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8429612666042366850}
-  m_Layer: 0
+  - component: {fileID: -6898664476645657336}
+  - component: {fileID: -1807128156783057272}
+  m_Layer: 10
   m_Name: KunaiStunGrenade
   m_TagString: Ammo
   m_Icon: {fileID: 0}
@@ -31,6 +33,40 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-6898664476645657336
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8429612666042366851}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneId: 0
+  serverOnly: 0
+  m_AssetId: 
+  hasSpawned: 0
+--- !u!114 &-1807128156783057272
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8429612666042366851}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f74aedd71d9a4f55b3ce499326d45fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  clientAuthority: 0
+  localPositionSensitivity: 0.01
+  localRotationSensitivity: 0.01
+  localScaleSensitivity: 0.01
 --- !u!1001 &8429612666254005155
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -43,6 +79,16 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 398bd2021fa219a43a3f582399ba6c61, type: 2}
+    - target: {fileID: -4710298922958252427, guid: c8bd12d582e789640b29d3aa21d41e5c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: -4540539275945913696, guid: c8bd12d582e789640b29d3aa21d41e5c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: c8bd12d582e789640b29d3aa21d41e5c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -113,16 +159,36 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.07188115
       objectReference: {fileID: 0}
+    - target: {fileID: -1199664492767012009, guid: c8bd12d582e789640b29d3aa21d41e5c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: -927199367670048503, guid: c8bd12d582e789640b29d3aa21d41e5c,
         type: 3}
       propertyPath: m_Name
       value: KunaiStunGrenadeModel
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: c8bd12d582e789640b29d3aa21d41e5c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 326680701022325867, guid: c8bd12d582e789640b29d3aa21d41e5c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 463493915248539591, guid: c8bd12d582e789640b29d3aa21d41e5c,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 1ae44877c7fca984ea9eb0e37640da33, type: 2}
+    - target: {fileID: 3600998106333876057, guid: c8bd12d582e789640b29d3aa21d41e5c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 5767974960422501358, guid: c8bd12d582e789640b29d3aa21d41e5c,
         type: 3}
       propertyPath: m_Materials.Array.data[0]

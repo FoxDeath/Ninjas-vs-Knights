@@ -3,6 +3,9 @@ using System.Collections;
 
 public class Bow : MonoBehaviour
 {
+    private UIManager uiManager;
+    private NinjaUI ninjaUI;
+
     [SerializeField] GameObject regularArrowObj;
     [SerializeField] GameObject fireArrowObj;
     [SerializeField] GameObject slowArrowObj;
@@ -37,23 +40,48 @@ public class Bow : MonoBehaviour
 
     private bool charging;
     private bool canShoot = true;
+    private bool equiped;
 
     public void SetCharging(bool charging)
     {
         this.charging = charging;
     }
 
+    public Quaternion GetStartingRotation()
+    {
+        return startingRotation;
+    }
+
+    public void SetEquiped(bool equiped)
+    {
+        this.equiped = equiped;
+    }
+
+    void Awake()
+    {
+        ninjaUI = transform.parent.parent.GetComponentInChildren<NinjaUI>();
+        uiManager = UIManager.GetInstance();
+    }
+
     void Start()
     {
-        charging = false;
-        charge = 0f;
+        equiped = transform.GetChild(0).gameObject.activeSelf;
+
         currentType = arrowTypes.Regular;
         currentRegularArrows = maxArrows;
         currentFireArrows = maxArrows;
         currentSlowArrows = maxArrows;
         currentExplosiveArrows = maxArrows;
-        UIManager.GetInstance().SetMaxAmmo(maxArrows);
-        UIManager.GetInstance().SetCurrentAmmo(currentRegularArrows);
+
+        if(equiped)
+        {
+            uiManager.SetMaxAmmo(maxArrows, ninjaUI);
+            uiManager.SetCurrentAmmo(currentRegularArrows, ninjaUI);
+        }
+
+        charging = false;
+        charge = 0f;
+
         startingRotation = transform.localRotation;
         animator = GetComponent<Animator>();
         audioManager = FindObjectOfType<AudioManager>();
@@ -62,7 +90,14 @@ public class Bow : MonoBehaviour
 
     void Update()
     {
-        if(charging)
+        if(!GetComponentInParent<NinjaPlayerMovement>().isLocalPlayer || !equiped)
+        {
+            return;
+        }
+
+        uiManager.SetMaxAmmo(maxArrows, ninjaUI);
+
+        if (charging && charge < chargeMax)
         {
             playerMovement.SetScoping(true);
             playerMovement.Sprint(false);
@@ -80,23 +115,19 @@ public class Bow : MonoBehaviour
         switch(currentType)
         {
             case arrowTypes.Fire:
-                UIManager.GetInstance().SetCurrentAmmo(currentFireArrows);
-                UIManager.GetInstance().SetMaxAmmo(0);
+                uiManager.SetCurrentAmmo(currentFireArrows, ninjaUI);
                 break;
 
             case arrowTypes.Regular:
-                UIManager.GetInstance().SetCurrentAmmo(currentRegularArrows);
-                UIManager.GetInstance().SetMaxAmmo(0);
+                uiManager.SetCurrentAmmo(currentRegularArrows, ninjaUI);
                 break;
 
             case arrowTypes.Slow:
-                UIManager.GetInstance().SetCurrentAmmo(currentSlowArrows);
-                UIManager.GetInstance().SetMaxAmmo(0);
+                uiManager.SetCurrentAmmo(currentSlowArrows, ninjaUI);
                 break;
                 
             case arrowTypes.Explosion:
-                UIManager.GetInstance().SetCurrentAmmo(currentExplosiveArrows);
-                UIManager.GetInstance().SetMaxAmmo(0);
+                uiManager.SetCurrentAmmo(currentExplosiveArrows, ninjaUI);
                 break;
         }
 
@@ -115,7 +146,7 @@ public class Bow : MonoBehaviour
         if((currentType == arrowTypes.Explosion && currentExplosiveArrows > 0) || (currentType == arrowTypes.Fire && currentFireArrows > 0) ||
                     (currentType == arrowTypes.Regular && currentRegularArrows > 0) || (currentType == arrowTypes.Slow && currentSlowArrows > 0))
         {
-            if(!UIManager.GetInstance().GetArrowMenuState())
+            if (!uiManager.GetArrowMenuState(ninjaUI))
             {
                 return true;
             }
@@ -132,15 +163,14 @@ public class Bow : MonoBehaviour
 
     public void Fire()
     {
-        if(CanShoot())
+        if (!CanShoot() || !GetComponentInParent<NinjaPlayerMovement>().isLocalPlayer)
         {
-            StartCoroutine(FireBehaviour());
-            animator.SetTrigger("Firing");
-            audioManager.Play("ShurikenShoot");
+            return;
         }
         else
         {
-            return;
+            StartCoroutine(FireBehaviour());
+            
         }
     }
 
@@ -152,25 +182,25 @@ public class Bow : MonoBehaviour
             {
                 case arrowTypes.Regular:
                     currentRegularArrows--;
-                    UIManager.GetInstance().SetCurrentAmmo(currentRegularArrows);
+                    uiManager.SetCurrentAmmo(currentRegularArrows, ninjaUI);
                     InstantiateArow(regularArrowObj);
                     break;
 
                 case arrowTypes.Fire:
                     currentFireArrows--;
-                    UIManager.GetInstance().SetCurrentAmmo(currentFireArrows);
+                    uiManager.SetCurrentAmmo(currentFireArrows, ninjaUI);
                     InstantiateArow(fireArrowObj);
                     break;
 
                 case arrowTypes.Explosion:
                     currentExplosiveArrows--;
-                    UIManager.GetInstance().SetCurrentAmmo(currentExplosiveArrows);
+                    uiManager.SetCurrentAmmo(currentExplosiveArrows, ninjaUI);
                     InstantiateArow(explosiveArrowObj);
                     break;
 
                 case arrowTypes.Slow:
                     currentSlowArrows--;
-                    UIManager.GetInstance().SetCurrentAmmo(currentSlowArrows);
+                    uiManager.SetCurrentAmmo(currentSlowArrows, ninjaUI);
                     InstantiateArow(slowArrowObj);
                     break;
             }
@@ -178,6 +208,10 @@ public class Bow : MonoBehaviour
             charging = false;
             charge = 0f;
             canShoot = false;
+
+            
+            animator.SetTrigger("Fire");
+            audioManager.NetworkPlay("ShurikenShoot");
 
             yield return new WaitForSeconds(1f);
 
@@ -187,7 +221,7 @@ public class Bow : MonoBehaviour
 
     private void InstantiateArow(GameObject arrowType)
     {
-        Ray ray = GameObject.Find("Main Camera").GetComponent<Camera>().ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
+        Ray ray = transform.parent.GetComponent<Camera>().ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
         RaycastHit hit;
 
         Vector3 targetPoint;
@@ -200,18 +234,12 @@ public class Bow : MonoBehaviour
             targetPoint = ray.GetPoint(1000f);
         }
 
-        Rigidbody arrow = Instantiate(arrowType, emmiter.transform.position, emmiter.transform.rotation).GetComponent<Rigidbody>();
-        arrow.AddForce((targetPoint - emmiter.transform.position).normalized * charge, ForceMode.Impulse);
+        GetComponentInParent<NetworkController>().NetworkSpawn(arrowType.name, emmiter.transform.position, emmiter.transform.rotation, (targetPoint - emmiter.transform.position).normalized * charge);
     }
 
     public void SetArrowMenuState(bool state)
     {
-        UIManager.GetInstance().SetArrowMenuState(state);
-
-        if(state == false)
-        {
-            charging = false;
-        }
+        uiManager.SetArrowMenuState(state, ninjaUI);
     }
 
     public void SetCurrentArrow(string name)
@@ -224,7 +252,7 @@ public class Bow : MonoBehaviour
                 {
                     currentFireArrows = maxArrows;
                 }
-                UIManager.GetInstance().SetCurrentAmmo(currentFireArrows);
+                uiManager.SetCurrentAmmo(currentFireArrows, ninjaUI);
                 break;
 
             case "Regular":
@@ -233,7 +261,7 @@ public class Bow : MonoBehaviour
                 {
                     currentRegularArrows = maxArrows;
                 }
-                UIManager.GetInstance().SetCurrentAmmo(currentRegularArrows);
+                uiManager.SetCurrentAmmo(currentRegularArrows, ninjaUI);
                 break;
 
             case "Slow":
@@ -242,7 +270,7 @@ public class Bow : MonoBehaviour
                 {
                     currentSlowArrows = maxArrows;
                 }
-                UIManager.GetInstance().SetCurrentAmmo(currentSlowArrows);
+                uiManager.SetCurrentAmmo(currentSlowArrows, ninjaUI);
                 break;
                 
             case "Explosive":
@@ -251,14 +279,8 @@ public class Bow : MonoBehaviour
                 {
                     currentExplosiveArrows = maxArrows;
                 }
-                UIManager.GetInstance().SetCurrentAmmo(currentExplosiveArrows);
+                uiManager.SetCurrentAmmo(currentExplosiveArrows, ninjaUI);
                 break;
         }
-    }
-
-    public void SetInactive()
-    {
-        transform.localRotation = startingRotation;
-        gameObject.SetActive(false);
     }
 }

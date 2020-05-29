@@ -11,7 +11,7 @@ public class KightPlayerInput : MonoBehaviour
     void Start()
     {
         playerMovement = GetComponent<KnightPlayerMovement>();
-        pauseMenu = FindObjectOfType<PauseMenu>();
+        pauseMenu = GetComponentInChildren<PauseMenu>();
         edgeClimb = GetComponent<EdgeClimb>();
     }
 

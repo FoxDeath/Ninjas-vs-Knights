@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Interactions;
+using Mirror;
 
-public class WeaponsInputKnight : MonoBehaviour
+public class WeaponsInputKnight : NetworkBehaviour
 {
-    [SerializeField] InputActionAsset inputActions;
+    private InputActionAsset inputActions;
     private WeaponSwitch.KnightWeapon currentWeapon;
     private WeaponSwitch weaponSwitch;
     private CrossBow crossBow;
@@ -16,6 +17,11 @@ public class WeaponsInputKnight : MonoBehaviour
     private bool openInput = true;
 
     private AudioManager audioManager;
+    void Awake()
+    {
+        inputActions = GetComponent<UnityEngine.InputSystem.PlayerInput>().actions;
+    }
+
     void Start()
     {
         weaponSwitch = GetComponent<WeaponSwitch>();
@@ -134,7 +140,7 @@ public class WeaponsInputKnight : MonoBehaviour
         
         if(other.tag.Equals("Ammo"))
         {
-            audioManager.Play("Pickup", GetComponent<AudioSource>());
+            audioManager.NetworkPlay("Pickup", GetComponent<AudioSource>());
             spearGun.RestockAmmo();
             Destroy(other.gameObject);
         }

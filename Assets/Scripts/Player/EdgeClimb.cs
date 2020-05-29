@@ -20,8 +20,8 @@ public class EdgeClimb : MonoBehaviour
 
     void Start()
     {
-        parkourCamera = gameObject.transform.Find("Parkour Camera").GetComponent<Camera>();
-        mainCamera = gameObject.transform.Find("Main Camera").GetComponent<Camera>();
+        parkourCamera = transform.Find("Parkour Camera").GetComponent<Camera>();
+        mainCamera = transform.Find("Main Camera").GetComponent<Camera>();
     }
 
     void OnEnable()
@@ -50,7 +50,7 @@ public class EdgeClimb : MonoBehaviour
         anim.SetTrigger("EdgeClimb");
 
         //plays sound
-        FindObjectOfType<AudioManager>().Play("Climb");
+        GetComponent<AudioManager>().NetworkPlay("Climb");
 
         playerMovement.SetEdgeHanging(false);
         playerMovement.SetEdgeClimbing(true);

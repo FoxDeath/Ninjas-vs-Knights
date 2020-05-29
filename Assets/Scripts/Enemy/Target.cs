@@ -50,10 +50,20 @@ public class Target : MonoBehaviour
         onFire = false;
     }
 
+    void Update()
+    {
+        if(audioManager == null)
+        {
+            audioManager = FindObjectOfType<AudioManager>();
+        }
+
+        healthBar.value = health;
+    }
+
     void Die()
     {
-        audioManager.Play("EnemyDying", GetComponent<AudioSource>());
         dead = true;
+        audioManager.NetworkPlay("EnemyDying", GetComponent<AudioSource>());
         myRigidbody.isKinematic = false;
         myRigidbody.constraints = RigidbodyConstraints.None;
 
@@ -62,8 +72,9 @@ public class Target : MonoBehaviour
             GetComponent<NavMeshAgent>().enabled = false;
         }
         
-        myRigidbody.AddForce(lastHit * 50f, ForceMode.Impulse);
-        Destroy(gameObject, 5f);
+        myRigidbody.AddForce(lastHit * 10f, ForceMode.Impulse);
+
+        StartCoroutine(FindObjectOfType<NetworkController>().NetworkDestroy(gameObject, 5f));
     }
 
     //Calculates the health for the health bar slider.
@@ -77,9 +88,8 @@ public class Target : MonoBehaviour
     {
         if(!dead)
         {
-            audioManager.Play("Hit", GetComponent<AudioSource>());
+            audioManager.NetworkPlay("Hit", GetComponent<AudioSource>());
             health -= damage;
-            healthBar.value = health;
 
             if (health <= 0f)
             {

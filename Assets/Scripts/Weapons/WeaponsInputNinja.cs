@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Interactions;
+using Mirror;
 
-public class WeaponsInputNinja : MonoBehaviour
+public class WeaponsInputNinja : NetworkBehaviour
 {
-    [SerializeField] InputActionAsset inputActions;
+    private InputActionAsset inputActions;
     private WeaponSwitch.NinjaWeapon currentWeapon;
     private WeaponSwitch weaponSwitch;
     private Bow bow;
@@ -17,6 +18,11 @@ public class WeaponsInputNinja : MonoBehaviour
 
     private AudioManager audioManager;
 
+    void Awake()
+    {
+        inputActions = GetComponent<UnityEngine.InputSystem.PlayerInput>().actions;
+    }
+    
     void Start()
     {
         weaponSwitch = GetComponent<WeaponSwitch>();
@@ -41,6 +47,11 @@ public class WeaponsInputNinja : MonoBehaviour
 
     void Update()
     {
+        if(!this.isLocalPlayer)
+        {
+            return;
+        }
+        
         SetCurrentWeapon();
 
         CanShoot();
@@ -154,7 +165,7 @@ public class WeaponsInputNinja : MonoBehaviour
 
         if(other.tag.Equals("Ammo"))
         {
-            audioManager.Play("Pickup", GetComponent<AudioSource>());
+            audioManager.NetworkPlay("Pickup", GetComponent<AudioSource>());
             shurikenGun.RestockAmmo();
             Destroy(other.gameObject);
         }

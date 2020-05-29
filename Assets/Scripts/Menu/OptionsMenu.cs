@@ -8,7 +8,7 @@ using UnityEngine.UI;
 //TO DO: Add to Menu Manager
 public class OptionsMenu : MonoBehaviour
 {
-    [SerializeField] InputActionAsset controls;
+    [SerializeField] private InputActionAsset inputActions;
     private AudioManager audioManager;
     private MouseLook mouseLook;
     private CrossBow crossBow;
@@ -55,6 +55,11 @@ public class OptionsMenu : MonoBehaviour
         audioManager = FindObjectOfType<AudioManager>();
         mouseLook = FindObjectOfType<MouseLook>();
 
+        if(inputActions == null)
+        {
+            inputActions = GetComponentInParent<UnityEngine.InputSystem.PlayerInput>().actions;
+        }
+
         if(FindObjectOfType<CrossBow>() != null)
         {
             crossBow = FindObjectOfType<CrossBow>();
@@ -93,17 +98,17 @@ public class OptionsMenu : MonoBehaviour
     void OnDisable()
     {
         SaveManager.GetInstance().SaveOptions();
-        controls.Enable();
+        inputActions.Enable();
     }
 
     void Update()
     {
-        if (controls.enabled)
+        if (inputActions.enabled)
         {
-            controls.Disable();
+            inputActions.Disable();
         }
-
-        audioManager.SetMasterVolume(volumeSlider.value);
+        
+        AudioListener.volume = volumeSlider.value;
 
         if(mouseLook != null)
         {

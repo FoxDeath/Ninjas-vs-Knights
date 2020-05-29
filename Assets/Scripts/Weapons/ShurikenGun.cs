@@ -4,12 +4,13 @@ using UnityEngine;
 public class ShurikenGun :  MonoBehaviour
 {
     [SerializeField] GameObject bullet;
-    private GameObject bulletEmiter;
+    [SerializeField] GameObject bulletEmiter;
+    [SerializeField] GameObject muzzleFlash;
     private AudioManager audioManager;
     private UIManager uiManager;
+    private NinjaUI ninjaUI;
     private Animator animator;
     private PlayerMovement playerMovement;
-    private ParticleSystem muzzleFlash;
     
     [SerializeField] float speed = 100f;
     [SerializeField] float reloadTime = 2f;
@@ -18,34 +19,64 @@ public class ShurikenGun :  MonoBehaviour
     private float nextTimeToFire = 0f;
 
     [SerializeField] int maxAmmo = 10;
-    [SerializeField] int maxMag;
+    [SerializeField] int maxMag = 5;
     private int currentAmmo;
     private int currentMag;
 
     private bool reloading;
     private bool scoping;
+    private bool equiped;
+
+    public void SetReloading(bool reloading)
+    {
+        this.reloading = reloading;
+    }
+
+    public bool GetScoping()
+    {
+        return scoping;
+    }
+    
+    public void SetEquiped(bool equiped)
+    {
+        this.equiped = equiped;
+    }
 
     //The Gun starts with maximum ammo.
-    void Start()
+    void Awake()
     {
         playerMovement = GetComponentInParent<PlayerMovement>();
-        audioManager = FindObjectOfType<AudioManager>();
+        audioManager = GetComponentInParent<AudioManager>();
         animator = GetComponent<Animator>();
+        ninjaUI = transform.parent.parent.GetComponentInChildren<NinjaUI>();
+        uiManager = UIManager.GetInstance();
+    }
+
+    void Start()
+    {
+        equiped = transform.GetChild(0).gameObject.activeSelf;
+
         maxMag = maxAmmo * 4;
         currentAmmo = maxAmmo;
         currentMag = maxMag;
-        uiManager = (UIManager)FindObjectOfType(typeof(UIManager));
-        uiManager.SetMaxAmmo(currentMag);
-        uiManager.SetCurrentAmmo(currentAmmo);
-        muzzleFlash = GetComponentInChildren<ParticleSystem>();
-        bulletEmiter = GameObject.Find("ShurikenEmitter");
+
+        if(equiped)
+        {
+            uiManager.SetMaxAmmo(currentMag, ninjaUI);
+            uiManager.SetCurrentAmmo(currentAmmo, ninjaUI);
+        }
     }
 
     void Update()
     {
-        uiManager.SetCurrentAmmo(currentAmmo);
-        uiManager.SetMaxAmmo(currentMag);
+        if(!equiped)
+        {
+            return;
+        }
         ManageAmmo();
+
+        uiManager.SetCurrentAmmo(currentAmmo, ninjaUI);
+        uiManager.SetMaxAmmo(currentMag, ninjaUI);
 
         if(playerMovement.GetMoving())
         {
@@ -56,6 +87,7 @@ public class ShurikenGun :  MonoBehaviour
             animator.SetBool("Moving", false);
         }
     }
+    
 
     private void ManageAmmo()
     {
@@ -84,14 +116,19 @@ public class ShurikenGun :  MonoBehaviour
     //The shuriken has spread, but only when the Gun isn't scoped.
     public void Fire()
     {
+        if(!GetComponentInParent<NinjaPlayerMovement>().isLocalPlayer)
+        {
+            return;
+        }
+
         if(Time.time >= nextTimeToFire && !reloading)
         {
             if(currentAmmo > 0)
             {
-                Ray ray = GameObject.Find("Main Camera").GetComponent<Camera>().ViewportPointToRay(new Vector3(0.5F, 0.5F, 0));
+                Ray ray = transform.parent.GetComponent<Camera>().ViewportPointToRay(new Vector3(0.5F, 0.5F, 0));
                 RaycastHit hit;
-                Vector3 targetPoint;
 
+                Vector3 targetPoint;
                 if (Physics.Raycast(ray, out hit))
                 {
                     targetPoint = hit.point;
@@ -103,19 +140,15 @@ public class ShurikenGun :  MonoBehaviour
 
                 currentAmmo--;
                 nextTimeToFire = Time.time + 1f / fireRate;
-                muzzleFlash.Play();
-                audioManager.Play("ShurikenShoot");
+                GetComponentInParent<NetworkController>().NetworkSpawn(muzzleFlash.name, bulletEmiter.transform.position, bulletEmiter.transform.rotation, Vector3.zero);
+                audioManager.NetworkPlay("ShurikenShoot");
 
                 targetPoint.x += Random.Range(-spread, spread);
                 targetPoint.y += Random.Range(-spread, spread);
 
-                GameObject instantiateBullet = Instantiate(bullet, bulletEmiter.transform.position, bulletEmiter.transform.rotation);
-                Rigidbody temporaryRigidbody = instantiateBullet.GetComponentInChildren<Rigidbody>();
+                GetComponentInParent<NetworkController>().NetworkSpawn(bullet.name, bulletEmiter.transform.position, bulletEmiter.transform.rotation,
+                (targetPoint - bulletEmiter.transform.position).normalized * speed);
                 animator.SetTrigger("Firing");
-
-                temporaryRigidbody.velocity = (targetPoint - bulletEmiter.transform.position).normalized * speed;
-
-                Destroy(instantiateBullet, 10f);
             }
             else
             {
@@ -126,6 +159,11 @@ public class ShurikenGun :  MonoBehaviour
 
     public void Scope(bool state)
     {
+        if(!GetComponentInParent<NinjaPlayerMovement>().isLocalPlayer)
+        {
+            return;
+        }
+
         scoping = state;
         animator.SetBool("Scoped", state);
         playerMovement.SetScoping(state);
@@ -134,7 +172,7 @@ public class ShurikenGun :  MonoBehaviour
 
     public void Reload()
     {
-        if(reloading)
+        if(reloading || !GetComponentInParent<NinjaPlayerMovement>().isLocalPlayer)
         {
             return;
         }
@@ -146,20 +184,6 @@ public class ShurikenGun :  MonoBehaviour
         }
     }
 
-    public void SetInactive()
-    {
-        reloading = false;
-        audioManager.Stop("Reload");
-        audioManager.Stop("ShurikenShoot");
-
-        if(scoping)
-        {
-            Scope(false);
-        }
-
-        gameObject.SetActive(false);
-    }
-
     public void RestockAmmo()
     {
         currentMag = maxMag;
@@ -169,7 +193,7 @@ public class ShurikenGun :  MonoBehaviour
     {
         reloading = true;
 
-        audioManager.Play("Reload");
+        audioManager.NetworkPlay("Reload");
 
         animator.SetBool("Reloading", true);
 
