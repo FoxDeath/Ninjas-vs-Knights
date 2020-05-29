@@ -6,11 +6,13 @@ public class UIManager : MonoBehaviour
 {
     private static UIManager instance;
 
+    //Returns the singleton instance of the class.
     public static UIManager GetInstance()
     {
         return instance;
     }
 
+    //Makes sure there is only one instance at a time.
     private void Awake()
     {
         if(instance == null)
@@ -24,6 +26,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    //Turns the radial menu and the Ninja UI on\off accordingly.
     public void SetArrowMenuState(bool state, NinjaUI ninjaUI = null)
     {
         if(ninjaUI != null)
@@ -55,6 +58,7 @@ public class UIManager : MonoBehaviour
                 {
                     text.gameObject.SetActive(true);
                 }
+
                 ninjaUI.bow.SetCurrentArrow(ninjaUI.selectedOption);
             }
         }
@@ -64,6 +68,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    //Checks if the radial menu is open or not.
     public bool GetArrowMenuState(NinjaUI ninjaUI = null)
     {
         if(ninjaUI != null)
@@ -76,6 +81,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    //Sets the maximum ammo UI.
     public void SetMaxAmmo(int ammo, NinjaUI ninjaUI = null, KnightUI knightUI = null)
     {
         if(ninjaUI != null)
@@ -92,6 +98,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    //Updates the current ammo UI.
     public void SetCurrentAmmo(int ammo, NinjaUI ninjaUI = null, KnightUI knightUI = null)
     {
         if(ninjaUI != null)
@@ -108,6 +115,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    //Updates the grenade UI
     public void SetGrenadeCount(int count, NinjaUI ninjaUI = null, KnightUI knightUI = null)
     {
         if(ninjaUI != null)
@@ -124,6 +132,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    //Sets the jetpack UI.
     public void SetKnightSliderValue(float value, KnightUI knightUI = null)
     {
         if(knightUI != null)
@@ -136,6 +145,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    //Sets the knights scoping overlay.
     public void SetKnightScopeOverlayActive(bool state, KnightUI knightUI = null)
     {
         if(knightUI != null)
@@ -148,6 +158,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    //Turns knight UI on/off.
     public void SetKnightUIActive(bool state, KnightUI knightUI = null)
     {
         if(knightUI != null)
@@ -160,6 +171,7 @@ public class UIManager : MonoBehaviour
         }
     }
  
+    //Updates the max health UI.
     public void SetMaxHealth(float health, NinjaUI ninjaUI = null, KnightUI knightUI = null)
     {
         if(ninjaUI != null)
@@ -178,6 +190,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    //Updates current health UI.
     public void SetHealth(float health, NinjaUI ninjaUI = null, KnightUI knightUI = null)
     {
         if(ninjaUI != null)

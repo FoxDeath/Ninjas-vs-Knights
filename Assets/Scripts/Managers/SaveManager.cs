@@ -13,11 +13,13 @@ public class SaveManager : MonoBehaviour
     private MouseLook mouseLook;
     private CrossBow crossBow;
 
+    //Returns the singleton instance of the class.
     public static SaveManager GetInstance()
     {
         return instance;
     }
 
+    //Makes sure there is only one instance at a time.
     void Awake()
     {
         if (instance == null)
@@ -31,6 +33,7 @@ public class SaveManager : MonoBehaviour
         }
     }
 
+    //Loops through the inputs and saves the changes with the help of a binary formatter.
     public void SaveConfig()
     {
         BinaryFormatter formatter = new BinaryFormatter();
@@ -53,6 +56,7 @@ public class SaveManager : MonoBehaviour
         stream.Close();
     }
 
+    //Loops through the inputs and loads the ones that changed with the help of a binary formatter.
     public void LoadConfig()
     {
         string path = Application.persistentDataPath + "/config.ismathrelatedtoscience";
@@ -80,6 +84,7 @@ public class SaveManager : MonoBehaviour
         }
     }
 
+    //Saves the options data file.
     public void SaveOptions()
     {
         BinaryFormatter formatter = new BinaryFormatter();
@@ -91,6 +96,7 @@ public class SaveManager : MonoBehaviour
         stream.Close();
     }
 
+    //Loads the option data file and sets the options accordingly.
     public void LoadOptions()
     {
         string path = Application.persistentDataPath + "/options.ismathrelatedtoscience";
@@ -110,25 +116,26 @@ public class SaveManager : MonoBehaviour
                 GameObject.Find("UI").transform.Find("OptionsMenu").GetComponent<OptionsMenu>().SetScopedSensitivity(options.scopedSens);
             }
         
-        if(FindObjectOfType<AudioManager>() != null)
-        {
-            FindObjectOfType<AudioManager>().SetMasterVolume(options.volume);
-        }
-        
-        AudioListener.volume = options.volume;
-        
-        if(FindObjectOfType<MouseLook>() != null)
-        {
-            FindObjectOfType<MouseLook>().SetSensitivity(options.lookSens);
-        }
+            if(FindObjectOfType<AudioManager>() != null)
+            {
+                FindObjectOfType<AudioManager>().SetMasterVolume(options.volume);
+            }
+            
+            AudioListener.volume = options.volume;
+            
+            if(FindObjectOfType<MouseLook>() != null)
+            {
+                FindObjectOfType<MouseLook>().SetSensitivity(options.lookSens);
+            }
 
-        if(FindObjectOfType<CrossBow>() != null)
-        {
-            FindObjectOfType<CrossBow>().SetScopedSensitivity(options.scopedSens);
-        }
+            if(FindObjectOfType<CrossBow>() != null)
+            {
+                FindObjectOfType<CrossBow>().SetScopedSensitivity(options.scopedSens);
+            }
         }
     }
 
+    //The data class that helps us gather the data for saving the options
     [Serializable]
     private class OptionsData
     {

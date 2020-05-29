@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 
+//The data class for every sound.
 [System.Serializable]
 public class Sound
 {
