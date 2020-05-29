@@ -17,7 +17,7 @@ public class Arrow : MonoBehaviour
 
     private bool hit = false;
 
-    void Start()
+    void Awake()
     {
         myRigidbody = GetComponent<Rigidbody>();
     }

@@ -19,7 +19,7 @@ public class GrapplingHook : MonoBehaviour
 
     public bool firing;
 
-    void Start()
+    void Awake()
     {
         hook = GetComponentInChildren<HookDetector>().gameObject;
         hookHolder = transform.Find("HookHolder").gameObject;

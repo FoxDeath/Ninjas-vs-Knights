@@ -13,10 +13,14 @@ public class KunaiNadeInput : MonoBehaviour
     private int currentKunai;
     private bool threw;
 
+    void Awake()
+    {
+        bulletEmitter = transform.Find("KunaiEmitter");
+    }
+
     void Start()
     {
         currentKunai = maxKunai;
-        bulletEmitter = transform.Find("KunaiEmitter");
     }
 
     private void Update() 

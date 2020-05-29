@@ -17,7 +17,7 @@ public class Slingshot : MonoBehaviour
 
     private bool grenading = false;
 
-    private void Start()
+    private void Awake()
     {
         audioManager = GetComponent<AudioManager>();
     }

@@ -21,16 +21,16 @@ public class WeaponsInputNinja : NetworkBehaviour
     void Awake()
     {
         inputActions = GetComponent<UnityEngine.InputSystem.PlayerInput>().actions;
-    }
-    
-    void Start()
-    {
         weaponSwitch = GetComponent<WeaponSwitch>();
         audioManager = FindObjectOfType<AudioManager>();
         currentWeapon = weaponSwitch.GetCurrentNinjaWeapon();
         bow = transform.Find("Main Camera").Find("Bow").GetComponent<Bow>();
         shurikenGun = transform.Find("Main Camera").Find("ShurikenGun").GetComponent<ShurikenGun>();
         kunai = GetComponent<KunaiNadeInput>();
+    }
+    
+    void Start()
+    {
         SaveManager.GetInstance().LoadConfig();
         SaveManager.GetInstance().LoadOptions();
     }

@@ -17,10 +17,14 @@ public class Kunai : MonoBehaviour
 
     private bool exploaded = false;
 
+    void Awake()
+    {
+        rigidBody = GetComponent<Rigidbody>();
+    }
+
     void Start()
     {
         countdown = delay;
-        rigidBody = GetComponent<Rigidbody>();
     }
 
     void FixedUpdate()

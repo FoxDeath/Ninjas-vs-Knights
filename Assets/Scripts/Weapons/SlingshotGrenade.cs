@@ -14,7 +14,7 @@ public class SlingshotGrenade : MonoBehaviour
 
     private bool exploded;
 
-    private void Start()
+    void Awake()
     {
         foreach(AudioManager audioManager in FindObjectsOfType<AudioManager>())
         {
@@ -23,10 +23,14 @@ public class SlingshotGrenade : MonoBehaviour
                 this.audioManager = audioManager;
             }
         }
+    }
+
+    void Start()
+    {
         countdown = delay;
     }
 
-    private void FixedUpdate()
+    void FixedUpdate()
     {
         countdown -= Time.deltaTime;
 

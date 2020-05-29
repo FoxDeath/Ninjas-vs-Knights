@@ -10,7 +10,7 @@ public class GrapplingHookMovement : NetworkBehaviour
 
     public bool hooking;
 
-    void Start()
+    void Awake()
     {
         hook = GetComponentInChildren<HookDetector>().gameObject;
         audioManager = GetComponent<AudioManager>();

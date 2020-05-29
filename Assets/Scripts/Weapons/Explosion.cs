@@ -10,11 +10,14 @@ public class Explosion : MonoBehaviour
     [SerializeField] float damage = 15;
     [SerializeField] float explosionForce = 450;
 
-    void Start()
+    void Awake()
     {
         FindObjectOfType<AudioManager>().NetworkPlay("GrenadeExplode", GetComponent<AudioSource>());
-
         myCollider = GetComponent<SphereCollider>();
+    }
+
+    void Start()
+    {
         Destroy(gameObject, 0.3f);
     }
 

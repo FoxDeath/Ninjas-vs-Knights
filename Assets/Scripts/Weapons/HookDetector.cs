@@ -6,7 +6,7 @@ public class HookDetector : MonoBehaviour
     private GameObject player;
     private AudioManager audioManager;
 
-    void Start()
+    void Awake()
     {
         grapplingHook = GetComponentInParent<GrapplingHook>().gameObject;
         player = GetComponentInParent<GrapplingHookMovement>().gameObject;

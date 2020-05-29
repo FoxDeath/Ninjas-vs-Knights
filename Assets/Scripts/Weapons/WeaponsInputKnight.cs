@@ -20,16 +20,16 @@ public class WeaponsInputKnight : NetworkBehaviour
     void Awake()
     {
         inputActions = GetComponent<UnityEngine.InputSystem.PlayerInput>().actions;
-    }
-
-    void Start()
-    {
         weaponSwitch = GetComponent<WeaponSwitch>();
         audioManager = FindObjectOfType<AudioManager>();
         currentWeapon = weaponSwitch.GetCurrentKnightWeapon();
         crossBow = transform.Find("Main Camera").Find("Crossbow").GetComponent<CrossBow>();
         spearGun = transform.Find("Main Camera").Find("SpearGun").GetComponent<SpearGun>();
         slingshot = GetComponent<Slingshot>();
+    }
+
+    void Start()
+    {
         SaveManager.GetInstance().LoadConfig();
         SaveManager.GetInstance().LoadOptions();
     }
