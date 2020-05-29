@@ -60,6 +60,7 @@ public class Target : MonoBehaviour
         healthBar.value = health;
     }
 
+    //Makes the target ragdoll
     void Die()
     {
         dead = true;
@@ -112,7 +113,7 @@ public class Target : MonoBehaviour
 
     public void SlowDown(float duration)
     {
-        if (slowDownEffectTimer != null)
+        if(slowDownEffectTimer != null)
         {
             StopCoroutine(slowDownEffectTimer);
         }
@@ -167,7 +168,7 @@ public class Target : MonoBehaviour
         myRigidbody.isKinematic = false;
         myRigidbody.constraints = RigidbodyConstraints.None;
 
-        if (GetComponent<NavMeshAgent>() != null)
+        if(GetComponent<NavMeshAgent>() != null)
         {
             GetComponent<NavMeshAgent>().enabled = false;
         }
@@ -181,7 +182,7 @@ public class Target : MonoBehaviour
         myRigidbody.isKinematic = true;
         myRigidbody.constraints = RigidbodyConstraints.FreezeRotation;
 
-        if (GetComponent<NavMeshAgent>() != null && !dead)
+        if(GetComponent<NavMeshAgent>() != null && !dead)
         {
             GetComponent<NavMeshAgent>().enabled = true;
             GetComponent<NavMeshAgent>().SetDestination(movement.GetObjective());
@@ -190,7 +191,7 @@ public class Target : MonoBehaviour
 
     void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.tag.Equals("Ammo"))
+        if(other.gameObject.tag.Equals("Ammo"))
         {
             lastHit = transform.localPosition - other.transform.localPosition;
         }

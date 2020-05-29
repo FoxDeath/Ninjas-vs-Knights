@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class FlyingEnemyAttack : MonoBehaviour
@@ -27,12 +26,13 @@ public class FlyingEnemyAttack : MonoBehaviour
     {
         target = GetComponent<FlyingEnemyMovement>().GetTarget();
 
-        if (LineOfSight() && InRange() && !coolingDown && !flashed)
+        if(LineOfSight() && InRange() && !coolingDown && !flashed)
         {
             StartCoroutine(AttackBehaviour());   
         }
     }
 
+    //Fires the Projectile towards the player
     IEnumerator AttackBehaviour()
     {
         coolingDown = true;
@@ -44,9 +44,10 @@ public class FlyingEnemyAttack : MonoBehaviour
         coolingDown = false;
     }
 
+    //Checks if the enemy has line of sight to the player
     bool LineOfSight()
     {
-        if (!target)
+        if(!target)
         {
             return false;
         }
@@ -56,9 +57,9 @@ public class FlyingEnemyAttack : MonoBehaviour
 
         Debug.DrawRay(transform.position, dir, Color.red);
 
-        if (Physics.Raycast(transform.position, dir, out hit, range))
+        if(Physics.Raycast(transform.position, dir, out hit, range))
         {
-            if (hit.transform.CompareTag("Player"))
+            if(hit.transform.CompareTag("Player"))
             {
                 return true;
             }
@@ -67,9 +68,10 @@ public class FlyingEnemyAttack : MonoBehaviour
         return false;
     }
 
+    //Checks if the player is in range of th enemy
     bool InRange()
     {
-        if (!target)
+        if(!target)
         {
             return false;
         }
