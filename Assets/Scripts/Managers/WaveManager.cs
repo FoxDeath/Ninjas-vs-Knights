@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class WaveManager : MonoBehaviour
 {
+    //Helper class representing spawn points.
     [System.Serializable]
     private class SpawnPoint
     {
@@ -18,6 +19,7 @@ public class WaveManager : MonoBehaviour
         }
     }
 
+    //Helper class representing enemy units.
     [System.Serializable]
     private class WaveUnit
     {
@@ -37,6 +39,7 @@ public class WaveManager : MonoBehaviour
         }
     }
 
+    //Helper class representing waves.
     [System.Serializable]
     private class Wave
     {
@@ -105,6 +108,7 @@ public class WaveManager : MonoBehaviour
         }
     }
 
+    //Gets called when when wave finishes and takes care of the proceeding actions.
     private void WaveCompleted()
     {
         state = spawnStates.COUNTING;
@@ -138,6 +142,7 @@ public class WaveManager : MonoBehaviour
         }
     }
 
+    //Takes care of spawning a specific wave.
     IEnumerator SpawnWaveBehaviour(Wave wave)
     {
         state = spawnStates.SPAWNING;
@@ -156,6 +161,7 @@ public class WaveManager : MonoBehaviour
         yield break;
     }
 
+    //Gets called by the wave spawn behaviour. It takes care of spawning one specific unit.
     IEnumerator SpawnUnit(WaveUnit unit, int rate)
     {
         NetworkController networkController = FindObjectOfType<NetworkController>();

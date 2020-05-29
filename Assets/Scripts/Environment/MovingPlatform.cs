@@ -72,6 +72,7 @@ public class MovingPlatform : MonoBehaviour
         }
     }
 
+    //Used if the platform is in circle mode. After the last waypoint it goes to the first one.
     private void CircleBehaviour()
     {
         if(currentPoint + 1 < points.Length)
@@ -88,6 +89,7 @@ public class MovingPlatform : MonoBehaviour
         time = 0;
     }
 
+    //Used if the platform is in linear mode. After the last waypoint it goes calls the linear backwards method.
     private void LinearForwardBehaviour()
     {
         if(!forward)
@@ -110,6 +112,7 @@ public class MovingPlatform : MonoBehaviour
         time = 0;
     }
 
+    //Used if the platform is in linear mode. After the last waypoint it goes calls the linear forward method.
     private void LinearBackwardsBehaviour()
     {
         if(forward)
@@ -132,6 +135,7 @@ public class MovingPlatform : MonoBehaviour
         time = 0;
     }
 
+    //Parents the player to the platform when it enters the colldier.
     void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.layer == LayerMask.NameToLayer("Player") && other.GetType() == typeof(MeshCollider))
@@ -140,6 +144,7 @@ public class MovingPlatform : MonoBehaviour
         }
     }
 
+    //Moves the player with the platform.
     void OnTriggerStay(Collider other)
     {
         if(other.gameObject.layer == LayerMask.NameToLayer("Player") && other.GetType() == typeof(MeshCollider))
@@ -157,6 +162,7 @@ public class MovingPlatform : MonoBehaviour
         }
     }
 
+    //Unparents the player from the platform when it enters the colldier.
     void OnTriggerExit(Collider other)
     {
         if(other.gameObject.layer == LayerMask.NameToLayer("Player") && other.GetType() == typeof(MeshCollider))
