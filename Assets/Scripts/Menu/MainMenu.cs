@@ -1,17 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using Mirror;
 using Mirror.Discovery;
-
 
 //TO DO: Add to Menu Manager
 public class MainMenu : NetworkBehaviour
 {
     private NetworkManagerLobby networkManager;
-
     [SerializeField] GameObject landingPagePanel;
-
     [SerializeField] GameObject knightPrefab;
     [SerializeField] GameObject ninjaPrefab;
 
@@ -20,6 +15,7 @@ public class MainMenu : NetworkBehaviour
         networkManager = FindObjectOfType<NetworkManagerLobby>();
     }
 
+    //Creates a new server host.
     public void HostLobby()
     {
         networkManager.StartHost();
@@ -27,6 +23,7 @@ public class MainMenu : NetworkBehaviour
         landingPagePanel.SetActive(false);
     }
 
+    //Quits the application.
     public void Quit()
     {
         Application.Quit();

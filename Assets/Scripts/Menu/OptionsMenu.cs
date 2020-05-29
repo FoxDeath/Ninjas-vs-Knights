@@ -1,9 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
-
 
 //TO DO: Add to Menu Manager
 public class OptionsMenu : MonoBehaviour
@@ -103,7 +100,7 @@ public class OptionsMenu : MonoBehaviour
 
     void Update()
     {
-        if (inputActions.enabled)
+        if(inputActions.enabled)
         {
             inputActions.Disable();
         }

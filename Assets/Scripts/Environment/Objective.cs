@@ -1,12 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class Objective : MonoBehaviour
 {
     private Slider healthBar;
-
     private Transform player;
     
     [SerializeField] float maxHealth = 1000f;
@@ -45,6 +42,7 @@ public class Objective : MonoBehaviour
         health = Mathf.Clamp(health, 0f, maxHealth);
     }
 
+    //Makes the objective take damage, ends the game if objective is destroyed.
     public void TakeDamage(float damage)
     {
         health -= damage;

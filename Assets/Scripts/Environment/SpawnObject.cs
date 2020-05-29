@@ -5,8 +5,8 @@ public class SpawnObject : MonoBehaviour
     [SerializeField] GameObject objectPrefab;
     private bool hasObject = false;
 
-    private float timer = 0f;
     [SerializeField] float timeUntilSpawn = 5f;
+    private float timer = 0f;
 
     //After the Instantiated object is destroyed, it calls Spawn() to create a new object.
     void Update()
@@ -19,7 +19,7 @@ public class SpawnObject : MonoBehaviour
         hasObject = Physics.Raycast(transform.position, Vector3.up, 5f);
     }
 
-    //Instantiates the object after some time.
+    //Instantiates the object after some time and resets the timer.
     void Spawn()
     {
         timer +=Time.deltaTime;
