@@ -3,6 +3,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 
+//Used for spawning the players after starting the game
 public class PlayerSpawnSystem : NetworkBehaviour
 {
     private static List<Transform> spawnPoints = new List<Transform>();
@@ -24,6 +25,8 @@ public class PlayerSpawnSystem : NetworkBehaviour
     [ServerCallback]
     private void OnDestroy() => NetworkManagerLobby.OnServerReadied -= SpawnPlayer;
 
+    //Spawns the players on the server by going trough an array of spawn points
+    //Is called after the scene is fully loaded
     [Server]
     public void SpawnPlayer(NetworkConnection conn, GameObject player)
     {

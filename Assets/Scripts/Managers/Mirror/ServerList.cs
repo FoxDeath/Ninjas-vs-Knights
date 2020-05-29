@@ -3,6 +3,7 @@ using Mirror.Discovery;
 using UnityEngine;
 using System.Collections.Generic;
 
+//Displays a list of LAN servers
 public class ServerList : MonoBehaviour
 {
     private NetworkDiscovery networkDiscovery;
@@ -38,6 +39,7 @@ public class ServerList : MonoBehaviour
         GUILayout.EndScrollView();
     }
 
+    //After clicking one of the servers on the list you are connected to it
     void Connect(ServerResponse info)
     {
         transform.parent.gameObject.SetActive(false);

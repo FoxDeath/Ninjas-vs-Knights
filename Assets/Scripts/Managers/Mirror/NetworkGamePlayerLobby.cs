@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using Mirror;
 using TMPro;
 
-
+//Only used for passing the playerPrefab trough the NetworkRoomPlayerLobby to the palyer spawner
 public class NetworkGamePlayerLobby : NetworkBehaviour
 {
     [SyncVar]

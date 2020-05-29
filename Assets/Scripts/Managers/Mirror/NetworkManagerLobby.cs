@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 using Mirror;
 using Mirror.Discovery;
 
+
+//Modified NetworkManages used for the lobby
 public class NetworkManagerLobby : NetworkManager
 {
     private int minPlayers = 1;
@@ -43,6 +45,8 @@ public class NetworkManagerLobby : NetworkManager
         }
     }
 
+    //Uppon players joining the server if the player is the first one then it is the 
+    // leader of the lobby and it's instantiated and added to a list of lobby players
     public override void OnServerAddPlayer(NetworkConnection conn)
     {
         bool isLeader = RoomPlayers.Count == 0;
@@ -53,7 +57,8 @@ public class NetworkManagerLobby : NetworkManager
 
         NetworkServer.AddPlayerForConnection(conn, roomPlayerInstance.gameObject);
     }
-
+    
+    //When a player disconects it is removed from the list and it notifies the other lobby players
     public override void OnServerDisconnect(NetworkConnection conn)
     {
         if(conn.identity != null)
@@ -76,7 +81,8 @@ public class NetworkManagerLobby : NetworkManager
             player.UpdateDisplay();
         }
     }
-
+    
+    //Returns true of the player chose a class and pressed the ready button, false otherwise
     private bool IsReadyToStart()
     {
         if(numPlayers < minPlayers)
@@ -95,6 +101,7 @@ public class NetworkManagerLobby : NetworkManager
         return true;
     }
 
+    //Called by the start button in the lobby
     public void StartGame()
     {
         if(!IsReadyToStart())
@@ -106,6 +113,9 @@ public class NetworkManagerLobby : NetworkManager
         ServerChangeScene(Loader.Scene.Map.ToString());
     }
 
+    //Called on the server to change the scene for all connected players
+    //Is modified to create a NetworkGamePlayerLobby that passes the selectedPlayerPrefab (class)
+    // trough to the player spawner
     public override void ServerChangeScene(string newSceneName)
     {        
         for (int i = RoomPlayers.Count - 1; i >= 0; i--)
@@ -125,6 +135,7 @@ public class NetworkManagerLobby : NetworkManager
         base.ServerChangeScene(newSceneName);
     }
 
+    //When the scene fully changed it creates the player spanw system
     public override void OnServerSceneChanged(string newSceneName)
     {
         GameObject playerSpawnSystemInstance = Instantiate(playerSpawnSystem);
@@ -142,6 +153,7 @@ public class NetworkManagerLobby : NetworkManager
         }
     }
 
+    //After a client stops it clears the lists of players for that client
     public override void OnStopClient()
     {
         RoomPlayers.Clear();
@@ -152,6 +164,7 @@ public class NetworkManagerLobby : NetworkManager
         OnClientStopped?.Invoke();
     }
 
+    //After the server stops it clears the lists of players for that client
     public override void OnStopServer()
     {
         RoomPlayers.Clear();

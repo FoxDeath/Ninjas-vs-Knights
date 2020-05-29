@@ -4,7 +4,7 @@ using Mirror;
 using Mirror.Discovery;
 using TMPro;
 
-
+//The player instance when in the lobby. It holds all the lobby UI as well
 public class NetworkRoomPlayerLobby : NetworkBehaviour
 {
     [SerializeField] private GameObject lobbyUI = null;
@@ -48,12 +48,14 @@ public class NetworkRoomPlayerLobby : NetworkBehaviour
         }
     }
     
+    //Sets the name it should display on the server
     public override void OnStartAuthority()
     {
         CmdSetDisplayName(PlayerNameInput.DisplayName);
         lobbyUI.SetActive(true);
     }
 
+    //Adds the player to the lobby player list and updates the UI
     public override void OnStartClient()
     {
         Room.RoomPlayers.Add(this);
@@ -63,6 +65,7 @@ public class NetworkRoomPlayerLobby : NetworkBehaviour
     public void HandleReadyStatusChanged(bool oldValue, bool newValue) => UpdateDisplay();
     public void HandleDisplayNameChanged(string oldValue, string newValue) => UpdateDisplay();
 
+    //Updates the UI of the local player
     public void UpdateDisplay()
     {
         if(!hasAuthority)
@@ -144,6 +147,8 @@ public class NetworkRoomPlayerLobby : NetworkBehaviour
         Room.NotifyPlayersOfReadyState();
     }
 
+    //If the disconect button is pressed then the client disconects or if the palyer is the host it disconects
+    // all the clients, stops the network discovery from showing the server and then it stops the server
     public void Disconect()
     {
         if (isLeader)

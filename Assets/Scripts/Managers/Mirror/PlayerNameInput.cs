@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+//Used to input the player name before entering a lobby
 public class PlayerNameInput : MonoBehaviour
 {
     [SerializeField] private TMP_InputField nameInputField = null;
