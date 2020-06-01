@@ -144,4 +144,13 @@ public class FlyingEnemyMovement : MonoBehaviour
             Move(); 
         }
     }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+        {
+            print(1);
+            transform.position -= (other.transform.position - transform.position).normalized * Time.deltaTime;
+        }
+    }
 }

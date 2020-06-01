@@ -42,12 +42,12 @@ public class EnemyShuriken : MonoBehaviour
         {
             FindObjectOfType<AudioManager>().NetworkPlay("ShurikenHit", GetComponent<AudioSource>());
             other.gameObject.GetComponentInParent<Health>().TakeDamage(damage);
-            Destroy(transform.parent.gameObject, 0.1f);
+            Destroy(gameObject, 0.1f);
         }
 
         if(other.gameObject.tag.Equals("EnemyObjective"))
         {
-            // FindObjectOfType<AudioManager>().Play("ShurikenHit", GetComponent<AudioSource>());
+            FindObjectOfType<AudioManager>().NetworkPlay("ShurikenHit", GetComponent<AudioSource>());
             other.gameObject.GetComponentInParent<Objective>().TakeDamage(damage);
         }
         
@@ -67,7 +67,11 @@ public class EnemyShuriken : MonoBehaviour
             this.anchor = anchor;
 
             Destroy(anchor, 10f);
-            Destroy(transform.parent.gameObject, 10f);
+
+            if(transform.parent)
+            {
+                Destroy(transform.parent.gameObject, 10f);  
+            }
         }
     }
 }
