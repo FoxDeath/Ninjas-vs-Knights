@@ -62,11 +62,15 @@ public class WaveManager : MonoBehaviour
     [SerializeField] spawnStates state = spawnStates.COUNTING;
 
     private Transform enemyContainer;
+    private UIManager uiManager;
 
+    private List<NinjaUI> ninjaUIs = new List<NinjaUI>();
+    private List<KnightUI> knightUIs = new List<KnightUI>();
     [SerializeField] List<SpawnPoint> spawnPoints;
     [SerializeField] List<Wave> waves;
 
     private int nextWave = 0;
+    private int waveNr = 0;
 
     [SerializeField] float timeBetweenWaves = 5f;
     [SerializeField] float infiniteMultiplier = 20f;
@@ -74,6 +78,11 @@ public class WaveManager : MonoBehaviour
 
     [SerializeField] bool infinite = true;
     private bool canContinue = false;
+
+    void Awake()
+    {
+        uiManager = FindObjectOfType<UIManager>();
+    }
 
     void Start()
     {
@@ -105,7 +114,27 @@ public class WaveManager : MonoBehaviour
         else
         {
             waveCountdown -= Time.deltaTime;
+
+            foreach (NinjaUI ui in ninjaUIs)
+            {
+                uiManager.SetWaveCounter(Mathf.Round(waveCountdown).ToString(), true, ui, null);
+            }
+
+            foreach (KnightUI ui in knightUIs)
+            {
+                uiManager.SetWaveCounter(Mathf.Round(waveCountdown).ToString(), true, null, ui);
+            }
         }
+    }
+
+    public void AddNinjaUI(NinjaUI ui)
+    {
+        ninjaUIs.Add(ui);
+    }
+
+    public void AddKnightUI(KnightUI ui)
+    {
+        knightUIs.Add(ui);
     }
 
     //Gets called when when wave finishes and takes care of the proceeding actions.
@@ -113,6 +142,7 @@ public class WaveManager : MonoBehaviour
     {
         state = spawnStates.COUNTING;
         waveCountdown = timeBetweenWaves;
+        waveNr++;
 
         if(nextWave + 1 > waves.Count - 1)
         {
@@ -146,6 +176,16 @@ public class WaveManager : MonoBehaviour
     IEnumerator SpawnWaveBehaviour(Wave wave)
     {
         state = spawnStates.SPAWNING;
+
+        foreach (NinjaUI ui in ninjaUIs)
+        {
+            uiManager.SetWaveCounter(waveNr.ToString(), false, ui, null);
+        }
+
+        foreach (KnightUI ui in knightUIs)
+        {
+            uiManager.SetWaveCounter(waveNr.ToString(), false, null, ui);
+        }
 
         foreach(WaveUnit unit in wave.units)
         {

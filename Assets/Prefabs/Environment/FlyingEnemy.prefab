@@ -46,6 +46,7 @@ GameObject:
   - component: {fileID: -4073184334260648984}
   - component: {fileID: 8826237944279459847}
   - component: {fileID: 6356611720357207286}
+  - component: {fileID: 721810842215974029}
   m_Layer: 12
   m_Name: FlyingEnemy
   m_TagString: Enemy
@@ -114,7 +115,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a5cf0428905df34aa22c017b7437c94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthBarUI: {fileID: 6517585018142116817}
   healthBar: {fileID: 4425154192600693351}
   maxHealth: 50
 --- !u!114 &8901322097930352479
@@ -260,6 +260,20 @@ MonoBehaviour:
   projectile: {fileID: 7853919440509985638, guid: f087191fa89a148409f3d5f1895ad376,
     type: 3}
   range: 20
+--- !u!136 &721810842215974029
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5426682381557393400}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 1
+  m_Height: 5
+  m_Direction: 2
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5426682381929735095
 GameObject:
   m_ObjectHideFlags: 0
@@ -523,12 +537,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 673fbad04112c1f47b465cb0da65d7f2, type: 3}
---- !u!1 &6517585018142116817 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5152426292745855783, guid: 673fbad04112c1f47b465cb0da65d7f2,
-    type: 3}
-  m_PrefabInstance: {fileID: 2157793084723374326}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &7267988596037783265 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8732216336582125079, guid: 673fbad04112c1f47b465cb0da65d7f2,
