@@ -80,7 +80,7 @@ public class FlyingEnemyMovement : MonoBehaviour
     //Slowly turns towards the player
     void Turn()
     {
-        Vector3 pos = target.position + new Vector3(0f,10f,0f) - transform.position;
+        Vector3 pos = target.position + new Vector3(0f, 10f, 0f) - transform.position;
         Quaternion rotation = Quaternion.LookRotation(pos);
         transform.rotation = Quaternion.Slerp(transform.rotation, rotation, rotationSpeed * Time.deltaTime);
     }
@@ -133,9 +133,15 @@ public class FlyingEnemyMovement : MonoBehaviour
         }
         else
         {
-            Turn();
+            if(target)
+            {
+                Turn();
+            }
         }
 
-        Move();
+        if(target)
+        {
+            Move(); 
+        }
     }
 }

@@ -273,6 +273,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   arrowSelect: {fileID: 0}
+  waveCounter: {fileID: 0}
   grenadeCount: {fileID: 0}
   currentAmmo: {fileID: 0}
   maxAmmo: {fileID: 0}
@@ -1039,12 +1040,12 @@ PrefabInstance:
     - target: {fileID: 3635412755623866354, guid: cf791bb89b4d3714b86f57655954dcfc,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 960
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3635412755623866354, guid: cf791bb89b4d3714b86f57655954dcfc,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 540
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3635412755623866354, guid: cf791bb89b4d3714b86f57655954dcfc,
         type: 3}
@@ -1059,22 +1060,22 @@ PrefabInstance:
     - target: {fileID: 3635412755623866354, guid: cf791bb89b4d3714b86f57655954dcfc,
         type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 3635412755623866354, guid: cf791bb89b4d3714b86f57655954dcfc,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 3635412755623866354, guid: cf791bb89b4d3714b86f57655954dcfc,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 3635412755623866354, guid: cf791bb89b4d3714b86f57655954dcfc,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 3635412755623866354, guid: cf791bb89b4d3714b86f57655954dcfc,
         type: 3}
@@ -1086,10 +1087,35 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 3635412755623866354, guid: cf791bb89b4d3714b86f57655954dcfc,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3635412755623866354, guid: cf791bb89b4d3714b86f57655954dcfc,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3635412755623866354, guid: cf791bb89b4d3714b86f57655954dcfc,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3635412755623866357, guid: cf791bb89b4d3714b86f57655954dcfc,
+        type: 3}
+      propertyPath: m_AdditionalShaderChannelsFlag
+      value: -1
+      objectReference: {fileID: 0}
     - target: {fileID: 3635412755623866358, guid: cf791bb89b4d3714b86f57655954dcfc,
         type: 3}
       propertyPath: m_Name
       value: NinjaUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3635412755623866358, guid: cf791bb89b4d3714b86f57655954dcfc,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3635412756261805643, guid: cf791bb89b4d3714b86f57655954dcfc,
         type: 3}
@@ -1117,6 +1143,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5655028120068413256, guid: cf791bb89b4d3714b86f57655954dcfc,
+        type: 3}
+      propertyPath: m_isInputParsingRequired
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7627936815181518272, guid: cf791bb89b4d3714b86f57655954dcfc,
+        type: 3}
+      propertyPath: m_havePropertiesChanged
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7627936815181518272, guid: cf791bb89b4d3714b86f57655954dcfc,
         type: 3}
       propertyPath: m_isInputParsingRequired
       value: 0

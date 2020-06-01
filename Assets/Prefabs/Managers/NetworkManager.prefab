@@ -25,7 +25,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 657817853378004655}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 344.1481, y: 990.92017, z: -550.88043}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -92,14 +92,14 @@ MonoBehaviour:
   showDebugMessages: 0
   serverTickRate: 30
   offlineScene: 
-  onlineScene: Assets/Scenes/MainMenu.unity
+  onlineScene: 
   transport: {fileID: 657817853378004820}
   networkAddress: localhost
   maxConnections: 4
   disconnectInactiveConnections: 0
   disconnectInactiveTimeout: 60
   authenticator: {fileID: 0}
-  playerPrefab: {fileID: 1588750985201798, guid: deae2134a1d77704b9c595efe69767dd,
+  playerPrefab: {fileID: 3598011707909405737, guid: c44ce6d8a73080f47839ad8ef3dde8b0,
     type: 3}
   autoCreatePlayer: 1
   playerSpawnMethod: 0
@@ -124,6 +124,21 @@ MonoBehaviour:
   - {fileID: 2056603104854673355, guid: 24c8b9a3d3d787a4c9e172c43a8d6063, type: 3}
   - {fileID: 5979411463758342020, guid: 0258cda89171918439bceff6ddf50f8d, type: 3}
   - {fileID: 4249065657589272132, guid: 8fbb03bc8c57e9242bb7fd6075073526, type: 3}
-  menuScene: Assets/Scenes/MainMenu.unity
+  - {fileID: 1434310356684611543, guid: cf4d7808e20fb4643a0041058f0fc1a9, type: 3}
+  - {fileID: 4249065657589272132, guid: c91e9dcfc9685e6499bc0302bb1a44bb, type: 3}
+  - {fileID: 2938815647763203279, guid: a1994325fa4cfe140bcaac9231ecdc96, type: 3}
+  - {fileID: 5426682381557393400, guid: 7bb93f52160a59e46911543cf04407d2, type: 3}
+  - {fileID: 2639069613400589893, guid: 9b56ad7b75a595c4d9396e94bc009108, type: 3}
+  - {fileID: 7853919440509985638, guid: f087191fa89a148409f3d5f1895ad376, type: 3}
+  - {fileID: 2639069613400589893, guid: 9b56ad7b75a595c4d9396e94bc009108, type: 3}
+  - {fileID: 4286818602018296624, guid: a371b207eca7a3649afba663f0253797, type: 3}
+  - {fileID: 6150923883148746154, guid: 93b09d0db5b105d4ca2e69f9597f663f, type: 3}
+  - {fileID: 3002191509367827471, guid: 5697c407c4309094093b921fcab585c1, type: 3}
+  - {fileID: 1444348944696146795, guid: 6e73da3a84a47914c9f13a52c4aca3dd, type: 3}
+  - {fileID: 7868399164631770164, guid: 0ffdcef440a1da645ae7dda1367c0864, type: 3}
   roomPlayerPrefab: {fileID: 4022034630445219632, guid: 8fbb03bc8c57e9242bb7fd6075073526,
+    type: 3}
+  gamePlayerPrefab: {fileID: 2925036912455353225, guid: c91e9dcfc9685e6499bc0302bb1a44bb,
+    type: 3}
+  playerSpawnSystem: {fileID: 1434310356684611543, guid: cf4d7808e20fb4643a0041058f0fc1a9,
     type: 3}

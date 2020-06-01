@@ -25,7 +25,7 @@ public class EnemyShuriken : MonoBehaviour
             }
             else
             {
-                Destroy(transform.parent.gameObject);
+                Destroy(transform.gameObject);
             }
         }
         else
@@ -54,7 +54,7 @@ public class EnemyShuriken : MonoBehaviour
         if(other.gameObject.layer != LayerMask.NameToLayer("Player") && other.gameObject.layer != LayerMask.NameToLayer("Enemy") && !other.gameObject.tag.Equals("Ammo"))
         {
             hit = true;
-            GetComponent<Collider>().enabled = false;
+            GetComponentInChildren<Collider>().enabled = false;
             FindObjectOfType<AudioManager>().NetworkPlay("ShurikenHit", GetComponent<AudioSource>());
             myRigidbody.velocity = Vector3.zero;
             myRigidbody.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;

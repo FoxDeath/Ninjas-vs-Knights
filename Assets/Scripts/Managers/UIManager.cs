@@ -24,6 +24,40 @@ public class UIManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+        }
+
+    public void SetWaveCounter(string waveNr, bool countDown, NinjaUI ninjaUI = null, KnightUI knightUI = null)
+    {
+        if (ninjaUI != null)
+        {
+            if(countDown)
+            {
+                ninjaUI.waveCounter.color = Color.red;
+            }
+            else
+            {
+                ninjaUI.waveCounter.color = ninjaUI.ogWaveNrColor;
+            }
+
+            ninjaUI.waveCounter.text = waveNr;
+        }
+        else if (knightUI != null)
+        {
+            if (countDown)
+            {
+                knightUI.waveCounter.color = Color.red;
+            }
+            else
+            {
+                knightUI.waveCounter.color = knightUI.ogWaveNrColor;
+            }
+
+            knightUI.waveCounter.text = waveNr;
+        }
+        else
+        {
+            return;
+        }
     }
 
     //Turns the radial menu and the Ninja UI on\off accordingly.
