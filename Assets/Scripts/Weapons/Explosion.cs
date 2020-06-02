@@ -25,7 +25,7 @@ public class Explosion : MonoBehaviour
     {
         if(other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {
-            other.GetComponent<Target>().StartExploding(damage, explosionForce, transform.position, myCollider.radius);
+            other.GetComponent<Target>().StartExploding(damage, explosionForce, transform.position, myCollider.radius, other.tag);
         }
     }
 }
