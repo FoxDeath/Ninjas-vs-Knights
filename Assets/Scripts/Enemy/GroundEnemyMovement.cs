@@ -70,7 +70,7 @@ public class GroundEnemyMovement : MonoBehaviour
             agent.enabled = false;
             obstacle.enabled = true;
         }
-        else if(!target.GetExploding())
+        else if(!target.GetExploding() && !target.GetDead())
         {
             agent.enabled = true;
             obstacle.enabled = false;
