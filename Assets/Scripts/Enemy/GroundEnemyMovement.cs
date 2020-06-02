@@ -65,12 +65,12 @@ public class GroundEnemyMovement : MonoBehaviour
 
     private void CheckProgress()
     {
-        if(agent.destination == agent.transform.position)
+        if(agent.transform.position == agent.destination)
         {
             agent.enabled = false;
             obstacle.enabled = true;
         }
-        else
+        else if(!target.GetExploding() && !target.GetDead())
         {
             agent.enabled = true;
             obstacle.enabled = false;

@@ -3,6 +3,7 @@
 public class FlyingEnemyMovement : MonoBehaviour
 {
     private Transform target;
+    private Target targetScript;
 
     private Mirror.NetworkTransformChild networkTransformChild;
 
@@ -19,6 +20,7 @@ public class FlyingEnemyMovement : MonoBehaviour
 
     void Awake()
     {
+        targetScript = GetComponent<Target>();
         transform.SetParent(GameObject.Find("EnemyContainer").transform);
         networkTransformChild = transform.parent.gameObject.AddComponent<Mirror.NetworkTransformChild>();
         networkTransformChild.target = transform;
@@ -41,7 +43,10 @@ public class FlyingEnemyMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        Pathfind();
+        if(!targetScript.GetDead())
+        {
+            Pathfind();
+        }
     }
 
     //Searches for the nearest player to target

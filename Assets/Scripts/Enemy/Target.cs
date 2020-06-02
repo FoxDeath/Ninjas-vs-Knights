@@ -24,12 +24,18 @@ public class Target : MonoBehaviour
     
     private bool dead;
     private bool onFire;
+    private bool exploding;
 
     #region Getters and Setters
 
     public bool GetDead()
     {
         return dead;
+    }
+
+    public bool GetExploding()
+    {
+        return exploding;
     }
 
     #endregion
@@ -48,6 +54,7 @@ public class Target : MonoBehaviour
         healthBar.value = health;
         dead = false;
         onFire = false;
+        exploding = false;
     }
 
     void Update()
@@ -150,21 +157,22 @@ public class Target : MonoBehaviour
         movement.SetAgentSpeed(ogSpeed);
     }
 
-    public void StartExploding(float damage, float explosionForce, Vector3 position, float radius)
+    public void StartExploding(float damage, float explosionForce, Vector3 position, float radius, GameObject obj)
     {
         if(explodingBehaviour == null)
         {
-            explodingBehaviour = StartCoroutine(ExplodingBehaviour(damage, explosionForce, position, radius));
+            explodingBehaviour = StartCoroutine(ExplodingBehaviour(damage, explosionForce, position, radius, obj));
         }
         else
         {
             StopCoroutine(explodingBehaviour);
-            explodingBehaviour = StartCoroutine(ExplodingBehaviour(damage, explosionForce, position, radius));
+            explodingBehaviour = StartCoroutine(ExplodingBehaviour(damage, explosionForce, position, radius, obj));
         }
     }
 
-    IEnumerator ExplodingBehaviour(float damage, float explosionForce, Vector3 position, float radius)
+    IEnumerator ExplodingBehaviour(float damage, float explosionForce, Vector3 position, float radius, GameObject obj)
     {
+        exploding = true;
         myRigidbody.isKinematic = false;
         myRigidbody.constraints = RigidbodyConstraints.None;
 
@@ -174,18 +182,35 @@ public class Target : MonoBehaviour
         }
 
         TakeDamage(damage);
-        myRigidbody.AddExplosionForce(explosionForce, position, radius, 1f);
 
-        yield return new WaitForSeconds(3f);
-
-        myRigidbody.rotation = ogRotation;
-        myRigidbody.isKinematic = true;
-        myRigidbody.constraints = RigidbodyConstraints.FreezeRotation;
-
-        if(GetComponent<NavMeshAgent>() != null && !dead)
+        if(obj.tag.Equals("GroundEnemy"))
         {
-            GetComponent<NavMeshAgent>().enabled = true;
-            GetComponent<NavMeshAgent>().SetDestination(movement.GetObjective());
+            myRigidbody.AddExplosionForce(explosionForce, position, radius, 1f);    
+        }
+        else if(obj.tag.Equals("FlyingEnemy"))
+        {
+            myRigidbody.AddExplosionForce(explosionForce * 0.1f, position, radius, 1f);
+        }
+
+        if(!obj.GetComponent<Target>().GetDead())
+        {
+            yield return new WaitForSeconds(2f);
+
+            myRigidbody.rotation = ogRotation;
+            myRigidbody.isKinematic = true;
+            myRigidbody.constraints = RigidbodyConstraints.FreezeRotation;
+
+            if (GetComponent<NavMeshAgent>() != null && !dead)
+            {
+                GetComponent<NavMeshAgent>().enabled = true;
+                GetComponent<NavMeshAgent>().SetDestination(movement.GetObjective());
+            }
+
+            exploding = false;
+        }
+        else
+        {
+            yield return null;
         }
     }
 
