@@ -7,7 +7,8 @@ using UnityEngine.UI;
 public class KnightUI : MonoBehaviour
 {
     [HideInInspector] public GameObject knightScopeOverlay;
-    [HideInInspector] public GameObject knightUI;
+    [HideInInspector] public GameObject knightInGameUI;
+    [HideInInspector] public GameObject gameOverScreen;
 
     [HideInInspector] public TextMeshProUGUI waveCounter;
     [HideInInspector] public TextMeshProUGUI grenadeCount;
@@ -19,23 +20,25 @@ public class KnightUI : MonoBehaviour
     [HideInInspector] public Slider knightSlider;
     [HideInInspector] public Slider healthSlider;
 
-    [HideInInspector] public List<Image> fills;
     [HideInInspector] public Image dashFill;
     [HideInInspector] public Image chargeFill;
     [HideInInspector] public Image AOEFill;
     [HideInInspector] public Image stimpackFill;
+    [HideInInspector] public List<Image> fills;
+
     [HideInInspector] public MouseLook mouseLook;
 
     private void Awake() 
     {
-        if(transform.Find("KnightUI") != null)
+        if(transform.Find("KnightInGameUI") != null)
         {
             fills = new List<Image>();
-            knightUI = transform.Find("KnightUI").gameObject;
-            waveCounter = knightUI.transform.Find("WaveCounter").GetComponent<TextMeshProUGUI>();
+            knightInGameUI = transform.Find("KnightInGameUI").gameObject;
+            gameOverScreen = transform.Find("GameOverScreen").gameObject;
+            waveCounter = knightInGameUI.transform.Find("WaveCounter").GetComponent<TextMeshProUGUI>();
             ogWaveNrColor = waveCounter.color;
-            grenadeCount = knightUI.transform.Find("Grenade").Find("GrenadeCount").GetComponent<TextMeshProUGUI>();
-            texts = knightUI.transform.Find("AmmoCounter").GetComponentsInChildren<TextMeshProUGUI>();
+            grenadeCount = knightInGameUI.transform.Find("Grenade").Find("GrenadeCount").GetComponent<TextMeshProUGUI>();
+            texts = knightInGameUI.transform.Find("AmmoCounter").GetComponentsInChildren<TextMeshProUGUI>();
 
             foreach(TextMeshProUGUI text in texts)
             {
@@ -49,16 +52,16 @@ public class KnightUI : MonoBehaviour
                 }
             }
 
-            knightSlider = knightUI.transform.Find("FuelSlider").GetComponent<Slider>();
-            healthSlider = knightUI.transform.Find("HealthBar").GetComponent<Slider>();
+            knightSlider = knightInGameUI.transform.Find("FuelSlider").GetComponent<Slider>();
+            healthSlider = knightInGameUI.transform.Find("HealthBar").GetComponent<Slider>();
             knightScopeOverlay = transform.Find("ScopeOverlay").gameObject;
-            stimpackFill = knightUI.transform.Find("Stimpack").Find("StimpackFill").GetComponent<Image>();
+            stimpackFill = knightInGameUI.transform.Find("Stimpack").Find("StimpackFill").GetComponent<Image>();
             fills.Add(stimpackFill);
-            dashFill = knightUI.transform.Find("Dash").Find("DashFill").GetComponent<Image>();
+            dashFill = knightInGameUI.transform.Find("Dash").Find("DashFill").GetComponent<Image>();
             fills.Add(dashFill);
-            chargeFill = knightUI.transform.Find("Charge").Find("ChargeFill").GetComponent<Image>();
+            chargeFill = knightInGameUI.transform.Find("Charge").Find("ChargeFill").GetComponent<Image>();
             fills.Add(chargeFill);
-            AOEFill = knightUI.transform.Find("AOE").Find("AOEFill").GetComponent<Image>();
+            AOEFill = knightInGameUI.transform.Find("AOE").Find("AOEFill").GetComponent<Image>();
             fills.Add(AOEFill);
             
             FindObjectOfType<WaveManager>().AddKnightUI(GetComponent<KnightUI>());

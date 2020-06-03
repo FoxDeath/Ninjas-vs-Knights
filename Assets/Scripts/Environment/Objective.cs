@@ -12,14 +12,6 @@ public class Objective : MonoBehaviour
     void Awake()
     {
         healthBar = GetComponentInChildren<Slider>();
-        
-        foreach(var player in FindObjectsOfType<PlayerMovement>())
-        {
-            if(player.isLocalPlayer)
-            {
-                this.player = player.transform;
-            }
-        }
     }
 
     void Start()
@@ -34,6 +26,16 @@ public class Objective : MonoBehaviour
         if(player)
         {
             healthBar.transform.parent.LookAt(player);
+        }
+        else
+        {
+            foreach(var player in FindObjectsOfType<PlayerMovement>())
+            {
+                if(player.isLocalPlayer)
+                {
+                    this.player = player.transform;
+                }
+            }
         }
     }
 

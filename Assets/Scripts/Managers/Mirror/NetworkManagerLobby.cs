@@ -109,7 +109,11 @@ public class NetworkManagerLobby : NetworkManager
             return;
         }
 
-        FindObjectOfType<NetworkDiscovery>().StopDiscovery();
+        if(FindObjectOfType<NetworkDiscovery>())
+        {
+            FindObjectOfType<NetworkDiscovery>().StopDiscovery();
+        }
+        
         ServerChangeScene(Loader.Scene.Map.ToString());
     }
 

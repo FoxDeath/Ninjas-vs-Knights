@@ -24,7 +24,21 @@ public class UIManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+    }
+
+    public void OnGameOver(NinjaUI ninjaUI = null, KnightUI knightUI = null)
+    {
+        if(ninjaUI != null)
+        {
+            ninjaUI.ninjaInGameUI.SetActive(false);
+            ninjaUI.gameOverScreen.SetActive(true);
         }
+        else if(knightUI != null)
+        {
+            knightUI.knightInGameUI.SetActive(false);
+            knightUI.gameOverScreen.SetActive(true);
+        }
+    }
 
     public void SetWaveCounter(string waveNr, bool countDown, NinjaUI ninjaUI = null, KnightUI knightUI = null)
     {
@@ -197,7 +211,7 @@ public class UIManager : MonoBehaviour
     {
         if(knightUI != null)
         {
-            knightUI.knightUI.SetActive(state);
+            knightUI.knightInGameUI.SetActive(state);
         }
         else
         {
@@ -209,7 +223,7 @@ public class UIManager : MonoBehaviour
     public void SetMaxHealth(float health, NinjaUI ninjaUI = null, KnightUI knightUI = null)
     {
         if(ninjaUI != null)
-        {   
+        {
             ninjaUI.healthSlider.maxValue = health;
             ninjaUI.healthSlider.value = health;
         }

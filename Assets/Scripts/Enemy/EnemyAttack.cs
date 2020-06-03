@@ -13,10 +13,30 @@ public class EnemyAttack : MonoBehaviour
     [SerializeField] float fireRate = 0.5f;
     [SerializeField] float spread = 0.65f;
     [SerializeField] float flashedSpread = 4f;
+    [SerializeField] float flashedPeriod = 4f;
     [SerializeField] protected float shootRadius = 20f;
     protected float nextTimeToFire;
 
     protected bool flashed;
+
+    #region Getters and Setters
+
+    public void SetFlashed(bool flashed)
+    {
+        this.flashed = flashed;
+
+        if(flashed)
+        {
+            Invoke("SetFlashedBack", flashedPeriod);
+        }
+    }
+
+    public bool GetFlashed()
+    {
+        return flashed;
+    }
+
+    #endregion
 
     protected virtual void Awake()
     {
@@ -101,19 +121,12 @@ public class EnemyAttack : MonoBehaviour
             {
                 targetPoint.y -= flashedSpread;
             }
-
-            Invoke("SetFlashedBack", 5);
         }
 
         audioManager.NetworkPlay("ShurikenShoot", GetComponent<AudioSource>());
 
         FindObjectOfType<NetworkController>().NetworkSpawn(bullet.name, bulletEmitter.transform.position, bulletEmitter.transform.rotation,
         (targetPoint - bulletEmitter.transform.position).normalized * shootSpeed, 10f);
-    }
-
-    public void SetFlashed(bool flashed)
-    {
-        this.flashed = flashed;
     }
 
     void SetFlashedBack()

@@ -1,19 +1,56 @@
 ﻿using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 //TO DO: Add to UI Manager
 public class EndLevel : MonoBehaviour
 {
-    public static int killedEnemies = 0;
-    public int numberOfEnemies;
-
-    public GameObject victoryScreenUI;
-
-    //TO DO: Game ends after the Objective is destroyed or when all players are dead.
-    void Update()
+    private InputActionAsset inputActions;
+    private NetworkManagerLobby networkManager;
+    
+    private void Awake()
     {
-        if(killedEnemies >= numberOfEnemies)
+        inputActions = GetComponentInParent<UnityEngine.InputSystem.PlayerInput>().actions;
+        networkManager = FindObjectOfType<NetworkManagerLobby>();
+    }
+
+    //Disables player inputs when UI is active
+    private void OnEnable()
+    {
+        inputActions.Disable();
+        Cursor.lockState = CursorLockMode.None;
+
+        // if (GetComponentInParent<PlayerMovement>().isServer)
+        // {
+        //     transform.Find("Restart").gameObject.GetComponent<Button>().enabled = true;
+        // }
+        // else if (GetComponentInParent<PlayerMovement>().isClientOnly)
+        // {
+        //     transform.Find("Restart").gameObject.GetComponent<Button>().enabled = false;
+        // }
+    }
+
+    //Enables player inputs when UI is inactive
+    private void OnDisable()
+    {
+        inputActions.Enable();
+    }
+
+    //Stops the client or host and returns to server.
+    public void MainMenu()
+    {
+        if (GetComponentInParent<PlayerMovement>().isServer)
         {
-            victoryScreenUI.SetActive(true);
+            networkManager.StopHost();
         }
+        else if (GetComponentInParent<PlayerMovement>().isClientOnly)
+        {
+            networkManager.StopClient();
+        }
+    }
+
+    public void Restart()
+    {
+        networkManager.StartGame();
     }
 }

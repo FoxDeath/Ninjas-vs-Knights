@@ -4,14 +4,11 @@ using UnityEngine.InputSystem.Samples.RebindUI;
 
 public class RebindMenu : MonoBehaviour
 {
-    [SerializeField] InputActionAsset inputActions;
+    private InputActionAsset inputActions;
 
     void Awake()
     {
-        if(inputActions == null)
-        {
-            inputActions = GetComponentInParent<UnityEngine.InputSystem.PlayerInput>().actions;
-        }
+        inputActions = GetComponentInParent<UnityEngine.InputSystem.PlayerInput>().actions;
     }
 
     void OnEnable()

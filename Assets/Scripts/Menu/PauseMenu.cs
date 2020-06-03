@@ -5,31 +5,34 @@ using Mirror;
 //TO DO: Add to Menu Manager
 public class PauseMenu : NetworkBehaviour
 {
-    public bool GameIsPaused = false;
+    private InputActionAsset inputActions;
+    private AudioManager audioManager;
+    private Health playerHealth;
+
     private GameObject pauseMenuUI;
     private GameObject gameUI;
     private GameObject optionsUI;
     private GameObject keyBindUI;
-    private InputActionAsset inputActions;
-    private PlayerInput playerInput;
-    private AudioManager audioManager;
+
+    public bool GameIsPaused = false;
+
 
     void Awake()
     {
-        playerInput = new PlayerInput();
+        playerHealth = GetComponentInParent<Health>();
         audioManager = FindObjectOfType<AudioManager>();
         pauseMenuUI = transform.Find("PauseMenu").gameObject;
         optionsUI = transform.Find("OptionsMenu").gameObject;
         keyBindUI = transform.Find("RebindMenu").gameObject;
         inputActions = GetComponentInParent<UnityEngine.InputSystem.PlayerInput>().actions;
 
-        if(transform.Find("NinjaUI") != null)
+        if(transform.Find("NinjaInGameUI") != null)
         {
-            gameUI = transform.Find("NinjaUI").gameObject;
+            gameUI = transform.Find("NinjaInGameUI").gameObject;
         }
         else
         {
-            gameUI = transform.Find("KnightUI").gameObject;
+            gameUI = transform.Find("KnightInGameUI").gameObject;
         }
     }
 
@@ -39,7 +42,7 @@ public class PauseMenu : NetworkBehaviour
         {
             inputActions.Disable();
         }
-        else if(!GameIsPaused && !inputActions.enabled)
+        else if(!GameIsPaused && !inputActions.enabled && !playerHealth.GetDead())
         {
             inputActions.Enable();
         }

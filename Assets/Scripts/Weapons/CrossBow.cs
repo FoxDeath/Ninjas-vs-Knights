@@ -47,8 +47,6 @@ public class CrossBow : MonoBehaviour
         scopedSensitivity = sens;
     }
 
-    #endregion
-
     public Quaternion GetStartingRotation()
     {
         return startingRotation;
@@ -63,6 +61,8 @@ public class CrossBow : MonoBehaviour
     {
         this.equiped = equiped;
     }
+
+    #endregion
 
     void Awake()
     {

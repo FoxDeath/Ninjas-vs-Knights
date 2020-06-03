@@ -7,6 +7,7 @@ public class GroundEnemyMovement : MonoBehaviour
     private Transform player;
     private Mirror.NetworkTransformChild networkTransformChild;
     private Target target;
+    private GroundEnemyAttack groungEnemyAttack;
     private Rigidbody myRigidbody;
     private NavMeshAgent agent;
     private NavMeshObstacle obstacle;
@@ -34,6 +35,7 @@ public class GroundEnemyMovement : MonoBehaviour
 
     void Awake()
     {
+        groungEnemyAttack = GetComponent<GroundEnemyAttack>();
         obstacle = GetComponent<NavMeshObstacle>();
         agent = GetComponent<NavMeshAgent>();
         objective = GameObject.FindGameObjectWithTag("EnemyObjective").transform;
@@ -61,6 +63,15 @@ public class GroundEnemyMovement : MonoBehaviour
     {
         CheckProgress();
         Facing();
+
+        if(!groungEnemyAttack.GetFlashed() && agent.isStopped)
+        {
+            agent.isStopped = false;
+        }
+        else if(groungEnemyAttack.GetFlashed() && !agent.isStopped)
+        {
+            agent.isStopped = true;
+        }
     }
 
     private void CheckProgress()

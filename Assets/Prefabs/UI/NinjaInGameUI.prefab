@@ -692,7 +692,7 @@ GameObject:
   - component: {fileID: 3635412755623866356}
   - component: {fileID: 3635412755623866359}
   m_Layer: 5
-  m_Name: NinjaUI
+  m_Name: NinjaInGameUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

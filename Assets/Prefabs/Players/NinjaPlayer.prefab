@@ -1911,6 +1911,12 @@ PrefabInstance:
       propertyPath: m_havePropertiesChanged
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2576489713652725826, guid: 9781cd081df387e4781f2962598e007c,
+        type: 3}
+      propertyPath: inputActions
+      value: 
+      objectReference: {fileID: -944628639613478452, guid: 8b0f9ee1f001840fd9b63063de21d7f6,
+        type: 3}
     - target: {fileID: 2727368029470350927, guid: 9781cd081df387e4781f2962598e007c,
         type: 3}
       propertyPath: m_havePropertiesChanged
@@ -1971,6 +1977,12 @@ PrefabInstance:
       propertyPath: m_havePropertiesChanged
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3904206877616676158, guid: 9781cd081df387e4781f2962598e007c,
+        type: 3}
+      propertyPath: inputActions
+      value: 
+      objectReference: {fileID: -944628639613478452, guid: 8b0f9ee1f001840fd9b63063de21d7f6,
+        type: 3}
     - target: {fileID: 3904206877661866439, guid: 9781cd081df387e4781f2962598e007c,
         type: 3}
       propertyPath: m_IsActive
