@@ -9,7 +9,8 @@ public class GroundEnemyAttack : EnemyAttack
 
     protected override void Awake()
     {
-        objective = GameObject.FindGameObjectWithTag("EnemyObjective").transform;
+      //  objective = GameObject.FindGameObjectWithTag("EnemyObjective").transform;
+        player = GameObject.FindGameObjectWithTag("Player").transform;
         audioManager = FindObjectOfType<AudioManager>();
         target = GetComponent<Target>();
     }
