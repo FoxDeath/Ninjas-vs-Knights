@@ -13,7 +13,6 @@ public class NinjaPlayerMovement : PlayerMovement
     private bool doubleJumped;
     private bool canWallJump;
     private bool wallJumping;
-
     protected override void FixedUpdate()
     {
         if(!this.isLocalPlayer)
@@ -183,7 +182,7 @@ public class NinjaPlayerMovement : PlayerMovement
         {
             if(!audioManager.IsPlaying("Wallrun"))
             {
-                audioManager.NetworkPlay("Wallrun");
+                audioManager.Play("Wallrun");              
             }
         }
         else
@@ -204,8 +203,10 @@ public class NinjaPlayerMovement : PlayerMovement
         velocity.z = wallJumpForce * normal.z;
         velocity.y = Mathf.Sqrt(jumpHeight * 50f);
         fallVelocity = 0f;
-        audioManager.NetworkPlay("Jump");
+        audioManager.Play("Jump");
+        //animator.SetTrigger("WJump");
 
+      
         yield return new WaitForSeconds(0.5f);
 
         wallJumping = false;

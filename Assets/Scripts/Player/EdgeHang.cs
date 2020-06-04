@@ -22,10 +22,13 @@ public class EdgeHang : MonoBehaviour
     private PlayerMovement playerMovement;
     private AudioManager audioManager;
 
+    private Animator animator;
     void Start()
     {
-        audioManager = GetComponent<AudioManager>();
+        audioManager = FindObjectOfType<AudioManager>();
         playerMovement = GetComponent<PlayerMovement>();
+        animator = transform.Find("player").GetComponent<Animator>();
+
 
         canHang = true;
     }
@@ -99,10 +102,14 @@ public class EdgeHang : MonoBehaviour
         if(hit.gameObject.tag == "EdgeHang")
         {
             hanging = true;
+            animator.SetBool("hang",true);
+            playerMovement.GetController().transform.position = new Vector3(0,100,0);
         }
         else
         {
             hanging = false;
+            animator.SetBool("hang", false);
+
         }
     }
 }

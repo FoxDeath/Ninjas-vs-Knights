@@ -11,17 +11,14 @@ public class KightPlayerInput : MonoBehaviour
     void Start()
     {
         playerMovement = GetComponent<KnightPlayerMovement>();
-        pauseMenu = GetComponentInChildren<PauseMenu>();
+        pauseMenu = FindObjectOfType<PauseMenu>();
         edgeClimb = GetComponent<EdgeClimb>();
+       
     }
 
     public void MoveInput(InputAction.CallbackContext context)
     {
-        if(!playerMovement.GetEdgeClimbing())
-        {
-            //passes on the move vector to the movement script
-            playerMovement.SetMoveInput(context.ReadValue<Vector2>());
-        }
+        playerMovement.SetMoveInput(context.ReadValue<Vector2>());
     }
 
     public void JumpInput(InputAction.CallbackContext context)
