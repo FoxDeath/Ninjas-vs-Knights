@@ -7,22 +7,18 @@ public class KightPlayerInput : MonoBehaviour
     private KnightPlayerMovement playerMovement;
     private PauseMenu pauseMenu;
     private EdgeClimb edgeClimb;
-    private Animator animator;
 
     void Start()
     {
         playerMovement = GetComponent<KnightPlayerMovement>();
         pauseMenu = FindObjectOfType<PauseMenu>();
         edgeClimb = GetComponent<EdgeClimb>();
-        animator = transform.Find("player").GetComponent<Animator>();
+       
     }
 
     public void MoveInput(InputAction.CallbackContext context)
     {
         playerMovement.SetMoveInput(context.ReadValue<Vector2>());
-
-        animator.SetFloat("stateSpeedY", context.ReadValue<Vector2>().y);
-        animator.SetFloat("stateSpeedX", context.ReadValue<Vector2>().x);
     }
 
     public void JumpInput(InputAction.CallbackContext context)

@@ -23,7 +23,7 @@ public class GroundEnemyAttack : MonoBehaviour
 
     void Awake()
     {
-        objective = GameObject.FindGameObjectWithTag("EnemyObjective").transform;
+      //  objective = GameObject.FindGameObjectWithTag("EnemyObjective").transform;
         player = GameObject.FindGameObjectWithTag("Player").transform;
         audioManager = FindObjectOfType<AudioManager>();
         target = GetComponent<Target>();

@@ -102,7 +102,8 @@ public class EdgeHang : MonoBehaviour
         if(hit.gameObject.tag == "EdgeHang")
         {
             hanging = true;
-            animator.SetBool("hang",true);        
+            animator.SetBool("hang",true);
+            playerMovement.GetController().transform.position = new Vector3(0,100,0);
         }
         else
         {
