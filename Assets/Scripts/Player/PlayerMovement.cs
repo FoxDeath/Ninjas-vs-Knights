@@ -238,8 +238,6 @@ public class PlayerMovement : NetworkBehaviour
         }
         controller.Move(move * Time.deltaTime);
 
-        
-
     }
 
     //Calculates the speed depending on the situation
@@ -282,6 +280,7 @@ public class PlayerMovement : NetworkBehaviour
         {
             isCrouched = true;
             animator.SetBool("crouch",true);
+            print("yessss");
         }
         else if(!sliding)
         {
@@ -295,10 +294,13 @@ public class PlayerMovement : NetworkBehaviour
         if(velocity.y < fallVelocity && !isGrounded && !resetFall)
         {
             velocity.y -= fallDecrease;
+            animator.SetBool("Fall", true);
         }
         else
         {
             resetFall = false;
+            animator.SetBool("Fall", false);
+
         }
     }
 
@@ -342,14 +344,16 @@ public class PlayerMovement : NetworkBehaviour
         if(state && !isCrouched && !scoping && !sprinting)
         {
             audioManager.SetPitch("Walking", 2);
-            sprinting = true;            
+            sprinting = true;
+            animator.SetBool("Running", true);
         }
         //turn off sprint
         else if(!state && sprinting)
         {
-            audioManager.NetworkSetPitch("Walking", 1);
+            audioManager.SetPitch("Walking", 1);
             sprinting = false;
-        }
+            animator.SetBool("Running", false);
+        }       
     }
 
     public virtual void Jump()
@@ -366,10 +370,12 @@ public class PlayerMovement : NetworkBehaviour
             audioManager.NetworkPlay("Jump");
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
             fallVelocity = 10f;
+            animator.SetTrigger("Jump");
+
         }
         else if(isGrounded && sprinting)
             {
-           // animator.SetTrigger("RunJump");
+            animator.SetTrigger("RunJump");
         }
         
     }

@@ -39,7 +39,7 @@ public class WallRun : MonoBehaviour
         //Raycast calculcations for right and left casts are done here because they are needed in both statements
         Physics.Raycast(transform.position, transform.right, out rightCast, 0.7f);
         Physics.Raycast(transform.position, -transform.right, out leftCast, 0.7f);
-
+       // animator.SetBool("Running", false);
 
         if(!playerMovement.wallRunning && !playerMovement.GetGrounded() && canWallRun)
         {
@@ -80,7 +80,6 @@ public class WallRun : MonoBehaviour
                 side = -1;
                 currentWallID = leftCast.transform.gameObject.GetInstanceID();
                 animator.SetBool("WallRunLeft", true);
-
             }
             else if(frontLeftCast.normal != Vector3.zero && frontLeftCast.transform.tag == "Wall" && frontLeftCast.transform.gameObject.GetInstanceID() != currentWallID)
             {
@@ -91,7 +90,6 @@ public class WallRun : MonoBehaviour
                 side = -1;
                 currentWallID = frontLeftCast.transform.gameObject.GetInstanceID();
                 animator.SetBool("WallRunLeft", true);
-
             }
         }
         else if(playerMovement.wallRunning)
@@ -117,12 +115,14 @@ public class WallRun : MonoBehaviour
             else if(side == -1 && leftCast.normal == Vector3.zero  && frontLeftCast.normal == Vector3.zero && backLeftCast.normal == Vector3.zero)
             {
                 StartCoroutine(EndWallrun());
+               // animator.SetTrigger("WJump");
           
             }
             else if(side == 1 && rightCast.normal == Vector3.zero && frontRightCast.normal == Vector3.zero &&  backRightCast.normal == Vector3.zero)
             {
                 StartCoroutine(EndWallrun());
-                
+               // animator.SetTrigger("WJump");
+
             }
         }
     }

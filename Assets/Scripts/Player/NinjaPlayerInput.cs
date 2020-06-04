@@ -45,6 +45,7 @@ public class NinjaPlayerInput : MonoBehaviour
         if(context.action.phase == InputActionPhase.Started && !playerMovement.GetSprinting() && playerMovement.GetVertical() > 0)
         {
             playerMovement.Sprint(true);
+            
         }
         //if button is released and sprinting
         else if(context.action.phase == InputActionPhase.Canceled && playerMovement.GetSprinting())

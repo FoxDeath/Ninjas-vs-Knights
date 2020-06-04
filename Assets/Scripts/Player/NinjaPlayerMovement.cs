@@ -13,8 +13,6 @@ public class NinjaPlayerMovement : PlayerMovement
     private bool doubleJumped;
     private bool canWallJump;
     private bool wallJumping;
-
-
     protected override void FixedUpdate()
     {
         if(!this.isLocalPlayer)
