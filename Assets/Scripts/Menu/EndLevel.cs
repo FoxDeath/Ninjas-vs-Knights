@@ -51,6 +51,6 @@ public class EndLevel : MonoBehaviour
 
     public void Restart()
     {
-        networkManager.StartGame();
+        //restart the game somehow
     }
 }

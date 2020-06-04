@@ -826,8 +826,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 047425db26f939343be3277c0bbb6792, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
-  regenPerSec: 5
+  maxHealth: 180
+  regenPerSec: 2
   damageReduPercentage: 50
 --- !u!114 &4238440793053572482
 MonoBehaviour:

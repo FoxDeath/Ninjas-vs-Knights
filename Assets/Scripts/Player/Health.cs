@@ -3,17 +3,18 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
+    private UIManager uiManager;
+    private PlayerMovement movement;
+
+    private Vector3 lastHit;
+
     [SerializeField] float maxHealth = 100f;
-    [SerializeField] float regenPerSec = 5f;
+    [SerializeField] float regenPerSec = 2f;
     [SerializeField] float damageReduPercentage = 50f;
     private float health;
 
     private bool regenerating;
     private bool dead = false;
-
-    private UIManager uiManager;
-
-    private PlayerMovement movement;
 
     #region  Getters and Setters
 
@@ -90,7 +91,7 @@ public class Health : MonoBehaviour
 
         regenerating = false;
 
-        if(health <= 0)
+        if(health <= 0 && !dead)
         {
             Die();
         }
@@ -101,7 +102,7 @@ public class Health : MonoBehaviour
 
     IEnumerator RegenCooldown() 
     {
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(8f);
 
         regenerating = true;
     }
@@ -125,7 +126,7 @@ public class Health : MonoBehaviour
     {
         if(regenerating && health < maxHealth)
         {
-            health += regenPerSec * Time.deltaTime;
+            health += regenPerSec * Time.fixedDeltaTime;
         }
         else if(health == maxHealth)
         {
@@ -136,10 +137,19 @@ public class Health : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         Medkit medkit = other.GetComponent<Medkit>();
+        
         if (medkit && health < maxHealth && !dead)
         {
             Heal(medkit.GetHealAmmount());
             GameObject.Destroy(other.gameObject);
+        }
+    }
+
+    void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.tag.Equals("Ammo"))
+        {
+            lastHit = transform.localPosition - other.transform.localPosition;
         }
     }
 }
