@@ -5,6 +5,7 @@ using System.Collections;
 public class NetworkController : NetworkBehaviour
 {
     private GameObject[] spawnableObjects;
+    [SerializeField] public GameObject playerPrefab;
 
     private void Awake() 
     {

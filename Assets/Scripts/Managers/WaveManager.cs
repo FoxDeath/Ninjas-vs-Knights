@@ -63,6 +63,7 @@ public class WaveManager : MonoBehaviour
 
     private Transform enemyContainer;
     private UIManager uiManager;
+    NetworkController networkController;
 
     private List<NinjaUI> ninjaUIs = new List<NinjaUI>();
     private List<KnightUI> knightUIs = new List<KnightUI>();
@@ -78,6 +79,8 @@ public class WaveManager : MonoBehaviour
 
     [SerializeField] bool infinite = true;
     private bool canContinue = false;
+
+    private bool restarting = false;
 
     void Awake()
     {
@@ -127,6 +130,15 @@ public class WaveManager : MonoBehaviour
         }
     }
 
+    public void Restart()
+    {
+        StopAllCoroutines();
+        nextWave = 0;
+        waveNr = 0;
+        restarting = true;
+        waveCountdown = timeBetweenWaves;
+    }
+
     public void AddNinjaUI(NinjaUI ui)
     {
         ninjaUIs.Add(ui);
@@ -142,7 +154,15 @@ public class WaveManager : MonoBehaviour
     {
         state = spawnStates.COUNTING;
         waveCountdown = timeBetweenWaves;
-        waveNr++;
+
+        if(restarting)
+        {
+            restarting = false;
+        }
+        else
+        {
+            waveNr++;
+        }
 
         if(nextWave + 1 > waves.Count - 1)
         {

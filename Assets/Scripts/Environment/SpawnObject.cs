@@ -2,7 +2,10 @@
 
 public class SpawnObject : MonoBehaviour
 {
+    private NetworkController networkController;
+
     [SerializeField] GameObject objectPrefab;
+
     private bool hasObject = false;
 
     [SerializeField] float timeUntilSpawn = 5f;
@@ -11,23 +14,34 @@ public class SpawnObject : MonoBehaviour
     //After the Instantiated object is destroyed, it calls Spawn() to create a new object.
     void Update()
     {
-        if(!hasObject)
+        if(transform.childCount == 0)
         {
             Spawn();
         }
-
-        hasObject = Physics.Raycast(transform.position, Vector3.up, 5f);
     }
 
     //Instantiates the object after some time and resets the timer.
     void Spawn()
     {
-        timer +=Time.deltaTime;
+        timer += Time.deltaTime;
 
         if(timer >= timeUntilSpawn)
         {
-            FindObjectOfType<NetworkController>().NetworkSpawn(objectPrefab.name, transform.position + Vector3.up * 2, Quaternion.identity, Vector3.zero);
+            if(!networkController)
+            {
+                networkController = FindObjectOfType<NetworkController>();
+            }
+            
+            networkController.NetworkSpawn(objectPrefab.name, transform.position + Vector3.up * 2, Quaternion.identity, Vector3.zero);
             timer = 0f;
+        }
+    }
+
+    public void Restart()
+    {
+        if(transform.childCount != 0)
+        {
+            networkController.NetworkDestroy(transform.GetChild(0).gameObject, 0f);
         }
     }
 }

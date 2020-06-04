@@ -44,6 +44,13 @@ public class Objective : MonoBehaviour
         health = Mathf.Clamp(health, 0f, maxHealth);
     }
 
+    public void Restart()
+    {
+        health = maxHealth;
+        healthBar.maxValue = maxHealth;
+        healthBar.value = health;
+    }
+
     //Makes the objective take damage, ends the game if objective is destroyed.
     public void TakeDamage(float damage)
     {

@@ -1126,6 +1126,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  playerPrefab: {fileID: 5979411463758342020}
 --- !u!114 &4786675677703884993
 MonoBehaviour:
   m_ObjectHideFlags: 0

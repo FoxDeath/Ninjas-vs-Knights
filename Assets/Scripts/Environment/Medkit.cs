@@ -7,6 +7,24 @@ public class Medkit : MonoBehaviour
     [SerializeField] float healAmmount = 25f;
     private float movementFactor;
 
+    void Awake()
+    {
+        Transform closestSpawner = FindObjectsOfType<SpawnObject>()[0].transform;
+
+        foreach(SpawnObject obj in FindObjectsOfType<SpawnObject>())
+        {
+            if(obj.transform.childCount == 0)
+            {
+                if(Vector3.Distance(transform.position, closestSpawner.position) > Vector3.Distance(transform.position, obj.transform.position))
+                {
+                    closestSpawner = obj.transform;
+                }
+            }
+        }
+
+        transform.SetParent(closestSpawner);
+    }
+
     void Start()
     {
         startingPos = transform.localPosition;

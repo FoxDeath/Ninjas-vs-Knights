@@ -7,11 +7,15 @@ public class EndLevel : MonoBehaviour
 {
     private InputActionAsset inputActions;
     private NetworkManagerLobby networkManager;
+    private WaveManager waveManager;
+    private Objective objective;
     
     private void Awake()
     {
         inputActions = GetComponentInParent<UnityEngine.InputSystem.PlayerInput>().actions;
         networkManager = FindObjectOfType<NetworkManagerLobby>();
+        waveManager = FindObjectOfType<WaveManager>();
+        objective = FindObjectOfType<Objective>();
     }
 
     //Disables player inputs when UI is active
@@ -51,6 +55,32 @@ public class EndLevel : MonoBehaviour
 
     public void Restart()
     {
-        //restart the game somehow
+        //restart wave spawner
+        waveManager.Restart();
+        //destroy all enemies
+        if(GetComponentInParent<PlayerMovement>().isServer)
+        { 
+            NetworkController networkController = GetComponentInParent<NetworkController>();
+
+            foreach(Target enemy in FindObjectsOfType<Target>())
+            {
+                StartCoroutine(networkController.NetworkDestroy(enemy.gameObject, 0f));
+            }
+        }
+        //restart consumables spawners
+        foreach(SpawnObject spawner in FindObjectsOfType<SpawnObject>())
+        {
+            spawner.Restart();
+        }
+        //restart objective
+        objective.Restart();
+        //destroy players
+        
+        //spawn new players
+    }
+
+    public void Spectate()
+    {
+        //spectate somehow and someway
     }
 }
