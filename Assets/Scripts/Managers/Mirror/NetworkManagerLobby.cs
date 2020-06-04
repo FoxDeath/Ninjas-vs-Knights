@@ -135,7 +135,7 @@ public class NetworkManagerLobby : NetworkManager
             NetworkServer.ReplacePlayerForConnection(conn, gamePlayerInstance.gameObject);
         }
 
-        RoomPlayers.Clear();
+        //RoomPlayers.Clear();
 
         base.ServerChangeScene(newSceneName);
     }

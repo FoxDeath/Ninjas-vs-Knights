@@ -1,8 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using Mirror;
 using UnityEngine;
 
-public class MovingPlatform : MonoBehaviour
+public class MovingPlatform : NetworkBehaviour
 {
     [SerializeField] Transform[] points;
     private Transform target;
@@ -43,6 +42,11 @@ public class MovingPlatform : MonoBehaviour
 
     void FixedUpdate()
     {
+        if(!isServer)
+        {
+            return;
+        }
+        
         if(points.Length != 0)
         {
             if(Mathf.Abs(Vector3.Distance(transform.position, target.position)) < 0.1f)
@@ -135,15 +139,6 @@ public class MovingPlatform : MonoBehaviour
         time = 0;
     }
 
-    //Parents the player to the platform when it enters the colldier.
-    void OnTriggerEnter(Collider other)
-    {
-        if(other.gameObject.layer == LayerMask.NameToLayer("Player") && other.GetType() == typeof(MeshCollider))
-        {
-            other.transform.parent.SetParent(transform.parent);
-        }
-    }
-
     //Moves the player with the platform.
     void OnTriggerStay(Collider other)
     {
@@ -159,15 +154,6 @@ public class MovingPlatform : MonoBehaviour
             {
                 playerCC.Move(myRigidbody.velocity * Time.fixedDeltaTime);
             }
-        }
-    }
-
-    //Unparents the player from the platform when it enters the colldier.
-    void OnTriggerExit(Collider other)
-    {
-        if(other.gameObject.layer == LayerMask.NameToLayer("Player") && other.GetType() == typeof(MeshCollider))
-        {
-            other.gameObject.transform.parent.SetParent(null);
         }
     }
 }

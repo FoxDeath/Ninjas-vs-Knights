@@ -24,12 +24,6 @@ public class NetworkController : NetworkBehaviour
     [Command]
     private void CmdSpawn(string name, Vector3 position, Quaternion rotation, Vector3 velocity, float time)
     {
-        Spawn(name, position, rotation, velocity, time);
-    }
-
-    //Actual spawn method who deals with the instantiating
-    private void Spawn(string name, Vector3 position, Quaternion rotation, Vector3 velocity, float time)
-    {
         GameObject temporaryObject = null;
 
         //Goes trough a list of all spawnable objects and finds the right one by name
@@ -74,11 +68,6 @@ public class NetworkController : NetworkBehaviour
 
     [Command]
     private void CmdDestroy(GameObject gameObject)
-    {
-        Destroy(gameObject);
-    }
-
-    private static void Destroy(GameObject gameObject)
     {
         NetworkServer.Destroy(gameObject);
     }

@@ -77,13 +77,16 @@ public class NinjaUI : MonoBehaviour
             {
                 radialOptions[i] = arrowSelect.transform.GetChild(i).GetComponent<Image>();
             }
-
-            FindObjectOfType<UIManager>().AddNinjaUI(GetComponent<NinjaUI>());
-            FindObjectOfType<UIManager>().SetWaveCounter(0.ToString(), false, GetComponent<NinjaUI>(), null);
         }
     }
 
+    public void SetWaveUI() 
     void OnDestroy()
+    {
+        FindObjectOfType<UIManager>().SetWaveCounter(0.ToString(), false, this, null);
+    }
+
+    public void ArrowMenuInput(InputAction.CallbackContext context)
     {
         if(FindObjectOfType<UIManager>())
         {

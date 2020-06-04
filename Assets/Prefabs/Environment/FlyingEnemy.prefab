@@ -47,6 +47,7 @@ GameObject:
   - component: {fileID: 8826237944279459847}
   - component: {fileID: 6356611720357207286}
   - component: {fileID: 721810842215974029}
+  - component: {fileID: 1359514927735514288}
   m_Layer: 12
   m_Name: FlyingEnemy
   m_TagString: FlyingEnemy
@@ -97,6 +98,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b2c3b87f0be2a84b9ea0e8fa730514d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   minDistanceFromPlayer: 15
   rotationSpeed: 2
   movementSpeed: 10
@@ -115,6 +118,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a5cf0428905df34aa22c017b7437c94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   healthBar: {fileID: 4425154192600693351}
   maxHealth: 50
 --- !u!114 &8901322097930352479
@@ -274,6 +279,24 @@ CapsuleCollider:
   m_Height: 5
   m_Direction: 2
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1359514927735514288
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5426682381557393400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f74aedd71d9a4f55b3ce499326d45fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  clientAuthority: 0
+  localPositionSensitivity: 0.01
+  localRotationSensitivity: 0.01
+  localScaleSensitivity: 0.01
 --- !u!1 &5426682381929735095
 GameObject:
   m_ObjectHideFlags: 0

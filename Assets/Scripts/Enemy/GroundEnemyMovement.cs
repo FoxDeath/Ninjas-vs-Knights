@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
+using Mirror;
 
-public class GroundEnemyMovement : MonoBehaviour
+public class GroundEnemyMovement : NetworkBehaviour
 {
     private Transform objective;
+    private GameObject[] players;
     private Transform player;
-    private Mirror.NetworkTransformChild networkTransformChild;
     private Target target;
     private GroundEnemyAttack groungEnemyAttack;
     private Rigidbody myRigidbody;
@@ -40,20 +41,26 @@ public class GroundEnemyMovement : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         objective = GameObject.FindGameObjectWithTag("EnemyObjective").transform;
         myRigidbody = GetComponent<Rigidbody>();
+        players = GameObject.FindGameObjectsWithTag("Player");
+        player = players[0].transform;
         target = GetComponent<Target>();
-        
+
         transform.SetParent(GameObject.Find("EnemyContainer").transform);
-        networkTransformChild = transform.parent.gameObject.AddComponent<Mirror.NetworkTransformChild>();
-        networkTransformChild.target = transform;
     }
 
-    void OnDestroy() 
+    public override void OnStartServer()
     {
-        Destroy(networkTransformChild);
+        agent.enabled = true;
+        base.OnStartServer();
     }
 
     void Start()
     {
+        if(!isServer)
+        {
+            return;
+        }
+        
         agent.SetDestination(GetObjective());
         agent.updateRotation = false;
         InvokeRepeating("SearchForNearestPlayer", 0f, 1f);
@@ -61,6 +68,19 @@ public class GroundEnemyMovement : MonoBehaviour
 
     void FixedUpdate()
     {
+        if(!isServer)
+        {
+            return;
+        }
+
+        foreach(GameObject player in players)
+        {
+            if(Vector3.Distance(player.transform.position, transform.position) < Vector3.Distance(this.player.position, transform.position))
+            {
+                this.player = player.transform;
+            }
+        }
+
         CheckProgress();
         Facing();
 
