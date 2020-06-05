@@ -182,7 +182,7 @@ public class NinjaPlayerMovement : PlayerMovement
         {
             if(!audioManager.IsPlaying("Wallrun"))
             {
-                audioManager.Play("Wallrun");              
+                audioManager.NetworkPlay("Wallrun");              
             }
         }
         else
@@ -204,10 +204,8 @@ public class NinjaPlayerMovement : PlayerMovement
         velocity.z = wallJumpForce * normal.z;
         velocity.y = Mathf.Sqrt(jumpHeight * 50f);
         fallVelocity = 0f;
-        audioManager.Play("Jump");
-        //animator.SetTrigger("WJump");
-
-      
+        audioManager.NetworkPlay("Jump");
+        
         yield return new WaitForSeconds(0.5f);
 
         wallJumping = false;

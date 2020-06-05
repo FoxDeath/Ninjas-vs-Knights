@@ -216,7 +216,7 @@ public class KnightPlayerMovement : PlayerMovement
             canDash = false;
             dashing = true;
 
-            audioManager.Play("Jetpack Dash");
+         //   audioManager.Play("Jetpack Dash");
             dashParticles.Play();
 
             vertical = dashForce * moveInput.y;
