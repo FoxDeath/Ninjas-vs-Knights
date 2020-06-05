@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2062681663133029972}
   - component: {fileID: -3351565974778806736}
   - component: {fileID: 3422659017377059474}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: Kunai
   m_TagString: Ammo
   m_Icon: {fileID: 0}
@@ -222,7 +222,7 @@ PrefabInstance:
     - target: {fileID: -927199367670048503, guid: 25ddf0bc8d964254e87bbae962fac2cf,
         type: 3}
       propertyPath: m_Layer
-      value: 10
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 25ddf0bc8d964254e87bbae962fac2cf, type: 3}

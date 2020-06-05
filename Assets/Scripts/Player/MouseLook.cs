@@ -38,7 +38,7 @@ public class MouseLook : NetworkBehaviour
 
     void Start()
     {
-        cameraTransform = transform.GetChild(0);
+        cameraTransform = transform.Find("Main Camera");
         Cursor.lockState = CursorLockMode.Locked;
         canLook = true;
         InvokeRepeating("CalculateLook", 0f, 0.005f);

@@ -341,14 +341,14 @@ public class PlayerMovement : NetworkBehaviour
         //turn on sprint
         if(state && !isCrouched && !scoping && !sprinting)
         {
-            audioManager.SetPitch("Walking", 2);
+            audioManager.NetworkSetPitch("Walking", 2);
             sprinting = true;
             animator.SetBool("Running", true);
         }
         //turn off sprint
         else if(!state && sprinting)
         {
-            audioManager.SetPitch("Walking", 1);
+            audioManager.NetworkSetPitch("Walking", 1);
             sprinting = false;
             animator.SetBool("Running", false);
         }       
@@ -368,14 +368,7 @@ public class PlayerMovement : NetworkBehaviour
             audioManager.NetworkPlay("Jump");
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
             fallVelocity = 10f;
-            animator.SetTrigger("Jump");
-
-        }
-        else if(isGrounded && sprinting)
-            {
-            animator.SetTrigger("RunJump");
-        }
-        
+        }      
     }
 
     //pass reference references into functions... obviously lol xdd

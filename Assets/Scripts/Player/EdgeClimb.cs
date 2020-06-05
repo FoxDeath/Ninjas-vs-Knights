@@ -51,7 +51,6 @@ public class EdgeClimb : MonoBehaviour
         anim.SetTrigger("EdgeClimb");
         animator.SetTrigger("climb");
 
-
         //plays sound
         GetComponent<AudioManager>().NetworkPlay("Climb");
 

@@ -115,14 +115,12 @@ public class WallRun : MonoBehaviour
             else if(side == -1 && leftCast.normal == Vector3.zero  && frontLeftCast.normal == Vector3.zero && backLeftCast.normal == Vector3.zero)
             {
                 StartCoroutine(EndWallrun());
-               // animator.SetTrigger("WJump");
-          
+              
             }
             else if(side == 1 && rightCast.normal == Vector3.zero && frontRightCast.normal == Vector3.zero &&  backRightCast.normal == Vector3.zero)
             {
                 StartCoroutine(EndWallrun());
-               // animator.SetTrigger("WJump");
-
+              
             }
         }
     }
