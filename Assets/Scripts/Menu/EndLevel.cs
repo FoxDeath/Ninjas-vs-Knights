@@ -84,7 +84,10 @@ public class EndLevel : MonoBehaviour
         yield return new WaitUntil(() => FindObjectsOfType<Target>().Length == 0);
 
         //destroy players and spawn new ones
-        networkManager.RestartGame();
+        yield return new WaitUntil(() => networkManager.RestartGame());
+
+        //restart ui
+        UIManager.GetInstance().Restart();
     }
 
     public void Spectate()

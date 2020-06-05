@@ -7,8 +7,8 @@ public class UIManager : MonoBehaviour
 {
     private static UIManager instance;
 
-    public List<NinjaUI> ninjaUIs = new List<NinjaUI>();
-    public List<KnightUI> knightUIs = new List<KnightUI>();
+    [HideInInspector] public List<NinjaUI> ninjaUIs = new List<NinjaUI>();
+    [HideInInspector] public List<KnightUI> knightUIs = new List<KnightUI>();
 
     //Returns the singleton instance of the class.
     public static UIManager GetInstance()
@@ -41,6 +41,23 @@ public class UIManager : MonoBehaviour
         {
             knightUI.knightInGameUI.SetActive(false);
             knightUI.gameOverScreen.SetActive(true);
+        }
+    }
+
+    public void Restart()
+    {
+        foreach(NinjaUI ui in ninjaUIs)
+        {
+            ui.ninjaInGameUI.SetActive(false);
+            ui.gameOverScreen.SetActive(true);
+            ui.Awake();
+        }
+
+        foreach(KnightUI ui in knightUIs)
+        {
+            ui.knightInGameUI.SetActive(false);
+            ui.gameOverScreen.SetActive(true);
+            ui.Awake();
         }
     }
 
