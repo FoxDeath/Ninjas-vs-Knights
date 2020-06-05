@@ -38,7 +38,7 @@ public class NinjaUI : MonoBehaviour
 
     [HideInInspector] public bool inArrowMenu = false;
 
-    private void Awake() 
+    public void Awake() 
     {
         if(transform.Find("NinjaInGameUI") != null)
         {
@@ -77,8 +77,16 @@ public class NinjaUI : MonoBehaviour
                 radialOptions[i] = arrowSelect.transform.GetChild(i).GetComponent<Image>();
             }
 
-            FindObjectOfType<WaveManager>().AddNinjaUI(GetComponent<NinjaUI>());
+            FindObjectOfType<UIManager>().AddNinjaUI(GetComponent<NinjaUI>());
             FindObjectOfType<UIManager>().SetWaveCounter(0.ToString(), false, GetComponent<NinjaUI>(), null);
+        }
+    }
+
+    void OnDestroy()
+    {
+        if(FindObjectOfType<UIManager>())
+        {
+            FindObjectOfType<UIManager>().RemoveNinjaUI(GetComponent<NinjaUI>());
         }
     }
 

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
@@ -55,6 +56,11 @@ public class EndLevel : MonoBehaviour
 
     public void Restart()
     {
+        StartCoroutine(RestartBehaviour());
+    }
+
+    IEnumerator RestartBehaviour()
+    {
         //restart wave spawner
         waveManager.Restart();
         //destroy all enemies
@@ -74,9 +80,11 @@ public class EndLevel : MonoBehaviour
         }
         //restart objective
         objective.Restart();
-        //destroy players
-        
-        //spawn new players
+
+        yield return new WaitUntil(() => FindObjectsOfType<Target>().Length == 0);
+
+        //destroy players and spawn new ones
+        networkManager.RestartGame();
     }
 
     public void Spectate()

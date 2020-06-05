@@ -15,7 +15,11 @@ public class PlayerSpawnSystem : NetworkBehaviour
         spawnPoints.Add(transform);
 
         spawnPoints = spawnPoints.OrderBy(x => x.GetSiblingIndex()).ToList();
+    }
 
+    public static List<Transform> GetSpawnPoints()
+    {
+        return spawnPoints;
     }
 
     public static void RemoveSpawnPoint(Transform transform) => spawnPoints.Remove(transform);

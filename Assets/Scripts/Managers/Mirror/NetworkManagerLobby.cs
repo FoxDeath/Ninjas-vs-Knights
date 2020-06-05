@@ -122,7 +122,7 @@ public class NetworkManagerLobby : NetworkManager
     // trough to the player spawner
     public override void ServerChangeScene(string newSceneName)
     {        
-        for (int i = RoomPlayers.Count - 1; i >= 0; i--)
+        for(int i = RoomPlayers.Count - 1; i >= 0; i--)
         {
             var conn = RoomPlayers[i].connectionToClient;
             var gamePlayerInstance = Instantiate(gamePlayerPrefab);
@@ -137,6 +137,27 @@ public class NetworkManagerLobby : NetworkManager
         RoomPlayers.Clear();
 
         base.ServerChangeScene(newSceneName);
+    }
+
+    public void RestartGame()
+    {
+        FindObjectOfType<NetworkManagerLobby>().GamePlayers.Clear();
+        int nextIndex = 0;
+
+        foreach(NetworkConnectionToClient conn in NetworkServer.connections.Values)
+        {
+            GameObject prefab = conn.identity.gameObject.GetComponent<NetworkController>().playerPrefab;
+
+            NetworkServer.Destroy(conn.identity.gameObject);
+
+            GameObject playerInstance = Instantiate(prefab, PlayerSpawnSystem.GetSpawnPoints()[nextIndex].position, PlayerSpawnSystem.GetSpawnPoints()[nextIndex].rotation);
+            nextIndex++;
+
+            NetworkServer.Spawn(playerInstance, conn);
+            NetworkServer.ReplacePlayerForConnection(conn, playerInstance);
+
+            FindObjectOfType<NetworkManagerLobby>().GamePlayers.Add(playerInstance);
+        }
     }
 
     //When the scene fully changed it creates the player spanw system

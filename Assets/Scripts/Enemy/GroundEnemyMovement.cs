@@ -40,9 +40,8 @@ public class GroundEnemyMovement : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         objective = GameObject.FindGameObjectWithTag("EnemyObjective").transform;
         myRigidbody = GetComponent<Rigidbody>();
-        player = GameObject.FindGameObjectWithTag("Player").transform;
         target = GetComponent<Target>();
-
+        
         transform.SetParent(GameObject.Find("EnemyContainer").transform);
         networkTransformChild = transform.parent.gameObject.AddComponent<Mirror.NetworkTransformChild>();
         networkTransformChild.target = transform;
@@ -57,6 +56,7 @@ public class GroundEnemyMovement : MonoBehaviour
     {
         agent.SetDestination(GetObjective());
         agent.updateRotation = false;
+        InvokeRepeating("SearchForNearestPlayer", 0f, 1f);
     }
 
     void FixedUpdate()
@@ -71,6 +71,23 @@ public class GroundEnemyMovement : MonoBehaviour
         else if(groungEnemyAttack.GetFlashed() && !agent.isStopped)
         {
             agent.isStopped = true;
+        }
+    }
+
+    //Searches for the nearest player to target
+    void SearchForNearestPlayer()
+    {
+        float closestdistance = -1f;
+
+        foreach (var item in GameObject.FindGameObjectsWithTag("Player"))
+        {
+            float distance = Vector3.Distance(this.transform.position, item.transform.position);
+
+            if (distance < closestdistance || closestdistance == -1)
+            {
+                player = item.transform;
+                closestdistance = distance;
+            }
         }
     }
 
@@ -91,7 +108,7 @@ public class GroundEnemyMovement : MonoBehaviour
     //Faces its target
     private void Facing()
     {
-        if(!target.GetDead())
+        if(!target.GetDead() && player)
         {
             float playerDistance = Vector3.Distance(transform.position, player.position);
             float objectiveDistance = Vector3.Distance(transform.position, objective.position);

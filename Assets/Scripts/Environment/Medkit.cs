@@ -2,8 +2,11 @@
 
 public class Medkit : MonoBehaviour
 {
+    private Mirror.NetworkTransformChild networkTransformChild;
+
     private Vector3 movementVector = new Vector3(0f, 1f, 0f);
     private Vector3 startingPos;
+
     [SerializeField] float healAmmount = 25f;
     private float movementFactor;
 
@@ -23,6 +26,13 @@ public class Medkit : MonoBehaviour
         }
 
         transform.SetParent(closestSpawner);
+        networkTransformChild = transform.parent.gameObject.AddComponent<Mirror.NetworkTransformChild>();
+        networkTransformChild.target = transform;
+    }
+
+    void OnDestroy()
+    {
+        Destroy(networkTransformChild);
     }
 
     void Start()

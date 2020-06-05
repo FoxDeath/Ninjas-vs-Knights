@@ -18,7 +18,6 @@ public class FlyingEnemyAttack : MonoBehaviour
 
     private void Awake()
     {
-        networkController = FindObjectOfType<NetworkController>();
         flyingEnemyMovement = GetComponent<FlyingEnemyMovement>();
     }
 
@@ -51,6 +50,12 @@ public class FlyingEnemyAttack : MonoBehaviour
     IEnumerator AttackBehaviour()
     {
         coolingDown = true;
+
+        if(networkController == null)
+        {
+            networkController = FindObjectOfType<NetworkController>();
+        }
+        
         networkController.NetworkSpawn(projectile.name, transform.position, Quaternion.LookRotation(target.position - transform.position), Vector3.zero, 5f);
 
         yield return new WaitForSeconds(2f);

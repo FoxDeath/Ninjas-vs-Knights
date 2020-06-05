@@ -119,7 +119,7 @@ public class Health : MonoBehaviour
         NinjaUI ninjaUI = GetComponentInChildren<NinjaUI>();
         KnightUI knightUI = GetComponentInChildren<KnightUI>();
 
-        uiManager.OnGameOver(ninjaUI, knightUI);
+        uiManager.GameOver(ninjaUI, knightUI);
     }
 
     private void Regenerate() 

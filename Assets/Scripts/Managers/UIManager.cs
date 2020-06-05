@@ -1,10 +1,14 @@
-﻿using TMPro;
+using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
     private static UIManager instance;
+
+    public List<NinjaUI> ninjaUIs = new List<NinjaUI>();
+    public List<KnightUI> knightUIs = new List<KnightUI>();
 
     //Returns the singleton instance of the class.
     public static UIManager GetInstance()
@@ -26,7 +30,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void OnGameOver(NinjaUI ninjaUI = null, KnightUI knightUI = null)
+    public void GameOver(NinjaUI ninjaUI = null, KnightUI knightUI = null)
     {
         if(ninjaUI != null)
         {
@@ -37,6 +41,32 @@ public class UIManager : MonoBehaviour
         {
             knightUI.knightInGameUI.SetActive(false);
             knightUI.gameOverScreen.SetActive(true);
+        }
+    }
+
+    public void AddNinjaUI(NinjaUI ui)
+    {
+        ninjaUIs.Add(ui);
+    }
+
+    public void RemoveNinjaUI(NinjaUI ui)
+    {
+        if(ninjaUIs.Contains(ui))
+        {
+            ninjaUIs.Remove(ui);
+        }
+    }
+
+    public void AddKnightUI(KnightUI ui)
+    {
+        knightUIs.Add(ui);
+    }
+
+    public void RemoveKnightUI(KnightUI ui)
+    {
+        if (knightUIs.Contains(ui))
+        {
+            knightUIs.Remove(ui);
         }
     }
 

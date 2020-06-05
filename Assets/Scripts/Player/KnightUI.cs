@@ -28,7 +28,7 @@ public class KnightUI : MonoBehaviour
 
     [HideInInspector] public MouseLook mouseLook;
 
-    private void Awake() 
+    public void Awake() 
     {
         if(transform.Find("KnightInGameUI") != null)
         {
@@ -64,8 +64,16 @@ public class KnightUI : MonoBehaviour
             AOEFill = knightInGameUI.transform.Find("AOE").Find("AOEFill").GetComponent<Image>();
             fills.Add(AOEFill);
             
-            FindObjectOfType<WaveManager>().AddKnightUI(GetComponent<KnightUI>());
+            FindObjectOfType<UIManager>().AddKnightUI(GetComponent<KnightUI>());
             FindObjectOfType<UIManager>().SetWaveCounter(0.ToString(), false, null, GetComponent<KnightUI>());
+        }
+    }
+
+    void OnDestroy()
+    {
+        if (FindObjectOfType<UIManager>())
+        {
+            FindObjectOfType<UIManager>().RemoveKnightUI(GetComponent<KnightUI>());
         }
     }
 
