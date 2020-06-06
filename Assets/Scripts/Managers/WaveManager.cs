@@ -63,9 +63,7 @@ public class WaveManager : MonoBehaviour
 
     private Transform enemyContainer;
     private UIManager uiManager;
-
-    private List<NinjaUI> ninjaUIs = new List<NinjaUI>();
-    private List<KnightUI> knightUIs = new List<KnightUI>();
+    NetworkController networkController;
     [SerializeField] List<SpawnPoint> spawnPoints;
     [SerializeField] List<Wave> waves;
 
@@ -78,6 +76,8 @@ public class WaveManager : MonoBehaviour
 
     [SerializeField] bool infinite = true;
     private bool canContinue = false;
+
+    private bool restarting = false;
 
     void Awake()
     {
@@ -115,26 +115,25 @@ public class WaveManager : MonoBehaviour
         {
             waveCountdown -= Time.deltaTime;
 
-            foreach (NinjaUI ui in ninjaUIs)
+            foreach (NinjaUI ui in uiManager.ninjaUIs)
             {
                 uiManager.SetWaveCounter(Mathf.Round(waveCountdown).ToString(), true, ui, null);
             }
 
-            foreach (KnightUI ui in knightUIs)
+            foreach (KnightUI ui in uiManager.knightUIs)
             {
                 uiManager.SetWaveCounter(Mathf.Round(waveCountdown).ToString(), true, null, ui);
             }
         }
     }
 
-    public void AddNinjaUI(NinjaUI ui)
+    public void Restart()
     {
-        ninjaUIs.Add(ui);
-    }
-
-    public void AddKnightUI(KnightUI ui)
-    {
-        knightUIs.Add(ui);
+        StopAllCoroutines();
+        nextWave = 0;
+        waveNr = 0;
+        restarting = true;
+        waveCountdown = timeBetweenWaves;
     }
 
     //Gets called when when wave finishes and takes care of the proceeding actions.
@@ -142,7 +141,15 @@ public class WaveManager : MonoBehaviour
     {
         state = spawnStates.COUNTING;
         waveCountdown = timeBetweenWaves;
-        waveNr++;
+
+        if(restarting)
+        {
+            restarting = false;
+        }
+        else
+        {
+            waveNr++;
+        }
 
         if(nextWave + 1 > waves.Count - 1)
         {
@@ -177,12 +184,12 @@ public class WaveManager : MonoBehaviour
     {
         state = spawnStates.SPAWNING;
 
-        foreach (NinjaUI ui in ninjaUIs)
+        foreach (NinjaUI ui in uiManager.ninjaUIs)
         {
             uiManager.SetWaveCounter(waveNr.ToString(), false, ui, null);
         }
 
-        foreach (KnightUI ui in knightUIs)
+        foreach (KnightUI ui in uiManager.knightUIs)
         {
             uiManager.SetWaveCounter(waveNr.ToString(), false, null, ui);
         }

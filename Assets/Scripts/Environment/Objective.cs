@@ -12,14 +12,6 @@ public class Objective : MonoBehaviour
     void Awake()
     {
         healthBar = GetComponentInChildren<Slider>();
-        
-        foreach(var player in FindObjectsOfType<PlayerMovement>())
-        {
-            if(player.isLocalPlayer)
-            {
-                this.player = player.transform;
-            }
-        }
     }
 
     void Start()
@@ -35,11 +27,28 @@ public class Objective : MonoBehaviour
         {
             healthBar.transform.parent.LookAt(player);
         }
+        else
+        {
+            foreach(var player in FindObjectsOfType<PlayerMovement>())
+            {
+                if(player.isLocalPlayer)
+                {
+                    this.player = player.transform;
+                }
+            }
+        }
     }
 
     void Update()
     {
         health = Mathf.Clamp(health, 0f, maxHealth);
+    }
+
+    public void Restart()
+    {
+        health = maxHealth;
+        healthBar.maxValue = maxHealth;
+        healthBar.value = health;
     }
 
     //Makes the objective take damage, ends the game if objective is destroyed.

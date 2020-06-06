@@ -11,6 +11,8 @@ public class NetworkGamePlayerLobby : NetworkBehaviour
 
     private GameObject playerPrefab;
 
+    #region Getters and Setters
+
     public void SetPlayerPrefab(GameObject playerPrefab)
     {
         this.playerPrefab = playerPrefab;
@@ -20,6 +22,13 @@ public class NetworkGamePlayerLobby : NetworkBehaviour
     {
         return playerPrefab;
     }
+
+    public string GetDisplayName()
+    {
+        return displayName;
+    }
+
+    #endregion
 
     private NetworkManagerLobby room;
 

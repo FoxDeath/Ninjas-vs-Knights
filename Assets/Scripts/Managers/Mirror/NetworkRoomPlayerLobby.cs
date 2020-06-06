@@ -149,7 +149,7 @@ public class NetworkRoomPlayerLobby : NetworkBehaviour
 
     //If the disconect button is pressed then the client disconects or if the palyer is the host it disconects
     // all the clients, stops the network discovery from showing the server and then it stops the server
-    public void Disconect()
+    public void Disconnect()
     {
         if (isLeader)
         {

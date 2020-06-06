@@ -13,6 +13,9 @@ TagManager:
   - EnemyObjective
   - FlyingEnemy
   - GroundEnemy
+  - Enemy
+  - ConsumableSpawner
+  - Consumable
   layers:
   - Default
   - TransparentFX

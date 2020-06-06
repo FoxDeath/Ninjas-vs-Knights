@@ -13,6 +13,7 @@ public class NetworkManagerLobby : NetworkManager
 
     [SerializeField] NetworkRoomPlayerLobby roomPlayerPrefab;
     [SerializeField] NetworkGamePlayerLobby gamePlayerPrefab;
+
     [SerializeField] GameObject playerSpawnSystem;
 
     public static event Action OnClientConnected;
@@ -109,7 +110,11 @@ public class NetworkManagerLobby : NetworkManager
             return;
         }
 
-        FindObjectOfType<NetworkDiscovery>().StopDiscovery();
+        if(FindObjectOfType<NetworkDiscovery>())
+        {
+            FindObjectOfType<NetworkDiscovery>().StopDiscovery();
+        }
+        
         ServerChangeScene(Loader.Scene.Map.ToString());
     }
 
@@ -118,7 +123,7 @@ public class NetworkManagerLobby : NetworkManager
     // trough to the player spawner
     public override void ServerChangeScene(string newSceneName)
     {        
-        for (int i = RoomPlayers.Count - 1; i >= 0; i--)
+        for(int i = RoomPlayers.Count - 1; i >= 0; i--)
         {
             var conn = RoomPlayers[i].connectionToClient;
             var gamePlayerInstance = Instantiate(gamePlayerPrefab);
@@ -133,6 +138,59 @@ public class NetworkManagerLobby : NetworkManager
         RoomPlayers.Clear();
 
         base.ServerChangeScene(newSceneName);
+    }
+
+    public bool RestartGame()
+    {
+        NetworkManager networkManager = FindObjectOfType<NetworkManager>();
+        NetworkManagerLobby networkManagerlobby = FindObjectOfType<NetworkManagerLobby>();
+
+        networkManagerlobby.GamePlayers.Clear();
+        int nextIndex = 0;
+
+        foreach(NetworkConnectionToClient conn in NetworkServer.connections.Values)
+        {
+            GameObject currentPlayer = conn.identity.gameObject.GetComponent<NetworkController>().playerPrefab;
+            GameObject prefab = null;
+
+            if(currentPlayer.GetComponent<NinjaPlayerMovement>())
+            {
+                foreach(GameObject obj in networkManager.spawnPrefabs)
+                {
+                    if(obj.tag.Equals("Player"))
+                    {
+                        if(obj.GetComponent<NinjaPlayerInput>())
+                        {
+                            prefab = obj;
+                        }
+                    }
+                }
+            }
+            else if(currentPlayer.GetComponent<KnightPlayerMovement>())
+            {
+                foreach(GameObject obj in networkManager.spawnPrefabs)
+                {
+                    if(obj.tag.Equals("Player"))
+                    {
+                        if(obj.GetComponent<KnightPlayerMovement>())
+                        {
+                            prefab = obj;
+                        }
+                    }
+                }
+            }
+
+            NetworkServer.Destroy(conn.identity.gameObject);
+
+            GameObject playerInstance = Instantiate(prefab, PlayerSpawnSystem.GetSpawnPoints()[nextIndex].position, PlayerSpawnSystem.GetSpawnPoints()[nextIndex].rotation);
+            nextIndex++;
+
+            NetworkServer.Spawn(playerInstance, conn);
+            NetworkServer.ReplacePlayerForConnection(conn, playerInstance);
+
+            networkManagerlobby.GamePlayers.Add(playerInstance);
+        }
+        return true;
     }
 
     //When the scene fully changed it creates the player spanw system
