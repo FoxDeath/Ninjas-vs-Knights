@@ -248,39 +248,53 @@ public class Bow : MonoBehaviour
         {
             case "Fire":
                 currentType = arrowTypes.Fire;
-                if(currentFireArrows < maxArrows)
-                {
-                    currentFireArrows = maxArrows;
-                }
                 uiManager.SetCurrentAmmo(currentFireArrows, ninjaUI);
                 break;
 
             case "Regular":
                 currentType = arrowTypes.Regular;
-                if(currentRegularArrows < maxArrows)
-                {
-                    currentRegularArrows = maxArrows;
-                }
                 uiManager.SetCurrentAmmo(currentRegularArrows, ninjaUI);
                 break;
 
             case "Slow":
                 currentType = arrowTypes.Slow;
-                if(currentSlowArrows < maxArrows)
-                {
-                    currentSlowArrows = maxArrows;
-                }
                 uiManager.SetCurrentAmmo(currentSlowArrows, ninjaUI);
                 break;
                 
             case "Explosive":
                 currentType = arrowTypes.Explosion;
-                if(currentExplosiveArrows < maxArrows)
-                {
-                    currentExplosiveArrows = maxArrows;
-                }
                 uiManager.SetCurrentAmmo(currentExplosiveArrows, ninjaUI);
                 break;
         }
+    }
+
+    public void RestockAmmo()
+    {
+        currentFireArrows = maxArrows;
+        currentRegularArrows = maxArrows;
+        currentSlowArrows = maxArrows;
+        currentExplosiveArrows = maxArrows;
+    }
+
+    public bool CanAddAmmo()
+    {
+        if (currentFireArrows < maxArrows)
+        {
+            return true;
+        }
+        else if (currentRegularArrows < maxArrows)
+        {
+            return true;
+        }
+        else if (currentSlowArrows < maxArrows)
+        {
+            return true;
+        }
+        else if (currentExplosiveArrows < maxArrows)
+        {
+            return true;
+        }
+
+        return false;
     }
 }

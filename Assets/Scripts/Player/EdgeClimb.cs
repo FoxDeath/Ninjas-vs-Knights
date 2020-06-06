@@ -69,7 +69,6 @@ public class EdgeClimb : MonoBehaviour
         Vector3 targetPos = new Vector3(transform.localPosition.x, transform.localPosition.y + 3.033f, transform.localPosition.z + 1.495f);
         Vector3 moveVector = targetPos - transform.localPosition;
 
-
         //moves the player
         playerMovement.GetController().Move(transform.up * moveVector.y);
         playerMovement.GetController().Move(transform.forward * moveVector.z);

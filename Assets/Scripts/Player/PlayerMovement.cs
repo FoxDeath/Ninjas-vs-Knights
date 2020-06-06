@@ -40,6 +40,7 @@ public class PlayerMovement : NetworkBehaviour
     protected bool charging;
 
     #region Getters and Setters
+    
     public CharacterController GetController() 
     {
         return controller;
@@ -114,6 +115,7 @@ public class PlayerMovement : NetworkBehaviour
     {
         this.scoping = scoping;
     }
+
     #endregion
 
     protected virtual void Start()

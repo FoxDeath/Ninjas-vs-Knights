@@ -107,9 +107,22 @@ public class Health : MonoBehaviour
         regenerating = true;
     }
 
-    public void Heal(float ammount) 
+    public void Heal(float amount) 
     {
-        health += ammount;
+        if(!dead)
+        {
+            health += amount;
+        }
+    }
+
+    public bool CanAddHealth()
+    {
+        if (!dead && health < maxHealth)
+        {
+            return true;
+        }
+
+        return false;
     }
 
     void Die()
@@ -147,17 +160,6 @@ public class Health : MonoBehaviour
         else if(health == maxHealth)
         {
             regenerating = false;
-        }
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        Medkit medkit = other.GetComponent<Medkit>();
-        
-        if (medkit && health < maxHealth && !dead)
-        {
-            Heal(medkit.GetHealAmmount());
-            GameObject.Destroy(other.gameObject);
         }
     }
 
