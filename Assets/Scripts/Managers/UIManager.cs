@@ -34,6 +34,11 @@ public class UIManager : MonoBehaviour
     {
         foreach (NinjaUI ui in ninjaUIs)
         {
+            if(!ui.GetComponentInParent<PlayerMovement>().isServer)
+            {
+                return;
+            }
+
             if(ui.deathScreen.activeInHierarchy)
             {
                 ui.deathScreen.SetActive(false);
@@ -45,6 +50,11 @@ public class UIManager : MonoBehaviour
 
         foreach (KnightUI ui in knightUIs)
         {
+            if(!ui.GetComponentInParent<PlayerMovement>().isServer)
+            {
+                return;
+            }
+
             if(ui.deathScreen.activeInHierarchy)
             {
                 ui.deathScreen.SetActive(false);
