@@ -13,6 +13,8 @@ public class PauseMenu : NetworkBehaviour
     private GameObject gameUI;
     private GameObject optionsUI;
     private GameObject keyBindUI;
+    private GameObject gameOverScreen;
+    private GameObject deathScreen;
 
     public bool GameIsPaused = false;
 
@@ -24,6 +26,8 @@ public class PauseMenu : NetworkBehaviour
         pauseMenuUI = transform.Find("PauseMenu").gameObject;
         optionsUI = transform.Find("OptionsMenu").gameObject;
         keyBindUI = transform.Find("RebindMenu").gameObject;
+        gameOverScreen = transform.Find("GameOverScreen").gameObject;
+        deathScreen = transform.Find("DeathScreen").gameObject;
         inputActions = GetComponentInParent<UnityEngine.InputSystem.PlayerInput>().actions;
 
         if(transform.Find("NinjaInGameUI") != null)
@@ -38,6 +42,13 @@ public class PauseMenu : NetworkBehaviour
 
     void Update()
     {
+        if(gameOverScreen.activeInHierarchy || deathScreen.activeInHierarchy)
+        {
+            pauseMenuUI.SetActive(false);
+            optionsUI.SetActive(false);
+            keyBindUI.SetActive(false);
+        }
+
         if(GameIsPaused && inputActions.enabled)
         {
             inputActions.Disable();
@@ -65,6 +76,7 @@ public class PauseMenu : NetworkBehaviour
     {
         gameUI.SetActive(false);
         pauseMenuUI.SetActive(true);
+
         Cursor.lockState = CursorLockMode.None;
         GameIsPaused = true;
     }

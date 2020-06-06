@@ -61,27 +61,32 @@ public class EndLevel : MonoBehaviour
 
     IEnumerator RestartBehaviour()
     {
+        NetworkController networkController = GetComponentInParent<NetworkController>();
+
         //restart wave spawner
         waveManager.Restart();
+
         //destroy all enemies
         if(GetComponentInParent<PlayerMovement>().isServer)
         { 
-            NetworkController networkController = GetComponentInParent<NetworkController>();
-
             foreach(Target enemy in FindObjectsOfType<Target>())
             {
                 StartCoroutine(networkController.NetworkDestroy(enemy.gameObject, 0f));
             }
         }
-        //restart consumables spawners
-        foreach(SpawnObject spawner in FindObjectsOfType<SpawnObject>())
-        {
-            spawner.Restart();
-        }
-        //restart objective
-        objective.Restart();
 
         yield return new WaitUntil(() => FindObjectsOfType<Target>().Length == 0);
+
+        //restart consumables spawners
+        foreach(GameObject obj in GameObject.FindGameObjectsWithTag("Consumable"))
+        {
+            StartCoroutine(networkController.NetworkDestroy(obj, 0f));
+        }
+
+        yield return new WaitUntil(() => GameObject.FindGameObjectsWithTag("Consumable").Length == 0);
+
+        //restart objective
+        objective.Restart();
 
         //destroy players and spawn new ones
         yield return new WaitUntil(() => networkManager.RestartGame());

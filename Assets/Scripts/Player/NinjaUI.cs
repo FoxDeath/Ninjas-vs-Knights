@@ -11,7 +11,7 @@ public class NinjaUI : MonoBehaviour
     [HideInInspector] public GameObject ninjaInGameUI;
     [HideInInspector] public GameObject arrowSelect;
     [HideInInspector] public GameObject gameOverScreen;
-
+    [HideInInspector] public GameObject deathScreen;
 
     [HideInInspector] public TextMeshProUGUI waveCounter;
     [HideInInspector] public TextMeshProUGUI grenadeCount;
@@ -46,6 +46,7 @@ public class NinjaUI : MonoBehaviour
             fills = new List<Image>();
             ninjaInGameUI = transform.Find("NinjaInGameUI").gameObject;
             gameOverScreen = transform.Find("GameOverScreen").gameObject;
+            deathScreen = transform.Find("DeathScreen").gameObject;
             texts = ninjaInGameUI.transform.Find("AmmoCounter").GetComponentsInChildren<TextMeshProUGUI>();
 
             foreach (TextMeshProUGUI text in texts)

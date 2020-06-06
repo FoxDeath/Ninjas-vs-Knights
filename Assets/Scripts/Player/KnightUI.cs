@@ -9,6 +9,7 @@ public class KnightUI : MonoBehaviour
     [HideInInspector] public GameObject knightScopeOverlay;
     [HideInInspector] public GameObject knightInGameUI;
     [HideInInspector] public GameObject gameOverScreen;
+    [HideInInspector] public GameObject deathScreen;
 
     [HideInInspector] public TextMeshProUGUI waveCounter;
     [HideInInspector] public TextMeshProUGUI grenadeCount;
@@ -35,6 +36,7 @@ public class KnightUI : MonoBehaviour
             fills = new List<Image>();
             knightInGameUI = transform.Find("KnightInGameUI").gameObject;
             gameOverScreen = transform.Find("GameOverScreen").gameObject;
+            deathScreen = transform.Find("DeathScreen").gameObject;
             waveCounter = knightInGameUI.transform.Find("WaveCounter").GetComponent<TextMeshProUGUI>();
             ogWaveNrColor = waveCounter.color;
             grenadeCount = knightInGameUI.transform.Find("Grenade").Find("GrenadeCount").GetComponent<TextMeshProUGUI>();

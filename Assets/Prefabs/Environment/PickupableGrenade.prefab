@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3269386663924924394}
   m_Layer: 13
   m_Name: PickupableGrenade
-  m_TagString: Grenade
+  m_TagString: Consumable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

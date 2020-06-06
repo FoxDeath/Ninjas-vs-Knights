@@ -36,12 +36,4 @@ public class SpawnObject : MonoBehaviour
             timer = 0f;
         }
     }
-
-    public void Restart()
-    {
-        if(transform.childCount != 0)
-        {
-            networkController.NetworkDestroy(transform.GetChild(0).gameObject, 0f);
-        }
-    }
 }

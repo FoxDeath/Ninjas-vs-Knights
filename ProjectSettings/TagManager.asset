@@ -15,6 +15,7 @@ TagManager:
   - GroundEnemy
   - Enemy
   - ConsumableSpawner
+  - Consumable
   layers:
   - Default
   - TransparentFX

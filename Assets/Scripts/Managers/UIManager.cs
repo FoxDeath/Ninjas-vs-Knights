@@ -30,17 +30,43 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void GameOver(NinjaUI ninjaUI = null, KnightUI knightUI = null)
+    public void GameOver()
     {
-        if(ninjaUI != null)
+        foreach (NinjaUI ui in ninjaUIs)
+        {
+            if(ui.deathScreen.activeInHierarchy)
+            {
+                ui.deathScreen.SetActive(false);
+            }
+
+            ui.ninjaInGameUI.SetActive(false);
+            ui.gameOverScreen.SetActive(true);
+        }
+
+        foreach (KnightUI ui in knightUIs)
+        {
+            if(ui.deathScreen.activeInHierarchy)
+            {
+                ui.deathScreen.SetActive(false);
+            }
+
+            ui.knightInGameUI.SetActive(false);
+            ui.gameOverScreen.SetActive(true);
+        }
+    }
+
+    public void PlayerDeath(NinjaUI ninjaUI = null, KnightUI knightUI = null)
+    {
+        if(ninjaUI)
         {
             ninjaUI.ninjaInGameUI.SetActive(false);
-            ninjaUI.gameOverScreen.SetActive(true);
+            ninjaUI.deathScreen.SetActive(true);
         }
-        else if(knightUI != null)
+        
+        if(knightUI)
         {
             knightUI.knightInGameUI.SetActive(false);
-            knightUI.gameOverScreen.SetActive(true);
+            knightUI.deathScreen.SetActive(true);
         }
     }
 

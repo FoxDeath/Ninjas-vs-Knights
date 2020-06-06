@@ -115,11 +115,27 @@ public class Health : MonoBehaviour
     void Die()
     {
         dead = true;
+        bool gameOver = true;
 
-        NinjaUI ninjaUI = GetComponentInChildren<NinjaUI>();
-        KnightUI knightUI = GetComponentInChildren<KnightUI>();
+        foreach(Health player in FindObjectsOfType<Health>())
+        {
+            if(!player.GetDead())
+            {
+                gameOver = false;
+            }
+        }
 
-        uiManager.GameOver(ninjaUI, knightUI);
+        if(!gameOver)
+        {
+            NinjaUI ninjaUI = GetComponentInChildren<NinjaUI>();
+            KnightUI knightUI = GetComponentInChildren<KnightUI>();
+
+            uiManager.PlayerDeath(ninjaUI, knightUI);
+        }
+        else
+        {
+            uiManager.GameOver();
+        }
     }
 
     private void Regenerate() 
