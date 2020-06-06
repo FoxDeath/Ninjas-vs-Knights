@@ -1,11 +1,10 @@
 ﻿using UnityEngine;
+using Mirror;
 
-public class FlyingEnemyMovement : MonoBehaviour
+public class FlyingEnemyMovement : NetworkBehaviour
 {
     private Transform target;
     private Target targetScript;
-
-    private Mirror.NetworkTransformChild networkTransformChild;
 
     private Vector3 avoidDir;
 
@@ -22,13 +21,6 @@ public class FlyingEnemyMovement : MonoBehaviour
     {
         targetScript = GetComponent<Target>();
         transform.SetParent(GameObject.Find("EnemyContainer").transform);
-        networkTransformChild = transform.parent.gameObject.AddComponent<Mirror.NetworkTransformChild>();
-        networkTransformChild.target = transform;
-    }
-
-    void OnDestroy() 
-    {
-        Destroy(networkTransformChild);
     }
 
     public Transform GetTarget()
@@ -43,6 +35,11 @@ public class FlyingEnemyMovement : MonoBehaviour
 
     void FixedUpdate()
     {
+        if(!isServer)
+        {
+            return;
+        }
+
         if(!targetScript.GetDead())
         {
             Pathfind();

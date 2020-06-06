@@ -65,10 +65,14 @@ public class KnightUI : MonoBehaviour
             fills.Add(chargeFill);
             AOEFill = knightInGameUI.transform.Find("AOE").Find("AOEFill").GetComponent<Image>();
             fills.Add(AOEFill);
-            
-            FindObjectOfType<UIManager>().AddKnightUI(GetComponent<KnightUI>());
-            FindObjectOfType<UIManager>().SetWaveCounter(0.ToString(), false, null, GetComponent<KnightUI>());
         }
+
+        FindObjectOfType<UIManager>().AddKnightUI(this);
+    }
+
+    public void SetWaveUI() 
+    {
+        FindObjectOfType<UIManager>().SetWaveCounter(0.ToString(), false, null, this);
     }
 
     void OnDestroy()

@@ -64,6 +64,8 @@ public class WaveManager : MonoBehaviour
     private Transform enemyContainer;
     private UIManager uiManager;
     NetworkController networkController;
+    private NinjaUI[] ninjaUIs;
+    private KnightUI[] knightUIs;
     [SerializeField] List<SpawnPoint> spawnPoints;
     [SerializeField] List<Wave> waves;
 
@@ -76,6 +78,7 @@ public class WaveManager : MonoBehaviour
 
     [SerializeField] bool infinite = true;
     private bool canContinue = false;
+    public bool ready = false;
 
     private bool restarting = false;
 
@@ -86,8 +89,21 @@ public class WaveManager : MonoBehaviour
 
     void Start()
     {
-        enemyContainer = transform.Find("EnemyContainer").transform;
+        enemyContainer = GameObject.Find("EnemyContainer").transform;
         waveCountdown = timeBetweenWaves;
+        
+        ninjaUIs = FindObjectsOfType<NinjaUI>();
+        knightUIs = FindObjectsOfType<KnightUI>();
+
+        foreach (NinjaUI ui in ninjaUIs)
+        {
+            ui.SetWaveUI();
+        }
+
+        foreach (KnightUI ui in knightUIs)
+        {
+            ui.SetWaveUI();
+        }
     }
 
     void Update()

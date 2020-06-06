@@ -2,8 +2,9 @@
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
+using Mirror;
 
-public class Target : MonoBehaviour
+public class Target : NetworkBehaviour
 {
     private Rigidbody myRigidbody;
     private AudioManager audioManager;
@@ -20,9 +21,10 @@ public class Target : MonoBehaviour
     private Vector3 lastHit;
 
     [SerializeField] float maxHealth = 50f;
-    private float health;
+
+    [SyncVar] private float health;
     
-    private bool dead;
+    [SyncVar] private bool dead;
     private bool onFire;
     private bool exploding;
 
@@ -92,9 +94,10 @@ public class Target : MonoBehaviour
     }
 
     //Makes the Enemy take damage and updates its health bar.
+    [Server]
     public void TakeDamage(float damage)
     {
-        if(!dead)
+        if (!dead)
         {
             audioManager.NetworkPlay("Hit", GetComponent<AudioSource>());
             health -= damage;

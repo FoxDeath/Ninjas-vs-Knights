@@ -25,14 +25,14 @@ public class EndLevel : MonoBehaviour
         inputActions.Disable();
         Cursor.lockState = CursorLockMode.None;
 
-        // if (GetComponentInParent<PlayerMovement>().isServer)
-        // {
-        //     transform.Find("Restart").gameObject.GetComponent<Button>().enabled = true;
-        // }
-        // else if (GetComponentInParent<PlayerMovement>().isClientOnly)
-        // {
-        //     transform.Find("Restart").gameObject.GetComponent<Button>().enabled = false;
-        // }
+        if (GetComponentInParent<PlayerMovement>().isServer)
+        {
+            transform.Find("Restart").gameObject.GetComponent<Button>().enabled = true;
+        }
+        else if (GetComponentInParent<PlayerMovement>().isClientOnly)
+        {
+            transform.Find("Restart").gameObject.GetComponent<Button>().enabled = false;
+        }
     }
 
     //Enables player inputs when UI is inactive
