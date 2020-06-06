@@ -59,7 +59,7 @@ public class Objective : MonoBehaviour
 
         if(health <= 0f)
         {
-            //game ends here
+            FindObjectOfType<UIManager>().GameOver();
         }
     }
 }
