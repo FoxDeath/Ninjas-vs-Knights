@@ -23,6 +23,13 @@ public class MainMenu : NetworkBehaviour
         landingPagePanel.SetActive(false);
     }
 
+    //Creates a single player sesion
+    public void SoloPlay()
+    {
+        networkManager.SoloHost();
+        landingPagePanel.SetActive(false);
+    }
+
     //Quits the application.
     public void Quit()
     {

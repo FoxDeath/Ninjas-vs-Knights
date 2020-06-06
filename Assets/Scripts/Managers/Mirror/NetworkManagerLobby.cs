@@ -9,7 +9,7 @@ using Mirror.Discovery;
 //Modified NetworkManages used for the lobby
 public class NetworkManagerLobby : NetworkManager
 {
-    private int minPlayers = 1;
+    private int minPlayers = 2;
 
     [SerializeField] NetworkRoomPlayerLobby roomPlayerPrefab;
     [SerializeField] NetworkGamePlayerLobby gamePlayerPrefab;
@@ -24,6 +24,8 @@ public class NetworkManagerLobby : NetworkManager
     
     public List<NetworkRoomPlayerLobby> RoomPlayers {get;} = new List<NetworkRoomPlayerLobby>();
     public List<GameObject> GamePlayers {get;} = new List<GameObject>();
+
+    public static bool Solo = false;
 
     public override void OnClientConnect(NetworkConnection conn)
     {
@@ -86,7 +88,7 @@ public class NetworkManagerLobby : NetworkManager
     //Returns true of the player chose a class and pressed the ready button, false otherwise
     private bool IsReadyToStart()
     {
-        if(numPlayers < minPlayers)
+        if(numPlayers < minPlayers && !Solo)
         {
             return false;
         }
@@ -135,9 +137,13 @@ public class NetworkManagerLobby : NetworkManager
             NetworkServer.ReplacePlayerForConnection(conn, gamePlayerInstance.gameObject);
         }
 
-        //RoomPlayers.Clear();
-
         base.ServerChangeScene(newSceneName);
+    }
+
+    public void SoloHost()
+    {
+        Solo = true;
+        StartHost();
     }
 
     public bool RestartGame()
@@ -217,6 +223,11 @@ public class NetworkManagerLobby : NetworkManager
         RoomPlayers.Clear();
         GamePlayers.Clear();
 
+        if(Solo)
+        {
+            Solo = false;
+        }
+
         Loader.Load(Loader.Scene.MainMenu);
 
         OnClientStopped?.Invoke();
@@ -227,6 +238,8 @@ public class NetworkManagerLobby : NetworkManager
     {
         RoomPlayers.Clear();
         GamePlayers.Clear();
+
+        
 
         Loader.Load(Loader.Scene.MainMenu);
 
