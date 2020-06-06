@@ -138,7 +138,6 @@ public class Consumables : MonoBehaviour
             }
 
             StartCoroutine(networkController.NetworkDestroy(gameObject, 0f));
-            print(gameObject.name);
         }
     }
 }

@@ -9,6 +9,15 @@ public class Objective : MonoBehaviour
     [SerializeField] float maxHealth = 1000f;
     private float health;
 
+    #region Getters and Setters
+
+    public float GetHealth()
+    {
+        return health;
+    }
+
+    #endregion
+
     void Awake()
     {
         healthBar = GetComponentInChildren<Slider>();

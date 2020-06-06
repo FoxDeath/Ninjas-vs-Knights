@@ -53,7 +53,7 @@ public class PauseMenu : NetworkBehaviour
         {
             inputActions.Disable();
         }
-        else if(!GameIsPaused && !inputActions.enabled && !playerHealth.GetDead())
+        else if(!GameIsPaused && !inputActions.enabled && !playerHealth.GetDead() && FindObjectOfType<Objective>().GetHealth() > 0f)
         {
             inputActions.Enable();
         }
