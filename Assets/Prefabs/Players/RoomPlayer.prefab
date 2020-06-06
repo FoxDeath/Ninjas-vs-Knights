@@ -1059,6 +1059,7 @@ MonoBehaviour:
   - {fileID: 2453493380073244999}
   - {fileID: 5363903920643048466}
   startGameButton: {fileID: 8786341374985860090}
+  readyGameButton: {fileID: 2381805452398013113}
   ninjaPlayerPrefab: {fileID: 2056603104854673355, guid: 24c8b9a3d3d787a4c9e172c43a8d6063,
     type: 3}
   knightPlayerPrefab: {fileID: 5979411463758342020, guid: 0258cda89171918439bceff6ddf50f8d,
@@ -2864,7 +2865,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 4022034630445219632}
-        m_MethodName: Disconect
+        m_MethodName: Disconnect
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

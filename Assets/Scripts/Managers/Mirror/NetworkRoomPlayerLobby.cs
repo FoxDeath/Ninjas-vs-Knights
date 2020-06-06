@@ -11,6 +11,8 @@ public class NetworkRoomPlayerLobby : NetworkBehaviour
     [SerializeField] private TMP_Text[] playerNameTexts = new TMP_Text[4];
     [SerializeField] private TMP_Text[] playerReadyTexts = new TMP_Text[4];
     [SerializeField] private Button startGameButton = null;
+    [SerializeField] private Button readyGameButton = null;
+
 
     [SerializeField] GameObject ninjaPlayerPrefab;
     [SerializeField] GameObject knightPlayerPrefab;
@@ -83,16 +85,34 @@ public class NetworkRoomPlayerLobby : NetworkBehaviour
 
         for(int i = 0; i < playerNameTexts.Length; i++)
         {
-            playerNameTexts[i].text = "Waiting For Player...";
-            playerReadyTexts[i].text = string.Empty;
+            if(!NetworkManagerLobby.Solo)
+            {            
+                playerNameTexts[i].text = "Waiting For Player...";
+                playerReadyTexts[i].text = string.Empty;
+            }
+            else
+            {
+                playerNameTexts[i].text = "Playing Alone";
+                playerReadyTexts[i].text = string.Empty;
+            }
         }
 
         for(int i = 0; i < Room.RoomPlayers.Count; i++)
         {
-            playerNameTexts[i].text = Room.RoomPlayers[i].DisplayName;
-            playerReadyTexts[i].text = Room.RoomPlayers[i].IsReady ?
-            "<color=green>Ready</color>" :
-            "<color=red>Not Ready</color>";
+            if(!NetworkManagerLobby.Solo)
+            {            
+                playerNameTexts[i].text = Room.RoomPlayers[i].DisplayName;
+                playerReadyTexts[i].text = Room.RoomPlayers[i].IsReady ?
+                "<color=green>Ready</color>" :
+                "<color=red>Not Ready</color>";
+            }
+            else
+            {
+                playerNameTexts[i].text = Room.RoomPlayers[i].DisplayName;
+                playerReadyTexts[i].text = string.Empty;
+                readyGameButton.gameObject.SetActive(false);
+                CmdReadyUp();
+            }
         }
     }
     public void HandleReadyToStart(bool readyToStart)
@@ -119,6 +139,11 @@ public class NetworkRoomPlayerLobby : NetworkBehaviour
     [Command]
     public void CmdReadyUp()
     {
+        if(NetworkManagerLobby.Solo && IsReady)
+        {
+            return;
+        }
+
         IsReady = !IsReady;
 
         Room.NotifyPlayersOfReadyState();
