@@ -54,7 +54,7 @@ public class PlayerSpawnSystem : NetworkBehaviour
 
         nextIndex++;
 
-        players ++;
+        players++;
     }
 
     [Server]

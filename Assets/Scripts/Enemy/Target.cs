@@ -116,7 +116,7 @@ public class Target : NetworkBehaviour
             StopCoroutine(fireEffectTimer);
             StopCoroutine(fireEffectBehaviour);
         }
-
+        
         fireEffectTimer = StartCoroutine(FireEffectTimer(duration));
         fireEffectBehaviour = StartCoroutine(OnFireBehaviour(damage));
     }

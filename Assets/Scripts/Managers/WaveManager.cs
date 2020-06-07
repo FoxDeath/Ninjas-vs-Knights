@@ -63,7 +63,7 @@ public class WaveManager : MonoBehaviour
 
     private Transform enemyContainer;
     private UIManager uiManager;
-    NetworkController networkController;
+    private NetworkController networkController;
     private NinjaUI[] ninjaUIs;
     private KnightUI[] knightUIs;
     [SerializeField] List<SpawnPoint> spawnPoints;
@@ -165,6 +165,11 @@ public class WaveManager : MonoBehaviour
         else
         {
             waveNr++;
+
+            if (PlayerPrefs.GetInt("HighScore") < waveNr)
+            {
+                PlayerPrefs.SetInt("HighScore", waveNr);
+            }
         }
 
         if(nextWave + 1 > waves.Count - 1)
