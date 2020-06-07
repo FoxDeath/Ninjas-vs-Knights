@@ -130,6 +130,7 @@ public class SaveManager : MonoBehaviour
 
             if(FindObjectOfType<CrossBow>() != null)
             {
+                FindObjectOfType<CrossBow>().SetSensitivity(options.lookSens);
                 FindObjectOfType<CrossBow>().SetScopedSensitivity(options.scopedSens);
             }
         }

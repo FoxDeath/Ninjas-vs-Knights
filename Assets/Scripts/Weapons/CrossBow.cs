@@ -47,6 +47,16 @@ public class CrossBow : MonoBehaviour
         scopedSensitivity = sens;
     }
 
+    public float GetSensitivity()
+    {
+        return lookSensitivity;
+    }
+
+    public void SetSensitivity(float sens)
+    {
+        lookSensitivity = sens;
+    }
+
     public Quaternion GetStartingRotation()
     {
         return startingRotation;
