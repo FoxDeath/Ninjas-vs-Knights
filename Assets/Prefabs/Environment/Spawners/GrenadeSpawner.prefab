@@ -45,4 +45,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectPrefab: {fileID: 1444348944696146795, guid: 6e73da3a84a47914c9f13a52c4aca3dd,
     type: 3}
-  timeUntilSpawn: 5
+  timeUntilSpawn: 60

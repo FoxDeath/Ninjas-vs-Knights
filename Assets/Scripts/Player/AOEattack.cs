@@ -20,6 +20,7 @@ public class AOEattack : MonoBehaviour
             {
                 return;
             }
+
             StartCoroutine(AOEAttackBehaviour());
         }
     }
@@ -40,12 +41,15 @@ public class AOEattack : MonoBehaviour
         {
             GetComponent<KnightPlayerMovement>().SetJetpackOn(false);
             GetComponent<KnightPlayerMovement>().Slam();
+
             yield return new WaitWhile(() => !GetComponent<KnightPlayerMovement>().GetGrounded());
+
             Attack(2f, 2f);
         }
 
         //15 second cooldown
         FindObjectOfType<UIManager>().ResetFill("AOEFill", null, GetComponentInChildren<KnightUI>());
+        
         yield return new WaitForSeconds(15f);
 
         //End cooldown

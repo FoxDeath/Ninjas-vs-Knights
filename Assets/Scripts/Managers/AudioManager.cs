@@ -76,14 +76,14 @@ public class AudioManager : NetworkBehaviour
     }
 
     [ClientRpc]
-     void RpcPlay(string name)
-     {
-         if(this.isLocalPlayer)
-         {
+    void RpcPlay(string name)
+    {
+        if(this.isLocalPlayer)
+        {
             return;
-         }
+        }
 
-         Play(name);
+        Play(name);
     }
 
     //Stopping the sound whose name is the string "name"

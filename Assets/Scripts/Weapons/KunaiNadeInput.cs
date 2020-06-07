@@ -4,8 +4,9 @@ using UnityEngine.InputSystem;
 
 public class KunaiNadeInput : MonoBehaviour
 {
-    [SerializeField] GameObject kunaiPrefab;
     private Transform bulletEmitter;
+
+    [SerializeField] GameObject kunaiPrefab;
 
     [SerializeField] float throwForce = 100f;
 
@@ -60,6 +61,24 @@ public class KunaiNadeInput : MonoBehaviour
 
         GetComponent<NetworkController>().NetworkSpawn(kunaiPrefab.name, bulletEmitter.position, bulletEmitter.rotation, (targetPoint - bulletEmitter.transform.position).normalized * throwForce);       
         yield return new WaitForSeconds(2f);
+    }
+
+    public void AddKunai(int n)
+    {
+        if (currentKunai < maxKunai)
+        {
+            currentKunai += n;
+        }
+    }
+
+    public bool CanAddKunai()
+    {
+        if (currentKunai < maxKunai)
+        {
+            return true;
+        }
+
+        return false;
     }
 
     private void OnTriggerEnter(Collider other)

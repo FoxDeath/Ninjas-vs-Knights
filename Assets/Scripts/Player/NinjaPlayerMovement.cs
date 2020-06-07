@@ -198,6 +198,7 @@ public class NinjaPlayerMovement : PlayerMovement
         {
             doubleJumped = true;
         }
+
         StartCoroutine(GetComponent<WallRun>().EndWallrun());
         wallJumping = true;
         velocity.x = wallJumpForce * normal.x;

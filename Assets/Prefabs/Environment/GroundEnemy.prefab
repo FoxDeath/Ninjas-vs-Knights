@@ -265,6 +265,7 @@ MonoBehaviour:
   fireRate: 2
   spread: 0.7
   flashedSpread: 5
+  flashedPeriod: 4
   shootRadius: 20
 --- !u!208 &420066035962339567
 NavMeshObstacle:
@@ -292,7 +293,7 @@ NavMeshAgent:
   m_Enabled: 0
   m_AgentTypeID: 0
   m_Radius: 1.2
-  m_Speed: 12
+  m_Speed: 8
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120

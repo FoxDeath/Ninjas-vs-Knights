@@ -129,7 +129,7 @@ public class WallRun : MonoBehaviour
     }
 
     /*Coroutine for reseting the ID of the current wall, so you can't jump back on a wall unless 
-      you jumped on another one first or jumped off and waited n seconds*/
+    you jumped on another one first or jumped off and waited n seconds*/
     private IEnumerator ResetID(int lastWallID)
     {
         yield return new WaitForSeconds(3f);

@@ -70,6 +70,7 @@ public class FlyingEnemyAttack : MonoBehaviour
         {
             return false;
         }
+
         RaycastHit hit;
 
         Vector3 dir = target.position - transform.position; 
@@ -94,6 +95,7 @@ public class FlyingEnemyAttack : MonoBehaviour
         {
             return false;
         }
+        
         return Vector3.Distance(transform.position, target.position) <= range;
     }
 }

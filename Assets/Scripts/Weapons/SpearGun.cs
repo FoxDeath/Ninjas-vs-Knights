@@ -225,6 +225,16 @@ public class SpearGun : MonoBehaviour
         currentMag = maxMag;
     }
 
+    public bool CanAddAmmo()
+    {
+        if (currentMag < maxMag)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
     IEnumerator ReloadingBehaviour()
     {
         reloading = true;

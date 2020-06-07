@@ -75,6 +75,7 @@ public class EndLevel : MonoBehaviour
             }
         }
 
+        //wait until all enemies are destroyed
         yield return new WaitUntil(() => FindObjectsOfType<Target>().Length == 0);
 
         //restart consumables spawners
@@ -83,12 +84,13 @@ public class EndLevel : MonoBehaviour
             StartCoroutine(networkController.NetworkDestroy(obj, 0f));
         }
 
+        //wait until all consumables are destroyed
         yield return new WaitUntil(() => GameObject.FindGameObjectsWithTag("Consumable").Length == 0);
 
         //restart objective
         objective.Restart();
 
-        //destroy players and spawn new ones
+        //respawn players and wait till its done
         yield return new WaitUntil(() => networkManager.RestartGame());
 
         //restart ui

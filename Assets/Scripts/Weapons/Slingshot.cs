@@ -74,14 +74,21 @@ public class Slingshot : MonoBehaviour
         grenading = false;
     }
 
-    //Picks up the grenade if you can carry them.
-    private void OnTriggerEnter(Collider other)
+    public void AddGrenade(int n)
     {
-        if(other.tag.Equals("Grenade") && currentGrenades < maxGrenades)
+        if(currentGrenades < maxGrenades)
         {
-            audioManager.NetworkPlay("Pickup", GetComponent<AudioSource>());
-            currentGrenades++;
-            Destroy(other.gameObject);
+            currentGrenades += n;
         }
+    }
+
+    public bool CanAddGrenade()
+    {
+        if (currentGrenades < maxGrenades)
+        {
+            return true;
+        }
+
+        return false;
     }
 }

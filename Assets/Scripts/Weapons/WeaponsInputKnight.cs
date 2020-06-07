@@ -133,16 +133,4 @@ public class WeaponsInputKnight : NetworkBehaviour
             }
         }
     }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        SpearGun spearGun = weaponSwitch.GetCurrentWeaponIndex().GetComponent<SpearGun>();
-        
-        if(other.tag.Equals("Ammo"))
-        {
-            audioManager.NetworkPlay("Pickup", GetComponent<AudioSource>());
-            spearGun.RestockAmmo();
-            Destroy(other.gameObject);
-        }
-    }
 }

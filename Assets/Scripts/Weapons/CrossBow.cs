@@ -28,7 +28,8 @@ public class CrossBow : MonoBehaviour
     private float[] scopedFOVs = { 5f, 10f, 15f, 20f };
     private float scopedSensitivity = 1f;
     private float lookSensitivity = 0.75f;
-
+    [SerializeField] int maxMag = 15;
+    private int currentMag;
     private int currentScopedFOV;
 
     private bool scoping;
@@ -45,6 +46,16 @@ public class CrossBow : MonoBehaviour
     public void SetScopedSensitivity(float sens)
     {
         scopedSensitivity = sens;
+    }
+
+    public float GetSensitivity()
+    {
+        return lookSensitivity;
+    }
+
+    public void SetSensitivity(float sens)
+    {
+        lookSensitivity = sens;
     }
 
     public Quaternion GetStartingRotation()
@@ -82,14 +93,16 @@ public class CrossBow : MonoBehaviour
     {
         equiped = transform.GetChild(0).gameObject.activeSelf;
 
-        if(equiped)
-        {
-            uiManager.SetMaxAmmo(1, null, knightUI);
-            uiManager.SetCurrentAmmo(1, null, knightUI);
-        }
-
         currentScopedFOV = scopedFOVs.Length - 1;
         scopedFOV = scopedFOVs[currentScopedFOV];
+
+        currentMag = maxMag;
+
+        if (equiped)
+        {
+            uiManager.SetCurrentAmmo(1, null, knightUI);
+            uiManager.SetMaxAmmo(currentMag, null, knightUI);
+        }
 
         startingRotation = transform.localRotation;
     }
@@ -101,8 +114,9 @@ public class CrossBow : MonoBehaviour
             return;
         }
 
+        ManageAmmo();
+
         SetAmmo();
-        uiManager.SetMaxAmmo(1, null, knightUI);
         
         if(GetComponentInParent<PlayerMovement>().GetMoving())
         {
@@ -116,16 +130,45 @@ public class CrossBow : MonoBehaviour
         }
     }
 
+    private void ManageAmmo()
+    {
+        if (currentMag > maxMag)
+        {
+            currentMag = maxMag;
+        }
+
+        if (currentMag < 0)
+        {
+            currentMag = 0;
+        }
+    }
+
     private void SetAmmo()
     {
         if(Time.time >= nextTimeToFire - 0.1f)
         {
             uiManager.SetCurrentAmmo(1, null, knightUI);
+            uiManager.SetMaxAmmo(currentMag, null, knightUI);
         }
         else
         {
             uiManager.SetCurrentAmmo(0, null, knightUI);
         }
+    }
+
+    public void RestockAmmo()
+    {
+        currentMag = maxMag;
+    }
+
+    public bool CanAddAmmo()
+    {
+        if (currentMag < maxMag)
+        {
+            return true;
+        }
+
+        return false;
     }
 
     public void Fire()
@@ -135,8 +178,10 @@ public class CrossBow : MonoBehaviour
             return;
         }
 
-        if(Time.time >= nextTimeToFire)
+        if(Time.time >= nextTimeToFire && currentMag > 0)
         {
+            currentMag--;
+
             nextTimeToFire = Time.time + 1 / fireRate;
             crossbowAnimator.SetTrigger("Reloading");
 
@@ -162,12 +207,6 @@ public class CrossBow : MonoBehaviour
                 {
                     target.TakeDamage(damage);
                 }
-            }
-
-            //If the target has a rigidbody then it pushes it
-            if(hit.rigidbody)
-            {
-                hit.rigidbody.AddForce(-hit.normal * pushForce, ForceMode.Impulse);
             }
 
             //If the target has a transform that isn't the player then it puts an arrow in it
