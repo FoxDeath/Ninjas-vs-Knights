@@ -121,7 +121,12 @@ public class Consumables : MonoBehaviour
                 {
                     if (other.GetComponent<WeaponSwitch>().GetCurrentKnightWeapon().ToString() == "Crossbow")
                     {
-                        //restock Crossbow after it doesnt have infinite ammo anymore
+                        CrossBow crossBow = other.GetComponentInChildren<CrossBow>();
+
+                        if (crossBow.CanAddAmmo())
+                        {
+                            crossBow.RestockAmmo();
+                        }
                     }
                     else if (other.GetComponent<WeaponSwitch>().GetCurrentKnightWeapon().ToString() == "SpearGun")
                     {

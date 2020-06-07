@@ -73,6 +73,7 @@ public class ShurikenGun :  MonoBehaviour
         {
             return;
         }
+        
         ManageAmmo();
 
         uiManager.SetCurrentAmmo(currentAmmo, ninjaUI);
@@ -87,7 +88,6 @@ public class ShurikenGun :  MonoBehaviour
             animator.SetBool("Moving", false);
         }
     }
-    
 
     private void ManageAmmo()
     {
