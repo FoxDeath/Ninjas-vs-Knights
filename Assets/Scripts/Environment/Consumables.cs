@@ -105,6 +105,7 @@ public class Consumables : MonoBehaviour
                         if(shurikenGun.CanAddAmmo())
                         {
                             shurikenGun.RestockAmmo();
+                            StartCoroutine(networkController.NetworkDestroy(gameObject, 0f));
                         }
                     }
                     else if(other.GetComponent<WeaponSwitch>().GetCurrentNinjaWeapon().ToString() == "Bow")
@@ -114,6 +115,7 @@ public class Consumables : MonoBehaviour
                         if (bow.CanAddAmmo())
                         {
                             bow.RestockAmmo();
+                            StartCoroutine(networkController.NetworkDestroy(gameObject, 0f));
                         }
                     }
                 }
@@ -126,6 +128,7 @@ public class Consumables : MonoBehaviour
                         if (crossBow.CanAddAmmo())
                         {
                             crossBow.RestockAmmo();
+                            StartCoroutine(networkController.NetworkDestroy(gameObject, 0f));
                         }
                     }
                     else if (other.GetComponent<WeaponSwitch>().GetCurrentKnightWeapon().ToString() == "SpearGun")
@@ -135,14 +138,13 @@ public class Consumables : MonoBehaviour
                         if (spearGun.CanAddAmmo())
                         {
                             spearGun.RestockAmmo();
+                            StartCoroutine(networkController.NetworkDestroy(gameObject, 0f));
                         }
                     }
                 }
 
                 FindObjectOfType<AudioManager>().NetworkPlay("Pickup", GetComponent<AudioSource>());
             }
-
-            StartCoroutine(networkController.NetworkDestroy(gameObject, 0f));
         }
     }
 }

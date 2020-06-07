@@ -209,12 +209,6 @@ public class CrossBow : MonoBehaviour
                 }
             }
 
-            //If the target has a rigidbody then it pushes it
-            if(hit.rigidbody)
-            {
-                hit.rigidbody.AddForce(-hit.normal * pushForce, ForceMode.Impulse);
-            }
-
             //If the target has a transform that isn't the player then it puts an arrow in it
             if(hit.transform && hit.transform != player.transform)
             {
