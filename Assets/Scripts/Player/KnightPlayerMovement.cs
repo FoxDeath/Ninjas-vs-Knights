@@ -24,6 +24,10 @@ public class KnightPlayerMovement : PlayerMovement
     private bool dashing;
     private bool jetpacking;
 
+    public ParticleSystem dashParticles;
+    public ParticleSystem chargeParticles;
+ 
+
     public bool GetDashing()
     {
         return dashing;
@@ -36,11 +40,12 @@ public class KnightPlayerMovement : PlayerMovement
     protected override void Start()
     {
         controller = GetComponent<CharacterController>();
-        groundCheck = transform.Find("Cylinder").Find("GroundCheck");
+        groundCheck = transform.Find("player").Find("body").Find("GroundCheck");
         groundMask = LayerMask.GetMask("Ground");
         fpsCamera = transform.Find("Main Camera").GetComponent<Camera>();
         uiManager = FindObjectOfType<UIManager>();
         audioManager = GetComponent<AudioManager>();
+        animator = transform.Find("player").GetComponent<Animator>();
 
         move = new Vector3();
         velocity = new Vector3();
@@ -125,10 +130,10 @@ public class KnightPlayerMovement : PlayerMovement
     
     public void Jetpack()
     {
-        uiManager.SetKnightSliderValue(jetpackFuel / maxJetpackFuel, GetComponentInChildren<KnightUI>());
-
+        uiManager.SetKnightSliderValue(jetpackFuel / maxJetpackFuel);
+        
         //If the jetpack is off stops the sound and recharges the jetpack
-        if(!jetpackOn)
+        if (!jetpackOn)
         {
             audioManager.NetworkStop("Jetpack");
             if(jetpackFuel < maxJetpackFuel)
@@ -152,21 +157,23 @@ public class KnightPlayerMovement : PlayerMovement
             }
 
             jetpacking = false;
-
+            
             return;
         }
         else
         {   
             //If the jetpack is on and it has fuel the player flies
             if(jetpackFuel > 0f)
-            {
+            {                
                 jetpacking = true;
 
-                if(!audioManager.IsPlaying("Jetpack"))
+             
+                if (!audioManager.IsPlaying("Jetpack"))
                 {
                     audioManager.NetworkPlay("Jetpack");
+                    
                 }
-
+                
                 jetpackFuel -= Time.deltaTime;
                 currentForce += Time.deltaTime/10f;
 
@@ -183,10 +190,11 @@ public class KnightPlayerMovement : PlayerMovement
             //If the jetpack is on and it has no fuel it stops
             else if(jetpackFuel <= 0f)
             {   
-                jetpacking = false;   
-                if(audioManager.IsPlaying("Jetpack"))
+                jetpacking = false;
+     
+                if (audioManager.IsPlaying("Jetpack"))
                 {
-                    audioManager.NetworkStop("Jetpack");
+                    audioManager.NetworkStop("Jetpack");                 
                 }
             }
         } 
@@ -209,6 +217,7 @@ public class KnightPlayerMovement : PlayerMovement
             dashing = true;
 
             audioManager.NetworkPlay("Jetpack Dash");
+            dashParticles.Play();
 
             vertical = dashForce * moveInput.y;
             horizontal = dashForce * moveInput.x;
@@ -233,6 +242,8 @@ public class KnightPlayerMovement : PlayerMovement
             dashing = true;
 
             audioManager.NetworkPlay("Jetpack Dash");
+            dashParticles.Play();
+
 
             float oldHorizontal = this.velocity.y;
             float oldGravity = this.gravity;
@@ -276,7 +287,9 @@ public class KnightPlayerMovement : PlayerMovement
         {
             canCharge = false;
             charging = true;
-            
+
+            chargeParticles.Play();
+
             GetComponentInChildren<MouseLook>().mouseSensitivity /= 10;
 
             vertical = chargeForce * moveInput.y;

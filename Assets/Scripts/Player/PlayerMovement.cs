@@ -39,6 +39,8 @@ public class PlayerMovement : NetworkBehaviour
     protected bool canSlide = true;
     protected bool charging;
 
+    protected Animator animator;
+
     #region Getters and Setters
     
     public CharacterController GetController() 
@@ -121,9 +123,10 @@ public class PlayerMovement : NetworkBehaviour
     protected virtual void Start()
     {
         controller = gameObject.GetComponent<CharacterController>();
-        groundCheck = transform.Find("Cylinder").Find("GroundCheck");
+        groundCheck = transform.Find("player").Find("body").Find("GroundCheck");
         groundMask = LayerMask.GetMask("Ground");
-        audioManager = GetComponent<AudioManager>();
+        audioManager = FindObjectOfType<AudioManager>();
+        animator = transform.Find("player").GetComponent<Animator>();
 
         defaultSpeed = speed;
         move = new Vector3();
@@ -158,6 +161,7 @@ public class PlayerMovement : NetworkBehaviour
 
         SpeedCalculation();
     }
+   
 
     protected virtual void FixedUpdate()
     {
@@ -211,6 +215,7 @@ public class PlayerMovement : NetworkBehaviour
         {
             move = (transform.right * horizontal + transform.forward * vertical) * speed;
             lastMove = move;
+
         }
         else
         {
@@ -232,6 +237,7 @@ public class PlayerMovement : NetworkBehaviour
             }
         }
         controller.Move(move * Time.deltaTime);
+
     }
 
     //Calculates the speed depending on the situation
@@ -273,12 +279,13 @@ public class PlayerMovement : NetworkBehaviour
         if(crouching)
         {
             isCrouched = true;
-            transform.localScale = new Vector3(1f, 0.5f, 1f);
+            animator.SetBool("crouch",true);
+            print("yessss");
         }
         else if(!sliding)
         {
             isCrouched = false;
-            transform.localScale = new Vector3(1f, 1f, 1f);
+            animator.SetBool("crouch", false);
         }
     }
 
@@ -287,10 +294,13 @@ public class PlayerMovement : NetworkBehaviour
         if(velocity.y < fallVelocity && !isGrounded && !resetFall)
         {
             velocity.y -= fallDecrease;
+            animator.SetBool("Fall", true);
         }
         else
         {
             resetFall = false;
+            animator.SetBool("Fall", false);
+
         }
     }
 
@@ -305,6 +315,9 @@ public class PlayerMovement : NetworkBehaviour
         this.moveInput = moveInput;
         horizontal = moveInput.x;
         vertical = moveInput.y;
+
+        animator.SetFloat("velX", moveInput.x);
+        animator.SetFloat("velY", moveInput.y);
     }
 
     protected virtual void MoveAudio()
@@ -332,13 +345,15 @@ public class PlayerMovement : NetworkBehaviour
         {
             audioManager.NetworkSetPitch("Walking", 2);
             sprinting = true;
+            animator.SetBool("Running", true);
         }
         //turn off sprint
         else if(!state && sprinting)
         {
             audioManager.NetworkSetPitch("Walking", 1);
             sprinting = false;
-        }
+            animator.SetBool("Running", false);
+        }       
     }
 
     public virtual void Jump()
@@ -355,7 +370,7 @@ public class PlayerMovement : NetworkBehaviour
             audioManager.NetworkPlay("Jump");
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
             fallVelocity = 10f;
-        }
+        }      
     }
 
     //pass reference references into functions... obviously lol xdd

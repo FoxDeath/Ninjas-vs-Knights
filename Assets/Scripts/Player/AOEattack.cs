@@ -11,6 +11,7 @@ public class AOEattack : MonoBehaviour
     [SerializeField] float pushForce = 500f;
 
     private bool attacking;
+    public ParticleSystem aoeParticles;
 
     public void AOEInput(InputAction.CallbackContext context)
     {
@@ -58,6 +59,8 @@ public class AOEattack : MonoBehaviour
 
     private void Attack(float damageMutliplyer, float forceMultiplyer)
     {
+        aoeParticles.Play();
+
         //Get all object hit by the ability
         var colliders = Physics.OverlapSphere(transform.position, range, Physics.AllLayers);
 
