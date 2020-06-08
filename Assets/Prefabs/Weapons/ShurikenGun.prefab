@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 8431848206516928053}
   - component: {fileID: -7681474507248471056}
   - component: {fileID: 5002261690092851177}
-  - component: {fileID: 3290319029810529639}
+  - component: {fileID: 7786228086367169878}
   m_Layer: 11
   m_Name: ShurikenGun
   m_TagString: Untagged
@@ -106,7 +106,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &3290319029810529639
+--- !u!114 &7786228086367169878
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -118,16 +118,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19c9e80192f267c4a9ce87522927bb1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  recoilPosition: {fileID: 9038772524923458218}
-  rotationPoint: {fileID: 1807586540888633540}
+  recoilPosition: {fileID: 1807586540888633540}
+  rotationPoint: {fileID: 9038772524923458218}
   positionRecoilSpeed: 8
   rotationRecoilSpeed: 8
   positionReturnSpeed: 18
   rotationReturnSpeed: 38
-  recoilRotation: {x: 20, y: 18, z: 16}
-  recoilKickBack: {x: 0.04, y: 0.1, z: -0.3}
+  recoilRotation: {x: 10, y: 5, z: 7}
+  recoilKickBack: {x: 0, y: 0, z: 0}
   recoilRotationAim: {x: 10, y: 4, z: 6}
-  recoilKickBackAim: {x: 0.015, y: 0, z: -0.2}
+  recoilKickBackAim: {x: 0, y: 0, z: 0}
 --- !u!1 &8431848207487731172
 GameObject:
   m_ObjectHideFlags: 0
@@ -209,7 +209,7 @@ PrefabInstance:
     - target: {fileID: 442109822463963105, guid: 58250c7a770005945a20cd04e17ab1a8,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.3
+      value: -1.01
       objectReference: {fileID: 0}
     - target: {fileID: 442109822463963105, guid: 58250c7a770005945a20cd04e17ab1a8,
         type: 3}
