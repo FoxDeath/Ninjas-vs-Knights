@@ -294,12 +294,12 @@ public class PlayerMovement : NetworkBehaviour
         if(velocity.y < fallVelocity && !isGrounded && !resetFall)
         {
             velocity.y -= fallDecrease;
-            animator.SetBool("Fall", true);
+            animator.SetBool("fall", true);
         }
         else
         {
             resetFall = false;
-            animator.SetBool("Fall", false);
+            animator.SetBool("fall", false);
 
         }
     }
