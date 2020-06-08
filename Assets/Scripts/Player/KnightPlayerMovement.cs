@@ -46,6 +46,7 @@ public class KnightPlayerMovement : PlayerMovement
         fpsCamera = transform.Find("Main Camera").GetComponent<Camera>();
         uiManager = FindObjectOfType<UIManager>();
         audioManager = GetComponent<AudioManager>();
+        animator = transform.Find("player").GetComponent<Animator>();
 
         move = new Vector3();
         velocity = new Vector3();
