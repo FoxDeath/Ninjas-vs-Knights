@@ -158,16 +158,4 @@ public class WeaponsInputNinja : NetworkBehaviour
             }
         }
     }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        ShurikenGun shurikenGun = weaponSwitch.GetCurrentWeaponIndex().GetComponent<ShurikenGun>();
-
-        if(other.tag.Equals("Ammo"))
-        {
-            audioManager.NetworkPlay("Pickup", GetComponent<AudioSource>());
-            shurikenGun.RestockAmmo();
-            Destroy(other.gameObject);
-        }
-    }
 }

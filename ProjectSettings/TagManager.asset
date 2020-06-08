@@ -4,7 +4,6 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Enemy
   - Hook
   - Hookable
   - Wall
@@ -12,6 +11,11 @@ TagManager:
   - Grenade
   - Ammo
   - EnemyObjective
+  - FlyingEnemy
+  - GroundEnemy
+  - Enemy
+  - ConsumableSpawner
+  - Consumable
   layers:
   - Default
   - TransparentFX

@@ -5,41 +5,55 @@ using Mirror;
 //TO DO: Add to Menu Manager
 public class PauseMenu : NetworkBehaviour
 {
-    public bool GameIsPaused = false;
+    private InputActionAsset inputActions;
+    private AudioManager audioManager;
+    private Health playerHealth;
+
     private GameObject pauseMenuUI;
     private GameObject gameUI;
     private GameObject optionsUI;
     private GameObject keyBindUI;
-    private InputActionAsset inputActions;
-    private PlayerInput playerInput;
-    private AudioManager audioManager;
+    private GameObject gameOverScreen;
+    private GameObject deathScreen;
+
+    public bool GameIsPaused = false;
+
 
     void Awake()
     {
-        playerInput = new PlayerInput();
+        playerHealth = GetComponentInParent<Health>();
         audioManager = FindObjectOfType<AudioManager>();
         pauseMenuUI = transform.Find("PauseMenu").gameObject;
         optionsUI = transform.Find("OptionsMenu").gameObject;
         keyBindUI = transform.Find("RebindMenu").gameObject;
+        gameOverScreen = transform.Find("GameOverScreen").gameObject;
+        deathScreen = transform.Find("DeathScreen").gameObject;
         inputActions = GetComponentInParent<UnityEngine.InputSystem.PlayerInput>().actions;
 
-        if(transform.Find("NinjaUI") != null)
+        if(transform.Find("NinjaInGameUI") != null)
         {
-            gameUI = transform.Find("NinjaUI").gameObject;
+            gameUI = transform.Find("NinjaInGameUI").gameObject;
         }
         else
         {
-            gameUI = transform.Find("KnightUI").gameObject;
+            gameUI = transform.Find("KnightInGameUI").gameObject;
         }
     }
 
     void Update()
     {
+        if(gameOverScreen.activeInHierarchy || deathScreen.activeInHierarchy)
+        {
+            pauseMenuUI.SetActive(false);
+            optionsUI.SetActive(false);
+            keyBindUI.SetActive(false);
+        }
+
         if(GameIsPaused && inputActions.enabled)
         {
             inputActions.Disable();
         }
-        else if(!GameIsPaused && !inputActions.enabled)
+        else if(!GameIsPaused && !inputActions.enabled && !playerHealth.GetDead() && FindObjectOfType<Objective>().GetHealth() > 0f)
         {
             inputActions.Enable();
         }
@@ -62,6 +76,7 @@ public class PauseMenu : NetworkBehaviour
     {
         gameUI.SetActive(false);
         pauseMenuUI.SetActive(true);
+
         Cursor.lockState = CursorLockMode.None;
         GameIsPaused = true;
     }

@@ -62,11 +62,15 @@ public class WaveManager : MonoBehaviour
     [SerializeField] spawnStates state = spawnStates.COUNTING;
 
     private Transform enemyContainer;
-
+    private UIManager uiManager;
+    private NetworkController networkController;
+    private NinjaUI[] ninjaUIs;
+    private KnightUI[] knightUIs;
     [SerializeField] List<SpawnPoint> spawnPoints;
     [SerializeField] List<Wave> waves;
 
     private int nextWave = 0;
+    private int waveNr = 0;
 
     [SerializeField] float timeBetweenWaves = 5f;
     [SerializeField] float infiniteMultiplier = 20f;
@@ -74,11 +78,32 @@ public class WaveManager : MonoBehaviour
 
     [SerializeField] bool infinite = true;
     private bool canContinue = false;
+    public bool ready = false;
+
+    private bool restarting = false;
+
+    void Awake()
+    {
+        uiManager = FindObjectOfType<UIManager>();
+    }
 
     void Start()
     {
-        enemyContainer = transform.Find("EnemyContainer").transform;
+        enemyContainer = GameObject.Find("EnemyContainer").transform;
         waveCountdown = timeBetweenWaves;
+        
+        ninjaUIs = FindObjectsOfType<NinjaUI>();
+        knightUIs = FindObjectsOfType<KnightUI>();
+
+        foreach (NinjaUI ui in ninjaUIs)
+        {
+            ui.SetWaveUI();
+        }
+
+        foreach (KnightUI ui in knightUIs)
+        {
+            ui.SetWaveUI();
+        }
     }
 
     void Update()
@@ -105,7 +130,26 @@ public class WaveManager : MonoBehaviour
         else
         {
             waveCountdown -= Time.deltaTime;
+
+            foreach (NinjaUI ui in uiManager.ninjaUIs)
+            {
+                uiManager.SetWaveCounter(Mathf.Round(waveCountdown).ToString(), true, ui, null);
+            }
+
+            foreach (KnightUI ui in uiManager.knightUIs)
+            {
+                uiManager.SetWaveCounter(Mathf.Round(waveCountdown).ToString(), true, null, ui);
+            }
         }
+    }
+
+    public void Restart()
+    {
+        StopAllCoroutines();
+        nextWave = 0;
+        waveNr = 0;
+        restarting = true;
+        waveCountdown = timeBetweenWaves;
     }
 
     //Gets called when when wave finishes and takes care of the proceeding actions.
@@ -113,6 +157,20 @@ public class WaveManager : MonoBehaviour
     {
         state = spawnStates.COUNTING;
         waveCountdown = timeBetweenWaves;
+
+        if(restarting)
+        {
+            restarting = false;
+        }
+        else
+        {
+            waveNr++;
+
+            if (PlayerPrefs.GetInt("HighScore") < waveNr)
+            {
+                PlayerPrefs.SetInt("HighScore", waveNr);
+            }
+        }
 
         if(nextWave + 1 > waves.Count - 1)
         {
@@ -146,6 +204,16 @@ public class WaveManager : MonoBehaviour
     IEnumerator SpawnWaveBehaviour(Wave wave)
     {
         state = spawnStates.SPAWNING;
+
+        foreach (NinjaUI ui in uiManager.ninjaUIs)
+        {
+            uiManager.SetWaveCounter(waveNr.ToString(), false, ui, null);
+        }
+
+        foreach (KnightUI ui in uiManager.knightUIs)
+        {
+            uiManager.SetWaveCounter(waveNr.ToString(), false, null, ui);
+        }
 
         foreach(WaveUnit unit in wave.units)
         {

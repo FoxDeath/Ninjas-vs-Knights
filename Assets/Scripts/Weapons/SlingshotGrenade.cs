@@ -56,7 +56,7 @@ public class SlingshotGrenade : MonoBehaviour
 
             if(target != null)
             {
-                target.StartExploding(damage, force, transform.position, radius);
+                target.StartExploding(damage, force, transform.position, radius, collider.gameObject);
             }
         }
 

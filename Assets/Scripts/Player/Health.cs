@@ -3,14 +3,20 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
+    private UIManager uiManager;
+    private PlayerMovement movement;
+
+    private Vector3 lastHit;
+
     [SerializeField] float maxHealth = 100f;
-    [SerializeField] float regenPerSec = 5f;
+    [SerializeField] float regenPerSec = 2f;
     [SerializeField] float damageReduPercentage = 50f;
     private float health;
 
     private bool regenerating;
+    private bool dead = false;
 
-    private UIManager uiManager;
+    #region  Getters and Setters
 
     public float GetMaxHealt() 
     {
@@ -21,10 +27,21 @@ public class Health : MonoBehaviour
         return health;
     }
 
+    public bool GetDead()
+    {
+        return dead;
+    }
+
+    #endregion
+
+    void Awake()
+    {
+        movement = GetComponent<KnightPlayerMovement>();
+        uiManager = UIManager.GetInstance();
+    }
+
     void Start()
     {
-        uiManager = UIManager.GetInstance();
-
         health = maxHealth;
 
         if(GetComponentInChildren<NinjaUI>() != null)
@@ -53,13 +70,16 @@ public class Health : MonoBehaviour
     private void FixedUpdate()
     {
         health = Mathf.Clamp(health, 0f, maxHealth);
-        Regenerate();
+
+        if(!dead)
+        {
+            Regenerate();
+        }
     }
 
     //The Players health will go down when he takes damage.
     public void TakeDamage(float damage)
     {
-        PlayerMovement movement = GetComponent<KnightPlayerMovement>();
         if(movement != null && movement.GetScoping())
         {
             health -= damage * (damageReduPercentage / 100);
@@ -71,7 +91,7 @@ public class Health : MonoBehaviour
 
         regenerating = false;
 
-        if(health <= 0)
+        if(health <= 0 && !dead)
         {
             Die();
         }
@@ -82,26 +102,60 @@ public class Health : MonoBehaviour
 
     IEnumerator RegenCooldown() 
     {
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(8f);
 
         regenerating = true;
     }
 
-    public void Heal(float ammount) 
+    public void Heal(float amount) 
     {
-        health += ammount;
+        if(!dead)
+        {
+            health += amount;
+        }
+    }
+
+    public bool CanAddHealth()
+    {
+        if (!dead && health < maxHealth)
+        {
+            return true;
+        }
+
+        return false;
     }
 
     void Die()
     {
-        //Future.
+        dead = true;
+        bool gameOver = true;
+
+        foreach(Health player in FindObjectsOfType<Health>())
+        {
+            if(!player.GetDead())
+            {
+                gameOver = false;
+            }
+        }
+
+        if(!gameOver)
+        {
+            NinjaUI ninjaUI = GetComponentInChildren<NinjaUI>();
+            KnightUI knightUI = GetComponentInChildren<KnightUI>();
+
+            uiManager.PlayerDeath(ninjaUI, knightUI);
+        }
+        else
+        {
+            uiManager.GameOver();
+        }
     }
 
     private void Regenerate() 
     {
         if(regenerating && health < maxHealth)
         {
-            health += regenPerSec * Time.deltaTime;
+            health += regenPerSec * Time.fixedDeltaTime;
         }
         else if(health == maxHealth)
         {
@@ -109,13 +163,11 @@ public class Health : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    void OnCollisionEnter(Collision other)
     {
-        Medkit medkit = other.GetComponent<Medkit>();
-        if (medkit && health < maxHealth)
+        if (other.gameObject.tag.Equals("Ammo"))
         {
-            Heal(medkit.GetHealAmmount());
-            GameObject.Destroy(other.gameObject);
+            lastHit = transform.localPosition - other.transform.localPosition;
         }
     }
 }

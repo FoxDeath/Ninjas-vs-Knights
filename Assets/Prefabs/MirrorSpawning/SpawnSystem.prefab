@@ -62,3 +62,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  waveManager: {fileID: 8703391680953702963, guid: d732760fe321b724f8458e1f82d36a81,
+    type: 3}

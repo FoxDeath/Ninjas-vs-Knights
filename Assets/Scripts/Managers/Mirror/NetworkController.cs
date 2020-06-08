@@ -5,6 +5,7 @@ using System.Collections;
 public class NetworkController : NetworkBehaviour
 {
     private GameObject[] spawnableObjects;
+    [SerializeField] public GameObject playerPrefab;
 
     private void Awake() 
     {
@@ -12,22 +13,16 @@ public class NetworkController : NetworkBehaviour
     }
 
     //Spawning object by it's name whith given possition, rotation, velocity and time untill delition if given
-    public void NetworkSpawn(string name, Vector3 possition, Quaternion rotation, Vector3 velocity, float time = 0)
+    public void NetworkSpawn(string name, Vector3 position, Quaternion rotation, Vector3 velocity, float time = 0)
     {
         if(this.isLocalPlayer)
         {
-            CmdSpawn(name, possition, rotation, velocity, time);
+            CmdSpawn(name, position, rotation, velocity, time);
         }
     }
 
     [Command]
-    private void CmdSpawn(string name, Vector3 possition, Quaternion rotation, Vector3 velocity, float time)
-    {
-        Spawn(name, possition, rotation, velocity, time);
-    }
-
-    //Actual spawn method who deals with the instantiating
-    private void Spawn(string name, Vector3 possition, Quaternion rotation, Vector3 velocity, float time)
+    private void CmdSpawn(string name, Vector3 position, Quaternion rotation, Vector3 velocity, float time)
     {
         GameObject temporaryObject = null;
 
@@ -41,7 +36,7 @@ public class NetworkController : NetworkBehaviour
         }
 
         //Instantinating the object on the client
-        GameObject instantiateObject = Instantiate(temporaryObject, possition, rotation);
+        GameObject instantiateObject = Instantiate(temporaryObject, position, rotation);
 
         Rigidbody rigidbody = instantiateObject.GetComponent<Rigidbody>();
 
@@ -73,11 +68,6 @@ public class NetworkController : NetworkBehaviour
 
     [Command]
     private void CmdDestroy(GameObject gameObject)
-    {
-        Destroy(gameObject);
-    }
-
-    private static void Destroy(GameObject gameObject)
     {
         NetworkServer.Destroy(gameObject);
     }

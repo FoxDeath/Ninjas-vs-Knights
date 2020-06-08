@@ -9,10 +9,11 @@ using Mirror.Discovery;
 //Modified NetworkManages used for the lobby
 public class NetworkManagerLobby : NetworkManager
 {
-    private int minPlayers = 1;
+    private int minPlayers = 2;
 
     [SerializeField] NetworkRoomPlayerLobby roomPlayerPrefab;
     [SerializeField] NetworkGamePlayerLobby gamePlayerPrefab;
+
     [SerializeField] GameObject playerSpawnSystem;
 
     public static event Action OnClientConnected;
@@ -23,6 +24,8 @@ public class NetworkManagerLobby : NetworkManager
     
     public List<NetworkRoomPlayerLobby> RoomPlayers {get;} = new List<NetworkRoomPlayerLobby>();
     public List<GameObject> GamePlayers {get;} = new List<GameObject>();
+
+    public static bool Solo = false;
 
     public override void OnClientConnect(NetworkConnection conn)
     {
@@ -61,7 +64,7 @@ public class NetworkManagerLobby : NetworkManager
     //When a player disconects it is removed from the list and it notifies the other lobby players
     public override void OnServerDisconnect(NetworkConnection conn)
     {
-        if(conn.identity != null)
+        if(conn.identity != null && SceneManager.GetActiveScene().Equals(Loader.Scene.MainMenu))
         {
             NetworkRoomPlayerLobby player = conn.identity.GetComponent<NetworkRoomPlayerLobby>();
 
@@ -85,7 +88,7 @@ public class NetworkManagerLobby : NetworkManager
     //Returns true of the player chose a class and pressed the ready button, false otherwise
     private bool IsReadyToStart()
     {
-        if(numPlayers < minPlayers)
+        if(numPlayers < minPlayers && !Solo)
         {
             return false;
         }
@@ -109,7 +112,11 @@ public class NetworkManagerLobby : NetworkManager
             return;
         }
 
-        FindObjectOfType<NetworkDiscovery>().StopDiscovery();
+        if(FindObjectOfType<NetworkDiscovery>())
+        {
+            FindObjectOfType<NetworkDiscovery>().StopDiscovery();
+        }
+        
         ServerChangeScene(Loader.Scene.Map.ToString());
     }
 
@@ -118,7 +125,7 @@ public class NetworkManagerLobby : NetworkManager
     // trough to the player spawner
     public override void ServerChangeScene(string newSceneName)
     {        
-        for (int i = RoomPlayers.Count - 1; i >= 0; i--)
+        for(int i = RoomPlayers.Count - 1; i >= 0; i--)
         {
             var conn = RoomPlayers[i].connectionToClient;
             var gamePlayerInstance = Instantiate(gamePlayerPrefab);
@@ -130,9 +137,66 @@ public class NetworkManagerLobby : NetworkManager
             NetworkServer.ReplacePlayerForConnection(conn, gamePlayerInstance.gameObject);
         }
 
-        RoomPlayers.Clear();
-
         base.ServerChangeScene(newSceneName);
+    }
+
+    public void SoloHost()
+    {
+        Solo = true;
+        StartHost();
+    }
+
+    public bool RestartGame()
+    {
+        NetworkManager networkManager = FindObjectOfType<NetworkManager>();
+        NetworkManagerLobby networkManagerlobby = FindObjectOfType<NetworkManagerLobby>();
+
+        networkManagerlobby.GamePlayers.Clear();
+        int nextIndex = 0;
+
+        foreach(NetworkConnectionToClient conn in NetworkServer.connections.Values)
+        {
+            GameObject currentPlayer = conn.identity.gameObject.GetComponent<NetworkController>().playerPrefab;
+            GameObject prefab = null;
+
+            if(currentPlayer.GetComponent<NinjaPlayerMovement>())
+            {
+                foreach(GameObject obj in networkManager.spawnPrefabs)
+                {
+                    if(obj.tag.Equals("Player"))
+                    {
+                        if(obj.GetComponent<NinjaPlayerInput>())
+                        {
+                            prefab = obj;
+                        }
+                    }
+                }
+            }
+            else if(currentPlayer.GetComponent<KnightPlayerMovement>())
+            {
+                foreach(GameObject obj in networkManager.spawnPrefabs)
+                {
+                    if(obj.tag.Equals("Player"))
+                    {
+                        if(obj.GetComponent<KnightPlayerMovement>())
+                        {
+                            prefab = obj;
+                        }
+                    }
+                }
+            }
+
+            NetworkServer.Destroy(conn.identity.gameObject);
+
+            GameObject playerInstance = Instantiate(prefab, PlayerSpawnSystem.GetSpawnPoints()[nextIndex].position, PlayerSpawnSystem.GetSpawnPoints()[nextIndex].rotation);
+            nextIndex++;
+
+            NetworkServer.Spawn(playerInstance, conn);
+            NetworkServer.ReplacePlayerForConnection(conn, playerInstance);
+
+            networkManagerlobby.GamePlayers.Add(playerInstance);
+        }
+        return true;
     }
 
     //When the scene fully changed it creates the player spanw system
@@ -159,6 +223,11 @@ public class NetworkManagerLobby : NetworkManager
         RoomPlayers.Clear();
         GamePlayers.Clear();
 
+        if(Solo)
+        {
+            Solo = false;
+        }
+
         Loader.Load(Loader.Scene.MainMenu);
 
         OnClientStopped?.Invoke();
@@ -169,6 +238,8 @@ public class NetworkManagerLobby : NetworkManager
     {
         RoomPlayers.Clear();
         GamePlayers.Clear();
+
+        
 
         Loader.Load(Loader.Scene.MainMenu);
 

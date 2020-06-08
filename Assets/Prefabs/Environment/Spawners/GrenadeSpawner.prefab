@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7424885605134327997}
   m_Layer: 0
   m_Name: GrenadeSpawner
-  m_TagString: Untagged
+  m_TagString: ConsumableSpawner
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -45,4 +45,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectPrefab: {fileID: 1444348944696146795, guid: 6e73da3a84a47914c9f13a52c4aca3dd,
     type: 3}
-  timer: 5
+  timeUntilSpawn: 60

@@ -8,72 +8,93 @@ using UnityEngine.InputSystem;
 
 public class NinjaUI : MonoBehaviour
 {
-    private GameObject ninjaUI;
-    public GameObject arrowSelect;
+    [HideInInspector] public GameObject ninjaInGameUI;
+    [HideInInspector] public GameObject arrowSelect;
+    [HideInInspector] public GameObject gameOverScreen;
+    [HideInInspector] public GameObject deathScreen;
 
-    
-    public TextMeshProUGUI grenadeCount;
-    public TextMeshProUGUI currentAmmo;
-    public TextMeshProUGUI maxAmmo;
-    public TextMeshProUGUI[] texts;
+    [HideInInspector] public TextMeshProUGUI waveCounter;
+    [HideInInspector] public TextMeshProUGUI grenadeCount;
+    [HideInInspector] public TextMeshProUGUI currentAmmo;
+    [HideInInspector] public TextMeshProUGUI maxAmmo;
+    [HideInInspector] public TextMeshProUGUI[] texts;
 
-    
-    public Slider healthSlider;
-    public List<Image> fills;
-    public MouseLook mouseLook;
-    public Image stimpackFill;
 
-    
-    public Bow bow;
+    [HideInInspector] public Color ogWaveNrColor;
+    [HideInInspector] public Slider healthSlider;
+    [HideInInspector] public List<Image> fills;
+    [HideInInspector] public MouseLook mouseLook;
+    [HideInInspector] public Image stimpackFill;
+
+
+    [HideInInspector] public Bow bow;
     [SerializeField] static Color normalColor = new Color(0f / 255f, 0f / 255f, 0f / 255f, 188f / 255f);
     [SerializeField] static Color highlightedColor = new Color(224f / 255f, 114f / 255f, 0f / 255f, 255f / 255f);
     public static Image[] radialOptions;
 
-    
-    public string selectedOption;
+    [HideInInspector] public Vector2 moveInput;
 
-    
-    public Vector2 moveInput;
+    [HideInInspector] public string selectedOption;
 
-    public bool inArrowMenu = false;
+    [HideInInspector] public bool inArrowMenu = false;
 
-    private void Awake() 
+    public void Awake() 
     {
-        if(transform.Find("NinjaUI") != null)
+        if(transform.Find("NinjaInGameUI") != null)
         {
             //if current player is a ninja, it gets the ninja assets
             fills = new List<Image>();
-            texts = transform.Find("NinjaUI").Find("AmmoCounter").GetComponentsInChildren<TextMeshProUGUI>();
+            ninjaInGameUI = transform.Find("NinjaInGameUI").gameObject;
+            gameOverScreen = transform.Find("GameOverScreen").gameObject;
+            deathScreen = transform.Find("DeathScreen").gameObject;
+            texts = ninjaInGameUI.transform.Find("AmmoCounter").GetComponentsInChildren<TextMeshProUGUI>();
 
-            foreach(TextMeshProUGUI text in texts)
+            foreach (TextMeshProUGUI text in texts)
             {
-                if(text.name.Equals("CurrentAmmo"))
+                if (text.name.Equals("CurrentAmmo"))
                 {
                     currentAmmo = text;
                 }
-                else if(text.name.Equals("MaxAmmo"))
+                else if (text.name.Equals("MaxAmmo"))
                 {
                     maxAmmo = text;
                 }
             }
-            ninjaUI = transform.Find("NinjaUI").gameObject;
-            grenadeCount = ninjaUI.transform.Find("Grenade").Find("GrenadeCount").GetComponent<TextMeshProUGUI>();
-            healthSlider = ninjaUI.transform.Find("HealthBar").GetComponent<Slider>();
-            arrowSelect = transform.Find("NinjaUI").Find("ArrowSelect").gameObject;
+
+            waveCounter = ninjaInGameUI.transform.Find("WaveCounter").GetComponent<TextMeshProUGUI>();
+            ogWaveNrColor = waveCounter.color;
+            grenadeCount = ninjaInGameUI.transform.Find("Grenade").Find("GrenadeCount").GetComponent<TextMeshProUGUI>();
+            healthSlider = ninjaInGameUI.transform.Find("HealthBar").GetComponent<Slider>();
+            arrowSelect = ninjaInGameUI.transform.Find("ArrowSelect").gameObject;
             arrowSelect = arrowSelect.transform.Find("Wheel").gameObject;
             mouseLook = transform.GetComponentInParent<MouseLook>();
-            stimpackFill = ninjaUI.transform.Find("Stimpack").Find("StimpackFill").GetComponent<Image>();
+            stimpackFill = ninjaInGameUI.transform.Find("Stimpack").Find("StimpackFill").GetComponent<Image>();
             fills.Add(stimpackFill);
 
             radialOptions = new Image[arrowSelect.transform.childCount];
+
             for(int i = 0; i < arrowSelect.transform.childCount; i++)
             {
                 radialOptions[i] = arrowSelect.transform.GetChild(i).GetComponent<Image>();
             }
         }
+        FindObjectOfType<UIManager>().AddNinjaUI(this);
     }
 
-        public void ArrowMenuInput(InputAction.CallbackContext context)
+    public void SetWaveUI() 
+    {
+        FindObjectOfType<UIManager>().SetWaveCounter(0.ToString(), false, this, null);
+    }
+
+    void OnDestroy()
+    {
+        if(FindObjectOfType<UIManager>())
+        {
+            FindObjectOfType<UIManager>().RemoveNinjaUI(GetComponent<NinjaUI>());
+        }
+    }
+
+    public void ArrowMenuInput(InputAction.CallbackContext context)
     {
         if (inArrowMenu)
         {

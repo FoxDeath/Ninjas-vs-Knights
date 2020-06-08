@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
+using Mirror;
 
-public class FlyingEnemyMovement : MonoBehaviour
+public class FlyingEnemyMovement : NetworkBehaviour
 {
     private Transform target;
-
-    private Mirror.NetworkTransformChild networkTransformChild;
+    private Target targetScript;
 
     private Vector3 avoidDir;
 
@@ -19,14 +19,8 @@ public class FlyingEnemyMovement : MonoBehaviour
 
     void Awake()
     {
+        targetScript = GetComponent<Target>();
         transform.SetParent(GameObject.Find("EnemyContainer").transform);
-        networkTransformChild = transform.parent.gameObject.AddComponent<Mirror.NetworkTransformChild>();
-        networkTransformChild.target = transform;
-    }
-
-    void OnDestroy() 
-    {
-        Destroy(networkTransformChild);
     }
 
     public Transform GetTarget()
@@ -41,7 +35,15 @@ public class FlyingEnemyMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        Pathfind();
+        if(!isServer)
+        {
+            return;
+        }
+
+        if(!targetScript.GetDead())
+        {
+            Pathfind();
+        }
     }
 
     //Searches for the nearest player to target
@@ -80,7 +82,7 @@ public class FlyingEnemyMovement : MonoBehaviour
     //Slowly turns towards the player
     void Turn()
     {
-        Vector3 pos = target.position + new Vector3(0f,10f,0f) - transform.position;
+        Vector3 pos = target.position + new Vector3(0f, 10f, 0f) - transform.position;
         Quaternion rotation = Quaternion.LookRotation(pos);
         transform.rotation = Quaternion.Slerp(transform.rotation, rotation, rotationSpeed * Time.deltaTime);
     }
@@ -133,9 +135,23 @@ public class FlyingEnemyMovement : MonoBehaviour
         }
         else
         {
-            Turn();
+            if(target)
+            {
+                Turn();
+            }
         }
 
-        Move();
+        if(target)
+        {
+            Move(); 
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+        {
+            transform.position -= (other.transform.position - transform.position).normalized * Time.deltaTime;
+        }
     }
 }

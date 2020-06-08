@@ -1,10 +1,14 @@
-﻿using TMPro;
+using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
     private static UIManager instance;
+
+    [HideInInspector] public List<NinjaUI> ninjaUIs = new List<NinjaUI>();
+    [HideInInspector] public List<KnightUI> knightUIs = new List<KnightUI>();
 
     //Returns the singleton instance of the class.
     public static UIManager GetInstance()
@@ -22,6 +26,123 @@ public class UIManager : MonoBehaviour
         else
         {
             Destroy(gameObject);
+            return;
+        }
+    }
+
+    public void GameOver()
+    {
+        foreach (NinjaUI ui in ninjaUIs)
+        {
+            if(ui.deathScreen.activeInHierarchy)
+            {
+                ui.deathScreen.SetActive(false);
+            }
+
+            ui.ninjaInGameUI.SetActive(false);
+            ui.gameOverScreen.SetActive(true);
+        }
+
+        foreach (KnightUI ui in knightUIs)
+        {
+            if(ui.deathScreen.activeInHierarchy)
+            {
+                ui.deathScreen.SetActive(false);
+            }
+
+            ui.knightInGameUI.SetActive(false);
+            ui.gameOverScreen.SetActive(true);
+        }
+    }
+
+    public void PlayerDeath(NinjaUI ninjaUI = null, KnightUI knightUI = null)
+    {
+        if(ninjaUI)
+        {
+            ninjaUI.ninjaInGameUI.SetActive(false);
+            ninjaUI.deathScreen.SetActive(true);
+        }
+        
+        if(knightUI)
+        {
+            knightUI.knightInGameUI.SetActive(false);
+            knightUI.deathScreen.SetActive(true);
+        }
+    }
+
+    public void Restart()
+    {
+        foreach(NinjaUI ui in ninjaUIs)
+        {
+            ui.ninjaInGameUI.SetActive(false);
+            ui.gameOverScreen.SetActive(true);
+            ui.Awake();
+        }
+
+        foreach(KnightUI ui in knightUIs)
+        {
+            ui.knightInGameUI.SetActive(false);
+            ui.gameOverScreen.SetActive(true);
+            ui.Awake();
+        }
+    }
+
+    public void AddNinjaUI(NinjaUI ui)
+    {
+        ninjaUIs.Add(ui);
+    }
+
+    public void RemoveNinjaUI(NinjaUI ui)
+    {
+        if(ninjaUIs.Contains(ui))
+        {
+            ninjaUIs.Remove(ui);
+        }
+    }
+
+    public void AddKnightUI(KnightUI ui)
+    {
+        knightUIs.Add(ui);
+    }
+
+    public void RemoveKnightUI(KnightUI ui)
+    {
+        if (knightUIs.Contains(ui))
+        {
+            knightUIs.Remove(ui);
+        }
+    }
+
+    public void SetWaveCounter(string waveNr, bool countDown, NinjaUI ninjaUI = null, KnightUI knightUI = null)
+    {
+        if (ninjaUI != null)
+        {
+            if(countDown)
+            {
+                ninjaUI.waveCounter.color = Color.red;
+            }
+            else
+            {
+                ninjaUI.waveCounter.color = ninjaUI.ogWaveNrColor;
+            }
+
+            ninjaUI.waveCounter.text = waveNr;
+        }
+        else if (knightUI != null)
+        {
+            if (countDown)
+            {
+                knightUI.waveCounter.color = Color.red;
+            }
+            else
+            {
+                knightUI.waveCounter.color = knightUI.ogWaveNrColor;
+            }
+
+            knightUI.waveCounter.text = waveNr;
+        }
+        else
+        {
             return;
         }
     }
@@ -163,7 +284,7 @@ public class UIManager : MonoBehaviour
     {
         if(knightUI != null)
         {
-            knightUI.knightUI.SetActive(state);
+            knightUI.knightInGameUI.SetActive(state);
         }
         else
         {
@@ -175,7 +296,7 @@ public class UIManager : MonoBehaviour
     public void SetMaxHealth(float health, NinjaUI ninjaUI = null, KnightUI knightUI = null)
     {
         if(ninjaUI != null)
-        {   
+        {
             ninjaUI.healthSlider.maxValue = health;
             ninjaUI.healthSlider.value = health;
         }

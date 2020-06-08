@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1381492447398515137}
   m_Layer: 0
   m_Name: MedKitSmallSpawner
-  m_TagString: Untagged
+  m_TagString: ConsumableSpawner
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -45,4 +45,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectPrefab: {fileID: 3002191509367827471, guid: 5697c407c4309094093b921fcab585c1,
     type: 3}
-  timer: 5
+  timeUntilSpawn: 120

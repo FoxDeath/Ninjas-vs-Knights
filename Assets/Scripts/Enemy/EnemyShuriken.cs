@@ -25,7 +25,7 @@ public class EnemyShuriken : MonoBehaviour
             }
             else
             {
-                Destroy(transform.parent.gameObject);
+                Destroy(transform.gameObject);
             }
         }
         else
@@ -42,19 +42,19 @@ public class EnemyShuriken : MonoBehaviour
         {
             FindObjectOfType<AudioManager>().NetworkPlay("ShurikenHit", GetComponent<AudioSource>());
             other.gameObject.GetComponentInParent<Health>().TakeDamage(damage);
-            Destroy(transform.parent.gameObject, 0.1f);
+            Destroy(gameObject, 0.1f);
         }
 
         if(other.gameObject.tag.Equals("EnemyObjective"))
         {
-            // FindObjectOfType<AudioManager>().Play("ShurikenHit", GetComponent<AudioSource>());
+            FindObjectOfType<AudioManager>().NetworkPlay("ShurikenHit", GetComponent<AudioSource>());
             other.gameObject.GetComponentInParent<Objective>().TakeDamage(damage);
         }
         
         if(other.gameObject.layer != LayerMask.NameToLayer("Player") && other.gameObject.layer != LayerMask.NameToLayer("Enemy") && !other.gameObject.tag.Equals("Ammo"))
         {
             hit = true;
-            GetComponent<Collider>().enabled = false;
+            GetComponentInChildren<Collider>().enabled = false;
             FindObjectOfType<AudioManager>().NetworkPlay("ShurikenHit", GetComponent<AudioSource>());
             myRigidbody.velocity = Vector3.zero;
             myRigidbody.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
@@ -67,7 +67,11 @@ public class EnemyShuriken : MonoBehaviour
             this.anchor = anchor;
 
             Destroy(anchor, 10f);
-            Destroy(transform.parent.gameObject, 10f);
+
+            if(transform.parent)
+            {
+                Destroy(transform.parent.gameObject, 10f);  
+            }
         }
     }
 }

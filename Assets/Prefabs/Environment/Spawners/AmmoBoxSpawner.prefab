@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4353748412193455332}
   m_Layer: 0
   m_Name: AmmoBoxSpawner
-  m_TagString: Untagged
+  m_TagString: ConsumableSpawner
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -45,4 +45,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectPrefab: {fileID: 7868399164631770164, guid: 0ffdcef440a1da645ae7dda1367c0864,
     type: 3}
-  timer: 5
+  timeUntilSpawn: 90

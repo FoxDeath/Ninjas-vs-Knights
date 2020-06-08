@@ -4,40 +4,59 @@ using UnityEngine;
 public class FlyingEnemyAttack : MonoBehaviour
 {
     private Transform target;
+    private NetworkController networkController;
+    private FlyingEnemyMovement flyingEnemyMovement;
 
     [SerializeField] GameObject projectile;
+
+    [SerializeField] float flashedPeriod = 4f;
 
     private bool coolingDown;
     private bool flashed;
 
     [SerializeField] float range = 20f;
 
-    public void SetFlashed(bool flashed)
+    private void Awake()
     {
-        this.flashed = flashed;
-        Invoke("SetFlashedBack", 5f);
-    }
-    void SetFlashedBack()
-    {
-        flashed = false;
+        flyingEnemyMovement = GetComponent<FlyingEnemyMovement>();
     }
 
     void Update()
     {
-        target = GetComponent<FlyingEnemyMovement>().GetTarget();
+        target = flyingEnemyMovement.GetTarget();
 
-        if(LineOfSight() && InRange() && !coolingDown && !flashed)
+        if (LineOfSight() && InRange() && !coolingDown && !flashed)
         {
-            StartCoroutine(AttackBehaviour());   
+            StartCoroutine(AttackBehaviour());
         }
+    }
+
+    public void SetFlashed(bool flashed)
+    {
+        this.flashed = flashed;
+
+        if (flashed)
+        {
+            Invoke("SetFlashedBack", flashedPeriod);
+        }
+    }
+
+    void SetFlashedBack()
+    {
+        flashed = false;
     }
 
     //Fires the Projectile towards the player
     IEnumerator AttackBehaviour()
     {
         coolingDown = true;
-        FindObjectOfType<NetworkController>().NetworkSpawn(projectile.name, transform.position,
-        Quaternion.LookRotation(target.position - transform.position), Vector3.zero, 2f);
+
+        if(networkController == null)
+        {
+            networkController = FindObjectOfType<NetworkController>();
+        }
+        
+        networkController.NetworkSpawn(projectile.name, transform.position, Quaternion.LookRotation(target.position - transform.position), Vector3.zero, 5f);
 
         yield return new WaitForSeconds(2f);
 
@@ -51,6 +70,7 @@ public class FlyingEnemyAttack : MonoBehaviour
         {
             return false;
         }
+
         RaycastHit hit;
 
         Vector3 dir = target.position - transform.position; 
@@ -75,6 +95,7 @@ public class FlyingEnemyAttack : MonoBehaviour
         {
             return false;
         }
+        
         return Vector3.Distance(transform.position, target.position) <= range;
     }
 }
