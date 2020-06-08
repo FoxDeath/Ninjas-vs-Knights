@@ -126,6 +126,8 @@ public class PlayerMovement : NetworkBehaviour
         groundCheck = transform.Find("player").Find("body").Find("GroundCheck");
         groundMask = LayerMask.GetMask("Ground");
         audioManager = FindObjectOfType<AudioManager>();
+
+        if(this.isLocalPlayer)
         animator = transform.Find("player").GetComponent<Animator>();
 
         defaultSpeed = speed;

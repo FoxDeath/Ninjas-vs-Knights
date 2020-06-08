@@ -42,6 +42,11 @@ public class PauseMenu : NetworkBehaviour
 
     void Update()
     {
+        if(!this.isLocalPlayer)
+        {
+            return;
+        }
+
         if(gameOverScreen.activeInHierarchy || deathScreen.activeInHierarchy)
         {
             pauseMenuUI.SetActive(false);
@@ -61,6 +66,11 @@ public class PauseMenu : NetworkBehaviour
 
     public void MenuInput()
     {
+        if(!this.isLocalPlayer)
+        {
+            return;
+        }
+
         if(GameIsPaused)
         {
             Resume();
