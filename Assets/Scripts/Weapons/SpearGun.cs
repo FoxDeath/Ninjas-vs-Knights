@@ -12,6 +12,8 @@ public class SpearGun : MonoBehaviour
     private AudioManager audioManager;
     [SerializeField] GameObject muzzleFlash;
     private Animator animator;
+    private MouseLook mouseLook;
+    private WeaponRecoil weaponRecoil;
 
     [SerializeField] float speed = 100f;
     [SerializeField] float reloadTime = 2f;
@@ -52,11 +54,13 @@ public class SpearGun : MonoBehaviour
         audioManager = GetComponentInParent<AudioManager>();
         animator = GetComponent<Animator>();
         model = transform.GetChild(0).gameObject;
+        mouseLook = GetComponentInParent<MouseLook>();
+        weaponRecoil = GetComponent<WeaponRecoil>();
     }
 
     void Start()
     {
-        equiped = transform.GetChild(0).gameObject.activeSelf;
+        equiped = transform.GetChild(0).GetChild(0).GetChild(0).gameObject.activeSelf;
 
         maxMag = maxAmmo * 4;
         currentAmmo = maxAmmo;
@@ -166,6 +170,8 @@ public class SpearGun : MonoBehaviour
                 GetComponentInParent<NetworkController>().NetworkSpawn(bullet.name, bulletEmiter.transform.position, bulletEmiter.transform.rotation,
                 (targetPoint - bulletEmiter.position).normalized * speed);
                 animator.SetTrigger("Firing");
+                mouseLook.Fire(false);
+                weaponRecoil.Fire(false);
             }
             else
             {

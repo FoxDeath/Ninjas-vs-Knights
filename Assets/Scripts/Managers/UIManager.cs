@@ -154,7 +154,7 @@ public class UIManager : MonoBehaviour
         {
             if (ninjaUI.bow == null)
             {
-                ninjaUI.bow = GameObject.Find("NinjaPlayer").transform.Find("Main Camera").Find("Bow").GetComponent<Bow>();
+                ninjaUI.bow = ninjaUI.transform.parent.Find("Main Camera").Find("Bow").GetComponent<Bow>();
             }
 
             ninjaUI.arrowSelect.SetActive(state);

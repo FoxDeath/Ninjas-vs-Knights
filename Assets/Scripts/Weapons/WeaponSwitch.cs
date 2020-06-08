@@ -83,14 +83,14 @@ public class WeaponSwitch : NetworkBehaviour
     //ToDo: Maybe change into a circular buffer    
     private void SetWeapon(int i)
     {
-        if (!canSwitch || !this.isLocalPlayer)
+        if(!canSwitch || !this.isLocalPlayer)
         {
             return;
         }
 
-        for (int index = 0; index < weapons.Length; index++)
+        for(int index = 0; index < weapons.Length; index++)
         {
-            if (weapons[index].activeSelf)
+            if(weapons[index].activeSelf)
             {
                 SetNetworkInactive(index);
             }
@@ -98,7 +98,7 @@ public class WeaponSwitch : NetworkBehaviour
 
         SetNetworkActive(i);
 
-        if (isKnight)
+        if(isKnight)
         {
             currentKnightWeapon = (KnightWeapon)i;
         }
@@ -110,7 +110,7 @@ public class WeaponSwitch : NetworkBehaviour
 
     private void SetActive(int i)
     {
-        switch (weapons[i].transform.parent.name)
+        switch(weapons[i].transform.parent.parent.parent.name)
         {
             case "Crossbow":
                 weapons[i].GetComponentInParent<CrossBow>().SetEquiped(true);
@@ -138,7 +138,8 @@ public class WeaponSwitch : NetworkBehaviour
     private void SetNetworkActive(int i)
     {
         SetActive(i);
-        if (isServer)
+
+        if(isServer)
         {
             RpcSetActive(i);
         }
@@ -150,10 +151,9 @@ public class WeaponSwitch : NetworkBehaviour
 
     private void SetNetworkInactive(int i)
     {
-        switch (weapons[i].transform.parent.name)
+        switch(weapons[i].transform.parent.parent.parent.name)
         {
             case "Crossbow":
-                CrossBow crossBow = weapons[i].GetComponentInParent<CrossBow>();
                     SetCrossBowInactive(weapons[i].GetComponentInParent<CrossBow>());
                         if (isServer)
                         {
@@ -252,17 +252,18 @@ public class WeaponSwitch : NetworkBehaviour
         shurikenGun.SetReloading(false);
         GetComponent<AudioManager>().NetworkStop("Reload");
         GetComponent<AudioManager>().NetworkStop("ShurikenShoot");
+
         if(shurikenGun.GetScoping())
         {
             shurikenGun.Scope(false);
         }
+
         weapons[0].gameObject.SetActive(false);
     }
 
     public void SetBowInactive(Bow bow)
     {
         bow.SetEquiped(false);
-
         bow.transform.localRotation = bow.GetStartingRotation();
         weapons[1].SetActive(false);
     }
@@ -275,21 +276,21 @@ public class WeaponSwitch : NetworkBehaviour
     }
 
     [ClientRpc]
-     void RpcSetActive(int i)
-     {
-         if(this.isLocalPlayer)
-         {
+    void RpcSetActive(int i)
+    {
+        if(this.isLocalPlayer)
+        {
             return;
-         }
+        }
 
-         SetActive(i);
+        SetActive(i);
     }
 
     
     [Command]
     public void CmdSetInactive(int i)
     {
-        switch (weapons[i].transform.parent.name)
+        switch (weapons[i].transform.parent.parent.parent.name)
         {
             case "Crossbow":
                 SetCrossBowInactive(weapons[i].GetComponentInParent<CrossBow>());
@@ -321,7 +322,7 @@ public class WeaponSwitch : NetworkBehaviour
             return;
         }
 
-        switch (weapons[i].transform.parent.name)
+        switch (weapons[i].transform.parent.parent.parent.name)
         {
             case "Crossbow":
                 SetCrossBowInactive(weapons[i].GetComponentInParent<CrossBow>());

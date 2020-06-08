@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3429750772712740746}
   - component: {fileID: -4858120496999374477}
   - component: {fileID: 5632096921406184189}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: BowArrowSlow
   m_TagString: Ammo
   m_Icon: {fileID: 0}
@@ -125,12 +125,12 @@ PrefabInstance:
     - target: {fileID: -7462036371361415008, guid: 8d9e9bbbd95fac141842ea6ed6f30861,
         type: 3}
       propertyPath: m_Layer
-      value: 10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -4425609515867240179, guid: 8d9e9bbbd95fac141842ea6ed6f30861,
         type: 3}
       propertyPath: m_Layer
-      value: 10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 8d9e9bbbd95fac141842ea6ed6f30861,
         type: 3}
@@ -220,17 +220,17 @@ PrefabInstance:
     - target: {fileID: -927199367670048503, guid: 8d9e9bbbd95fac141842ea6ed6f30861,
         type: 3}
       propertyPath: m_Layer
-      value: 10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -594094835925579944, guid: 8d9e9bbbd95fac141842ea6ed6f30861,
         type: 3}
       propertyPath: m_Layer
-      value: 10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -492420421572216379, guid: 8d9e9bbbd95fac141842ea6ed6f30861,
         type: 3}
       propertyPath: m_Layer
-      value: 10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -113181020801827196, guid: 8d9e9bbbd95fac141842ea6ed6f30861,
         type: 3}
@@ -255,12 +255,12 @@ PrefabInstance:
     - target: {fileID: 2502203975881118265, guid: 8d9e9bbbd95fac141842ea6ed6f30861,
         type: 3}
       propertyPath: m_Layer
-      value: 10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3667633384733631754, guid: 8d9e9bbbd95fac141842ea6ed6f30861,
         type: 3}
       propertyPath: m_Layer
-      value: 10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4063835366044962077, guid: 8d9e9bbbd95fac141842ea6ed6f30861,
         type: 3}
@@ -270,7 +270,7 @@ PrefabInstance:
     - target: {fileID: 4695666576454475813, guid: 8d9e9bbbd95fac141842ea6ed6f30861,
         type: 3}
       propertyPath: m_Layer
-      value: 10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5490870052100550915, guid: 8d9e9bbbd95fac141842ea6ed6f30861,
         type: 3}
@@ -280,7 +280,7 @@ PrefabInstance:
     - target: {fileID: 7469484624682501897, guid: 8d9e9bbbd95fac141842ea6ed6f30861,
         type: 3}
       propertyPath: m_Layer
-      value: 10
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8d9e9bbbd95fac141842ea6ed6f30861, type: 3}

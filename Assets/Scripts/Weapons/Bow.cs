@@ -14,6 +14,9 @@ public class Bow : MonoBehaviour
     
     private Animator animator;
     private PlayerMovement playerMovement;
+    private MouseLook mouseLook;
+    private WeaponRecoil weaponRecoil;
+
     private AudioManager audioManager;
 
     private Quaternion startingRotation;
@@ -61,11 +64,13 @@ public class Bow : MonoBehaviour
     {
         ninjaUI = transform.parent.parent.GetComponentInChildren<NinjaUI>();
         uiManager = UIManager.GetInstance();
+        mouseLook = GetComponentInParent<MouseLook>();
+        weaponRecoil = GetComponent<WeaponRecoil>();
     }
 
     void Start()
     {
-        equiped = transform.GetChild(0).gameObject.activeSelf;
+        equiped = transform.GetChild(0).GetChild(0).GetChild(0).gameObject.activeSelf;
 
         currentType = arrowTypes.Regular;
         currentRegularArrows = maxArrows;
@@ -170,7 +175,6 @@ public class Bow : MonoBehaviour
         else
         {
             StartCoroutine(FireBehaviour());
-            
         }
     }
 
@@ -209,7 +213,8 @@ public class Bow : MonoBehaviour
             charge = 0f;
             canShoot = false;
 
-            
+            mouseLook.Fire(false);
+            weaponRecoil.Fire(false);
             animator.SetTrigger("Fire");
             audioManager.NetworkPlay("ShurikenShoot");
 

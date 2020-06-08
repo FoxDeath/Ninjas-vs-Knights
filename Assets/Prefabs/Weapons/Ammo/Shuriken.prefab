@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 4349958456309026257}
   - component: {fileID: -2608579110929975329}
   - component: {fileID: 4365554894445286527}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Shuriken
   m_TagString: Ammo
   m_Icon: {fileID: 0}
@@ -229,7 +229,7 @@ PrefabInstance:
     - target: {fileID: 5543901162341361421, guid: 8062d1ed2f6b72a479d6b7670e00af30,
         type: 3}
       propertyPath: m_Layer
-      value: 10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6112284882152018897, guid: 8062d1ed2f6b72a479d6b7670e00af30,
         type: 3}

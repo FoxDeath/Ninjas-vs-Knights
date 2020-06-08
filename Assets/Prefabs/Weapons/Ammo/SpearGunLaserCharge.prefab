@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -3268451231330986179}
   - component: {fileID: 8991693927751997223}
   - component: {fileID: 7717624711069408524}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: SpearGunLaserCharge
   m_TagString: Ammo
   m_Icon: {fileID: 0}
@@ -123,7 +123,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5544664576239474445}
   - component: {fileID: 5544664576239474444}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -216,7 +216,7 @@ GameObject:
   - component: {fileID: 5544664576523975889}
   - component: {fileID: 5544664576523975894}
   - component: {fileID: 5544664576523975895}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: SpearGunLaserChargeModel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -295,7 +295,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5544664577176983273}
   - component: {fileID: 5544664577176983272}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Trail
   m_TagString: Untagged
   m_Icon: {fileID: 0}

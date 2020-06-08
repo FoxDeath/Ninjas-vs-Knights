@@ -8,6 +8,7 @@ public class InactivityController : NetworkBehaviour
     [SerializeField] Camera[] cameras;
     [SerializeField] Canvas[] canvases;
     [SerializeField] AudioListener[] audioListeners;
+    [SerializeField] GameObject[] playerModels;
 
     void Update()
     {
@@ -32,6 +33,14 @@ public class InactivityController : NetworkBehaviour
             if(!this.isLocalPlayer)
             {
                 audio.enabled = false;
+            }
+        }
+
+        foreach(GameObject gameObject in playerModels)
+        {
+            if(this.isLocalPlayer)
+            {
+                gameObject.SetActive(false);
             }
         }
     }

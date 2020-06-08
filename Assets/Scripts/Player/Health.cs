@@ -9,7 +9,6 @@ public class Health : MonoBehaviour
     private Vector3 lastHit;
 
     [SerializeField] float maxHealth = 100f;
-    [SerializeField] float regenPerSec = 2f;
     [SerializeField] float damageReduPercentage = 50f;
     private float health;
 
@@ -70,11 +69,6 @@ public class Health : MonoBehaviour
     private void FixedUpdate()
     {
         health = Mathf.Clamp(health, 0f, maxHealth);
-
-        if(!dead)
-        {
-            Regenerate();
-        }
     }
 
     //The Players health will go down when he takes damage.
@@ -148,18 +142,6 @@ public class Health : MonoBehaviour
         else
         {
             uiManager.GameOver();
-        }
-    }
-
-    private void Regenerate() 
-    {
-        if(regenerating && health < maxHealth)
-        {
-            health += regenPerSec * Time.fixedDeltaTime;
-        }
-        else if(health == maxHealth)
-        {
-            regenerating = false;
         }
     }
 
