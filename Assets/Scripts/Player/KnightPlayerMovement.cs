@@ -26,8 +26,7 @@ public class KnightPlayerMovement : PlayerMovement
 
     public ParticleSystem dashParticles;
     public ParticleSystem chargeParticles;
-    public ParticleSystem jetpackFlame;
-    public ParticleSystem jetpackFlameTwo;
+ 
 
     public bool GetDashing()
     {
@@ -168,14 +167,13 @@ public class KnightPlayerMovement : PlayerMovement
             {                
                 jetpacking = true;
 
-                jetpackFlame.Play();
-                jetpackFlameTwo.Play();
-
+             
                 if (!audioManager.IsPlaying("Jetpack"))
                 {
                     audioManager.NetworkPlay("Jetpack");
+                    
                 }
-
+                
                 jetpackFuel -= Time.deltaTime;
                 currentForce += Time.deltaTime/10f;
 
@@ -192,10 +190,11 @@ public class KnightPlayerMovement : PlayerMovement
             //If the jetpack is on and it has no fuel it stops
             else if(jetpackFuel <= 0f)
             {   
-                jetpacking = false;   
-                if(audioManager.IsPlaying("Jetpack"))
+                jetpacking = false;
+     
+                if (audioManager.IsPlaying("Jetpack"))
                 {
-                    audioManager.NetworkStop("Jetpack");
+                    audioManager.NetworkStop("Jetpack");                 
                 }
             }
         } 
@@ -217,7 +216,7 @@ public class KnightPlayerMovement : PlayerMovement
             canDash = false;
             dashing = true;
 
-         //   audioManager.Play("Jetpack Dash");
+            audioManager.NetworkPlay("Jetpack Dash");
             dashParticles.Play();
 
             vertical = dashForce * moveInput.y;
@@ -243,6 +242,8 @@ public class KnightPlayerMovement : PlayerMovement
             dashing = true;
 
             audioManager.NetworkPlay("Jetpack Dash");
+            dashParticles.Play();
+
 
             float oldHorizontal = this.velocity.y;
             float oldGravity = this.gravity;

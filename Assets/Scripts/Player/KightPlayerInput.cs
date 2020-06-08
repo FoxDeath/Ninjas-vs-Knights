@@ -7,13 +7,15 @@ public class KightPlayerInput : MonoBehaviour
     private KnightPlayerMovement playerMovement;
     private PauseMenu pauseMenu;
     private EdgeClimb edgeClimb;
-
+    public ParticleSystem jetpackFlame;
+    public ParticleSystem jetpackFlameTwo;
     void Start()
     {
         playerMovement = GetComponent<KnightPlayerMovement>();
         pauseMenu = FindObjectOfType<PauseMenu>();
         edgeClimb = GetComponent<EdgeClimb>();
-       
+    
+
     }
 
     public void MoveInput(InputAction.CallbackContext context)
@@ -42,10 +44,14 @@ public class KightPlayerInput : MonoBehaviour
             if(context.action.phase == InputActionPhase.Performed)
             {
                 playerMovement.SetJetpackOn(true);
+                jetpackFlame.Play();
+                jetpackFlameTwo.Play();
             }
             else if(context.action.phase == InputActionPhase.Canceled)
             {
                 playerMovement.SetJetpackOn(false);
+                jetpackFlame.Stop();
+                jetpackFlameTwo.Stop();
             }
         }
     }
