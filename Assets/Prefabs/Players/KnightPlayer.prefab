@@ -837,6 +837,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  recoilRotation: {x: 2, y: 2, z: 4}
+  recoilRotationAiming: {x: 1, y: 1, z: 2.5}
+  rotationSpeed: 5
+  returnSpeed: 20
   zRotation: 0
   mouseSensitivity: 2
 --- !u!114 &8099921737715984655
@@ -2368,6 +2372,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5979411464056459487}
     m_Modifications:
+    - target: {fileID: 856999078518715496, guid: 76869c458a6c999489100e18cc36e3ca,
+        type: 3}
+      propertyPath: m_Name
+      value: RecoilPosition
+      objectReference: {fileID: 0}
+    - target: {fileID: 7776604128761474667, guid: 76869c458a6c999489100e18cc36e3ca,
+        type: 3}
+      propertyPath: m_Name
+      value: RotationPoint
+      objectReference: {fileID: 0}
     - target: {fileID: 8678044670209680598, guid: 76869c458a6c999489100e18cc36e3ca,
         type: 3}
       propertyPath: player

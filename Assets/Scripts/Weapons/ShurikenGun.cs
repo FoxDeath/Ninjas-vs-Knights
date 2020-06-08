@@ -6,11 +6,14 @@ public class ShurikenGun :  MonoBehaviour
     [SerializeField] GameObject bullet;
     [SerializeField] GameObject bulletEmiter;
     [SerializeField] GameObject muzzleFlash;
+    
     private AudioManager audioManager;
     private UIManager uiManager;
     private NinjaUI ninjaUI;
     private Animator animator;
     private PlayerMovement playerMovement;
+    private MouseLook mouseLook;
+    private WeaponRecoil weaponRecoil;
     
     [SerializeField] float speed = 100f;
     [SerializeField] float reloadTime = 2f;
@@ -50,6 +53,8 @@ public class ShurikenGun :  MonoBehaviour
         animator = GetComponent<Animator>();
         ninjaUI = transform.parent.parent.GetComponentInChildren<NinjaUI>();
         uiManager = UIManager.GetInstance();
+        mouseLook = GetComponentInParent<MouseLook>();
+        weaponRecoil = GetComponent<WeaponRecoil>();
     }
 
     void Start()
@@ -148,7 +153,8 @@ public class ShurikenGun :  MonoBehaviour
 
                 GetComponentInParent<NetworkController>().NetworkSpawn(bullet.name, bulletEmiter.transform.position, bulletEmiter.transform.rotation,
                 (targetPoint - bulletEmiter.transform.position).normalized * speed);
-                animator.SetTrigger("Firing");
+                mouseLook.Fire(scoping);
+                weaponRecoil.Fire(scoping);
             }
             else
             {
