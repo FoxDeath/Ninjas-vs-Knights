@@ -130,7 +130,7 @@ public class KnightPlayerMovement : PlayerMovement
     
     public void Jetpack()
     {
-        uiManager.SetKnightSliderValue(jetpackFuel / maxJetpackFuel);
+        uiManager.SetKnightSliderValue(jetpackFuel / maxJetpackFuel, GetComponentInChildren<KnightUI>());
         
         //If the jetpack is off stops the sound and recharges the jetpack
         if (!jetpackOn)

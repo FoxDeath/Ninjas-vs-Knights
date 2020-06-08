@@ -280,7 +280,6 @@ public class PlayerMovement : NetworkBehaviour
         {
             isCrouched = true;
             animator.SetBool("crouch",true);
-            print("yessss");
         }
         else if(!sliding)
         {

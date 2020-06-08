@@ -13,7 +13,7 @@ public class Stimpack : MonoBehaviour
         health = FindObjectOfType<Health>();
     }
 
-    [SerializeField] float healPercentage = 75f;
+    [SerializeField] float healPercentage = 35f;
     public void StimpackInput(InputAction.CallbackContext context)
     {   
         if(context.action.phase == InputActionPhase.Performed && !stimpacking)
@@ -42,7 +42,7 @@ public class Stimpack : MonoBehaviour
             {
                 UIManager.GetInstance().ResetFill("StimpackFill", null, GetComponentInChildren<KnightUI>());
             }
-            yield return new WaitForSeconds(10f);
+            yield return new WaitForSeconds(30f);
 
             stimpacking = false;
         }

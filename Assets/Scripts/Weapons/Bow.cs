@@ -70,7 +70,7 @@ public class Bow : MonoBehaviour
 
     void Start()
     {
-        equiped = transform.GetChild(0).gameObject.activeSelf;
+        equiped = transform.GetChild(0).GetChild(0).GetChild(0).gameObject.activeSelf;
 
         currentType = arrowTypes.Regular;
         currentRegularArrows = maxArrows;

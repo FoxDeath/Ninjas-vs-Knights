@@ -133,7 +133,6 @@ GameObject:
   - component: {fileID: 4358447904225304526}
   - component: {fileID: 4973464306921727533}
   - component: {fileID: 6557420975512878445}
-  - component: {fileID: 6229083783119021424}
   - component: {fileID: 8016480316701481317}
   - component: {fileID: 4948003428216916260}
   - component: {fileID: 5868462613030419134}
@@ -678,7 +677,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
-  regenPerSec: 2
   damageReduPercentage: 100
 --- !u!114 &9116619986222610613
 MonoBehaviour:
@@ -1013,25 +1011,6 @@ MonoBehaviour:
   localPositionSensitivity: 0.01
   localRotationSensitivity: 0.01
   localScaleSensitivity: 0.01
---- !u!114 &6229083783119021424
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2056603104854673355}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 734b48bea0b204338958ee3d885e11f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  clientAuthority: 1
-  localPositionSensitivity: 0.01
-  localRotationSensitivity: 0.01
-  localScaleSensitivity: 0.01
-  target: {fileID: 4940581728872944058}
 --- !u!114 &8016480316701481317
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2738,12 +2717,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 24233b83f4aee0f4b893bb7059d0f4f1, type: 3}
---- !u!1 &4035193689866795532 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: -927199367670048503, guid: 24233b83f4aee0f4b893bb7059d0f4f1,
-    type: 3}
-  m_PrefabInstance: {fileID: 4962419638352159493}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &118424622084294687 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: 24233b83f4aee0f4b893bb7059d0f4f1,
@@ -2759,6 +2732,12 @@ Animator:
 --- !u!4 &6169813531949682351 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1243445300402941354, guid: 24233b83f4aee0f4b893bb7059d0f4f1,
+    type: 3}
+  m_PrefabInstance: {fileID: 4962419638352159493}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &4035193689866795532 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -927199367670048503, guid: 24233b83f4aee0f4b893bb7059d0f4f1,
     type: 3}
   m_PrefabInstance: {fileID: 4962419638352159493}
   m_PrefabAsset: {fileID: 0}
@@ -3076,12 +3055,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5b991d4c1b0bde448a6b84425db5d414, type: 3}
---- !u!95 &999806969 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 8431848206516928052, guid: 5b991d4c1b0bde448a6b84425db5d414,
-    type: 3}
-  m_PrefabInstance: {fileID: 8431848206675175885}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &999806968 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8431848206516928053, guid: 5b991d4c1b0bde448a6b84425db5d414,
@@ -3097,12 +3070,6 @@ GameObject:
 --- !u!95 &3488156401516471844 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 5002261690092851177, guid: 5b991d4c1b0bde448a6b84425db5d414,
-    type: 3}
-  m_PrefabInstance: {fileID: 8431848206675175885}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &999806968 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8431848206516928053, guid: 5b991d4c1b0bde448a6b84425db5d414,
     type: 3}
   m_PrefabInstance: {fileID: 8431848206675175885}
   m_PrefabAsset: {fileID: 0}
@@ -3201,12 +3168,6 @@ PrefabInstance:
       objectReference: {fileID: 2056603104854673355}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2fdda716840d5134982c2ddfabb5fed6, type: 3}
---- !u!1 &7040241951151823806 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1443655227300184267, guid: 2fdda716840d5134982c2ddfabb5fed6,
-    type: 3}
-  m_PrefabInstance: {fileID: 8483394145403542389}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &8437390942318618597 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 48607609029655696, guid: 2fdda716840d5134982c2ddfabb5fed6,

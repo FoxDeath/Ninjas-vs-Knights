@@ -93,7 +93,7 @@ public class CrossBow : MonoBehaviour
 
     void Start()
     {
-        equiped = transform.GetChild(0).gameObject.activeSelf;
+        equiped = transform.GetChild(0).GetChild(0).GetChild(0).gameObject.activeSelf;
 
         currentScopedFOV = scopedFOVs.Length - 1;
         scopedFOV = scopedFOVs[currentScopedFOV];

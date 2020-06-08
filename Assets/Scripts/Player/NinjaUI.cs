@@ -131,7 +131,7 @@ public class NinjaUI : MonoBehaviour
 
     void Update()
     {
-        FillingAbility(stimpackFill, 10f);
+        FillingAbility(stimpackFill, 30f);
     }
 
     //Refils the fillAmount for cooldown seconds if the fill is not null or full

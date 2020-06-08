@@ -46,11 +46,14 @@ public class Objective : MonoBehaviour
                 }
             }
         }
+
+        health += 0.005f;
     }
 
     void Update()
     {
         health = Mathf.Clamp(health, 0f, maxHealth);
+        healthBar.value = health;
     }
 
     public void Restart()

@@ -86,7 +86,7 @@ public class KnightUI : MonoBehaviour
     void Update()
     {
         FillingAbility(dashFill, 2.4f);
-        FillingAbility(stimpackFill, 10f);
+        FillingAbility(stimpackFill, 30f);
         FillingAbility(chargeFill, 12.5f);
         FillingAbility(AOEFill, 15f);
     }

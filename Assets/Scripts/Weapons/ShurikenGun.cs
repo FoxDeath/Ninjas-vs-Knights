@@ -59,13 +59,13 @@ public class ShurikenGun :  MonoBehaviour
 
     void Start()
     {
-        equiped = transform.GetChild(0).gameObject.activeSelf;
+        equiped = transform.GetChild(0).GetChild(0).GetChild(0).gameObject.activeSelf;
 
         maxMag = maxAmmo * 4;
         currentAmmo = maxAmmo;
         currentMag = maxMag;
 
-        if(equiped)
+        if (equiped)
         {
             uiManager.SetMaxAmmo(currentMag, ninjaUI);
             uiManager.SetCurrentAmmo(currentAmmo, ninjaUI);
