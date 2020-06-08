@@ -272,7 +272,18 @@ MonoBehaviour:
     m_ActionId: 0f35ab6f-75df-461c-9f0e-051d7a62d3a9
     m_ActionName: Ninja/Sprint[/Keyboard/leftShift]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5666419560278554658}
+        m_MethodName: LookInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: f3881dd5-c9bc-42b4-9b39-b25ffa9635cb
     m_ActionName: Knight/Look[/Mouse/delta]
   - m_PersistentCalls:
@@ -406,7 +417,18 @@ MonoBehaviour:
     m_ActionId: d0177fad-de37-4d4c-ae08-b6e1b0f69e12
     m_ActionName: Weapon/Reload[/Keyboard/r]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5954251335044053656}
+        m_MethodName: ShurikenGunScopeInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 9aab2f80-be9d-4b02-955a-6f6400162694
     m_ActionName: Weapon/ScopeZoom[/Keyboard/q]
   - m_PersistentCalls:

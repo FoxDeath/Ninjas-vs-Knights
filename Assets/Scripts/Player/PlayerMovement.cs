@@ -39,7 +39,7 @@ public class PlayerMovement : NetworkBehaviour
     protected bool canSlide = true;
     protected bool charging;
 
-    private Animator animator;
+    protected Animator animator;
 
     #region Getters and Setters
     

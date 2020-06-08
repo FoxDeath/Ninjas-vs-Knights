@@ -1,62 +1,68 @@
 fileFormatVersion: 2
-guid: aa32c720ab554e14ea40e5f4fef75fe9
+guid: e7c3af7b4698ac14e9c0b959ab4f57b8
 ModelImporter:
   serializedVersion: 19300
   internalIDToNameTable:
   - first:
       74: -623603649343465320
-    second: Run
-  - first:
-      74: -623603649343465320
-    second: Hanging
-  - first:
-      74: 5522812681064789136
-    second: Run
-  - first:
-      74: -7813635296899823279
-    second: Crouch
-  - first:
-      74: 2667949614841947897
-    second: Walk
-  - first:
-      74: 4049019042120651370
-    second: CWalk
-  - first:
-      74: -9220292663797961659
-    second: WRun
-  - first:
-      74: -5044683687378138335
-    second: WJump
+    second: K.Walk
   - first:
       74: -623603649343465320
     second: Scene
   - first:
-      74: 279411378297958422
-    second: Hanging
+      74: -2729727863909928480
+    second: K.Run
   - first:
-      74: 4212115077381722841
-    second: ClimbMoving
+      74: 5416402720407593744
+    second: K.Walk
   - first:
-      74: -3100369314251171874
-    second: Idle
+      74: 3798173849624348323
+    second: K.WRunL
   - first:
-      74: -1343086146854073801
-    second: ClimbUp
+      74: 239225249992422394
+    second: K.WRunR
   - first:
-      74: 5668136405559828791
-    second: SideWalk
+      74: 3310255667836335490
+    second: K.WalkR
   - first:
-      74: 5280189765777415482
-    second: CrouchSideWalk
+      74: -4441882333053219479
+    second: K.WalkL
   - first:
-      74: 4749916858553617154
-    second: CrouchIdle
+      74: -6097932352908646409
+    second: K.Fall
   - first:
-      74: 842011099488704110
-    second: Charge
+      74: -4932658815759211153
+    second: K.Idle
   - first:
-      74: 8046689404674467441
-    second: AOE
+      74: 8190869570348240917
+    second: K.HangIdle
+  - first:
+      74: -8887139986262873450
+    second: K.HangLeft
+  - first:
+      74: -1632510010668157277
+    second: K.HangRight
+  - first:
+      74: -4025646902844047059
+    second: K.ClimbUp
+  - first:
+      74: 5964527088622527239
+    second: K.CrouchIdle
+  - first:
+      74: 7948304704450356738
+    second: K.CRight
+  - first:
+      74: 8447041554879765292
+    second: K.CLeft
+  - first:
+      74: 7295240611112323661
+    second: AOE/Charge
+  - first:
+      74: -1609281748187839663
+    second: Scene
+  - first:
+      74: 8830290775314812394
+    second: K.CWalk
   externalObjects: {}
   materials:
     materialImportMode: 1
@@ -68,7 +74,7 @@ ModelImporter:
     bakeSimulation: 0
     resampleCurves: 1
     optimizeGameObjects: 0
-    motionNodeName: Armature/base
+    motionNodeName: 
     rigImportErrors: 
     rigImportWarnings: 
     animationImportErrors: 
@@ -89,8 +95,8 @@ ModelImporter:
       name: Scene
       takeName: Scene
       internalID: 0
-      firstFrame: 0
-      lastFrame: 920
+      firstFrame: 1
+      lastFrame: 1025
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -115,7 +121,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Run
+      name: K.Run
       takeName: Scene
       internalID: 0
       firstFrame: 250
@@ -144,36 +150,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Crouch
-      takeName: Scene
-      internalID: 0
-      firstFrame: 270
-      lastFrame: 282
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
-    - serializedVersion: 16
-      name: Walk
+      name: K.Walk
       takeName: Scene
       internalID: 0
       firstFrame: 125
@@ -202,11 +179,11 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: CWalk
+      name: K.WRunL
       takeName: Scene
       internalID: 0
-      firstFrame: 80
-      lastFrame: 110
+      firstFrame: 300
+      lastFrame: 338
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -231,11 +208,11 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Hanging
+      name: K.WRunR
       takeName: Scene
       internalID: 0
-      firstFrame: 380
-      lastFrame: 439
+      firstFrame: 1005
+      lastFrame: 1025
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -258,96 +235,9 @@ ModelImporter:
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 1
+      additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: ClimbMoving
-      takeName: Scene
-      internalID: 0
-      firstFrame: 540
-      lastFrame: 580
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 1
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 1
-    - serializedVersion: 16
-      name: Idle
-      takeName: Scene
-      internalID: 0
-      firstFrame: 168
-      lastFrame: 192
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 1
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 1
-    - serializedVersion: 16
-      name: ClimbUp
-      takeName: Scene
-      internalID: 0
-      firstFrame: 600
-      lastFrame: 716
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 1
-    - serializedVersion: 16
-      name: SideWalk
+      name: K.WalkR
       takeName: Scene
       internalID: 0
       firstFrame: 725
@@ -374,13 +264,13 @@ ModelImporter:
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 1
+      additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: CrouchSideWalk
+      name: K.WalkL
       takeName: Scene
       internalID: 0
-      firstFrame: 850
-      lastFrame: 880
+      firstFrame: 910
+      lastFrame: 930
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -403,9 +293,183 @@ ModelImporter:
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 1
+      additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: CrouchIdle
+      name: K.Fall
+      takeName: Scene
+      internalID: 0
+      firstFrame: 960
+      lastFrame: 1000
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: K.Idle
+      takeName: Scene
+      internalID: 0
+      firstFrame: 168
+      lastFrame: 215
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: K.HangIdle
+      takeName: Scene
+      internalID: 0
+      firstFrame: 380
+      lastFrame: 439
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: K.HangLeft
+      takeName: Scene
+      internalID: 0
+      firstFrame: 935
+      lastFrame: 955
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: K.HangRight
+      takeName: Scene
+      internalID: 0
+      firstFrame: 540
+      lastFrame: 580
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: K.ClimbUp
+      takeName: Scene
+      internalID: 0
+      firstFrame: 600
+      lastFrame: 716
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: K.CrouchIdle
       takeName: Scene
       internalID: 0
       firstFrame: 750
@@ -432,13 +496,71 @@ ModelImporter:
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 1
+      additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Charge
+      name: K.CRight
       takeName: Scene
       internalID: 0
-      firstFrame: 223
-      lastFrame: 223
+      firstFrame: 860
+      lastFrame: 880
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: K.CLeft
+      takeName: Scene
+      internalID: 0
+      firstFrame: 885
+      lastFrame: 905
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: AOE/Charge
+      takeName: Scene
+      internalID: 0
+      firstFrame: 255
+      lastFrame: 255
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -461,20 +583,20 @@ ModelImporter:
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 1
+      additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: AOE
+      name: K.CWalk
       takeName: Scene
       internalID: 0
-      firstFrame: 517
-      lastFrame: 920
+      firstFrame: 80
+      lastFrame: 109
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
+      loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
@@ -490,7 +612,7 @@ ModelImporter:
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 1
+      additiveReferencePoseFrame: 0
     isReadable: 0
   meshes:
     lODScreenPercentages: []
