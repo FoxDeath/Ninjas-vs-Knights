@@ -14,6 +14,7 @@ public class CrossBow : MonoBehaviour
     private Camera fpsCam;
     private Camera weaponCam;
     private UIManager uiManager;
+    private MouseLook mouseLook;
     [SerializeField] GameObject muzzleFlash;
     private Transform bulletEmiter;
     private Quaternion startingRotation;
@@ -84,9 +85,10 @@ public class CrossBow : MonoBehaviour
         shieldAnimator = transform.parent.Find("Shield").GetComponent<Animator>();
         fpsCam = transform.parent.GetComponent<Camera>();
         weaponCam = transform.parent.Find("WeaponCamera").GetComponent<Camera>();
-        bulletEmiter = transform.GetChild(0).Find("BulletEmitter");
+        bulletEmiter = transform.GetChild(0).GetChild(0).GetChild(0).Find("BulletEmitter");
         lookSensitivity = GetComponentInParent<MouseLook>().GetSensitivity();
         model = transform.GetChild(0).gameObject;
+        mouseLook = GetComponentInParent<MouseLook>();
     }
 
     void Start()
@@ -214,6 +216,8 @@ public class CrossBow : MonoBehaviour
             {
                 GetComponentInParent<NetworkController>().NetworkSpawn(arrowPrefab.name, hit.point, fpsCam.transform.rotation, Vector3.zero);
             }
+            
+            mouseLook.Fire(scoping);
         } 
     }
 

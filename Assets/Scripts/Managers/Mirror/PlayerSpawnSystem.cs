@@ -70,6 +70,8 @@ public class PlayerSpawnSystem : NetworkBehaviour
             GameObject WaveManager = Instantiate(waveManager);
 
             NetworkServer.Spawn(WaveManager);
+
+            NetworkManagerLobby.OnServerReadied -= SpawnPlayer;
         }
     }
 }

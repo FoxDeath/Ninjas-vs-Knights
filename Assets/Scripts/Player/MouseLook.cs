@@ -7,6 +7,13 @@ public class MouseLook : NetworkBehaviour
 {
     private Transform cameraTransform;
 
+    [SerializeField] Vector3 recoilRotation = new Vector3(2f, 2f, 4f);
+    [SerializeField] Vector3 recoilRotationAiming = new Vector3(1f, 1f, 2.5f);
+    private Vector3 currentRotation;
+    private Vector3 rotation;
+
+    [SerializeField] float rotationSpeed = 5f;
+    [SerializeField] float returnSpeed = 20f;
     [HideInInspector] public float zRotation;
     public float mouseSensitivity = 2f;
     private float lookX;
@@ -44,6 +51,18 @@ public class MouseLook : NetworkBehaviour
         InvokeRepeating("CalculateLook", 0f, 0.005f);
     }
 
+    public void Fire(bool aiming)
+    {
+        if (aiming)
+        {
+            currentRotation += new Vector3(-recoilRotationAiming.x, Random.Range(-recoilRotationAiming.y, recoilRotationAiming.y), Random.Range(-recoilRotationAiming.z, recoilRotationAiming.z));
+        }
+        else
+        {
+            currentRotation += new Vector3(-recoilRotation.x, Random.Range(-recoilRotation.y, recoilRotation.y), Random.Range(-recoilRotation.z, recoilRotation.z));
+        }
+    }
+
     private void CalculateLook()
     {
         //if game is paused
@@ -59,6 +78,11 @@ public class MouseLook : NetworkBehaviour
 
         //applies rotation to player
         transform.Rotate(Vector2.up, lookX);
+
+        //applies weapon recoil
+        currentRotation = Vector3.Lerp(currentRotation, Vector3.zero, returnSpeed * Time.deltaTime);
+        rotation = Vector3.Slerp(rotation, currentRotation, rotationSpeed * Time.fixedDeltaTime);
+        cameraTransform.Rotate(rotation.x, rotation.y, rotation.z, Space.Self);
     }
 
     //gets input from player
