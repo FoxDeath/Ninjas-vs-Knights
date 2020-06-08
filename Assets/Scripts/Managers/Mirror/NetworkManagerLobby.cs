@@ -64,7 +64,7 @@ public class NetworkManagerLobby : NetworkManager
     //When a player disconects it is removed from the list and it notifies the other lobby players
     public override void OnServerDisconnect(NetworkConnection conn)
     {
-        if(conn.identity != null)
+        if(conn.identity != null && SceneManager.GetActiveScene().Equals(Loader.Scene.MainMenu))
         {
             NetworkRoomPlayerLobby player = conn.identity.GetComponent<NetworkRoomPlayerLobby>();
 
