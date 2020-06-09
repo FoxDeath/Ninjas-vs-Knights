@@ -40,7 +40,7 @@ public class InactivityController : NetworkBehaviour
         {
             if(this.isLocalPlayer)
             {
-                gameObject.SetActive(false);
+                //gameObject.SetActive(false);
             }
         }
     }

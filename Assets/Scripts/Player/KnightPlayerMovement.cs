@@ -46,7 +46,6 @@ public class KnightPlayerMovement : PlayerMovement
         uiManager = FindObjectOfType<UIManager>();
         audioManager = GetComponent<AudioManager>();
 
-        if(this.isLocalPlayer)
         animator = transform.Find("player").GetComponent<Animator>();
 
         move = new Vector3();
