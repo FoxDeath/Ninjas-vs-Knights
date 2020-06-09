@@ -70,6 +70,7 @@ public class Target : NetworkBehaviour
     }
 
     //Makes the target ragdoll
+    [Server]
     void Die()
     {
         dead = true;
