@@ -42,7 +42,7 @@ public class PauseMenu : NetworkBehaviour
 
     void Update()
     {
-        if(!this.isLocalPlayer)
+        if(!GetComponentInParent<PlayerMovement>().isLocalPlayer)
         {
             return;
         }
@@ -66,7 +66,7 @@ public class PauseMenu : NetworkBehaviour
 
     public void MenuInput()
     {
-        if(!this.isLocalPlayer)
+        if(!GetComponentInParent<PlayerMovement>().isLocalPlayer)
         {
             return;
         }

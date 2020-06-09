@@ -40,7 +40,7 @@ public class KnightPlayerMovement : PlayerMovement
     protected override void Start()
     {
         controller = GetComponent<CharacterController>();
-        groundCheck = transform.Find("player").Find("body").Find("GroundCheck");
+        groundCheck = transform.Find("player").Find("GroundCheck");
         groundMask = LayerMask.GetMask("Ground");
         fpsCamera = transform.Find("Main Camera").GetComponent<Camera>();
         uiManager = FindObjectOfType<UIManager>();

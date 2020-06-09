@@ -123,7 +123,7 @@ public class PlayerMovement : NetworkBehaviour
     protected virtual void Start()
     {
         controller = gameObject.GetComponent<CharacterController>();
-        groundCheck = transform.Find("player").Find("body").Find("GroundCheck");
+        groundCheck = transform.Find("player").Find("GroundCheck");
         groundMask = LayerMask.GetMask("Ground");
         audioManager = FindObjectOfType<AudioManager>();
 
@@ -307,7 +307,7 @@ public class PlayerMovement : NetworkBehaviour
     //gets input from PlayerInputSrcipt script
     public void SetMoveInput(Vector2 moveInput)
     {
-        if(charging)
+        if(charging && !isLocalPlayer)
         {
             return;
         }
@@ -340,6 +340,11 @@ public class PlayerMovement : NetworkBehaviour
 
     public void Sprint(bool state)
     {
+        if(!isLocalPlayer)
+        {
+            return;
+        }
+
         //turn on sprint
         if(state && !isCrouched && !scoping && !sprinting)
         {
@@ -359,7 +364,7 @@ public class PlayerMovement : NetworkBehaviour
     public virtual void Jump()
     {
         //Cant jump while crouching
-        if(isCrouched)
+        if(isCrouched || !isLocalPlayer)
         {
             return;
         }
