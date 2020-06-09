@@ -85,7 +85,9 @@ public class Target : NetworkBehaviour
         
         myRigidbody.AddForce(lastHit * 10f, ForceMode.Impulse);
 
-        StartCoroutine(FindObjectOfType<NetworkController>().NetworkDestroy(gameObject, 5f));
+        NetworkServer.Destroy(gameObject);
+
+        //StartCoroutine(FindObjectOfType<NetworkController>().NetworkDestroy(gameObject, 5f));
     }
 
     //Calculates the health for the health bar slider.
